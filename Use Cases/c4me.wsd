@@ -1,0 +1,16 @@
+@startuml
+scale 2
+left to right direction
+
+' Actors
+actor Student
+component Database <<Actor>> as db
+
+' Use cases
+rectangle c4me {
+    (Create Profile) as UC1
+    Student -- UC1
+    db -- UC1
+}
+
+@enduml
