@@ -1,6 +1,6 @@
 # CSE416 c4me
 
-[Link to SRS](http://google.com)
+[Link to SRS](https://docs.google.com/document/d/1zBmLondr7yHdbPGrkzg776qxLEJqCqIKL3l4ssYfD_s/edit#)
 
 [Plant UML docs](https://plantuml-documentation.readthedocs.io/en/latest/diagrams/usecase.html)
 

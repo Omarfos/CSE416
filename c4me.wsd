@@ -1,16 +1,81 @@
 @startuml
-scale 2
+scale 1
 left to right direction
 
 ' Actors
 actor Student
-component Database <<Actor>> as db
+actor Admin
+' Not sure about these external actors, I think they're going to be internal
+component "Database" <<Actor>> as db
+' component "High School Database" <<Actor>> as hsdb
+' component "College Database" <<Actor>> as cdb
 
-' Use cases
 rectangle c4me {
+    ' Use cases for Student
     (Create Profile) as UC1
+    (View Profile) as UC2
+    (Edit Profile) as UC3
+    (Search for Colleges) as UC4
+    (Compute Recommendation Score) as UC5
+    (Find similar high schools) as UC6
+    (Track Admissions) as UC7
+    (List Matching Student Profile) as UC8
+    (Display Scatter Plot of Matching Students) as UC9
+
+    ' Use cases for Admin
+    (Scrape college rankings) as UCA1
+    (Import College Scorecard data file) as UCA2
+    (Scrape CollegeData.com) as UCA3
+    (Delete all student profiles) as UCA4
+    (Import student profile dataset) as UCA5
+    (Review questionable acceptance decisions) as UCA6
+
+    ' Misc Use Cases
+    (Authenticate) as Auth
+    ' UC2 .> Auth : <<include>>
+    ' UC3 .> Auth : <<include>>
+    ' UC4 .> Auth : <<include>>
+    ' UC5 .> Auth : <<include>>
+    ' UC6 .> Auth : <<include>>
+    ' UC7 .> Auth : <<include>>
+    ' UC8 .> Auth : <<include>>
+    ' UC9 .> Auth : <<include>>
+    ' UCA1 .> Auth : <<include>>
+    ' UCA2 .> Auth : <<include>>
+    ' UCA3 .> Auth : <<include>>
+    ' UCA4 .> Auth : <<include>>
+    ' UCA5 .> Auth : <<include>>
+    ' UCA6 .> Auth : <<include>>
+
+
+    ' Student Relationships
     Student -- UC1
+    Student -- UC2
+    Student -- UC3
+    Student -- UC4
+    Student -- UC5
+    Student -- UC6
+    Student -- UC7
+    Student -- UC8
+    Student -- UC9
+
+    'Admin Relationships
+    Admin -- UCA1
+    Admin -- UCA2
+    Admin -- UCA3
+    Admin -- UCA4
+    Admin -- UCA5
+    Admin -- UCA6
+
+    'Database Relationships 
     db -- UC1
+    db -- UC2
+    db -- UC3
+
+
+    'Generalizations 
+    UC8 --|> UC7
+    UC9 --|> UC7
 }
 
 @enduml
