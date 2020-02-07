@@ -4,34 +4,97 @@ left to right direction
 
 ' Actors
 actor Student
-actor Admin
+' actor Admin
 ' Not sure about these external actors, I think they're going to be internal
-component "Database" <<Actor>> as db
-' component "High School Database" <<Actor>> as hsdb
-' component "College Database" <<Actor>> as cdb
+component "Tests Database" <<Actor>> as tdb
+component "High School Database" <<Actor>> as hsdb
+component "College Database" <<Actor>> as cdb
+
+skinparam UsecaseStereotypeFontColor red
+
+
+
 
 rectangle c4me {
     ' Use cases for Student
     (Create Profile) as UC1
-    (View Profile) as UC2
-    (Edit Profile) as UC3
-    (Search for Colleges) as UC4
-    (Compute Recommendation Score) as UC5
-    (Find similar high schools) as UC6
-    (Track Admissions) as UC7
-    (List Matching Student Profile) as UC8
-    (Display Scatter Plot of Matching Students) as UC9
+    (View/Edit Profile) as UC2
+    (Update Acceptance Decision) as UC3
+    (Verify Integrity of Data) as UC4
+    (Filter Data) as UC5
+    (Filter with Strict Interpretation) as UC6
+    (Filter with Lax Interpretation) as UC7
+    (Sort Results) as UC8
+    (View College) as UC9
+    (Search for Colleges) as UC10
+    (Recommend College) as UC11
+    (Show Similar Profiles in Institution) as UC12
+    (Obtain Similar Profiles) as UC13
+    (Find Similar High Schools) as UC14
+    (Track Applications) as UC15
+    (Display Scatter Plot of Applications) as UC16
+    (Mark Decision Unquestionable) as UC17
+
+    ' Student Relationships
+    Student -- UC1
+    Student -- UC2
+    Student -- UC9
+    Student -- UC10
+    Student -- UC11
+    Student -- UC12
+    Student -- UC14
+    Student -- UC15
+
+     'Generalizations 
+    UC2 ..> UC3 : <<include>>
+    UC2 ..> UC4 : <<include>>
+    UC3 <.. UC17 : <<extends>>
+    UC10 ..> UC5 : <<include>>
+    UC3 ..> UC4 : <<include>>
+    UC10 ..> UC8 : <<include>>
+    UC11 ..> UC12 : <<include>>
+    UC11 ..> UC8 : <<include>>
+    UC12 ..> UC13 : <<include>>
+    UC14 ..> UC13 : <<include>>
+    UC14 ..> UC5 : <<include>>
+    UC14 ..> UC8 : <<include>>
+    UC15 ..> UC16 : <<include>>
+
+    
+    UC6 --|> UC5 
+    UC7 --|> UC5
+    
+    cdb -- UC4
+    tdb -- UC4
+    hsdb -- UC4
+
+    cdb - UC5
+    tdb - UC5
+    hsdb - UC5
+
+    cdb - UC9
+    cdb - UC11
+
+    hsdb - UC14
+
+
 
     ' Use cases for Admin
-    (Scrape college rankings) as UCA1
-    (Import College Scorecard data file) as UCA2
-    (Scrape CollegeData.com) as UCA3
-    (Delete all student profiles) as UCA4
-    (Import student profile dataset) as UCA5
-    (Review questionable acceptance decisions) as UCA6
+    ' (Scrape college rankings) as UCA1
+    ' (Import College Scorecard data file) as UCA2
+    ' (Scrape CollegeData.com) as UCA3
+    ' (Delete all student profiles) as UCA4
+    ' (Import student profile dataset) as UCA5
+    ' (Review questionable acceptance decisions) as UCA6
+    
 
-    ' Misc Use Cases
-    (Authenticate) as Auth
+    ' Use cases for database
+    ' UCD2 --|> UCD1
+    ' UCD3 --|> UCD1
+
+
+    ' ' Misc Use Cases
+    ' (Authenticate) as Auth
     ' UC2 .> Auth : <<include>>
     ' UC3 .> Auth : <<include>>
     ' UC4 .> Auth : <<include>>
@@ -40,42 +103,24 @@ rectangle c4me {
     ' UC7 .> Auth : <<include>>
     ' UC8 .> Auth : <<include>>
     ' UC9 .> Auth : <<include>>
-    ' UCA1 .> Auth : <<include>>
-    ' UCA2 .> Auth : <<include>>
-    ' UCA3 .> Auth : <<include>>
-    ' UCA4 .> Auth : <<include>>
-    ' UCA5 .> Auth : <<include>>
-    ' UCA6 .> Auth : <<include>>
 
 
-    ' Student Relationships
-    Student -- UC1
-    Student -- UC2
-    Student -- UC3
-    Student -- UC4
-    Student -- UC5
-    Student -- UC6
-    Student -- UC7
-    Student -- UC8
-    Student -- UC9
+
 
     'Admin Relationships
-    Admin -- UCA1
-    Admin -- UCA2
-    Admin -- UCA3
-    Admin -- UCA4
-    Admin -- UCA5
-    Admin -- UCA6
+    ' Admin -- UCA1
+    ' Admin -- UCA2
+    ' Admin -- UCA3
+    ' Admin -- UCA4
+    ' Admin -- UCA5
+    ' Admin -- UCA6
 
     'Database Relationships 
-    db -- UC1
-    db -- UC2
-    db -- UC3
-
-
-    'Generalizations 
-    UC8 --|> UC7
-    UC9 --|> UC7
+    ' db -- UC1
+    ' db -- UC2
+    ' db -- UCD1
+    ' db -- UCD2
+    ' db -- UCD3
 }
 
 @enduml
