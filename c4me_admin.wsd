@@ -1,0 +1,29 @@
+@startuml
+
+' Use cases for Admin
+left to right direction
+
+    
+actor admin
+
+skinparam ActorBackgroundColor black
+skinparam ActorBorderColor black
+
+rectangle c4me{
+    ' Use cases for Admin
+    (Scrape college rankings) as UCA1
+    (Import College Scorecard data file) as UCA2
+    (Scrape CollegeData.com) as UCA3
+    (Delete all student profiles) as UCA4
+    (Import student profile dataset) as UCA5
+    (Review questionable acceptance decisions) as UCA6
+
+    admin -- UCA1
+    admin -- UCA2
+    admin -- UCA3
+    admin -- UCA4
+    admin -- UCA5
+    admin -- UCA6
+}
+
+@enduml
