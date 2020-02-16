@@ -1,12 +1,17 @@
-# CSE416 c4me
+##### Bingo
 
-[Link to SRS](https://docs.google.com/document/d/1zBmLondr7yHdbPGrkzg776qxLEJqCqIKL3l4ssYfD_s/edit#)
 
-[Plant UML docs](https://plantuml-documentation.readthedocs.io/en/latest/diagrams/usecase.html)
 
-[Examples](https://real-world-plantuml.com/?type=usecase)
+### Run The Server
+pipenv shell
+python3 -m manage runserver
+cd frontend 
+npm start
+
+### PlantUml Diagram
 
 ## Setup
+- Install PlantUml Extension
 1. Open VSCode Settings
 2. Search PlantUML
 3. Set export directory .
@@ -18,3 +23,9 @@
 2. Type plantUml
 3. Preview diagram first to see your changes
 4. When satisfied, press export diagram, choose PNG
+
+[Link to SRS](https://docs.google.com/document/d/1zBmLondr7yHdbPGrkzg776qxLEJqCqIKL3l4ssYfD_s/edit#)
+
+[Plant UML docs](https://plantuml-documentation.readthedocs.io/en/latest/diagrams/usecase.html)
+
+[Examples](https://real-world-plantuml.com/?type=usecase)

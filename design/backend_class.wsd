@@ -1,0 +1,141 @@
+@startuml
+' Use cases for Admin
+left to right direction
+
+class Admin {
+    -scrapeCollegeRankings() : None
+    -importCollegeScorecardDataFile() : None
+    -scrapeCollegeData() : None
+    -deleteAllStudentProfiles() : None
+    -importStudentProfileDataset() : None
+    -reviewQuestionableAcceptanceDecisions() : None
+}
+
+class Urls {
+
+}
+
+class Algorithms {
+    -editProfile() :
+    -searchColleges() :
+    -recommendColleges() :
+    -findSimilarHighSchools() :
+    -trackApplications() :
+
+}
+
+class "Rest Framework" << (I,orchid) Interface>> {
+    Post(request: HttpRequest) : HttpResponse
+    Get(reponse : HttpResponse) : HttpResonse
+    Serialize(model : Model) : JSON
+}
+
+Serializers -(0- "Rest Framework"
+Views -(0- "Rest Framework"
+
+class Serializers {
+
+}
+note "Serializers convert between Python Classes to JSON and vice vera" as N2
+Serializers .. N2
+
+
+class Views {
+
+}
+
+Views -- Urls : Map <
+Views -- Algorithms : Use >
+Admin -- Views 
+Views "1" -- "1" Models 
+
+note "Views describe how the data will look to users of the API" as N1
+Views .. N1
+
+'  Models
+class Models {
+
+}
+
+Models <|-- "Academic Institution"
+Models <|-- Student
+
+(Models, Views) .. Serializers
+
+class Student {
+    +userid : CharField
+    -password : CharField
+    +first name : CharField
+    +last name : CharField
+    +address : CharField
+    +email : EmailField
+    +financial situation : CharField
+    +residence_state : CharField
+    +high_school_name : CharField
+    +high_school_city : CharField
+    +high_school_state : CharField
+    +college_class : CharField
+    +major_1 : CharField
+    +major_2 : CharField
+    +gpa : FloatField
+    +SAT_math : IntegerField
+    +SAT_EBRW : IntegerField
+    +ACT_English : IntegerField
+    +ACT_math : IntegerField
+    +ACT_reading : IntegerField
+    +ACT_science : IntegerField
+    +ACT_composite : IntegerField
+    +SAT_literature : IntegerField
+    +SAT_US_hist : IntegerField
+    +SAT_world_hist : IntegerField
+    +SAT_math_I : IntegerField
+    +SAT_math_II : IntegerField
+    +SAT_eco_bio : IntegerField
+    +SAT_mol_bio : IntegerField
+    +SAT_chemistry : IntegerField
+    +SAT_physics : IntegerField
+    +num_AP_passed : IntegerField
+}
+Student "1" *-- "*" Application
+
+
+class Application {
+    -Student : ForeignKey
+    +College : ForeignKey
+    +userid : CharField
+    +status : CharField
+}
+
+
+
+class "Academic Institution" {
+    +name : CharField
+    +institution_type: CharField
+    +admission_rate : FloatField
+    +completion_rate : FloatField
+    +cost_of_attendance : CharField
+    +location : CharField
+    +ranking : IntegerField
+    +size : IntegerField
+    +SAT_Math : IntegerField
+    +SAT_EBRW : IntegerField
+    +ACT_Composite : IntegerField
+    +diversity : IntegerField
+}
+
+"Academic Institution" <|-- College
+"Academic Institution" <|-- "High School"
+
+class College {
+    +grad_debt_mdn : IntegerField
+    +majors : choices   
+    
+}
+
+class "High School" {
+    +ap_enrollment : IntergerField
+    +college_prep : CharField
+}
+
+@enduml
+
