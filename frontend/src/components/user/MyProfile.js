@@ -1,36 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { Container } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 
-
-
-export default function Student() {
-    // Declare a new state variable, which we'll call "count"
-    const [student, setStudent] = useState({
-        userid: 'omar',
-        password: 'hello',
-        residence_state: 'NY',
-        high_school_name: 'Stuy',
-        high_school_city: 'NYC',
-        college_class: 'Senior'
-    });
-
-
-    useEffect(() => {
-        // Update the document title using the browser API
-        fetch('http://localhost:8000/students')
-            .then(response => response.json())
-            .then(
-                data => {
-                    console.log('data', data);
-                    setStudent(data[0]);
-                }
-            )
-    }, []);
-
-
+export default function Student(props) {
     return (
 
         <React.Fragment>
@@ -44,22 +18,22 @@ export default function Student() {
                 </Grid>
                 <Grid item xs>
                     <Typography variant="body1">
-                        {student.userid}
+                        {props.user.userid}
                     </Typography>
                 </Grid>
                 <Grid item xs>
                     <Typography variant="body1">
-                        {student.high_school_city}
+                        {props.user.high_school_city}
                     </Typography>
                 </Grid>
                 <Grid item xs>
                     <Typography variant="body1">
-                        {student.high_school_name}
+                        {props.user.high_school_name}
                     </Typography>
                 </Grid>
                 <Grid item xs>
                     <Typography variant="body1">
-                        {student.residence_state}
+                        {props.user.residence_state}
                     </Typography>
                 </Grid>
             </Grid>

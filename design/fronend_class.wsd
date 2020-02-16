@@ -1,0 +1,35 @@
+@startuml frontend
+left to right direction
+
+class App{
+    +user:
+}
+class "React Framework"{
+}
+"React Framework" *-- App
+App o-- "react-router-dom"
+App o-- axios 
+note "connect to backend" as N1
+axios -- N1
+
+package ScreenComponents #DDDDDD {
+
+    class StudentProfileScreen{
+    }
+    class HomeScreen{
+    }
+    class SearchCollegeScreen{
+    }
+    class SimilarHighSchoolScreen{
+    }
+    class CollegeProfileScreen{
+    }  
+    class LoginScreen{
+    } 
+    class RegisterScreen{
+    }
+    class MyProfileScreen(user){
+    }
+}
+App o-- ScreenComponents
+@enduml
