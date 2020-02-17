@@ -13,23 +13,54 @@ note "connect to backend" as N1
 axios -- N1
 
 package ScreenComponents #DDDDDD {
-
-    class StudentProfileScreen{
-    }
+    note "search result = state? " as n2
     class HomeScreen{
+        +Home(): View
+        -SubmitSearchForm(event): list
+    }
+    class StudentProfileScreen{
+        +StudentProfile(props): View
+        -GetStudentInfo(username): Student
     }
     class SearchCollegeScreen{
+        +SearchCollege(): View
+        -UpdateSearchForm(event): list
+        -ProcessCollegeRecommender(listOfColleges): list
     }
     class SimilarHighSchoolScreen{
+        +SimilarHighSchool(): View
+        -UpdateSearchForm(event): list
     }
     class CollegeProfileScreen{
+        +CollegeProfile(props): View
     }  
     class LoginScreen{
+        +Login(): View
+        +SubmitLoginForm(event): user
     } 
     class RegisterScreen{
+        +Register(): View
+        +SubmitSignupForm(event): user
     }
-    class MyProfileScreen(user){
+    class MyProfileScreen{
+        +MyProfile(loginUser): View
+        +SubmitEditForm(event): boolean
     }
+
+    note "did draw relationship between register, view my profile, login. too obvious. " as N3
+    HomeScreen -- SearchCollegeScreen
+    HomeScreen -- SimilarHighSchoolScreen
+    CollegeProfileScreen -- SearchCollegeScreen
+    CollegeProfileScreen -- SimilarHighSchoolScreen
 }
 App o-- ScreenComponents
+ScreenComponents o-- axios
+
+class ApplicationTracker{
+    +GetMatchingStudents(collegeName): list
+    +ChangeDisplayMethods(): void 
+    +UpdateResult(event): list
+}
+CollegeProfileScreen *-- ApplicationTracker
+ApplicationTracker o-- axios
 @enduml

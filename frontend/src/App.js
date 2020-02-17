@@ -5,7 +5,7 @@ import Register from './components/user/Register'
 import Home from './components/Home'
 import FindCollege from './components/search/FindCollege'
 import SimilarHighSchool from './components/search/SimilarHighSchool.js'
-import ViewCollege from './components/college/ViewCollege.js'
+import CollegeProfile from './components/college/CollegeProfile.js'
 import MyProfile from './components/user/MyProfile.js'
 import {Route,Switch} from "react-router-dom";
 import axios from 'axios';
@@ -41,7 +41,7 @@ function App() {
         <Route exact path="/student" render={() => (<Student/>)} /> 
         <Route exact path="/find_college" render={() => (<FindCollege/>)} />
         <Route exact path="/find_similar_high_school" render={() => (<SimilarHighSchool/>)} />
-        <Route exact path="/view_college" render={() => (<ViewCollege/>)} />
+        <Route exact path="/view_college" render={() => (<CollegeProfile/>)} />
 
 
         <Route exact path="/my_profile" render={()=>(<MyProfile user = {user}/>)} /> 
