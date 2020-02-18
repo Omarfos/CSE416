@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Student from './components/Student'
 import Login from './components/user/Login'
 import Register from './components/user/Register'
 import Home from './components/Home'
-import FindCollege from './components/search/FindCollege'
-import SimilarHighSchool from './components/search/SimilarHighSchool.js'
+import Search from './components/search/Search'
 import CollegeProfile from './components/college/CollegeProfile.js'
-import MyProfile from './components/user/MyProfile.js'
-import {Route,Switch} from "react-router-dom";
+import Profile from './components/user/Profile.js'
+import {Route,Switch, Redirect} from "react-router-dom";
 import axios from 'axios';
 import './App.css';
 
@@ -31,6 +29,8 @@ function App() {
                 console.log('data', data);
                 setUser(data[0]);
             }
+            //PaymentResponse.ur
+            //return <Redirect data={data}></Redirect>
         )
   }, []);
 
@@ -38,13 +38,9 @@ function App() {
     <div className="App">
       <Switch>
         <Route exact path="/" render={() => (<Home/>)} />
-        <Route exact path="/student" render={() => (<Student/>)} /> 
-        <Route exact path="/find_college" render={() => (<FindCollege/>)} />
-        <Route exact path="/find_similar_high_school" render={() => (<SimilarHighSchool/>)} />
-        <Route exact path="/view_college" render={() => (<CollegeProfile/>)} />
-
-
-        <Route exact path="/my_profile" render={()=>(<MyProfile user = {user}/>)} /> 
+        <Route exact path="/search/:q" render={() => (<Search/>)} />
+        <Route exact path="/view_college/:id" render={() => (<CollegeProfile/>)} />
+        <Route exact path="/profile/:id" render={()=>(<Profile user = {user}/>)} /> 
         <Route exact path="/login" render={() => (<Login/>)} />
         <Route exact path="/register" render={() => (<Register/>)} />
 

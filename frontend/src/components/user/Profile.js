@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import { Container } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 
-export default function MyProfile(props) {
+export default function Profile(props) {
     return (
 
         <React.Fragment>

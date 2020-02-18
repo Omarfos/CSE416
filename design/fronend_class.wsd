@@ -2,65 +2,68 @@
 left to right direction
 
 class App{
-    +user:
+    +user: state
 }
 class "React Framework"{
 }
 "React Framework" *-- App
 App o-- "react-router-dom"
+App o-- "material-ui"
 App o-- axios 
-note "connect to backend" as N1
-axios -- N1
 
-package ScreenComponents #DDDDDD {
-    note "search result = state? " as n2
-    class HomeScreen{
-        +Home(): View
-        -SubmitSearchForm(event): list
-    }
-    class StudentProfileScreen{
-        +StudentProfile(props): View
-        -GetStudentInfo(username): Student
-    }
-    class SearchCollegeScreen{
-        +SearchCollege(): View
-        -UpdateSearchForm(event): list
-        -ProcessCollegeRecommender(listOfColleges): list
-    }
-    class SimilarHighSchoolScreen{
-        +SimilarHighSchool(): View
-        -UpdateSearchForm(event): list
-    }
-    class CollegeProfileScreen{
-        +CollegeProfile(props): View
-    }  
-    class LoginScreen{
-        +Login(): View
-        +SubmitLoginForm(event): user
-    } 
-    class RegisterScreen{
-        +Register(): View
-        +SubmitSignupForm(event): user
-    }
-    class MyProfileScreen{
-        +MyProfile(loginUser): View
-        +SubmitEditForm(event): boolean
-    }
-
-    note "did draw relationship between register, view my profile, login. too obvious. " as N3
-    HomeScreen -- SearchCollegeScreen
-    HomeScreen -- SimilarHighSchoolScreen
-    CollegeProfileScreen -- SearchCollegeScreen
-    CollegeProfileScreen -- SimilarHighSchoolScreen
+class HomeScreen{
+    +Home(): View
+    +handleSearch(event): void
 }
-App o-- ScreenComponents
-ScreenComponents o-- axios
+
+class ProfileScreen{
+    +Profile(props): View
+    +useEffect(username): Student
+    +SubmitEditForm(event): boolean
+}
+
+class SearchPageScreen{
+    +searchResult: State
+    +recommender: State
+    +SearchPage(): View
+    -useEffect(query):SearchResult
+    +updateSearchForm(event): void
+    +processCollegeRecommender(): void
+}
+
+class CollegeProfileScreen{
+    +CollegeProfile(props): View
+    +useEffect(collegeID): College
+}  
 
 class ApplicationTracker{
-    +GetMatchingStudents(collegeName): list
-    +ChangeDisplayMethods(): void 
-    +UpdateResult(event): list
+    +similarHighSchools: State
+    +resultDisplay: State
+    +ApplicationTracker(props): View
+    +handleSearchSimilarHighSchool(event): void
+    +handleUpdateFilter(event): void
 }
+
 CollegeProfileScreen *-- ApplicationTracker
-ApplicationTracker o-- axios
+
+class LoginScreen{
+    +Login(): View
+    +submitLoginForm(event): user
+} 
+
+class RegisterScreen{
+    +Register(): View
+    +submitSignupForm(event): user
+}
+
+
+App o-- HomeScreen
+App o-- ProfileScreen
+App o-- SearchPageScreen
+App o-- CollegeProfileScreen
+App o-- LoginScreen
+App o-- RegisterScreen
+
+
+
 @enduml
