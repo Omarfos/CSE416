@@ -16,14 +16,15 @@ rectangle c4me {
     component "Data Sync" as ds 
 }
 
-wb -(0- ws : HTTP
+wb -(0- gui
+gui -(0- ws : HTTP
 ws -(0- c4me 
 stud -(0- hs : Persistance Framework
 stud -(0- col : Persistance Framework
 stud -(0- auth
 hs -- ds
 col -- ds
-ds -- rdb
+ds -- rdb : Persistance Framework
 
 
 @enduml
