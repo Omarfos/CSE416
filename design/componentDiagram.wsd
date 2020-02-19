@@ -1,0 +1,30 @@
+@startuml
+
+left to right direction
+
+
+' component "persistance framework" as fram 
+
+rectangle c4me {
+    component "Student" as stud 
+    component "Student Profile DB" as sDB 
+    component "Django (Web Server)" as ws
+}
+
+component "College DB" as col
+component "High School DB" as hs 
+component "Test DB" as testDB
+component "Web Browser" as wb
+component "React (View Layer)" as gui
+
+
+wb -(0 gui : HTTP
+gui -(0- ws : HTTP
+ws -(0- sDB  : Serializer Interface
+ws -(0- col  : Serializer Interface
+ws -(0- hs  : Serializer Interface
+ws -(0- testDB  : Serializer Interface
+stud -(0- wb
+
+
+@enduml

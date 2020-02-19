@@ -1,14 +1,14 @@
 @startuml
 ' Use cases for Admin
-left to right direction
+' left to right direction
 
 class Admin {
-    -scrapeCollegeRankings() : None
-    -importCollegeScorecardDataFile() : None
-    -scrapeCollegeData() : None
-    -deleteAllStudentProfiles() : None
-    -importStudentProfileDataset() : None
-    -reviewQuestionableAcceptanceDecisions() : None
+    -scrapeCollegeRankings() 
+    -importCollegeScorecardDataFile() 
+    -scrapeCollegeData() 
+    -deleteAllStudentProfiles() 
+    -importStudentProfileDataset() 
+    -reviewQuestionableAcceptanceDecisions() 
 }
 
 class Urls {
@@ -16,12 +16,12 @@ class Urls {
 }
 
 class Algorithms {
-    -editProfile() :
-    -searchColleges() :
-    -recommendColleges() :
-    -findSimilarHighSchools() :
-    -trackApplications() :
-
+    -editProfile() 
+    -searchColleges() 
+    -recommendColleges() 
+    -findSimilarHighSchools() 
+    -trackApplications() 
+    -verifyData()
 }
 
 class "Rest Framework" << (I,orchid) Interface>> {

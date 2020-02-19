@@ -19,6 +19,12 @@ class ProfileScreen{
     +submitEditForm(event): boolean
 }
 
+class NavigationBar{
+    userAvatar: Image
+}
+
+App o-- NavigationBar
+
 class SearchPageScreen{
     +searchResult: State
     +recommender: State
