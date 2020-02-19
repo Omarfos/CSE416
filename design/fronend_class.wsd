@@ -1,58 +1,67 @@
 @startuml frontend
-left to right direction
+'left to right direction
 
 class App{
     +user: state
 }
-class "React Framework"{
+class "React"{
 }
-"React Framework" *-- App
-App o-- "react-router-dom"
-App o-- "material-ui"
-App o-- axios 
+App -(0- "React"
+App -(0- "react-router"
+App -(0- "material-ui"
+
 
 class HomeScreen{
-    +Home(): View
     +handleSearch(event): void
 }
 
 class ProfileScreen{
-    +Profile(props): View
-    +useEffect(username): Student
-    +SubmitEditForm(event): boolean
+    +submitEditForm(event): boolean
 }
 
 class SearchPageScreen{
     +searchResult: State
     +recommender: State
-    +SearchPage(): View
-    -useEffect(query):SearchResult
+    +sortCriteria: State
+    +filterCriteria: State
     +updateSearchForm(event): void
-    +processCollegeRecommender(): void
+    +recommendColleges(): void
 }
 
+class CollegeCard{
+    +collegeName: String 
+    +collegeRanking: Integer
+    +collegeType: String
+    +recommendationScore: Integer
+    +viewCollege():void
+}
+SearchPageScreen*--CollegeCard
+
 class CollegeProfileScreen{
-    +CollegeProfile(props): View
-    +useEffect(collegeID): College
 }  
 
 class ApplicationTracker{
     +similarHighSchools: State
-    +resultDisplay: State
-    +ApplicationTracker(props): View
+    +studentList: State
+    +filterCriteria: State
     +handleSearchSimilarHighSchool(event): void
     +handleUpdateFilter(event): void
 }
-
+class StudentCard{
+    +studentName: String    
+    +studentGPA: Float
+    +studentScores: Integer
+    +studentHighSchool: String
+    +viewStudentProfile():void
+}
+StudentCard -* ApplicationTracker
 CollegeProfileScreen *-- ApplicationTracker
 
 class LoginScreen{
-    +Login(): View
     +submitLoginForm(event): user
 } 
 
 class RegisterScreen{
-    +Register(): View
     +submitSignupForm(event): user
 }
 
