@@ -1,0 +1,69 @@
+@startuml frontend
+left to right direction
+
+class App{
+    +user: state
+}
+class "React Framework"{
+}
+"React Framework" *-- App
+App o-- "react-router-dom"
+App o-- "material-ui"
+App o-- axios 
+
+class HomeScreen{
+    +Home(): View
+    +handleSearch(event): void
+}
+
+class ProfileScreen{
+    +Profile(props): View
+    +useEffect(username): Student
+    +SubmitEditForm(event): boolean
+}
+
+class SearchPageScreen{
+    +searchResult: State
+    +recommender: State
+    +SearchPage(): View
+    -useEffect(query):SearchResult
+    +updateSearchForm(event): void
+    +processCollegeRecommender(): void
+}
+
+class CollegeProfileScreen{
+    +CollegeProfile(props): View
+    +useEffect(collegeID): College
+}  
+
+class ApplicationTracker{
+    +similarHighSchools: State
+    +resultDisplay: State
+    +ApplicationTracker(props): View
+    +handleSearchSimilarHighSchool(event): void
+    +handleUpdateFilter(event): void
+}
+
+CollegeProfileScreen *-- ApplicationTracker
+
+class LoginScreen{
+    +Login(): View
+    +submitLoginForm(event): user
+} 
+
+class RegisterScreen{
+    +Register(): View
+    +submitSignupForm(event): user
+}
+
+
+App o-- HomeScreen
+App o-- ProfileScreen
+App o-- SearchPageScreen
+App o-- CollegeProfileScreen
+App o-- LoginScreen
+App o-- RegisterScreen
+
+
+
+@enduml
