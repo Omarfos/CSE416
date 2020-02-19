@@ -1,12 +1,12 @@
-##### Bingo
+#Bingo
 
 
 
 ### Run The Server
-pipenv shell
-python3 -m manage runserver
-cd frontend 
-npm start
+-pipenv shell
+-python3 -m manage runserver
+-cd frontend 
+-npm start
 
 ### PlantUml Diagram
 
