@@ -1,8 +1,13 @@
 @startuml
 ' Use cases for Admin
-' left to right direction
+left to right direction
 
-class Admin {
+class Urls {
+
+}
+note bottom of Urls : Urls map the API endpoint to the view
+
+class AdminAPI {
     -scrapeCollegeRankings() 
     -importCollegeScorecardDataFile() 
     -scrapeCollegeData() 
@@ -10,19 +15,19 @@ class Admin {
     -importStudentProfileDataset() 
     -reviewQuestionableAcceptanceDecisions() 
 }
+AdminAPI -- Views
 
-class Urls {
 
+class StudentAPI {
+    +editProfile() 
+    +searchColleges() 
+    +recommendColleges() 
+    +findSimilarHighSchools() 
+    +trackApplications() 
+    +verifyData()
 }
 
-class Algorithms {
-    -editProfile() 
-    -searchColleges() 
-    -recommendColleges() 
-    -findSimilarHighSchools() 
-    -trackApplications() 
-    -verifyData()
-}
+StudentAPI -- Views
 
 class "Rest Framework" << (I,orchid) Interface>> {
     Post(request: HttpRequest) : HttpResponse
@@ -30,26 +35,32 @@ class "Rest Framework" << (I,orchid) Interface>> {
     Serialize(model : Model) : JSON
 }
 
-Serializers -(0- "Rest Framework"
-Views -(0- "Rest Framework"
+Serializers ..|> "Rest Framework"
+Views ..> "Rest Framework"
 
 class Serializers {
+    -StudentSerializer
+    -CollegeSerializer
+    -HighSchoolSerializer
+    -ApplicationSerializer
 
 }
-note "Serializers convert between Python Classes to JSON and vice vera" as N2
+note "Serializers are meta classes that convert between Python Classes to JSON and vice vera." as N2
 Serializers .. N2
 
 
 class Views {
+    +SearchView
+    +CollegeView
+    +ProfileView
 
 }
 
 Views -- Urls : Map <
-Views -- Algorithms : Use >
-Admin -- Views 
-Views "1" -- "1" Models 
+Views - Serializers
+Serializers -- Models
 
-note "Views describe how the data will look to users of the API" as N1
+note "Views provide the API for frtonend" as N1
 Views .. N1
 
 '  Models
@@ -59,8 +70,6 @@ class Models {
 
 Models <|-- "Academic Institution"
 Models <|-- Student
-
-(Models, Views) .. Serializers
 
 class Student {
     +userid : CharField

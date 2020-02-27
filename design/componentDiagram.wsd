@@ -1,30 +1,48 @@
 @startuml
-
 left to right direction
 
-
-' component "persistance framework" as fram 
+component "Web Browser" as wb
 
 rectangle c4me {
-    component "Student" as stud 
-    component "Student Profile DB" as sDB 
+    component "StudentAPI" as student
+    component "AdminAPI" as admin
     component "Django (Web Server)" as ws
+    component "React (View Layer)" as react
+    component "Student Profile DB" as sdb 
+    component "College DB" as cdb
+    component "High School DB" as hsdb 
 }
 
-component "College DB" as col
-component "High School DB" as hs 
-component "Test DB" as testDB
-component "Web Browser" as wb
-component "React (View Layer)" as gui
+component "College Data Sources" as cds
+component "High School Data Source" as hsds
+component "Test Data Source" as tds
 
 
-wb -(0 gui : HTTP
-gui -(0- ws : HTTP
-ws -(0- sDB  : Serializer Interface
-ws -(0- col  : Serializer Interface
-ws -(0- hs  : Serializer Interface
-ws -(0- testDB  : Serializer Interface
-stud -(0- wb
+'Data reliance
+cdb -(0- cds
+cdb -(0- tds
+hsdb -(0- hsds
+hsdb -(0- tds
 
+ws -(0- student
+ws -(0- admin
+
+
+student -(0- sdb
+student -(0- cdb
+student -(0- hsdb
+
+admin -(0- sdb
+admin -(0- cdb
+admin -(0- hsdb
+
+
+
+wb -(0 react 
+react -(0- ws 
+
+
+ 
+note left of student : Not an actor, but the component that provides student functionality
 
 @enduml
