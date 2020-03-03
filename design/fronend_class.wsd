@@ -1,4 +1,4 @@
-@startuml frontend
+@startuml
 'left to right direction
 
 class App{
