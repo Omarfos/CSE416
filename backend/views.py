@@ -1,19 +1,16 @@
-from rest_framework import viewsets
-from django.shortcuts import render
-from django.http import HttpResponse
-from .serializers import StudentSerializer
+from django.http import HttpResponse, JsonResponse
+from django.core import serializers
+from django.shortcuts import get_object_or_404
 from .models import Student
+
 
 # Create your views here
 
-
-class StudentViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = Student.objects.all()
-    serializer_class = StudentSerializer
+def index(request):
+    return HttpResponse("Hello World")
 
 
-# def index(request):
-#     return HttpResponse("Hello, you are at the index")
+def student_profile(request, userid):
+    s = Student.objects.filter(userid=userid)
+    r = serializers.serialize('json', s, fields=('userid', 'high_school_name'))
+    return JsonResponse(r, safe=False)

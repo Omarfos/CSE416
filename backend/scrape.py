@@ -14,7 +14,7 @@ headers = {
     "Upgrade-Insecure-Requests": "1"
 }
 
-college_scorecard_api_key = '9yXtfpTsEQjDu6zfPz6eWZqimWZe0hac1LcbXsAL
+college_scorecard_api_key = '9yXtfpTsEQjDu6zfPz6eWZqimWZe0hac1LcbXsAL'
 
 
 def scrape_high_school():
@@ -33,18 +33,16 @@ def scrape_high_school():
                     print(f"{k['label']:50} ::: {k['value']}")
 
 
-def scrape_college_rankings():
+def scrape_college_rankings(my_college):
 
     url = 'https://www.timeshighereducation.com/sites/default/files/the_data_rankings/united_states_rankings_2020_limit0_25839923f8b1714cf54659d4e4af6c3b.json'
     r = requests.get(url, headers=headers)
-    colleges_list = r.json()['data']
+    rankings_list = r.json()['data']
 
-    with open('colleges.txt', 'r') as f:
-        for my_college in f.readlines():
-            for college in colleges_list:
-                if my_college.strip() == college['name']:
-                    print(f"{my_college.strip():50} ::: {college['rank']}")
-                    break
+    for college in rankings_list:
+        if my_college == college['name']:
+            print(f"{my_college.strip():50} ::: {college['rank']}")
+            return college['rank']
 
 
 def scrape_college_data():
@@ -56,8 +54,3 @@ def scrape_college_data():
 
         for k, v in zip(description_list.find_all('dt'), description_list.find_all('dd')):
             print(f'{k.text:50} ::: {v.text:20}')
-
-
-# scrape_high_school()
-# scrape_college_rankings()
-scrape_college_data()

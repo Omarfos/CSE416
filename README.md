@@ -1,14 +1,19 @@
-#Bingo
+# Bingo
+
+## Super User
+    - user: omar
+    - pass: bingo
+
+## Run The Server
+1. pipenv shell 
+2. pipenv install
+3. python3 -m manage runserver
+4. cd frontend 
+5. npm start
 
 
 
-### Run The Server
--pipenv shell
--python3 -m manage runserver
--cd frontend 
--npm start
-
-### PlantUml Diagram
+## PlantUml Diagram
 
 ## Setup
 - Install PlantUml Extension
@@ -16,7 +21,7 @@
 2. Search PlantUML
 3. Set export directory .
 4. Set render server
-5. set server https://www.plantuml.com/plantuml
+5. sSt server https://www.plantuml.com/plantuml
 
 ## Exporting Diagrams
 1. Press CMD or CTRL + SHIFT + P
@@ -28,4 +33,3 @@
 
 [Plant UML docs](https://plantuml-documentation.readthedocs.io/en/latest/diagrams/usecase.html)
 
-[Examples](https://real-world-plantuml.com/?type=usecase)
