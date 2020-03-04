@@ -2,6 +2,7 @@ import requests
 import re
 import json
 import os
+from bs4 import BeautifulSoup
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Macintosh Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Safari/537.36",
@@ -12,6 +13,8 @@ headers = {
     "Connection": "keep",
     "Upgrade-Insecure-Requests": "1"
 }
+
+college_scorecard_api_key = '9yXtfpTsEQjDu6zfPz6eWZqimWZe0hac1LcbXsAL
 
 
 def scrape_high_school():
@@ -44,5 +47,17 @@ def scrape_college_rankings():
                     break
 
 
-scrape_high_school()
-scrape_college_rankings()
+def scrape_college_data():
+
+    url = 'https://www.collegedata.com/college/Stony-Brook-University/'
+    r = requests.get(url, headers=headers)
+    soup = BeautifulSoup(r.text, 'html.parser')
+    for description_list in soup.find_all('dl'):
+
+        for k, v in zip(description_list.find_all('dt'), description_list.find_all('dd')):
+            print(f'{k.text:50} ::: {v.text:20}')
+
+
+# scrape_high_school()
+# scrape_college_rankings()
+scrape_college_data()
