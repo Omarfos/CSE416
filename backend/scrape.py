@@ -3,6 +3,8 @@ import re
 import json
 import os
 from bs4 import BeautifulSoup
+import time
+import random
 # from .models import HighSchool
 
 headers = {
@@ -10,9 +12,9 @@ headers = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     "Accept-Language": "en-US,en;q=0.5",
     "Accept-Encoding": "gzip, deflate",
-    "DNT": "1",
-    "Connection": "keep",
-    "Upgrade-Insecure-Requests": "1"
+    "DNT": "1", "Connection": "keep",
+    "Upgrade-Insecure-Requests": "1",
+    "Referer": "scholarships.com"
 }
 
 college_scorecard_api_key = '9yXtfpTsEQjDu6zfPz6eWZqimWZe0hac1LcbXsAL'
@@ -59,13 +61,14 @@ def scrape_high_school_location():
 
 
 def scrape_high_school(url=''):
+    
+    time.sleep(random.randint(2,10))
     d = {}
-
-    url = 'https://www.niche.com/k12/ward-melville-senior-high-school-east-setauket-ny/'
     r = requests.get(url, headers=headers)
+
     if r.status_code != 200:
-        print("ERROR")
-        return
+        print("ERROR: Being blocked by niche.com")
+        raise Exception
 
     soup = BeautifulSoup(r.text, 'html.parser')
     name = soup.find('h1','postcard__title').text
@@ -75,7 +78,7 @@ def scrape_high_school(url=''):
         '<script>window.App=(.*?);</script>', r.text).group(1)
     serialized_json = json.loads(extracted_json)
     data = serialized_json['context']['dispatcher']['stores']['ProfileStore']['content']['blocks']
-    #s = HighSchool(name="Ward Melville Senior High School")
+
     for i in data:
         for j in i['buckets'].values():
             for k in j['contents']:
@@ -98,9 +101,6 @@ def scrape_high_school(url=''):
                     if label == 'AP Enrollment':
                         d['ap_enroll'] = value
                 
-                    #print(f"{k['label']:50} ::: {k['value']}")
-    # s.save()
-    print(d)
+    return(d)
 
 
-scrape_high_school()

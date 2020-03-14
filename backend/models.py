@@ -58,5 +58,5 @@ class HighSchool(models.Model):
 
     sat = models.IntegerField(default=1000)
     act = models.IntegerField(default=1000)
-    grad_rate = models.FloatField(default=0.69)
+    grad_rate = models.FloatField(default=0.69, null=True, blank=True)
     ap_enroll = models.FloatField(default=0.69)
