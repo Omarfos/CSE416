@@ -32,14 +32,15 @@ class Student(models.Model):
     SAT_chemistry = models.IntegerField(default=-1)
     SAT_physics = models.IntegerField(default=-1)
     num_AP_passed = models.IntegerField(default=-1)
-  
 
     def __str__(self):
         return self.userid
 
+
 class College(models.Model):
     name = models.CharField(max_length=50)
     ranking = models.CharField(max_length=10)
+
 
 class Application(models.Model):
     userid = models.ForeignKey(Student, on_delete=models.CASCADE)
@@ -50,8 +51,12 @@ class Application(models.Model):
         return f'Application status: {self.status}'
 
 
-
-
 class HighSchool(models.Model):
-    name = models.CharField(max_length=50)
-    acceptance_rate = models.IntegerField()
+    name = models.CharField(max_length=100, default="Stuyvesant High School")
+    city = models.CharField(max_length=100, default='NYC')
+    state = models.CharField(max_length=100, default="New York")
+
+    sat = models.IntegerField(default=1000)
+    act = models.IntegerField(default=1000)
+    grad_rate = models.FloatField(default=0.69)
+    ap_enroll = models.FloatField(default=0.69)
