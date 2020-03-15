@@ -1,16 +1,27 @@
-import React from 'react';
+import React,{ useState, useEffect }  from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { Container } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 
+
 export default function Profile(props) {
+    const [userprofile, setUserProfile] = useState(null);
+    const [editing, setEditing] = useState(false);
+    //    contact backend to get the information for props.user 
+    //     Compare if it's the current logged in user, display edit profile option. 
+    useEffect(() => {
+        async function fetchData() {
+           // const res = await axios.get(location.pathname);
+            // if(!res.data.error){
+            //     setUserProfile(res.data.user);
+            // }  
+        };
+        fetchData();
+    }, []);
     return (
 
         <React.Fragment>
-            <Typography variant="h1">
-                C4ME
-            </Typography>
 
             <Grid container spacing={3}>
                 <Grid item xs>
@@ -18,24 +29,10 @@ export default function Profile(props) {
                 </Grid>
                 <Grid item xs>
                     <Typography variant="body1">
-                        {props.user.userid}
+                        {props.user}
                     </Typography>
                 </Grid>
-                <Grid item xs>
-                    <Typography variant="body1">
-                        {props.user.high_school_city}
-                    </Typography>
-                </Grid>
-                <Grid item xs>
-                    <Typography variant="body1">
-                        {props.user.high_school_name}
-                    </Typography>
-                </Grid>
-                <Grid item xs>
-                    <Typography variant="body1">
-                        {props.user.residence_state}
-                    </Typography>
-                </Grid>
+                
             </Grid>
         </React.Fragment >
 
