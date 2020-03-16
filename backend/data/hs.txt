@@ -24,8 +24,6 @@ https://www.niche.com/k12/noble-and-greenough-school-dedham-ma/
 https://www.niche.com/k12/deerfield-academy-deerfield-ma/
 https://www.niche.com/k12/polytechnic-school-pasadena-ca/
 https://www.niche.com/k12/ef-academy-new-york-thornwood-ny/
-https://www.niche.com/k12/avenues--the-world-school---online-new-york-city-ny/
-https://www.niche.com/k12/success-academy-harlem-2-new-york-ny/
 https://www.niche.com/k12/the-nueva-school-hillsborough-ca/
 https://www.niche.com/k12/walter-payton-college-prep-chicago-il/
 https://www.niche.com/k12/john-burroughs-school-st-louis-mo/
@@ -52,7 +50,6 @@ https://www.niche.com/k12/high-technology-high-school-lincroft-nj/
 https://www.niche.com/k12/maggie-walker-governors-school-richmond-va/
 https://www.niche.com/k12/basis-scottsdale-scottsdale-az/
 https://www.niche.com/k12/eagle-hill-school-greenwich-ct/
-https://www.niche.com/k12/success-academy-harlem-1-new-york-ny/
 https://www.niche.com/k12/the-windsor-school-flushing-ny/
 https://www.niche.com/k12/head-royce-school-oakland-ca/
 https://www.niche.com/k12/massachusetts-academy-of-math--and--science-worcester-ma/
@@ -108,7 +105,6 @@ https://www.niche.com/k12/american-heritage-school---plantation-campus-plantatio
 https://www.niche.com/k12/cistercian-preparatory-school-irving-tx/
 https://www.niche.com/k12/the-urban-school-of-san-francisco-san-francisco-ca/
 https://www.niche.com/k12/rippowam-cisqua-school-bedford-ny/
-https://www.niche.com/k12/williamsburg-charter-high-school-brooklyn-ny/
 https://www.niche.com/k12/hoosac-school-hoosick-ny/
 https://www.niche.com/k12/raleigh-charter-high-school-raleigh-nc/
 https://www.niche.com/k12/dwight-englewood-school-englewood-nj/
@@ -135,7 +131,6 @@ https://www.niche.com/k12/united-nations-international-school---manhattan-campus
 https://www.niche.com/k12/jericho-senior-high-school-jericho-ny/
 https://www.niche.com/k12/ocvts---marine-academy-of-technology--and--environmental-science-mates-manahawkin-nj/
 https://www.niche.com/k12/the-baldwin-school-bryn-mawr-pa/
-https://www.niche.com/k12/the-cathedral-school-of-st-john-the-divine-new-york-ny/
 https://www.niche.com/k12/eagle-hill-school-greenwich-ct/
 https://www.niche.com/k12/x/diocese-of-brooklyn/
 https://www.niche.com/k12/saint-anns-school-brooklyn-ny/
@@ -165,7 +160,6 @@ https://www.niche.com/k12/detroit-country-day-school-beverly-hills-mi/
 https://www.niche.com/k12/rutgers-preparatory-school-somerset-nj/
 https://www.niche.com/k12/blue-school-new-york-ny/
 https://www.niche.com/k12/gill-st-bernards-school-gladstone-nj/
-https://www.niche.com/k12/the-windsor-school-flushing-ny/
 https://www.niche.com/k12/carrollton-school-of-the-sacred-heart-miami-fl/
 https://www.niche.com/k12/the-john-cooper-school-the-woodlands-tx/
 https://www.niche.com/k12/convent-of-the-sacred-heart-new-york-ny/
@@ -219,6 +213,5 @@ https://www.niche.com/k12/the-hill-school-pottstown-pa/
 https://www.niche.com/k12/la-jolla-country-day-school-la-jolla-ca/
 https://www.niche.com/k12/laurel-school-shaker-heights-oh/
 https://www.niche.com/k12/jones-college-prep-high-school-chicago-il/
-https://www.niche.com/k12/the-ideal-school-of-manhattan-new-york-ny/
 https://www.niche.com/k12/lawrence-woodmere-academy-woodmere-ny/
 https://www.niche.com/k12/the-green-vale-school-glen-head-ny/

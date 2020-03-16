@@ -16,11 +16,18 @@ def import_students():
 
 def import_hs():
     with open('backend/data/hs.txt', 'r') as f:
-        hs_urls = f.read().split('\n')
+        hs_urls = f.read().split('\n')[191:]
         for hs_url in hs_urls:
-            d = scrape_high_school(hs_url)
+            try:
+                d = scrape_high_school(hs_url)
+            except Warning:
+                print('Niche.com Wins again...')
+                return
+
             hs = HighSchool(**d)
-            hs.save() 
+            if len(HighSchool.objects.filter(name=d['name'])) == 0:
+                hs.save() 
+
 class Command(BaseCommand):
     help = 'Import either the Student dataset or Colleges from college.txt'
 
@@ -40,12 +47,3 @@ class Command(BaseCommand):
         else:
             self.stdout.write(self.style.SUCCESS('Importing HS'))
             import_hs()
-#        for poll_id in options['poll_ids']:
-#            try:
-#                poll = Poll.objects.get(pk=poll_id)
-#            except Poll.DoesNotExist:
-#                raise CommandError('Poll "%s" does not exist' % poll_id)
-#
-#            poll.opened = False
-#            poll.save()
-#

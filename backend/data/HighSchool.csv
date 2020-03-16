@@ -1,0 +1,195 @@
+id,name,city,state,sat,act,num_students,grad_rate,ap_enroll
+194,Jones College Prep High School,Chicago,IL,1310,29,1861,0.95,0.481703
+193,Laurel School,Shaker Heights,OH,1280,30,645,1.0,
+192,La Jolla Country Day School,La Jolla,CA,1330,30,1101,1.0,
+191,The Hill School,Pottstown,PA,1350,31,529,1.0,
+190,Academy for Allied Health Science,Scotch Plains,NJ,1350,31,297,0.95,0.453901
+189,Landon School,Bethesda,MD,1340,31,655,1.0,
+188,Westtown School,West Chester,PA,1320,30,732,1.0,
+187,BASIS Oro Valley,Oro Valley,AZ,1370,31,552,0.95,1.0
+186,Hinsdale Central High School,Hinsdale,IL,1350,30,2786,0.95,0.372591
+185,North Shore Country Day School,Winnetka,IL,1410,31,540,1.0,
+184,Oakwood School,North Hollywood,CA,1340,31,780,1.0,
+183,Sierra Canyon School,Chatsworth,CA,1320,29,1076,1.0,
+182,Berkeley Preparatory School,Tampa,FL,1340,31,1340,,
+181,Palo Alto High School,Palo Alto,CA,1380,31,2072,0.97,0.401907
+180,Hathaway Brown School,Shaker Heights,OH,1370,31,799,1.0,
+179,Mounds Park Academy,St. Paul,MN,1410,29,468,1.0,
+178,Saratoga High School,Saratoga,CA,1420,32,1354,0.98,0.462835
+177,Durham Academy,Durham,NC,1380,31,1227,1.0,
+176,"The Academy for Mathematics, Science & Engineering",Rockaway,NJ,1510,35,101,,0.979382
+175,Bergen County Technical High School - Teterboro,Teterboro,NJ,1360,31,665,0.95,0.544073
+174,Northfield Mount Hermon School,Mount Hermon,MA,1340,31,655,1.0,
+173,St. Anselm's Abbey School,Washington,DC,1390,31,256,1.0,
+172,Pacific Ridge School,Carlsbad,CA,1340,31,616,1.0,
+171,Donovan Catholic High School,Toms River,NJ,1170,28,722,1.0,
+170,BASIS Independent Manhattan,New York,NY,1000,,342,,
+169,Western Reserve Academy,Hudson,OH,1370,31,405,1.0,
+168,Marymount High School,Los Angeles,CA,1330,30,369,1.0,
+167,Atlanta International School,Atlanta,GA,1330,30,1284,1.0,
+166,Oregon Episcopal School,Portland,OR,1370,31,870,1.0,
+165,Catlin Gabel School,Portland,OR,1390,31,769,1.0,
+164,The Green Vale School,Glen Head,NY,1000,,419,,
+163,The Episcopal Academy,Newtown Square,PA,1340,31,1267,1.0,
+162,The Blake School,Hopkins,MN,1390,32,1380,,
+161,Gill St. Bernard's School,Gladstone,NJ,1330,30,658,1.0,
+160,Blue School,New York,NY,1000,,299,,
+159,Rutgers Preparatory School,Somerset,NJ,1330,31,640,,
+158,Detroit Country Day School,Beverly Hills,MI,1430,31,1529,1.0,
+157,Poly Prep Country Day School,Brooklyn,NY,1360,31,1122,1.0,
+156,Eastside Preparatory School,Kirkland,WA,1390,32,428,1.0,
+155,Sage Hill School,Newport Coast,CA,1360,31,545,,
+154,Friends Seminary,New York,NY,1380,33,777,1.0,
+153,Shady Side Academy,Pittsburgh,PA,1330,31,1028,1.0,
+152,Thomas Jefferson School,Saint Louis,MO,1460,32,85,1.0,
+151,Marymount School of New York,New York,NY,1370,31,759,1.0,
+150,The Paideia School,Atlanta,GA,1350,31,1010,1.0,
+149,Hawken School,Gates Mills,OH,1350,31,1082,1.0,
+148,Nightingale-Bamford School,New York,NY,1390,32,592,,
+147,The Athenian School,Danville,CA,1360,31,533,1.0,
+146,Francis Parker School,San Diego,CA,1360,31,1185,,
+145,Poolesville High School,Poolesville,MD,1400,32,1183,0.96,0.650622
+144,Canyon Crest Academy,San Diego,CA,1390,31,2576,0.99,0.56541
+143,Avenues: The World School,New York,NY,1390,32,1537,1.0,
+142,Belmont Hill School,Belmont,MA,1410,33,450,1.0,
+141,Kent Place School,Summit,NJ,1350,31,657,1.0,
+140,Tesla STEM High School,Redmond,WA,1430,33,605,0.95,0.714794
+139,Greenwich Academy,Greenwich,CT,1370,32,784,,
+138,Maret School,Washington,DC,1360,31,651,,
+137,Emma Willard School,Troy,NY,1370,30,358,1.0,
+136,The Bryn Mawr School,Baltimore,MD,1340,30,780,1.0,
+135,Saint Ann's School,Brooklyn,NY,1410,32,1085,,
+134,Diocese of Brooklyn,,,1000,,,,
+133,The Baldwin School,Bryn Mawr,PA,1390,30,584,1.0,
+132,OCVTS - Marine Academy of Technology & Environmental Science (MATES),Manahawkin,NJ,1420,32,275,0.95,
+131,Jericho Senior High School,Jericho,NY,1390,30,1124,0.99,0.573889
+130,United Nations International School - Manhattan Campus,New York,NY,1330,30,1600,,
+129,The Webb Schools,Claremont,CA,1360,31,410,1.0,
+128,The Awty International School,Houston,TX,1360,30,1731,1.0,
+127,Chadwick School,Palos Verdes Peninsula,CA,1360,32,868,1.0,
+126,Menlo School,Atherton,CA,1410,33,795,,
+125,Pace Academy,Atlanta,GA,1320,31,1041,,
+124,The Kinkaid School,Houston,TX,1420,32,1423,,
+123,Henry M. Gunn High School,Palo Alto,CA,1410,32,2008,0.96,0.415537
+122,The Taft School,Watertown,CT,1360,31,587,1.0,
+121,BASIS Tucson North,Tucson,AZ,1430,32,960,0.95,1.0
+120,South Carolina Governor's School for Science & Mathematics,Hartsville,SC,1380,31,280,0.95,1.0
+119,Biotechnology High School,Freehold,NJ,1460,34,323,0.95,0.094801
+118,Keystone School,San Antonio,TX,1390,32,495,1.0,
+117,St. Mark's School,Southborough,MA,1370,31,365,,
+116,The Potomac School,McLean,VA,1380,32,1060,,
+115,French-American School of New York,Mamaroneck,NY,1350,30,784,1.0,
+114,Albuquerque Academy,Albuquerque,NM,1390,31,1149,1.0,
+113,The Quarry Lane School,Dublin,CA,1390,31,700,1.0,
+112,Woodside Priory School,Portola Valley,CA,1350,31,382,1.0,
+111,Lick-Wilmerding High School,San Francisco,CA,1380,32,490,,
+110,Dwight-Englewood School,Englewood,NJ,1380,31,947,,
+109,Raleigh Charter High School,Raleigh,NC,1370,32,564,0.95,0.538324
+108,Hoosac School,Hoosick,NY,1170,17,194,1.0,
+107,Rippowam Cisqua School,Bedford,NY,1000,,363,,
+106,The Urban School of San Francisco,San Francisco,CA,1360,31,420,1.0,
+105,Cistercian Preparatory School,Irving,TX,1440,33,349,,
+104,American Heritage School - Plantation Campus,Plantation,FL,1360,31,2785,1.0,
+103,BASIS Independent Silicon Valley,San Jose,CA,1520,34,800,1.0,
+102,Cary Academy,Cary,NC,1380,32,753,,
+101,Liberal Arts & Science Academy,Austin,TX,1410,32,1186,0.99,0.760828
+100,Bronx High School of Science,Bronx,NY,1420,32,2997,0.99,0.686815
+99,St. Stephen's Episcopal School,Austin,TX,1380,32,696,1.0,
+98,The Roxbury Latin School,West Roxbury,MA,1470,25,304,1.0,
+97,Whitney M. Young Magnet High School,Chicago,IL,1330,30,2153,0.956,0.59267
+96,San Francisco University High School,San Francisco,CA,1420,32,410,1.0,
+95,Packer Collegiate Institute,Brooklyn,NY,1380,31,998,,
+94,Townsend Harris High School,Flushing,NY,1380,32,1144,0.99,0.899293
+93,Windward School,Los Angeles,CA,1360,32,550,1.0,
+92,Buckingham Browne & Nichols School,Cambridge,MA,1400,32,1014,1.0,
+91,The Branson School,Ross,CA,1420,32,320,,
+90,The Davidson Academy,Reno,NV,1500,34,160,,
+89,Holton-Arms School,Bethesda,MD,1370,31,660,,
+88,Hackley School,Tarrytown,NY,1400,32,834,,
+87,Greenhill School,Addison,TX,1400,32,1316,1.0,
+86,School for the Talented & Gifted,Dallas,TX,1400,32,276,0.95,1.0
+85,Peddie School,Hightstown,NJ,1370,32,550,,
+84,School of Science & Engineering,Dallas,TX,1360,31,428,1.0,0.992823
+83,Commonwealth School,Boston,MA,1450,32,132,1.0,
+82,The Thacher School,Ojai,CA,1410,32,255,1.0,
+81,The Cathedral School of St. John the Divine,New York,NY,1000,,288,,
+80,City and Country School,New York,NY,1000,,310,,
+79,Williamsburg Charter High School,Brooklyn,NY,980,23,920,0.82,0.0625
+78,Staten Island Technical High School,Staten Island,NY,1420,32,1320,0.99,0.954617
+77,Delbarton School,Morristown,NJ,1400,32,609,1.0,
+76,The Hockaday School,Dallas,TX,1410,32,1091,1.0,
+75,Westridge School,Pasadena,CA,1380,32,500,,
+74,Concord Academy,Concord,MA,1380,32,398,0.99,
+73,Germantown Friends School,Philadelphia,PA,1400,32,1064,1.0,
+72,National Cathedral School,Washington,DC,1410,33,595,1.0,
+71,St. Albans School,Washington,DC,1410,33,585,,
+70,St. Andrew's School,Middletown,DE,1370,31,310,,
+69,Adlai E. Stevenson High School,Lincolnshire,IL,1360,31,4185,0.97,0.496948
+68,Pine Crest School - Fort Lauderdale,Fort Lauderdale,FL,1380,32,2636,1.0,
+67,Boston University Academy,Boston,MA,1430,33,201,1.0,
+66,"Gwinnett School of Mathematics, Science & Technology",Lawrenceville,GA,1360,31,1031,0.95,0.682195
+65,The Overlake School,Redmond,WA,1410,32,529,,
+64,Hopkins School,New Haven,CT,1430,32,714,1.0,
+63,Union County Magnet High School,Scotch Plains,NJ,1390,33,304,0.95,0.469798
+62,University of Chicago Laboratory Schools,Chicago,IL,1430,32,2051,0.98,
+61,The Westminster Schools,Atlanta,GA,1420,33,1870,1.0,
+60,The Harker School,San Jose,CA,1480,33,2048,1.0,
+59,The Spence School,New York,NY,1500,34,751,1.0,
+58,St. John's School,Houston,TX,1480,33,1258,,
+57,Northside College Preparatory High School,Chicago,IL,1380,31,1061,0.98,0.595644
+56,The Bishop's School,San Diego,CA,1400,32,800,1.0,
+55,Massachusetts Academy of Math & Science,Worcester,MA,1480,34,96,0.9,
+54,Head-Royce School,Oakland,CA,1400,32,875,1.0,
+53,The Windsor School,Flushing,NY,1320,23,125,1.0,
+52,Eagle Hill School,Greenwich,CT,1000,,265,,
+51,BASIS Scottsdale,Scottsdale,AZ,1480,33,1081,0.95,0.952529
+50,Maggie Walker Governor's School,Richmond,VA,1400,33,746,0.988,0.656836
+49,High Technology High School,Lincroft,NJ,1520,34,287,0.95,0.332204
+48,Newark Academy,Livingston,NJ,1410,32,615,1.0,
+47,Riverdale Country School,Bronx,NY,1430,33,1189,1.0,
+46,Milton Academy,Milton,MA,1390,32,1020,,
+45,The Loomis Chaffee School,Windsor,CT,1390,31,736,1.0,
+44,The Mississippi School for Mathematics and Science,Columbus,MS,1350,30,234,1.0,0.77551
+43,The Chapin School,New York,NY,1400,32,725,,
+42,Rye Country Day School,Rye,NY,1410,33,924,1.0,
+41,Cranbrook Schools,Bloomfield Hills,MI,1390,31,1659,1.0,
+40,Bergen County Academies,Hackensack,NJ,1460,33,1098,0.99,0.465534
+39,Georgetown Day School,Washington,DC,1410,33,1075,1.0,
+38,Groton School,Groton,MA,1440,34,368,,
+37,Dalton School,New York,NY,1430,33,1322,,
+36,Stuyvesant High School,New York,NY,1480,33,3334,0.98,0.557391
+35,Ransom Everglades School,Coconut Grove,FL,1390,33,1094,1.0,
+34,Sidwell Friends School,Washington,DC,1420,33,1145,,
+33,Winsor School,Boston,MA,1450,33,450,,
+32,Middlesex School,Concord,MA,1420,32,409,1.0,
+31,Marlborough School,Los Angeles,CA,1390,32,533,1.0,
+30,Cate School,Carpinteria,CA,1390,32,298,1.0,
+29,John Burroughs School,St. Louis,MO,1400,32,641,1.0,
+28,Walter Payton College Prep,Chicago,IL,1400,31,1073,0.99,0.763248
+27,The Nueva School,Hillsborough,CA,1500,34,605,,
+26,EF Academy New York,Thornwood,NY,1220,24,585,0.99,
+25,Polytechnic School,Pasadena,CA,1420,33,859,1.0,
+24,Deerfield Academy,Deerfield,MA,1410,32,658,1.0,
+23,Noble and Greenough School,Dedham,MA,1400,33,614,,
+22,Illinois Mathematics and Science Academy,Aurora,IL,1450,33,647,0.99,0.340524
+21,Thomas Jefferson High School for Science & Technology,Alexandria,VA,1510,34,1786,0.99,0.731212
+20,The Pingry School,Basking Ridge,NJ,1400,33,1125,1.0,
+19,Crystal Springs Uplands School,Hillsborough,CA,1460,34,539,1.0,
+18,St. Paul's School,Concord,NH,1410,32,534,,
+17,The Hotchkiss School,Lakeville,CT,1400,32,600,1.0,
+16,Flintridge Preparatory School,La Canada Flintridge,CA,1420,33,530,1.0,
+15,Brearley School,New York,NY,1510,34,720,1.0,
+14,Lakeside School,Seattle,WA,1440,33,838,,
+13,Collegiate School,New York,NY,1480,34,651,,
+12,Horace Mann School,Bronx,NY,1430,33,1694,,
+11,Regis High School,New York,NY,1470,34,532,1.0,
+10,The Lawrenceville School,Lawrenceville,NJ,1440,32,822,,
+9,Castilleja School,Palo Alto,CA,1460,33,434,1.0,
+8,Choate Rosemary Hall,Wallingford,CT,1380,33,848,1.0,
+7,Stanford Online High School,Redwood City,CA,1470,33,804,1.0,
+6,Harvard-Westlake School,Los Angeles,CA,1460,33,1598,1.0,
+5,Trinity School,New York,NY,1500,34,1001,,
+4,The College Preparatory School,Oakland,CA,1470,34,364,1.0,
+3,Phillips Academy,Andover,MA,1470,33,1146,,
+2,St. Mark's School of Texas,Dallas,TX,1480,33,863,,
+1,Phillips Exeter Academy,Exeter,NH,1430,33,1085,,

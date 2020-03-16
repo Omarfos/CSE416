@@ -12,6 +12,7 @@ class Student(models.Model):
     high_school_state = models.CharField(max_length=100, default="New York")
     major_1 = models.CharField(max_length=100, default="CS")
     major_2 = models.CharField(max_length=100, default="AMS")
+
     GPA = models.FloatField(default=3.0)
 
     college_class = models.IntegerField(default=2020)
@@ -38,25 +39,38 @@ class Student(models.Model):
 
 
 class College(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100, unique=True)
     ranking = models.CharField(max_length=10)
 
 
 class Application(models.Model):
-    userid = models.ForeignKey(Student, on_delete=models.CASCADE)
-    #college = models.ForeignKey(College, on_delete=models.CASCADE)
-    #status = models.CharField(max_length=20)
+    APP_STATUS = [
+            ('pending','pending'),
+            ('accepted','accepted'),
+            ('denied','denied'),
+            ('deferred','deferred'),
+            ('wait','wait'),
+            ('listed','listed'),
+            ('withdrawn','withdrawn')
+    ]
+
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True)
+    college = models.ForeignKey(College, on_delete=models.CASCADE, null=True)
+    status = models.CharField(max_length=10, choices=APP_STATUS, null=True)
 
     def __str__(self):
-        return f'Application status: {self.status}'
+        return f'Application '
 
 
 class HighSchool(models.Model):
-    name = models.CharField(max_length=100, default="Stuyvesant High School")
-    city = models.CharField(max_length=100, default='NYC')
-    state = models.CharField(max_length=100, default="New York")
+    name = models.CharField(max_length=100, unique=True)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
 
-    sat = models.IntegerField(default=1000)
-    act = models.IntegerField(default=1000)
-    grad_rate = models.FloatField(default=0.69, null=True, blank=True)
-    ap_enroll = models.FloatField(default=0.69)
+    sat = models.IntegerField(default=1000,null=True, blank=True)
+    act = models.IntegerField(null=True, blank=True)
+    num_students = models.IntegerField(null=True, blank=True)
+
+    grad_rate = models.FloatField(null=True, blank=True)
+    ap_enroll = models.FloatField(null=True, blank=True)
+

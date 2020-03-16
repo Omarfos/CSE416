@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Student, Application, College, HighSchool
 from .scrape import scrape_college_rankings
+from import_export.admin import ImportExportModelAdmin
 
 # Register your models here.
 
@@ -12,8 +13,6 @@ def import_college_rankings(modeladmin, request, queryset):
         college.save()
 
 
-# scrape_college_rankings.short_description = "College Rankings Scraped"
-
 class CollegeAdmin(admin.ModelAdmin):
     list_display = ['name', 'ranking']
     actions = [import_college_rankings]
@@ -22,8 +21,9 @@ class CollegeAdmin(admin.ModelAdmin):
 class StudentAdmin(admin.ModelAdmin):
     list_display = ['userid']
 
-class HighSchoolAdmin(admin.ModelAdmin):
-    list_display = ['name', 'city', 'state', 'sat', 'act', 'grad_rate', 'ap_enroll' ]
+class HighSchoolAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    list_display = ['name', 'city', 'state', 'sat', 'act', 'grad_rate',
+            'ap_enroll', 'num_students' ]
 
 
 
