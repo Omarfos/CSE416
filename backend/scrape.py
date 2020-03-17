@@ -47,7 +47,8 @@ user_agent_list = [
 college_scorecard_api_key = '9yXtfpTsEQjDu6zfPz6eWZqimWZe0hac1LcbXsAL'
 college_data_url = 'https://www.timeshighereducation.com/sites/default/files/the_data_rankings/united_states_ranking \
 s_2020_limit0_25839923f8b1714cf54659d4e4af6c3b.json'
-
+college_scorecard = 'https://api.data.gov/ed/collegescorecard/v1/schools.json?&api_key=9yXtfpTsEQjDu6zfPz6eWZqimWZe0hac1LcbXsAL'
+ 
 def scrape_college_rankings(my_college):
 
     r = requests.get(url, headers=headers)
@@ -59,11 +60,26 @@ def scrape_college_rankings(my_college):
             return college['rank']
 
 
-def scrape_college_data():
+def scrape_college_data(college):
+    college = college.replace(',', '')
+    college = college.replace('The ', '')
+    college = college.replace('& ', '')
+    college = college.replace('SUNY', 'State University of New York')
 
-    url = 'https://www.collegedata.com/college/Stony-Brook-University/'
+    url = f"https://www.collegedata.com/college/{college.replace(' ', '-')}"
+
     r = requests.get(url, headers=headers)
+    if r.status_code != 200:
+        print(f"ERROR: unable to scrape {url}")
+        return
+
     soup = BeautifulSoup(r.text, 'html.parser')
+    majors = soup.find('ul', 'list--nice').contents
+    majors = list(filter(lambda x : x != '\n', majors))
+    for major in majors:
+        print(major.text)
+    return
+
     for description_list in soup.find_all('dl'):
 
         for k, v in zip(description_list.find_all('dt'), description_list.find_all('dd')):

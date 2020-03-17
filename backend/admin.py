@@ -18,16 +18,24 @@ class CollegeAdmin(admin.ModelAdmin):
     actions = [import_college_rankings]
 
 
-class StudentAdmin(admin.ModelAdmin):
+class ApplicationInline(admin.TabularInline):
+    model = Application
+
+class StudentAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ['userid']
+    inlines = [ApplicationInline]
 
 class HighSchoolAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ['name', 'city', 'state', 'sat', 'act', 'grad_rate',
             'ap_enroll', 'num_students' ]
 
+class ApplicationAdmin(admin.ModelAdmin):
+    list_display = ['status']
+    list_filter = ['status']
+
 
 
 admin.site.register(Student, StudentAdmin)
-admin.site.register(Application)
+admin.site.register(Application, ApplicationAdmin)
 admin.site.register(College, CollegeAdmin)
 admin.site.register(HighSchool, HighSchoolAdmin)

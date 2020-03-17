@@ -12,6 +12,7 @@ django-cors-headers = "*"
 requests = "*"
 beautifulsoup4 = "*"
 django-import-export = "*"
+faker = "*"
 
 [requires]
 python_version = "3.8"
