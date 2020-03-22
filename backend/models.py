@@ -5,11 +5,11 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class HighSchool(models.Model):
-    name = models.CharField(max_length=100, unique=True, primary_key=True)
+    name = models.CharField(max_length=100, unique=True)
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
 
-    sat = models.IntegerField(default=1000,null=True, blank=True)
+    sat = models.IntegerField(default=1000, null=True, blank=True)
     act = models.IntegerField(null=True, blank=True)
     num_students = models.IntegerField(null=True, blank=True)
 
@@ -19,10 +19,13 @@ class HighSchool(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+
 class Student(models.Model):
-    userid = models.CharField(max_length=100, unique=True, primary_key=True)
+    userid = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
     residence_state = models.CharField(max_length=2, null=True)
+    
+    high_school = models.ForeignKey(HighSchool, on_delete=models.CASCADE, null=True)
     high_school_name = models.CharField(max_length=100, null=True)
     high_school_city = models.CharField(max_length=100, null=True)
     high_school_state = models.CharField(max_length=2, null=True)
@@ -32,8 +35,7 @@ class Student(models.Model):
     GPA = models.DecimalField(max_digits=3, decimal_places=2, null=True)
 
     college_class = models.IntegerField(null=True)
-    ACT_english = models.IntegerField(null=True,
-            validators=[MaxValueValidator(0)])
+    ACT_english = models.IntegerField(null=True)
     ACT_math = models.IntegerField(null=True)
     ACT_reading = models.IntegerField(null=True)
     ACT_science = models.IntegerField(null=True)
@@ -53,7 +55,7 @@ class Student(models.Model):
     num_AP_passed = models.IntegerField(null=True)
 
     def __str__(self):
-        return self.userid
+        return f'{self.userid}'
 
 
 class College(models.Model):
@@ -61,24 +63,24 @@ class College(models.Model):
     ranking = models.CharField(max_length=10, null=True)
     adm_rate = models.FloatField(null=True)
     size = models.IntegerField(null=True)
-    SAT_math= models.IntegerField(null=True)
+    SAT_math = models.IntegerField(null=True)
     SAT_EBRW = models.IntegerField(null=True)
-    ACT_composite= models.IntegerField(null=True)
-
+    ACT_composite = models.IntegerField(null=True)
 
     def __str__(self):
         return f'{self.name}'
 
+
 class Application(models.Model):
     APP_STATUS = [
-            ('pending','pending'),
-            ('accepted','accepted'),
-            ('denied','denied'),
-            ('deferred','deferred'),
-            ('wait','wait'),
-            ('listed','listed'),
-            ('withdrawn','withdrawn'),
-            ('questionable','questionable')
+        ('pending', 'pending'),
+        ('accepted', 'accepted'),
+        ('denied', 'denied'),
+        ('deferred', 'deferred'),
+        ('wait', 'wait'),
+        ('listed', 'listed'),
+        ('withdrawn', 'withdrawn'),
+        ('questionable', 'questionable')
     ]
 
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
@@ -86,4 +88,3 @@ class Application(models.Model):
 
     def __str__(self):
         return f'Application '
-

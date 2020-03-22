@@ -23,7 +23,7 @@ def import_students():
     with open('backend/data/majors.txt', 'r') as f:
         majors = f.read().split('\n')
 
-    for i in range(10000):
+    for i in range(10):
         d['userid'] = fake.user_name()
         d['password'] = fake.password(length=random.randint(8,20), special_chars=False)
 
@@ -60,7 +60,9 @@ def import_students():
         d['SAT_physics'] = int(random.gauss(671, 108))
         d['num_AP_passed'] = max(0, int(random.gauss(2, 2)))
 
+
         s = Student(**d)
+        s.high_school = hs
         s.save()
 
 def import_hs():

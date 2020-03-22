@@ -30,3 +30,5 @@ urlpatterns = [
     path('', include('backend.urls')),
     path('admin/', admin.site.urls)
 ]
+
+
