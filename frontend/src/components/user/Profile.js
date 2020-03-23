@@ -1,8 +1,5 @@
 import React,{ useState, useEffect }  from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
 import { Container } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
 
 
 export default function Profile(props) {
@@ -11,7 +8,7 @@ export default function Profile(props) {
     //    contact backend to get the information for props.user 
     //     Compare if it's the current logged in user, display edit profile option. 
     useEffect(() => {
-        // fetch('http://localhost:8000/students/Omar')
+        // fetch('http://localhost:8000/student/Omar')
         // .then(response => response.json())
         // .then(
         //     data => {
@@ -21,21 +18,27 @@ export default function Profile(props) {
         // )
     }, []);
     return (
+        <div>
+            if current_user == requested_user:
+                <br /> Account ID 
+                <br /> Email / changeable
+                <br /> Password / change
+                <br /> Name / change
+                <br /> DOB / change
+                <br /> Gender / change
+                <br /> Address / change (City, State)
+                <br /> Phone / change
+                and everything below
+            else:
+                <br /> Expected College Graduation 
+                <br /> SAT, ACT Scores, Other Scores
+                <br /> Current College (if any) 
+                    <br /> College City, State, Major, College GPA, College Classes taken
+                <br /> Current/Last High School(if any)
+                    <br /> High School City, State, High School GPA, AP classes taken/scores
+                <br /> Colleges Applied, Status (Whether Questionable)
 
-        <React.Fragment>
 
-            <Grid container spacing={3}>
-                <Grid item xs>
-                    <Avatar alt="Remy Sharp" src="https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-1/p120x120/64438855_773875386339706_2482325925530697728_o.jpg?_nc_cat=104&_nc_ohc=VNZ7gGyjMw8AX86V-X2&_nc_ht=scontent-lga3-1.xx&_nc_tp=6&oh=45386d713cf814b1e68f70e636dd10cf&oe=5ECDBA76" />
-                </Grid>
-                <Grid item xs>
-                    <Typography variant="body1">
-                        {props.user}
-                    </Typography>
-                </Grid>
-                
-            </Grid>
-        </React.Fragment >
-
+        </div>
     );
 }

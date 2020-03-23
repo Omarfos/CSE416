@@ -1,26 +1,38 @@
+
 import React from 'react';
-import { Link } from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import useStyles from '../style/css'
+
+
 
 export default function Navbar (props){
+    const classes = useStyles();
     return (
-           <div>         
+      <div className={classes.root}>
+        <AppBar position="static" className={classes.navBar}>
+          <Toolbar>
+            <Typography align="left" className={classes.title}>
+               <Button className={classes.button} href="/" >C4ME</Button>
+            </Typography>
             {props.user &&
                 <React.Fragment>
-                    <Link to={"/profile/"+props.user}>Profile</Link>
-                    <button onClick={props.handleLogout}>Log out</button>
+                    <Button className={classes.button} href={"/profile/"+props.user}>Profile</Button>
+                    <Button className={classes.button} onClick={props.handleLogout}>Log out</Button>
                 </React.Fragment>
             }
             {!props.user &&
                 <React.Fragment>
-                    <Link to="/login">Login</Link>
-                    <Link to="/register">Register</Link>
+                    <Button className={classes.button} href="/login" color="inherit">Login</Button>
+                    <Button className={classes.button} href="/register" color="inherit">Register</Button>
                 </React.Fragment>
             }
-            <br />
-            <br />
-            <br />
-            </div>
-        
+          </Toolbar>
+        </AppBar>
+      </div>
     );
 }
 

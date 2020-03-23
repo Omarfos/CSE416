@@ -3,3 +3,4 @@
 *.png
 Pipfile.lock
 backend/migrations
+Pipfile.lock

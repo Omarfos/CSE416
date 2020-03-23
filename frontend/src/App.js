@@ -7,6 +7,7 @@ import CollegeProfile from './components/college/CollegeProfile'
 import Profile from './components/user/Profile'
 import Navbar from './components/Navbar.js';
 import {Route,Switch, Redirect, useHistory} from "react-router-dom";
+import { Container } from '@material-ui/core';
 import axios from 'axios';
 import './App.css';
 
@@ -19,12 +20,12 @@ function App() {
 
   useEffect(() => {
     // Update the document title using the browser API
-    fetch('http://localhost:8000/students')
+    fetch('http://localhost:8000/student/omar')
         .then(response => response.json())
         .then(
             data => {
-                console.log('data', data);
-                setUser(data[0]);
+                // console.log('data', data);
+                // setUser(data[0]);
             }
             //PaymentResponse.ur
             //return <Redirect data={data}></Redirect>
@@ -60,6 +61,7 @@ function App() {
   return (
     <div className="App">
       <Navbar user = {user} handleLogout = {handleLogout}/>
+      <Container maxWidth="sm">
       <Switch>
         <Route exact path="/" render={() => (<Home/>)} />
         <Route exact path="/search/:q" render={() => (<Search/>)} />
@@ -75,6 +77,7 @@ function App() {
 
         <Route render={() => <NotFound/>}/>
       </Switch>
+      </Container>
     </div>
   );
 }
