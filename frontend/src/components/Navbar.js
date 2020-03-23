@@ -5,50 +5,34 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import Link from '@material-ui/core/Link';
+import useStyles from '../style/css'
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
 
 
 export default function Navbar (props){
     const classes = useStyles();
-
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="static" className={classes.navBar}>
           <Toolbar>
-            <Typography variant="h6" align="left" className={classes.title}>
-              C4ME
+            <Typography align="left" className={classes.title}>
+               <Button className={classes.button} href="/" >C4ME</Button>
             </Typography>
             {props.user &&
                 <React.Fragment>
-                    <Link href={"/profile/"+props.user} color="inherit">Profile</Link>
-                    <Button onClick={props.handleLogout} color="inherit">Log out</Button>
+                    <Button className={classes.button} href={"/profile/"+props.user}>Profile</Button>
+                    <Button className={classes.button} onClick={props.handleLogout}>Log out</Button>
                 </React.Fragment>
             }
             {!props.user &&
                 <React.Fragment>
-                    <Link href="/login" color="inherit">Login</Link>
-                    <Link href="/register" color="inherit">Register</Link>
+                    <Button className={classes.button} href="/login" color="inherit">Login</Button>
+                    <Button className={classes.button} href="/register" color="inherit">Register</Button>
                 </React.Fragment>
             }
           </Toolbar>
         </AppBar>
       </div>
     );
-
-
 }
 
