@@ -19,8 +19,8 @@ from django.contrib.auth.models import User, Group
 from django.urls import include, path
 from backend import views
 
-admin.site.unregister(User)
-admin.site.unregister(Group)
+#admin.site.unregister(User)
+#admin.site.unregister(Group)
 
 admin.site.site_header = "Bingo Admin"
 admin.site.site_title = "Bingo Admin Portal"

@@ -2,4 +2,4 @@
 *.pyc
 *.png
 Pipfile.lock
-*/migrations/*
+backend/migrations
