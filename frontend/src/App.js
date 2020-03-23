@@ -19,12 +19,12 @@ function App() {
 
   useEffect(() => {
     // Update the document title using the browser API
-    fetch('http://localhost:8000/students')
+    fetch('http://localhost:8000/student/omar')
         .then(response => response.json())
         .then(
             data => {
-                console.log('data', data);
-                setUser(data[0]);
+                // console.log('data', data);
+                // setUser(data[0]);
             }
             //PaymentResponse.ur
             //return <Redirect data={data}></Redirect>
