@@ -11,13 +11,14 @@ export default function Profile(props) {
     //    contact backend to get the information for props.user 
     //     Compare if it's the current logged in user, display edit profile option. 
     useEffect(() => {
-        async function fetchData() {
-           // const res = await axios.get(location.pathname);
-            // if(!res.data.error){
-            //     setUserProfile(res.data.user);
-            // }  
-        };
-        fetchData();
+        // fetch('http://localhost:8000/students/Omar')
+        // .then(response => response.json())
+        // .then(
+        //     data => {
+        //         console.log
+        //     }
+            
+        // )
     }, []);
     return (
 

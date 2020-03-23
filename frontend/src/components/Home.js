@@ -5,8 +5,8 @@ export default function Home() {
     let history = useHistory();
 
     async function handleSearch(event){
-        //event.preventDefault();
-       // history.push('/search_page/' + event.target.q.value);
+        event.preventDefault();
+        history.push('/search/' + event.target.searchQuery.value);
     }
 
     return (
@@ -14,7 +14,7 @@ export default function Home() {
             Home page. 
             <div>
                 <form onSubmit={handleSearch}>
-                Search Bar<input></input>
+                Search Bar<input name="searchQuery"></input>
                 <button type="submit">Search</button>
                 </form>
             </div>
