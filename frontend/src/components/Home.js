@@ -1,23 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { makeStyles} from '@material-ui/core/styles';
-import SearchBar from 'material-ui-search-bar';
+import useStyles from '../style/css'
+import SearchIcon from "@material-ui/icons/Search";
+import Paper from '@material-ui/core/Paper';
+import InputBase from '@material-ui/core/InputBase';
+import IconButton from '@material-ui/core/IconButton';
 
-const useStyles = makeStyles(theme => ({
-    root: {
-      flexGrow: 1,
-    },
-    bar: {
-      backgroundColor: '#eef5ff',
-    },
-    button:{
-      color:'#8493d3',
-      fontSize: 20
-    },
-    
-  }));
 
-  
 export default function Home() {
     let history = useHistory();
     const classes = useStyles();
@@ -29,19 +18,18 @@ export default function Home() {
 
     return (
         <div>
-            <div>
-                <form onSubmit={handleSearch}>
-                <SearchBar
-                onChange={() => console.log('onChange')}
-                onRequestSearch={() => console.log('onRequestSearch')}
-                style={{
-                    margin: '0 auto',
-                    maxWidth: 800
-                }}
-                />
-                Search Bar<input name="searchQuery"></input>
-                <button type="submit">Search</button>
-                </form>
+            <div> 
+            <Paper component="form" className={classes.root}>
+            <InputBase
+                className={classes.input}
+                placeholder="Search for College"
+            />
+            <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                <SearchIcon />
+            </IconButton>
+            </Paper>
+                {/* Search Bar<input name="searchQuery"></input>
+                <button type="submit">Search</button> */}
             </div>
         </div>
     );
