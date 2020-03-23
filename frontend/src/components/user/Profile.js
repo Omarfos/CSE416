@@ -1,8 +1,5 @@
 import React,{ useState, useEffect }  from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
 import { Container } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
 
 
 export default function Profile(props) {
@@ -33,7 +30,7 @@ export default function Profile(props) {
                 <br /> Phone / change
                 and everything below
             else:
-                <br />Expected College Graduation 
+                <br /> Expected College Graduation 
                 <br /> SAT, ACT Scores, Other Scores
                 <br /> Current College (if any) 
                     <br /> College City, State, Major, College GPA, College Classes taken
