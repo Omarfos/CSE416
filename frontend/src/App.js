@@ -67,6 +67,7 @@ function App() {
         <Route exact path="/search/:q" render={() => (<Search/>)} />
         <Route exact path="/view_college/:id" render={() => (<CollegeProfile/>)} />
         <Route exact path="/profile/:id" render={()=>(<Profile user = {user}/>)} /> 
+        <Route exact path="/login" render={() => <Login/>} />
         
         {!user && 
           <React.Fragment>
