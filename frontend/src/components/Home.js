@@ -7,28 +7,32 @@ import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import Image from '../images/homeBackground.png';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
+
 
 const useStyles = makeStyles(theme => ({
     search: {
-        position: "relative",
-        left: "34%",
-        top: "220px",
-        width: "35%",
-        alignContent:"center"
+        marginTop: "250px",
+        minWidth: "400px",
+        marginBottom: "10px"
     },
     input:{
         width: "80%"
     },
     backgound:{
-        minHeight: "600px",
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top:0,
+        bottom:0,
         backgroundImage: 'url('+ Image+')',
         backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        zIndex: "-1",
     },
     bingo:{
-        position: "relative",
-        top:"250px",
         color: "#657ECD",
-        
     }
   }));
 export default function Home() {
@@ -42,20 +46,26 @@ export default function Home() {
 
     return (
         <div>
-            <Paper className={classes.backgound} width="75%">
-                <Paper component="form" className={classes.search} onSubmit={handleSearch}>
-                <InputBase
-                    name="searchQuery"
-                    className={classes.input}
-                    placeholder="Search for College"
-                />
-                <IconButton type="submit" className={classes.iconButton} aria-label="search">
-                    <SearchIcon />
-                </IconButton>
-                </Paper>
-                <Typography variant="h1" className={classes.bingo} >BinGo</Typography>
-                <Typography variant="h6" className={classes.bingo}>Plan your path to college</Typography>
-            </Paper>
+            <Container className={classes.backgound}>
+            <Grid container direction="column" justify="center" alignItems="center">
+                <Grid item xs={8}>
+                    <Paper component="form" className={classes.search} onSubmit={handleSearch}>
+                    <InputBase
+                        name="searchQuery"
+                        className={classes.input}
+                        placeholder="Search for College"
+                    />
+                    <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                        <SearchIcon />
+                    </IconButton>
+                    </Paper>
+                </Grid>
+                <Grid item>
+                    <Typography variant="h1" className={classes.bingo} >BinGo</Typography>
+                    <Typography variant="h6" className={classes.bingo}>Plan your path to college</Typography>
+                </Grid>
+                </Grid>
+            </Container>
         </div>
     );
 }
