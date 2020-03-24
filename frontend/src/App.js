@@ -8,7 +8,6 @@ import Profile from './components/user/Profile'
 import Navbar from './components/Navbar.js';
 import {Route,Switch, Redirect, useHistory} from "react-router-dom";
 import { Container } from '@material-ui/core';
-import axios from 'axios';
 import './App.css';
 
 
@@ -32,24 +31,7 @@ function App() {
   //       )
   // }, []);
 
-  async function handleLogin(e) {
-    e.preventDefault();
-    let userid = e.target.userid.value;
-    let password = e.target.password.value;
-    fetch('http://localhost:8000/login', {
-      method: 'POST', // or 'PUT'
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({userid, password}),
-    }).then((data) => {
-      if (data.status === 200)
-        setUser(userid);
-    })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  };
+ 
 
   async function handleLogout(event){
     console.log("Logging out");
@@ -73,7 +55,7 @@ function App() {
         <Route exact path="/search/:q" render={() => (<Search/>)} />
         <Route exact path="/view_college/:id" render={() => (<CollegeProfile/>)} />
         <Route exact path="/profile/:id" render={()=>(<Profile user = {user}/>)} />    
-        <Route exact path="/login" render={() => (<Login errorMessage={errorMessage} handleLogin = {handleLogin} user = {user}/>)} />
+        <Route exact path="/login" render={() => (<Login errorMessage={errorMessage} setError = {setErrorMessage} setUser = {setUser} user = {user}/>)} />
         {!user && 
           <React.Fragment>
             <Route exact path="/register" render={() => (<Register handleRegister = {handleRegister}/>)} />
