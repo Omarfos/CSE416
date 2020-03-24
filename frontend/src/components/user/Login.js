@@ -37,32 +37,33 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn(props) {
   const classes = useStyles();
-  const [userid, setUserid] = useState('');
-  const [password, setPassword] = useState('');
-  const [loggedIn, setLoggedIn] = useState(false);
+  // const [userid, setUserid] = useState("");
+  // const [loggedIn, setLoggedIn] = useState(false);
 
-  const login = (data) => {
-    console.log('fetching ' + data);
-
-    fetch('http://localhost:8000/login', {
-      method: 'POST', // or 'PUT'
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    }).then((data) => {
-      if (data.status === 200)
-        setLoggedIn(true)
-    })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  };
+  // async function login(e) {
+  //   e.preventDefault();
+  //   let userid = e.target.userid.value;
+  //   let password = e.target.password.value;
+  //   fetch('http://localhost:8000/login', {
+  //     method: 'POST', // or 'PUT'
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({userid, password}),
+  //   }).then((data) => {
+  //     if (data.status === 200)
+  //       setLoggedIn(true);
+  //       setUserid(userid);
+  //   })
+  //     .catch((error) => {
+  //       console.error('Error:', error);
+  //     });
+  // };
 
 
   return (
     <Container component="main" maxWidth="xs">
-      {loggedIn && <Redirect to="/" />}
+      {props.user && <Redirect to="/" />}
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -71,37 +72,18 @@ export default function SignIn(props) {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={props.handleLogin}>
           <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="userid"
-            label="Userid"
-            name="userid"
-            autoFocus
-            onChange={(e) => setUserid(e.target.value)}
+            variant="outlined" margin="normal" required
+            fullWidth id="userid" label="Userid" name="userid" autoFocus
           />
           <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={(e) => setPassword(e.target.value)}
+            variant="outlined" margin="normal"
+            required fullWidth name="password" label="Password" type="password"
+            id="password" autoComplete="current-password"
           />
-          <Button
-            //type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
+          <Button type="submit" fullWidth variant="contained" color="primary"
             className={classes.submit}
-            onClick={() => login({ userid, password })}
           >
             Sign In
           </Button>

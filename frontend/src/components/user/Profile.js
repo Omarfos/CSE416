@@ -7,18 +7,19 @@ export default function Profile(props) {
     const [editing, setEditing] = useState(false);
     //    contact backend to get the information for props.user 
     //     Compare if it's the current logged in user, display edit profile option. 
-    useEffect(() => {
-        // fetch('http://localhost:8000/student/Omar')
-        // .then(response => response.json())
-        // .then(
-        //     data => {
-        //         console.log
-        //     }
+    // useEffect(() => {
+    //     // fetch('http://localhost:8000/student/Omar')
+    //     // .then(response => response.json())
+    //     // .then(
+    //     //     data => {
+    //     //         console.log
+    //     //     }
             
-        // )
-    }, []);
+    //     // )
+    // }, []);
     return (
         <div>
+            {console.log(props.user)}
             if current_user == requested_user:
                 <br /> Account ID 
                 <br /> Email / changeable
