@@ -61,7 +61,6 @@ function App() {
   return (
     <div className="App">
       <Navbar user = {user} handleLogout = {handleLogout}/>
-      <Container maxWidth="sm">
       <Switch>
         <Route exact path="/" render={() => (<Home/>)} />
         <Route exact path="/search/:q" render={() => (<Search/>)} />
@@ -78,7 +77,6 @@ function App() {
 
         <Route render={() => <NotFound/>}/>
       </Switch>
-      </Container>
     </div>
   );
 }
