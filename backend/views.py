@@ -17,7 +17,15 @@ def student_profile(request, userid):
     r = serializers.serialize('json', s, fields=('userid', 'high_school_name'))
     return JsonResponse(r, safe=False)
 
-def create_profile(request):
+def login(request):
     d = json.loads(request.body);
     student = get_object_or_404(Student, **d)
     return HttpResponse("User Found")
+
+def register(request):
+    d = json.loads(request.body);
+    user = User.objects.create_user(d['userid'], password=d['password'])
+    user.save()
+    student = Student(**d)
+    student.save()
+    return HttpResponse("User Created")
