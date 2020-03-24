@@ -5,9 +5,23 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import useStyles from '../style/css'
 
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+  }, 
+  navBar: {
+    backgroundColor: "#eef5ff",
+  },
+  title: {
+    flexGrow: 1,
+  },
+  button:{
+    color:'#8493d3',
+    fontSize: 20
+  }
+}));
 
 export default function Navbar (props){
     const classes = useStyles();
@@ -26,8 +40,8 @@ export default function Navbar (props){
             }
             {!props.user &&
                 <React.Fragment>
-                    <Button className={classes.button} href="/login" color="inherit">Login</Button>
-                    <Button className={classes.button} href="/register" color="inherit">Register</Button>
+                    <Button className={classes.button} href="/login">Login</Button>
+                    <Button className={classes.button} href="/register">Register</Button>
                 </React.Fragment>
             }
           </Toolbar>
