@@ -4,3 +4,4 @@
 backend/migrations/*
 frontend/package-lock.json
 Pipfile.lock
+**/*lock

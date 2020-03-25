@@ -6,8 +6,7 @@ import Search from './components/search/Search'
 import CollegeProfile from './components/college/CollegeProfile'
 import Profile from './components/user/Profile'
 import Navbar from './components/Navbar.js';
-import {Route,Switch, Redirect, useHistory} from "react-router-dom";
-import { Container } from '@material-ui/core';
+import {Route,Switch, Redirect} from "react-router-dom";
 import './App.css';
 
 
@@ -15,8 +14,6 @@ function App() {
   //Set it to this right now. 
   const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  let history = useHistory();
-
   // useEffect(() => {
   //   // Update the document title using the browser API
   //   fetch('http://localhost:8000/student/omar')
@@ -31,25 +28,11 @@ function App() {
   //       )
   // }, []);
 
- 
 
-  async function handleLogout(event){
-    console.log("Logging out");
-    //call backend post /logout
-    setUser(null);
-    history.push('/');
-  }
-
-  async function handleRegister(event){
-    //call backend post /register to register for user
-    //change logged in user state.  
-    //After registered, redirect to profile page.
-    //history.push('/profile/');
-  }
 
   return (
     <div className="App">
-      <Navbar user = {user} handleLogout = {handleLogout}/>
+      <Navbar user = {user} setUser = {setUser}/>
       <Switch>
         <Route exact path="/" render={() => (<Home/>)} />
         <Route exact path="/search/:q" render={() => (<Search/>)} />
@@ -58,7 +41,7 @@ function App() {
         <Route exact path="/login" render={() => (<Login errorMessage={errorMessage} setError = {setErrorMessage} setUser = {setUser} user = {user}/>)} />
         {!user && 
           <React.Fragment>
-            <Route exact path="/register" render={() => (<Register handleRegister = {handleRegister}/>)} />
+            <Route exact path="/register" render={() => (<Register setUser = {setUser} errorMessage={errorMessage} setError = {setErrorMessage}/>)} />
           </React.Fragment>
         }   
 

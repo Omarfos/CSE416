@@ -16,7 +16,6 @@ def import_colleges():
 
 
 def import_students():
-    Faker.seed(random.randint(0,10000))
     fake = Faker()
     d = {}
     hs_list = HighSchool.objects.all()
@@ -37,30 +36,31 @@ def import_students():
         d['major_2'] = random.choice(majors)
         d['college_class'] = random.randint(2023,2028)
         d['GPA'] = min(random.gauss(3.0,0.4), 4.0)
-
+        
+        act = lambda mean,std : max(0, min(36, int(random.gauss(mean,std))))
+        sat = lambda mean,std : max(400, min(800, int(random.gauss(mean,std))))
         #https://www.act.org/content/dam/act/unsecured/documents/MultipleChoiceStemComposite.pdf
-        d['ACT_composite'] = max(36, int(random.gauss(20.0, 5.8)))
-        d['ACT_english'] = int(random.gauss(20.2, 7.0))
-        d['ACT_math'] = int(random.gauss(20.5, 5.5))
-        d['ACT_science'] = int(random.gauss(20.8, 5.7))
-        d['ACT_reading'] = int(random.gauss(21.3, 6.8))
+        d['ACT_composite'] = act(21.0, 5.8)
+        d['ACT_english'] = act(21.2, 7.0)
+        d['ACT_math'] = act(21.5, 5.5)
+        d['ACT_science'] = act(21.8, 5.7)
+        d['ACT_reading'] = act(22.3, 6.8)
 
         #https://reports.collegeboard.org/pdf/2019-total-group-sat-suite-assessments-annual-report.pdf
-        d['SAT_math'] = int(random.gauss(528, 117))
-        d['SAT_EBRW'] = int(random.gauss(531, 103))
+        d['SAT_math'] = sat(528, 117)
+        d['SAT_EBRW'] = sat(531, 103)
 
         #https://secure-media.collegeboard.org/sat/pdf/sat-subject-tests-percentile-ranks.pdf
-        d['SAT_literature'] = int(random.gauss(614, 109))
-        d['SAT_US_hist'] = int(random.gauss(647, 102))
-        d['SAT_world_hist'] = int(random.gauss(629, 110))
-        d['SAT_math_I'] = int(random.gauss(610, 109))
-        d['SAT_math_II'] = int(random.gauss(698, 97))
-        d['SAT_eco_bio'] = int(random.gauss(622, 109))
-        d['SAT_mol_bio'] = int(random.gauss(654, 108))
-        d['SAT_chemistry'] = int(random.gauss(668, 104))
-        d['SAT_physics'] = int(random.gauss(671, 108))
-        d['num_AP_passed'] = max(0, int(random.gauss(2, 2)))
-
+        d['SAT_literature'] = sat(614, 109)
+        d['SAT_US_hist'] = sat(647, 102)
+        d['SAT_world_hist'] = sat(629, 110)
+        d['SAT_math_I'] = sat(610, 109)
+        d['SAT_math_II'] = sat(698, 97)
+        d['SAT_eco_bio'] = sat(622, 109)
+        d['SAT_mol_bio'] = sat(654, 108)
+        d['SAT_chemistry'] = sat(668, 104)
+        d['SAT_physics'] = sat(671, 108)
+        d['num_AP_passed'] = random.randint(0, 10)
 
         s = Student(**d)
         s.high_school = hs

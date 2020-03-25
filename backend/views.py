@@ -1,9 +1,10 @@
 from django.http import HttpResponse, JsonResponse, HttpRequest
 from django.core import serializers
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, get_list_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from .models import Student
+from .models import Student, College
+from django.forms.models import model_to_dict
 import json
 
 # Create your views here
@@ -13,9 +14,10 @@ def index(request):
 
 
 def student_profile(request, userid):
-    s = Student.objects.filter(userid=userid)
-    r = serializers.serialize('json', s, fields=('userid', 'high_school_name'))
-    return JsonResponse(r, safe=False)
+    print(userid)
+    s = get_object_or_404(Student,userid=userid)
+    r = model_to_dict(s)
+    return JsonResponse(r)
 
 def login(request):
     d = json.loads(request.body);
@@ -29,3 +31,10 @@ def register(request):
     student = Student(**d)
     student.save()
     return HttpResponse("User Created")
+
+def college(request, name):
+    college = get_object_or_404(College, name=name)
+    r = model_to_dict(college)
+    return JsonResponse(r) 
+
+
