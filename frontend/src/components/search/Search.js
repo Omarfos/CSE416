@@ -49,31 +49,6 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-// sliders
-function valuetextAdmissionRate(value) {
-    return `${value}%`;
-}
-
-function valuetextSATmath(value) {
-    return `${value}`;
-}
-
-function valuetextSATebrw(value) {
-    return `${value}`;
-}
-
-function valuetextACTcomposite(value) {
-    return `${value}`;
-}
-
-function valuetextCostOfAttendance(value) {
-    return `${value}`;
-}
-
-function valuetextRanking(value) {
-    return `${value}`;
-}
-
 
 const AntSwitch = withStyles(theme => ({
     root: {
@@ -324,7 +299,6 @@ export default function Search(props) {
                                     onChange={handleChangeAdmissionRate}
                                     valueLabelDisplay="auto"
                                     aria-labelledby="range-slider"
-                                    getAriaValueText={valuetextAdmissionRate}
                                 />
                             </div>
                         </Grid>
@@ -339,7 +313,6 @@ export default function Search(props) {
                                     onChange={handleChangeSATmath}
                                     valueLabelDisplay="auto"
                                     aria-labelledby="range-slider"
-                                    getAriaValueText={valuetextSATmath}
                                     min={200}
                                     max={800}
                                     step={10}
@@ -357,7 +330,6 @@ export default function Search(props) {
                                     onChange={handleChangeSATebrw}
                                     valueLabelDisplay="auto"
                                     aria-labelledby="range-slider"
-                                    getAriaValueText={valuetextSATebrw}
                                     min={200}
                                     max={800}
                                     step={10}
@@ -375,7 +347,6 @@ export default function Search(props) {
                                     onChange={handleChangeACTcomposite}
                                     valueLabelDisplay="auto"
                                     aria-labelledby="range-slider"
-                                    getAriaValueText={valuetextACTcomposite}
                                     min={1}
                                     max={36}
                                 />
@@ -392,7 +363,6 @@ export default function Search(props) {
                                     onChange={handleChangeCostOfAttendance}
                                     valueLabelDisplay="auto"
                                     aria-labelledby="range-slider"
-                                    getAriaValueText={valuetextCostOfAttendance}
                                     min={0}
                                     max={100000}
                                     step={1000}
@@ -410,7 +380,6 @@ export default function Search(props) {
                                     onChange={handleChangeRanking}
                                     valueLabelDisplay="auto"
                                     aria-labelledby="range-slider"
-                                    getAriaValueText={valuetextRanking}
                                     min={1}
                                     max={100}
                                 />
