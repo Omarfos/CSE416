@@ -41,12 +41,11 @@ async function validateEmail(email) {
 export default function Register(props) {
     async function handleRegister(event){
         event.preventDefault();
-        let firstname = event.target.firstName.value;
-        let lastname = event.target.lastName.value;
+        let first_name = event.target.firstName.value;
+        let last_name = event.target.lastName.value;
         let email = event.target.email.value;
-        let userid = event.target.userid.value;
+        let username = event.target.userid.value;
         let password = event.target.password.value;
-        
         if (await validateEmail(email) === false){
             props.setError("Invalid Email Address");
         }else{  //NEED to be tested
@@ -62,7 +61,7 @@ export default function Register(props) {
                 headers: {
                 'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({firstname, lastname, email, userid, password}),
+                body: JSON.stringify({first_name, last_name, email, username, password}),
             })
             .then((data) => {
                 if (data.status === 200) {
