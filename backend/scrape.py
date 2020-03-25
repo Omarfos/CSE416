@@ -72,7 +72,7 @@ def scrape_college_score_card(colleges):
             'grad_debt_median': 'latest.aid.median_debt.completers.overall',
             'state':            'school.state',
             'name':             'school.name'
-        }
+    }
 
     control = ['','Public', 'Private nonprofit', 'Private for-profit']
     fields = ",".join(f.values())
@@ -127,11 +127,9 @@ def scrape_college_data(colleges_list):
         college = college.replace('The ', '')
         college = college.replace('& ', '')
         college = college.replace('SUNY', 'State University of New York')
-        print(college)
         colleges[c] = college 
     
 
-    print(colleges)
 
     result = []
     for college, cleaned_college in colleges.items():
@@ -145,7 +143,15 @@ def scrape_college_data(colleges_list):
             return
 
         soup = BeautifulSoup(r.text, 'html.parser')
-        d = {'name': college }
+
+        d = {'name': college, 'majors': [] }
+
+        majors = soup.find('ul', 'list--nice').contents
+        majors = list(filter(lambda x : x != '\n', majors))
+        for major in majors:
+            d['majors'].append(major.text)
+
+        d['majors'] = json.dumps(d['majors'])
 
         for description_list in soup.find_all('dl'):
             for k, v in zip(description_list.find_all('dt'), description_list.find_all('dd')):
@@ -182,12 +188,6 @@ def scrape_college_data(colleges_list):
         result.append(d)
 
     return result
-
-    majors = soup.find('ul', 'list--nice').contents
-    majors = list(filter(lambda x : x != '\n', majors))
-    for major in majors:
-        print(major.text)
-    return
 
 #if __name__ == '__main__':
 #    scrape_college_data(['Stony Brook University']) #, 'Williams College'])

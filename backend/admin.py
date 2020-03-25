@@ -20,6 +20,7 @@ def import_college_rankings(modeladmin, request, queryset):
 
 def import_college_data(modeladmin, request, queryset):
     r = scrape_college_data([college.name for college in queryset])
+    print(r)
     for college in r:
         College.objects.filter(name=college['name']).update(**college)
 
@@ -27,7 +28,7 @@ def import_college_data(modeladmin, request, queryset):
 class CollegeAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ['name', 'state', 'ranking', 'institution_type', 'size','adm_rate', 
     'SAT_math', 'SAT_EBRW', 'ACT_composite', 'in_state_cost', 'out_state_cost',
-    'institution_type', 'grad_debt_median', 'completion_rate' ]
+    'institution_type', 'grad_debt_median', 'completion_rate']
 
     actions = [import_college_rankings, import_college_data,
             import_college_score_card]

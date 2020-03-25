@@ -79,6 +79,7 @@ class College(models.Model):
     grad_debt_median = models.IntegerField(null=True)
     completion_rate = models.FloatField(null=True)
     state = models.CharField(max_length=2, null=True)
+    majors = models.CharField(max_length=2000, null=True)
 
     def __str__(self):
         return f'{self.name}'
