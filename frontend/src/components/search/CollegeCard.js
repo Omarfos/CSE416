@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation, Link, useHistory } from "react-router-dom";
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Slider from '@material-ui/core/Slider';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -17,14 +10,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        flexGrow: 1
-    },
-
-    filters: {
-        marginLeft: "20px",
-        marginTop: "40px"
-    },
 
     card: {
         marginTop: "40px",

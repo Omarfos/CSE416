@@ -10,12 +10,8 @@ import Slider from '@material-ui/core/Slider';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import CollegeCard from './CollegeCard'
+import CollegeCard from './CollegeCard';
+import Pagination from '@material-ui/lab/Pagination';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -27,9 +23,10 @@ const useStyles = makeStyles(theme => ({
         marginTop: "40px"
     },
 
-    card: {
+    pagination: {
         marginTop: "40px",
-        marginLeft: "60px"
+        marginBottom: "40px",
+        marginLeft: "35%"
     }
 
 }));
@@ -51,8 +48,9 @@ export default function Search(props) {
     const location = useLocation();
     const history = useHistory();
     const classes = useStyles();
-    const [colleges, setColleges] = useState([{ "name": "Stony Brook" }, { "name": "Wagner College" }, { "name": "NYU" }]);
-    const [filters, setFilters] = useState([{ "name": "Stony Brook" }, { "name": "Wagner College" }, { "name": "NYU" }]);
+    const [colleges, setColleges] = useState([{ "name": "Stony Brook" }, { "name": "Wagner College" }, { "name": "New York University" }, 
+            {"name": "Boston University"}, {"name": "Princeton University"}, {"name": "Harvard University"}]);
+    // const [filters, setFilters] = useState([{ "name": "Stony Brook" }, { "name": "Wagner College" }, { "name": "N" }]);
     const [valueAdmissionRate, setValueAdmissionRate] = useState([25, 75]);
     const [valueSATmath, setValueSATmath] = useState([600, 700]);
     const [stateSmallSize, setStateSmallSize] = useState({
@@ -304,9 +302,14 @@ export default function Search(props) {
 
                 {/* right side - colleges */}
                 <Grid item md={9}>
+
+                    {/* college cards */}
                     {colleges.map((college) =>
                         <CollegeCard college={college} />
                     )}
+
+                    {/* pagination */}
+                    <Pagination count={10} color="primary" className={classes.pagination}/>
 
                 </Grid>
 
