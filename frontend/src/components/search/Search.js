@@ -10,6 +10,11 @@ import Slider from '@material-ui/core/Slider';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -19,6 +24,11 @@ const useStyles = makeStyles(theme => ({
     filters: {
         marginLeft: "20px",
         marginTop: "40px"
+    },
+
+    card: {
+        marginTop: "40px",
+        marginLeft: "60px"
     }
 
 }));
@@ -290,7 +300,26 @@ export default function Search(props) {
                 </Grid>
 
                 {/* right side - colleges */}
-                <Grid item md={6}>
+                <Grid item md={9}>
+
+                    <Card className={classes.card}>
+                        <CardActionArea>
+                            <CardContent>
+                                <Typography gutterBottom variant="h5" component="h2" align='left'>
+                                    Lizard
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary" component="p" align='left'>
+                                    Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+                                    across all continents except Antarctica
+                                </Typography>
+                            </CardContent>
+                        </CardActionArea>
+                        <CardActions>
+                            <Button size="small" color="primary">
+                            Learn More
+                            </Button>
+                        </CardActions>
+                    </Card>
                     
                 </Grid>
 
