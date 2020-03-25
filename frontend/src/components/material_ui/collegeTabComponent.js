@@ -61,22 +61,17 @@ export default function SimpleTabs(props) {
   return (
     <div className={classes.root}>
         <AppBar position="static">
-            <Tabs className={classes.tabs} centered value={value} onChange={handleChange} aria-label="simple tabs example">
+            <Tabs variant="fullWidth" className={classes.tabs} value={value} onChange={handleChange} aria-label="simple tabs example">
             <Tab className={classes.tab}  label="Overview" {...a11yProps(0)}/>
             <Tab className={classes.tab}  label="Majors" {...a11yProps(1)}/>
             <Tab className={classes.tab}  label="Admissions" {...a11yProps(2)}/>
-            <Tab className={classes.tab} label="Campus Life" {...a11yProps(3)}/>
             </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
-            <br />Early Action Availability
-            <br />Early Decision Availability
-            <br />Admission deadline
             <br />Average GPA:
             <br />SAT MATH: {props.college.SAT_math}
             <br />SAT EBRW: {props.college.SAT_EBRW}
             <br />ACT: {props.college.ACT_composite}
-            <br />Detail Enrollment: (%male, %female) (number of undergrad, grad)
         </TabPanel>
         <TabPanel value={value} index={1}>
             Item Two
@@ -84,13 +79,6 @@ export default function SimpleTabs(props) {
         <TabPanel value={value} index={2}>
             <br />Admission Rate: {props.college.adm_rate}
             <ApplicationTracker/>
-        </TabPanel>
-        <TabPanel value={value} index={3}>
-            <br />Nearest Metropolitan Area
-            <br />Freshman Housing Guarantee
-            <br />Students in College Housing
-            <br />Mascot
-            <br />Student body (%American, %Asian, %Black..., %International)
         </TabPanel>
     </div>
   );

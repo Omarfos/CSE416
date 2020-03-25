@@ -114,19 +114,15 @@ export default function CollegeProfile(props) {
                                     <TableBody>
                                         <TableRow>
                                             <TableCell align="left" className={classes.tableCell}>Tuition and Fees (in-state)</TableCell>
-                                            <TableCell align="right" className={classes.tableCell}>{college.in_state_cost}</TableCell>
+                                            <TableCell align="right" className={classes.tableCell}>$ {college.in_state_cost}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell align="left" className={classes.tableCell}>Tuition and Fees (out-state)</TableCell>
-                                            <TableCell align="right" className={classes.tableCell}>{college.out_state_cost}</TableCell>
+                                            <TableCell align="right" className={classes.tableCell}>$ {college.out_state_cost}</TableCell>
                                         </TableRow>
                                         <TableRow>
-                                            <TableCell align="left" className={classes.tableCell}>Totoal Enrollment</TableCell>
+                                            <TableCell align="left" className={classes.tableCell}>Total Undergradate Enrollment</TableCell>
                                             <TableCell align="right" className={classes.tableCell}>{college.size}</TableCell>
-                                        </TableRow>
-                                        <TableRow>
-                                            <TableCell align="left" className={classes.tableCell}>Application Deadline</TableCell>
-                                            <TableCell align="right" className={classes.tableCell}>college.deadline</TableCell>
                                         </TableRow>
                                     </TableBody>
                                 </Table>
