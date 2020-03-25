@@ -4,12 +4,19 @@ import { useLocation, Link, useHistory } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles} from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import CollegeCard from './CollegeCard';
+import Pagination from '@material-ui/lab/Pagination';
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from '@material-ui/core/Select';
+import Divider from '@material-ui/core/Divider';
+import Switch from '@material-ui/core/Switch';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -19,6 +26,25 @@ const useStyles = makeStyles(theme => ({
     filters: {
         marginLeft: "20px",
         marginTop: "40px"
+    },
+
+    pagination: {
+        marginTop: "40px",
+        marginBottom: "40px",
+        marginLeft: "35%"
+    },
+
+    formControl: {
+        marginTop: "20px",
+        width: "200px"
+    },
+
+    sortOrder: {
+        marginTop: "40px"
+    },
+
+    sortOptions: {
+        marginLeft: "50%"
     }
 
 }));
@@ -26,12 +52,62 @@ const useStyles = makeStyles(theme => ({
 // sliders
 function valuetextAdmissionRate(value) {
     return `${value}%`;
-}   
+}
 
 function valuetextSATmath(value) {
-    return `${value}%`;
-} 
-  
+    return `${value}`;
+}
+
+function valuetextSATebrw(value) {
+    return `${value}`;
+}
+
+function valuetextACTcomposite(value) {
+    return `${value}`;
+}
+
+function valuetextCostOfAttendance(value) {
+    return `${value}`;
+}
+
+function valuetextRanking(value) {
+    return `${value}`;
+}
+
+
+const AntSwitch = withStyles(theme => ({
+    root: {
+      width: 28,
+      height: 16,
+      padding: 2,
+      display: 'flex',
+    },
+    switchBase: {
+      padding: 3,
+      color: theme.palette.grey[500],
+      '&$checked': {
+        transform: 'translateX(12px)',
+        color: theme.palette.common.white,
+        '& + $track': {
+          opacity: 1,
+          backgroundColor: theme.palette.primary.main,
+          borderColor: theme.palette.primary.main,
+        },
+      },
+    },
+    thumb: {
+      width: 12,
+      height: 12,
+      boxShadow: 'none',
+    },
+    track: {
+      border: `1px solid ${theme.palette.grey[500]}`,
+      borderRadius: 16 / 2,
+      opacity: 1,
+      backgroundColor: theme.palette.common.white,
+    },
+    checked: {},
+  }))(Switch);
 
 
 export default function Search(props) {
@@ -40,17 +116,32 @@ export default function Search(props) {
     const location = useLocation();
     const history = useHistory();
     const classes = useStyles();
-    const [valueAdmissionRate, setValueAdmissionRate] = React.useState([25, 75]);
-    const [valueSATmath, setValueSATmath] = React.useState([600, 700]);
-    const [stateSmallSize, setStateSmallSize] = React.useState({
+    const [colleges, setColleges] = useState([{ "name": "Stony Brook" }, { "name": "Wagner College" }, { "name": "New York University" }, 
+            {"name": "Boston University"}, {"name": "Princeton University"}, {"name": "Harvard University"}]);
+    // const [filters, setFilters] = useState([{ "name": "Stony Brook" }, { "name": "Wagner College" }, { "name": "N" }]);
+    const [valueAdmissionRate, setValueAdmissionRate] = useState([25, 75]);
+    const [valueSATmath, setValueSATmath] = useState([600, 700]);
+    const [valueSATebrw, setValueSATebrw] = useState([600, 700]);
+    const [valueACTcomposite, setValueACTcomposite] = useState([28, 32]);
+    const [valueCostOfAttendance, setValueCostOfAttendance] = useState([5000, 35000]);
+    const [valueRanking, setValueRanking] = useState([10, 50]);
+
+    const [stateSmallSize, setStateSmallSize] = useState({
         checkedSmallSize: false
     });
-    const [stateMediumSize, setStateMediumSize] = React.useState({
+    const [stateMediumSize, setStateMediumSize] = useState({
         checkedMediumSize: true
     });
-    const [stateLargeSize, setStateLargeSize] = React.useState({
+    const [stateLargeSize, setStateLargeSize] = useState({
         checkedLargeSize: false
     });
+    const [stateSort, setStateSort] = useState({
+        sortBy: "Ranking"
+    });
+
+    const [stateOrder, setStateOrder] = useState({
+        checkedOrder: false
+      });
 
     const handleChangeAdmissionRate = (event, newValue) => {
         setValueAdmissionRate(newValue);
@@ -60,16 +151,44 @@ export default function Search(props) {
         setValueSATmath(newValue);
     };
 
+    const handleChangeSATebrw = (event, newValue) => {
+        setValueSATebrw(newValue);
+    };
+
+    const handleChangeACTcomposite = (event, newValue) => {
+        setValueACTcomposite(newValue);
+    };
+
+    const handleChangeCostOfAttendance = (event, newValue) => {
+        setValueCostOfAttendance(newValue);
+    };
+
+    const handleChangeRanking = (event, newValue) => {
+        setValueRanking(newValue);
+    };
+
     const handleChangeSmallSize = event => {
         setStateSmallSize({ ...stateSmallSize, [event.target.name]: event.target.checked });
     };
-    
+
     const handleChangeMediumSize = event => {
         setStateMediumSize({ ...stateMediumSize, [event.target.name]: event.target.checked });
     };
 
     const handleChangeLargeSize = event => {
         setStateLargeSize({ ...stateLargeSize, [event.target.name]: event.target.checked });
+    };
+
+    const handleChangeSort = event => {
+        const name = event.target.name;
+        setStateSort({
+          ...stateSort,
+          [name]: event.target.value
+        });
+    };
+
+    const handleChangeOrder = event => {
+        setStateOrder({ ...stateOrder, [event.target.name]: event.target.checked });
     };
 
     useEffect(() => {
@@ -82,7 +201,7 @@ export default function Search(props) {
         fetchData();
     });
 
-    async function handleSearch(event){
+    async function handleSearch(event) {
         event.preventDefault();
         history.push('/search/' + event.target.searchQuery.value);
         //refresh. or whatever
@@ -93,7 +212,7 @@ export default function Search(props) {
             <Grid container spacing={2}>
 
                 {/* left side - filters */}
-                <Grid item md={2} className={classes.filters}> 
+                <Grid item md={2} className={classes.filters}>
                     <Grid container spacing={2}>
 
                         <Grid item md={12}>
@@ -101,56 +220,56 @@ export default function Search(props) {
                                 multiple
                                 id="tags-outlined"
                                 options={[
-                                    { title: 'Alabama'},
-                                    { title: 'Alaska'},
-                                    { title: 'Arizona'},
-                                    { title: 'Arkansas'},
-                                    { title: 'California'},
-                                    { title: 'Colorado'},
-                                    { title: 'Connecticut'},
-                                    { title: 'Delaware'},
-                                    { title: 'Florida'},
-                                    { title: 'Georgia'},
-                                    { title: 'Hawaii'},
-                                    { title: 'Idaho'},
-                                    { title: 'Illinois'},
-                                    { title: 'Indiana'},
-                                    { title: 'Iowa'},
-                                    { title: 'Kansas'},
-                                    { title: 'Kentucky'},
-                                    { title: 'Louisiana'},
-                                    { title: 'Maine'},
-                                    { title: 'Maryland'},
-                                    { title: 'Massachusetts'},
-                                    { title: 'Michigan'},
-                                    { title: 'Minnesota'},
-                                    { title: 'Mississippi'},
-                                    { title: 'Missouri'},
-                                    { title: 'Montana'},
-                                    { title: 'Nebraska'},
-                                    { title: 'Nevada'},
-                                    { title: 'New Hampshire'},
-                                    { title: 'New Jersey'},
-                                    { title: 'New Mexico'},
-                                    { title: 'New York'},
-                                    { title: 'North Carolina'},
-                                    { title: 'North Dakota'},
-                                    { title: 'Ohio'},
-                                    { title: 'Oklahoma'},
-                                    { title: 'Oregon'},
-                                    { title: 'Pennsylvania'},
-                                    { title: 'Rhode Island'},
-                                    { title: 'South Carolina'},
-                                    { title: 'South Dakota'},
-                                    { title: 'Tennessee'},
-                                    { title: 'Texas'},
-                                    { title: 'Utah'},
-                                    { title: 'Vermont'},
-                                    { title: 'Virginia'},
-                                    { title: 'Washington'},
-                                    { title: 'West Virginia'},
-                                    { title: 'Wisconsin'},
-                                    { title: 'Wyoming'}
+                                    { title: 'Alabama' },
+                                    { title: 'Alaska' },
+                                    { title: 'Arizona' },
+                                    { title: 'Arkansas' },
+                                    { title: 'California' },
+                                    { title: 'Colorado' },
+                                    { title: 'Connecticut' },
+                                    { title: 'Delaware' },
+                                    { title: 'Florida' },
+                                    { title: 'Georgia' },
+                                    { title: 'Hawaii' },
+                                    { title: 'Idaho' },
+                                    { title: 'Illinois' },
+                                    { title: 'Indiana' },
+                                    { title: 'Iowa' },
+                                    { title: 'Kansas' },
+                                    { title: 'Kentucky' },
+                                    { title: 'Louisiana' },
+                                    { title: 'Maine' },
+                                    { title: 'Maryland' },
+                                    { title: 'Massachusetts' },
+                                    { title: 'Michigan' },
+                                    { title: 'Minnesota' },
+                                    { title: 'Mississippi' },
+                                    { title: 'Missouri' },
+                                    { title: 'Montana' },
+                                    { title: 'Nebraska' },
+                                    { title: 'Nevada' },
+                                    { title: 'New Hampshire' },
+                                    { title: 'New Jersey' },
+                                    { title: 'New Mexico' },
+                                    { title: 'New York' },
+                                    { title: 'North Carolina' },
+                                    { title: 'North Dakota' },
+                                    { title: 'Ohio' },
+                                    { title: 'Oklahoma' },
+                                    { title: 'Oregon' },
+                                    { title: 'Pennsylvania' },
+                                    { title: 'Rhode Island' },
+                                    { title: 'South Carolina' },
+                                    { title: 'South Dakota' },
+                                    { title: 'Tennessee' },
+                                    { title: 'Texas' },
+                                    { title: 'Utah' },
+                                    { title: 'Vermont' },
+                                    { title: 'Virginia' },
+                                    { title: 'Washington' },
+                                    { title: 'West Virginia' },
+                                    { title: 'Wisconsin' },
+                                    { title: 'Wyoming' }
                                 ]}
                                 getOptionLabel={option => option.title}
                                 filterSelectedOptions
@@ -158,12 +277,12 @@ export default function Search(props) {
                                 //     {width: 300}
                                 // }
                                 renderInput={params => (
-                                <TextField
-                                    {...params}
-                                    variant="outlined"
-                                    label="Location"
-                                    placeholder="Select State"
-                                />
+                                    <TextField
+                                        {...params}
+                                        variant="outlined"
+                                        label="Location"
+                                        placeholder="Select State"
+                                    />
                                 )}
                             />
                         </Grid>
@@ -173,42 +292,24 @@ export default function Search(props) {
                                 multiple
                                 id="tags-outlined"
                                 options={[
-                                    { title: 'Accounting'},
-                                    { title: 'Anthropology'},
-                                    { title: 'Biochemistry'},
-                                    { title: 'Biology'},
-                                    { title: 'Business Management'},
-                                    { title: 'Chemistry'},
-                                    { title: 'Civil Engineering'},
-                                    { title: 'Computer Engineering'},
-                                    { title: 'Civil Engineering'},
-                                    { title: 'Computer Science'},
-                                    { title: 'Economics'},
-                                    { title: 'Electrical Engineering'},
-                                    { title: 'English'},
-                                    { title: 'Geology'},
-                                    { title: 'Health Science'},
-                                    { title: 'History'},
-                                    { title: 'Journalism'},
-                                    { title: 'Mathematics'},
-                                    { title: 'Mechanical Engineering'},
-                                    { title: 'Music'},
-                                    { title: 'Nursing'},
-                                    { title: 'Philosophy'},
-                                    { title: 'Physics'},
-                                    { title: 'Political Science'},
-                                    { title: 'Sociology'},
-                                    { title: 'Theatre Arts'},
+                                    { title: 'Accounting' },
+                                    { title: 'Anthropology' },
+                                    { title: 'Biochemistry' },
+                                    { title: 'Biology' },
+                                    { title: 'Business Management' },
+                                    { title: 'Chemistry' },
+                                    { title: 'Civil Engineering' },
+                                    { title: 'Theatre Arts' },
                                 ]}
                                 getOptionLabel={option => option.title}
                                 filterSelectedOptions
                                 renderInput={params => (
-                                <TextField
-                                    {...params}
-                                    variant="outlined"
-                                    label="Major"
-                                    placeholder="Select Subject"
-                                />
+                                    <TextField
+                                        {...params}
+                                        variant="outlined"
+                                        label="Major"
+                                        placeholder="Select Subject"
+                                    />
                                 )}
                             />
                         </Grid>
@@ -227,6 +328,7 @@ export default function Search(props) {
                                 />
                             </div>
                         </Grid>
+
                         <Grid item md={12}>
                             <div className={classes.root}>
                                 <Typography id="range-slider" gutterBottom align='left'>
@@ -246,42 +348,112 @@ export default function Search(props) {
                         </Grid>
 
                         <Grid item md={12}>
+                            <div className={classes.root}>
+                                <Typography id="range-slider" gutterBottom align='left'>
+                                    Average SAT EBRW: {valueSATebrw[0]} - {valueSATebrw[1]}
+                                </Typography>
+                                <Slider
+                                    value={valueSATebrw}
+                                    onChange={handleChangeSATebrw}
+                                    valueLabelDisplay="auto"
+                                    aria-labelledby="range-slider"
+                                    getAriaValueText={valuetextSATebrw}
+                                    min={200}
+                                    max={800}
+                                    step={10}
+                                />
+                            </div>
+                        </Grid>
+
+                        <Grid item md={12}>
+                            <div className={classes.root}>
+                                <Typography id="range-slider" gutterBottom align='left'>
+                                    Average ACT Composite: {valueACTcomposite[0]} - {valueACTcomposite[1]}
+                                </Typography>
+                                <Slider
+                                    value={valueACTcomposite}
+                                    onChange={handleChangeACTcomposite}
+                                    valueLabelDisplay="auto"
+                                    aria-labelledby="range-slider"
+                                    getAriaValueText={valuetextACTcomposite}
+                                    min={1}
+                                    max={36}
+                                />
+                            </div>
+                        </Grid>
+
+                        <Grid item md={12}>
+                            <div className={classes.root}>
+                                <Typography id="range-slider" gutterBottom align='left'>
+                                    Cost of Attendance: {valueCostOfAttendance[0]} - {valueCostOfAttendance[1]}
+                                </Typography>
+                                <Slider
+                                    value={valueCostOfAttendance}
+                                    onChange={handleChangeCostOfAttendance}
+                                    valueLabelDisplay="auto"
+                                    aria-labelledby="range-slider"
+                                    getAriaValueText={valuetextCostOfAttendance}
+                                    min={0}
+                                    max={100000}
+                                    step={1000}
+                                />
+                            </div>
+                        </Grid>
+
+                        <Grid item md={12}>
+                            <div className={classes.root}>
+                                <Typography id="range-slider" gutterBottom align='left'>
+                                    Ranking: {valueRanking[0]} - {valueRanking[1]} %
+                                </Typography>
+                                <Slider
+                                    value={valueRanking}
+                                    onChange={handleChangeRanking}
+                                    valueLabelDisplay="auto"
+                                    aria-labelledby="range-slider"
+                                    getAriaValueText={valuetextRanking}
+                                    min={1}
+                                    max={100}
+                                />
+                            </div>
+                        </Grid>
+
+                        <Grid item md={12}>
                             <Typography id="size-checkbox" gutterBottom align='left'>
-                                Student Body Size:
+                                Undegraduate Enrollment:
                             </Typography>
                             <FormGroup column>
                                 <FormControlLabel
                                     control={
-                                    <Checkbox
-                                        checked={stateSmallSize.checkedSmallSize}
-                                        onChange={handleChangeSmallSize}
-                                        name="checkedSmallSize"
-                                        color="primary"
-                                    />
+                                        <Checkbox
+                                            checked={stateSmallSize.checkedSmallSize}
+                                            onChange={handleChangeSmallSize}
+                                            name="checkedSmallSize"
+                                            color="primary"
+                                        />
                                     }
-                                    label="Small"
+                                    label="Small (up to 5000)"
                                 />
                                 <FormControlLabel
                                     control={
-                                    <Checkbox
-                                        checked={stateMediumSize.checkedMediumSize}
-                                        onChange={handleChangeMediumSize}
-                                        name="checkedMediumSize"
-                                        color="primary"
-                                    />
+                                        <Checkbox
+                                            checked={stateMediumSize.checkedMediumSize}
+                                            onChange={handleChangeMediumSize}
+                                            name="checkedMediumSize"
+                                            color="primary"
+                                        />
                                     }
-                                    label="Medium"
+                                    label="Medium (5000 - 15000)" 
                                 />
                                 <FormControlLabel
                                     control={
-                                    <Checkbox
-                                        checked={stateLargeSize.checkedLargeSize}
-                                        onChange={handleChangeLargeSize}
-                                        name="checkedLargeSize"
-                                        color="primary"
-                                    />
+                                        <Checkbox
+                                            checked={stateLargeSize.checkedLargeSize}
+                                            onChange={handleChangeLargeSize}
+                                            name="checkedLargeSize"
+                                            color="primary"
+                                        />
                                     }
-                                    label="Large"
+                                    label="Large (15000 and more)"
                                 />
                             </FormGroup>
                         </Grid>
@@ -290,11 +462,56 @@ export default function Search(props) {
                 </Grid>
 
                 {/* right side - colleges */}
-                <Grid item md={6}>
-                    
+                <Grid item md={9}>
+
+                    <Grid container spacing={24}>
+                        <Grid item md={3} className={classes.sortOptions}>
+                            {/* sort option */}
+                            <FormControl className={classes.formControl}>
+                                <InputLabel htmlFor="age-native-simple"></InputLabel>
+                                <Select
+                                    native
+                                    value={stateSort.age}
+                                    onChange={handleChangeSort}
+                                    inputProps={{
+                                        sortBy: 'age',
+                                        order: 'age-native-simple',
+                                    }}
+                                    >
+                                    <option value="admissionRate">Admission Rate</option>
+                                    <option value="costOfAttendance">Cost of Attendance</option>
+                                    <option value="ranking">Ranking</option>
+                                    <option value="recommendationScore">Recommendation Score</option>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item md={3}>
+                            {/* sortOrder */}
+                            <FormGroup className={classes.sortOrder}>
+                                <Typography component="div">
+                                    <Grid component="label" container alignItems="center" spacing={1}>
+                                    <Grid item>Ascending</Grid>
+                                    <Grid item>
+                                        <AntSwitch checked={stateOrder.checkedOrder} onChange={handleChangeOrder} name="checkedOrder" />
+                                    </Grid>
+                                    <Grid item>Descending</Grid>
+                                    </Grid>
+                                </Typography>
+                            </FormGroup>
+                        </Grid>
+                    </Grid>
+
+                    {/* college cards */}
+                    {colleges.map((college) =>
+                        <CollegeCard college={college} />
+                    )}
+
+                    {/* pagination */}
+                    <Pagination count={10} color="primary" className={classes.pagination}/>
+
                 </Grid>
 
             </Grid>
         </div>
-      );
+    );
 }
