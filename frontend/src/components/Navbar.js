@@ -1,12 +1,10 @@
-
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import {Link}  from "react-router-dom";
-
+import {Link, useHistory}  from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,30 +29,39 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+
+
 export default function Navbar (props){
-    const classes = useStyles();
-    return (
-      <div className={classes.root}>
-        <AppBar position="static" className={classes.navBar}>
-          <Toolbar>
-            <Typography align="left" className={classes.title}>
-               <Link className={classes.button} to="/" >C4ME</Link>
-            </Typography>
-            {props.user &&
-                <React.Fragment>
-                    <Link className={classes.button} to={"/profile/"+props.user}>Profile</Link>
-                    <Button className={classes.button} onClick={props.handleLogout}>Log out</Button>
-                </React.Fragment>
-            }
-            {!props.user &&
-                <React.Fragment>
-                    <Link className={classes.button} to="/login">Login</Link>
-                    <Link className={classes.button} to="/register">Register</Link>
-                </React.Fragment>
-            }
-          </Toolbar>
-        </AppBar>
-      </div>
-    );
+  const classes = useStyles();
+  let history = useHistory();
+
+  async function handleLogout(){
+    props.setUser(null);
+    history.push('/');
+  }
+
+  return (
+    <div className={classes.root}>
+      <AppBar position="static" className={classes.navBar}>
+        <Toolbar>
+          <Typography align="left" className={classes.title}>
+              <Link className={classes.button} to="/" >C4ME</Link>
+          </Typography>
+          {props.user &&
+              <React.Fragment>
+                  <Link className={classes.button} to={"/profile/"+props.user}>Profile</Link>
+                  <Button className={classes.button} onClick={handleLogout}>Log out</Button>
+              </React.Fragment>
+          }
+          {!props.user &&
+              <React.Fragment>
+                  <Link className={classes.button} to="/login">Login</Link>
+                  <Link className={classes.button} to="/register">Register</Link>
+              </React.Fragment>
+          }
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
 }
 

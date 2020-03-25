@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
     bingo:{
         color: "#657ECD",
     }
-  }));
+}));
 export default function Home() {
     let history = useHistory();
     const classes = useStyles();
