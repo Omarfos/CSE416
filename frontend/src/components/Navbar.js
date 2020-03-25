@@ -5,6 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import {Link}  from "react-router-dom";
 
 
 const useStyles = makeStyles(theme => ({
@@ -18,8 +19,15 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
   },
   button:{
+    textDecoration:"none",
+    marginRight:"20px",
     color:'#8493d3',
-    fontSize: 20
+    fontSize: 20,
+    padding: "8px",
+    '&:hover': {
+      background: "hsla(240, 48%, 41%, 0.1)",
+      color: "#5d6896"
+   },
   }
 }));
 
@@ -30,18 +38,18 @@ export default function Navbar (props){
         <AppBar position="static" className={classes.navBar}>
           <Toolbar>
             <Typography align="left" className={classes.title}>
-               <Button className={classes.button} href="/" >C4ME</Button>
+               <Link className={classes.button} to="/" >C4ME</Link>
             </Typography>
             {props.user &&
                 <React.Fragment>
-                    <Button className={classes.button} href={"/profile/"+props.user}>Profile</Button>
+                    <Link className={classes.button} to={"/profile/"+props.user}>Profile</Link>
                     <Button className={classes.button} onClick={props.handleLogout}>Log out</Button>
                 </React.Fragment>
             }
             {!props.user &&
                 <React.Fragment>
-                    <Button className={classes.button} href="/login">Login</Button>
-                    <Button className={classes.button} href="/register">Register</Button>
+                    <Link className={classes.button} to="/login">Login</Link>
+                    <Link className={classes.button} to="/register">Register</Link>
                 </React.Fragment>
             }
           </Toolbar>

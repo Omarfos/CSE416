@@ -8,44 +8,33 @@ import Profile from './components/user/Profile'
 import Navbar from './components/Navbar.js';
 import {Route,Switch, Redirect, useHistory} from "react-router-dom";
 import { Container } from '@material-ui/core';
-import axios from 'axios';
 import './App.css';
 
 
 function App() {
   //Set it to this right now. 
-  const [user, setUser] = useState("omar");
+  const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   let history = useHistory();
 
-  useEffect(() => {
-    // Update the document title using the browser API
-    fetch('http://localhost:8000/student/omar')
-        .then(response => response.json())
-        .then(
-            data => {
-                // console.log('data', data);
-                // setUser(data[0]);
-            }
-            //PaymentResponse.ur
-            //return <Redirect data={data}></Redirect>
-        )
-  }, []);
+  // useEffect(() => {
+  //   // Update the document title using the browser API
+  //   fetch('http://localhost:8000/student/omar')
+  //       .then(response => response.json())
+  //       .then(
+  //           data => {
+  //               // console.log('data', data);
+  //               // setUser(data[0]);
+  //           }
+  //           //PaymentResponse.ur
+  //           //return <Redirect data={data}></Redirect>
+  //       )
+  // }, []);
 
-  async function handleLogin(event) {
-    //call backend post /login to verify
-    //event.preventDefault();
-    // const res = await axios.post('/login', { 
-    //         username: event.target.username.value,
-    //         password: event.target.password.value   
-    // });
-    //setUser();
-    //setErrorMessage(res.data.error);
-    // if(!res.data.error)
-    //     history.push('/');
-  }
+ 
 
   async function handleLogout(event){
+    console.log("Logging out");
     //call backend post /logout
     setUser(null);
     history.push('/');
@@ -65,12 +54,10 @@ function App() {
         <Route exact path="/" render={() => (<Home/>)} />
         <Route exact path="/search/:q" render={() => (<Search/>)} />
         <Route exact path="/view_college/:id" render={() => (<CollegeProfile/>)} />
-        <Route exact path="/profile/:id" render={()=>(<Profile user = {user}/>)} /> 
-        <Route exact path="/login" render={() => <Login/>} />
-        
+        <Route exact path="/profile/:id" render={()=>(<Profile user = {user}/>)} />    
+        <Route exact path="/login" render={() => (<Login errorMessage={errorMessage} setError = {setErrorMessage} setUser = {setUser} user = {user}/>)} />
         {!user && 
           <React.Fragment>
-            <Route exact path="/login" render={() => (<Login errorMessage={errorMessage} handleLogin = {handleLogin}/>)} />
             <Route exact path="/register" render={() => (<Register handleRegister = {handleRegister}/>)} />
           </React.Fragment>
         }   
