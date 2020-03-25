@@ -1,6 +1,5 @@
 .vscode
 *.pyc
-*.png
 backend/migrations/*
 frontend/package-lock.json
 Pipfile.lock
