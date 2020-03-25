@@ -23,24 +23,24 @@ def login_internal(request):
     try:
         d = json.loads(request.body)
         if 'userid' not in d or 'password' not in d:
-            return HttpResponse(status=400)
+            return JsonResponse(status=400)
         user = authenticate(request, username=d['userid'], password=d['password'])
         if user is not None:
              login(request, user)
         else:
-            return HttpResponse("ERROR: Invalid User Name or Password")
+            return JsonResponse({"ERROR": "Invalid User Name or Password"})
 
     except json.decoder.JSONDecodeError:
-        return HttpResponse(status=400)
+        return JsonResponse(status=400)
 
-    return HttpResponse("SUCCESS: User logged in")
+    return JsonResponse({"SUCCESS": "User logged in"})
 
 def register(request):
 
     try:
         d = json.loads(request.body)
         if 'userid' not in d or 'password' not in d:
-            return HttpResponse(status=400)
+            return JsonResponse(status=400)
         user = User.objects.create_user(d['userid'], password=d['password'])
         user.first_name = d.get('first_name', '')
         user.last_name = d.get('last_name', '')
