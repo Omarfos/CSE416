@@ -9,9 +9,10 @@ def import_colleges():
     with open('backend/data/colleges.txt', 'r') as f:
         colleges_list = f.read().split('\n')
         for college_name in colleges_list:
-            scrape_college_data(college_name)
-        #    c = College(name=college_name)
-        #    c.save()
+            print(college_name)
+            #scrape_college_data(college_name)
+            c = College(name=college_name)
+            c.save()
 
 
 def import_students():
@@ -95,6 +96,7 @@ class Command(BaseCommand):
         elif options['data_type'] == 'student':
             self.stdout.write(self.style.SUCCESS('Importing Students'))
             import_students()
+
         else:
             self.stdout.write(self.style.SUCCESS('Importing HS'))
             import_hs()

@@ -59,13 +59,26 @@ class Student(models.Model):
 
 
 class College(models.Model):
-    name = models.CharField(max_length=100, unique=True, primary_key=True)
-    ranking = models.CharField(max_length=10, null=True)
+
+    INS_TYPE = [
+        ('Public', 'Public'),
+        ('Private nonprofit', 'Private nonprofit'),
+        ('Private for-profit', 'Private for-profit'),
+    ]
+
+    name = models.CharField(max_length=100, unique=True)
+    ranking = models.IntegerField(null=True)
     adm_rate = models.FloatField(null=True)
     size = models.IntegerField(null=True)
     SAT_math = models.IntegerField(null=True)
     SAT_EBRW = models.IntegerField(null=True)
     ACT_composite = models.IntegerField(null=True)
+    in_state_cost = models.IntegerField(null=True)
+    out_state_cost = models.IntegerField(null=True)
+    institution_type = models.CharField(max_length=30, choices=INS_TYPE)
+    grad_debt_median = models.IntegerField(null=True)
+    completion_rate = models.FloatField(null=True)
+    state = models.CharField(max_length=2, null=True)
 
     def __str__(self):
         return f'{self.name}'

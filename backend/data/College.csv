@@ -1,0 +1,102 @@
+id,name,ranking,adm_rate,size,SAT_math,SAT_EBRW,ACT_composite,in_state_cost,out_state_cost,institution_type,grad_debt_median,completion_rate,state
+58,Salve Regina University,401,0.7189,2160,-1,-1,-1,61260,61260,Private nonprofit,27000,67.0,RI
+39,Merrimack College,401,0.8154,3404,-1,-1,-1,58150,58150,Private nonprofit,27000,65.6,MA
+53,Rider University,319,0.6712,4042,-1,-1,-1,61540,61540,Private nonprofit,26000,56.9,NJ
+7,Campbell University,401,0.8058,4328,-1,-1,-1,43710,43710,Private nonprofit,22000,30.7,NC
+34,Kennesaw State University,600,0.6063,32309,-1,-1,-1,26733,40459,Public,24126,13.9,GA
+5,"California State University, Fresno",356,0.5941,21877,-1,-1,18,,,Public,15000,,CA
+46,North Park University,401,0.5373,2018,-1,-1,22,,,Private nonprofit,25000,39.1,IL
+61,School of the Art Institute of Chicago,351,0.6982,2889,-1,-1,24,71090,71090,Private nonprofit,26000,41.0,IL
+85,University of Illinois at Chicago,81,0.7708,19106,-1,-1,24,27753,41445,Public,17400,29.9,IL
+97,Wagner College,311,0.6969,1763,-1,-1,25,62131,62131,Private nonprofit,25000,63.4,NY
+40,Mississippi State University,401,0.624,17723,-1,-1,25,26014,41054,Public,23000,31.5,MS
+75,University of Alabama at Birmingham,256,0.533,32387,-1,-1,25,28375,43165,Public,23250,30.1,AL
+15,DePauw University,116,0.6725,2137,-1,-1,26,67046,67046,Private nonprofit,26000,75.7,IN
+79,"University of California, Santa Barbara",71,0.3281,22181,690,-1,28,36685,65677,Public,15306,70.1,CA
+28,Idaho State University,501,,7921,510,26,22,21111,35887,Public,22968,20.1,ID
+19,Eastern Washington University,600,0.962,10500,480,495,20,23769,41265,Public,21000,24.0,WA
+4,"California State University, East Bay",401,0.7405,13433,490,502,19,25099,38071,Public,15326,10.3,CA
+83,University of Hartford,360,0.8089,4835,560,518,24,59249,59249,Private nonprofit,27000,46.1,CT
+18,Eastern Illinois University,375,0.5151,4877,495,520,21,24653,26933,Public,22500,37.5,IL
+62,Siena College,295,0.7785,3132,580,529,25,57410,57410,Private nonprofit,26927,73.7,NY
+32,John Carroll University,305,0.8503,2972,530,536,25,60217,60217,Private nonprofit,27000,71.7,OH
+29,Illinois College,340,0.5487,947,540,544,23,43870,43870,Private nonprofit,27000,65.1,IL
+6,"California State University, Monterey Bay",381,0.532,6557,525,545,20,23363,35243,Public,13521,27.2,CA
+9,Central Connecticut State University,401,0.6676,9317,530,545,22,26861,38663,Public,22455,26.4,CT
+67,Suffolk University,291,0.8355,4952,540,546,24,62149,62149,Private nonprofit,27000,45.4,MA
+65,Stevenson University,401,0.6087,3375,555,549,22,55266,55266,Private nonprofit,27000,40.8,MD
+31,Iona College,401,0.922,2989,535,550,23,59258,59258,Private nonprofit,26475,59.8,NY
+42,Moravian College,285,0.7597,2007,550,554,24,62876,62876,Private nonprofit,27000,59.1,PA
+23,Gannon University,391,0.799,2616,550,555,23,,,Private nonprofit,27000,47.2,PA
+64,St Bonaventure University,401,0.7053,1592,560,560,24,50791,50791,Private nonprofit,26718,59.3,NY
+48,Nova Southeastern University,401,0.5817,4417,585,560,24,50450,50450,Private nonprofit,22907,40.8,FL
+90,"University of Nevada, Las Vegas",401,0.8107,24783,565,570,21,26665,42433,Public,18750,12.9,NV
+35,Lawrence Technological University,401,0.5964,2191,585,570,25,51846,51846,Private nonprofit,27000,17.9,MI
+71,The College of St Scholastica,332,0.6825,2626,580,574,23,51866,51866,Private nonprofit,20262,61.1,MN
+41,Missouri University of Science and Technology,199,0.8351,6872,640,576,27,23993,42941,Public,24750,22.7,MO
+20,Florida Gulf Coast University,600,0.6426,13636,555,580,23,19350,37487,Public,19500,21.5,FL
+87,University of Maine,600,0.9226,8836,570,584,24,25604,45914,Public,25500,40.1,ME
+100,William Jewell College,328,0.4763,928,575,584,25,49248,49248,Private nonprofit,25000,54.1,MO
+36,Manhattan College,266,0.7539,3664,580,585,-1,63534,63534,Private nonprofit,26000,58.0,NY
+70,Texas Tech University,401,0.6918,30330,575,585,24,26712,39162,Public,21500,33.9,TX
+76,University of Arizona,136,0.8358,33428,625,586,25,28601,49822,Public,20000,45.0,AZ
+91,"University of Nevada, Reno",276,0.8803,17930,585,590,23,24492,39543,Public,19500,48.3,NV
+95,Utah State University,401,0.8908,21473,580,590,24,18349,32887,Public,14000,20.5,UT
+89,University of Montana,600,0.6074,1397,570,591,24,21614,40478,Public,21912,24.8,MT
+74,University of Alabama,401,0.533,32387,580,591,27,27216,46686,Public,23250,44.0,AL
+55,Roger Williams University,401,0.8229,4476,585,593,26,53324,53324,Private nonprofit,26798,55.3,RI
+25,Gordon College,401,0.8889,1573,577,595,26,52436,52436,Private nonprofit,26901,57.4,MA
+14,DePaul University,221,0.7174,14591,585,597,-1,59406,59406,Private nonprofit,24000,59.4,IL
+59,Samford University,170,0.8319,3364,570,598,26,49634,49634,Private nonprofit,19304,64.0,AL
+86,University of Kentucky,323,0.9577,22078,590,599,26,30928,49248,Public,23102,44.2,KY
+60,San Diego State University,270,0.3542,29781,605,602,25,30522,42402,Public,15340,37.0,CA
+84,University of Houston,364,0.6111,35985,610,605,25,26034,41694,Public,19000,29.6,TX
+77,University of Arkansas,401,0.6596,22763,590,605,26,26144,42632,Public,21500,47.1,AR
+27,Hope College,261,0.7363,3029,600,605,26,48680,48680,Private nonprofit,26920,67.3,MI
+94,University of Utah,126,0.6615,23402,615,610,25,23869,42474,Public,17500,31.1,UT
+98,Washington & Jefferson College,208,0.4785,1378,610,616,26,64082,64082,Private nonprofit,27000,69.7,PA
+56,SUNY College of Environmental Science and Forestry,299,0.5215,1790,605,617,26,27635,37545,Public,18000,,NY
+3,Berry College,401,0.616,1963,595,618,26,53540,53540,Private nonprofit,23250,57.3,GA
+73,Transylvania University,381,0.9547,965,620,618,27,54080,54080,Private nonprofit,26660,68.9,KY
+68,Temple University,185,0.5667,29037,610,620,27,34830,49208,Public,24796,48.7,PA
+82,University of Delaware,148,0.6289,18948,620,620,27,29342,49972,Public,24388,72.6,DE
+11,Clarkson University,205,0.6571,2991,640,620,27,70228,70228,Private nonprofit,26125,59.8,NY
+80,"University of California, Santa Cruz",251,0.5094,17577,655,620,27,37186,66178,Public,19000,49.1,CA
+69,Texas Christian University,165,0.4108,8983,626,620,28,68894,68894,Private nonprofit,21000,69.2,TX
+30,Indiana University Bloomington,123,0.7601,33104,630,620,28,25657,51222,Public,20500,64.0,IN
+78,"University of California, Davis",36,0.4336,30046,660,620,28,35752,64744,Public,13000,60.8,CA
+17,Drexel University,96,0.7904,15335,635,625,27,72257,72257,Private nonprofit,26000,,PA
+44,New Jersey Institute of Technology,245,0.6139,7489,660,626,27,38574,54286,Public,23000,29.1,NJ
+16,Drake University,208,0.688,3038,620,628,27,58488,58488,Private nonprofit,23823,71.4,IA
+72,The College of Wooster,143,0.5644,1970,640,628,27,66000,66000,Private nonprofit,25800,69.9,OH
+99,Westmont College,189,0.8471,1285,610,630,25,64240,64240,Private nonprofit,23000,70.6,CA
+81,University of Central Florida,311,0.499,56366,620,630,28,22118,38217,Public,18750,43.6,FL
+38,Mercer University,234,0.7326,4708,625,633,27,53394,53394,Private nonprofit,25000,48.5,GA
+57,Saint Louis University,121,0.6443,7209,640,634,28,63068,63068,Private nonprofit,24988,70.6,MO
+26,Hendrix College,396,0.798,1233,620,635,26,62174,62174,Private nonprofit,27000,67.3,AR
+93,University of San Diego,150,0.4979,5677,640,635,28,70999,70999,Private nonprofit,23782,68.3,CA
+10,Centre College,224,0.7632,1441,655,635,29,55420,55420,Private nonprofit,27000,80.2,KY
+54,Rochester Institute of Technology,155,0.5672,12858,665,635,29,61518,61518,Private nonprofit,27000,27.9,NY
+88,University of Massachusetts Amherst,160,0.5758,23010,655,638,28,32872,52193,Public,23250,70.7,MA
+50,Providence College,229,0.5152,4011,645,639,28,69730,69730,Private nonprofit,27000,83.1,RI
+33,Kalamazoo College,181,0.7338,1415,615,640,28,63176,63176,Private nonprofit,24500,73.1,MI
+22,Franklin & Marshall College,91,0.3411,2269,680,660,30,76020,76020,Private nonprofit,19812,80.5,PA
+1,American University,131,0.294,7433,635,661,29,66478,66478,Private nonprofit,23288,75.0,DC
+21,Fordham University,176,0.4644,9403,680,666,29,76891,76891,Private nonprofit,25815,79.0,NY
+92,University of Richmond,66,0.3297,3165,700,669,30,69750,69750,Private nonprofit,19991,82.2,VA
+66,Stony Brook University,105,0.4219,17215,675,671,28,27221,44891,Public,19000,52.8,NY
+24,Gettysburg College,101,0.458,2411,665,675,28,73560,73560,Private nonprofit,23250,80.5,PA
+43,Mount Holyoke College,61,0.5084,2186,690,680,31,73078,73078,Private nonprofit,19000,80.7,MA
+45,New York University,31,0.2766,26055,725,683,31,76602,76602,Private nonprofit,21250,76.5,NY
+13,Colorado College,111,0.1513,2091,700,685,31,73850,73850,Private nonprofit,16043,83.8,CO
+12,Colgate University,48,0.2814,2854,725,689,32,75050,75050,Private nonprofit,16125,83.9,NY
+63,Smith College,41,0.3187,2519,695,695,31,75229,75229,Private nonprofit,19000,82.3,MA
+2,Barnard College,51,0.1542,2540,695,704,31,78044,78044,Private nonprofit,17500,87.1,NY
+51,Reed College,75,0.3563,1415,700,705,31,77010,77010,Private nonprofit,13465,64.8,OR
+96,Vassar College,56,0.2378,2323,730,710,32,75860,75860,Private nonprofit,17695,87.8,NY
+8,Carnegie Mellon University,25,0.222,6434,775,725,33,74491,74491,Private nonprofit,23250,74.9,PA
+101,Williams College,21,0.1458,2033,745,729,33,75520,75520,Private nonprofit,12702,89.6,MA
+47,Northwestern University,11,0.0924,8489,760,730,34,78599,78599,Private nonprofit,15000,81.8,IL
+52,Rice University,16,0.1586,3970,775,730,34,67352,67352,Private nonprofit,11989,85.5,TX
+49,Princeton University,5,0.0641,5246,765,740,33,70900,70900,Private nonprofit,9850,87.4,NJ
+37,Massachusetts Institute of Technology,2,0.0717,4489,790,741,35,73160,73160,Private nonprofit,12500,85.1,MA

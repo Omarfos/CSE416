@@ -1,22 +1,36 @@
 from django.contrib import admin
 from .models import Student, Application, College, HighSchool
-from .scrape import scrape_college_rankings
+from .scrape import *
 from import_export.admin import ImportExportModelAdmin
 
 
+def import_college_score_card(modeladmin, request, queryset):
+    r = scrape_college_score_card([college.name for college in queryset])
+    for college in r:
+        College.objects.filter(name=college['name']).update(**college)
+
 
 def import_college_rankings(modeladmin, request, queryset):
-    for college in queryset:
-        print(college.name)
-        r = scrape_college_rankings(college.name)
-        college.ranking = r
-        college.save()
+    r = scrape_college_rankings([college.name for college in queryset])
+    print(r)
+    for name, ranking in r.items():
+        c = College.objects.get(name=name)
+        c.ranking = ranking
+        c.save()
+
+def import_college_data(modeladmin, request, queryset):
+    r = scrape_college_data([college.name for college in queryset])
+    for college in r:
+        College.objects.filter(name=college['name']).update(**college)
 
 
-class CollegeAdmin(admin.ModelAdmin):
-    list_display = ['name', 'ranking']
-    actions = [import_college_rankings]
+class CollegeAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    list_display = ['name', 'state', 'ranking', 'institution_type', 'size','adm_rate', 
+    'SAT_math', 'SAT_EBRW', 'ACT_composite', 'in_state_cost', 'out_state_cost',
+    'institution_type', 'grad_debt_median', 'completion_rate' ]
 
+    actions = [import_college_rankings, import_college_data,
+            import_college_score_card]
 
 class ApplicationInline(admin.TabularInline):
     model = Application
