@@ -49,15 +49,6 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-// sliders
-function valuetextAdmissionRate(value) {
-    return `${value}%`;
-}
-
-function valuetextSATmath(value) {
-    return `${value}%`;
-}
-
 
 const AntSwitch = withStyles(theme => ({
     root: {
@@ -79,19 +70,6 @@ const AntSwitch = withStyles(theme => ({
         },
       },
     },
-    thumb: {
-      width: 12,
-      height: 12,
-      boxShadow: 'none',
-    },
-    track: {
-      border: `1px solid ${theme.palette.grey[500]}`,
-      borderRadius: 16 / 2,
-      opacity: 1,
-      backgroundColor: theme.palette.common.white,
-    },
-    checked: {},
-  }))(Switch);
 
 
 export default function Search(props) {
@@ -103,9 +81,6 @@ export default function Search(props) {
     const [colleges, setColleges] = useState([{ "name": "Stony Brook" }, { "name": "Wagner College" }, { "name": "New York University" }, 
             {"name": "Boston University"}, {"name": "Princeton University"}, {"name": "Harvard University"}]);
     // const [filters, setFilters] = useState([{ "name": "Stony Brook" }, { "name": "Wagner College" }, { "name": "N" }]);
-    const [valueAdmissionRate, setValueAdmissionRate] = useState([25, 75]);
-    const [valueSATmath, setValueSATmath] = useState([600, 700]);
-    const [stateSmallSize, setStateSmallSize] = useState({
         checkedSmallSize: false
     });
     const [stateMediumSize, setStateMediumSize] = useState({
@@ -128,6 +103,22 @@ export default function Search(props) {
 
     const handleChangeSATmath = (event, newValue) => {
         setValueSATmath(newValue);
+    };
+
+    const handleChangeSATebrw = (event, newValue) => {
+        setValueSATebrw(newValue);
+    };
+
+    const handleChangeACTcomposite = (event, newValue) => {
+        setValueACTcomposite(newValue);
+    };
+
+    const handleChangeCostOfAttendance = (event, newValue) => {
+        setValueCostOfAttendance(newValue);
+    };
+
+    const handleChangeRanking = (event, newValue) => {
+        setValueRanking(newValue);
     };
 
     const handleChangeSmallSize = event => {
@@ -287,10 +278,10 @@ export default function Search(props) {
                                     onChange={handleChangeAdmissionRate}
                                     valueLabelDisplay="auto"
                                     aria-labelledby="range-slider"
-                                    getAriaValueText={valuetextAdmissionRate}
                                 />
                             </div>
                         </Grid>
+
                         <Grid item md={12}>
                             <div className={classes.root}>
                                 <Typography id="range-slider" gutterBottom align='left'>
@@ -301,7 +292,6 @@ export default function Search(props) {
                                     onChange={handleChangeSATmath}
                                     valueLabelDisplay="auto"
                                     aria-labelledby="range-slider"
-                                    getAriaValueText={valuetextSATmath}
                                     min={200}
                                     max={800}
                                     step={10}
@@ -310,8 +300,74 @@ export default function Search(props) {
                         </Grid>
 
                         <Grid item md={12}>
+                            <div className={classes.root}>
+                                <Typography id="range-slider" gutterBottom align='left'>
+                                    Average SAT EBRW: {valueSATebrw[0]} - {valueSATebrw[1]}
+                                </Typography>
+                                <Slider
+                                    value={valueSATebrw}
+                                    onChange={handleChangeSATebrw}
+                                    valueLabelDisplay="auto"
+                                    aria-labelledby="range-slider"
+                                    min={200}
+                                    max={800}
+                                    step={10}
+                                />
+                            </div>
+                        </Grid>
+
+                        <Grid item md={12}>
+                            <div className={classes.root}>
+                                <Typography id="range-slider" gutterBottom align='left'>
+                                    Average ACT Composite: {valueACTcomposite[0]} - {valueACTcomposite[1]}
+                                </Typography>
+                                <Slider
+                                    value={valueACTcomposite}
+                                    onChange={handleChangeACTcomposite}
+                                    valueLabelDisplay="auto"
+                                    aria-labelledby="range-slider"
+                                    min={1}
+                                    max={36}
+                                />
+                            </div>
+                        </Grid>
+
+                        <Grid item md={12}>
+                            <div className={classes.root}>
+                                <Typography id="range-slider" gutterBottom align='left'>
+                                    Cost of Attendance: {valueCostOfAttendance[0]} - {valueCostOfAttendance[1]}
+                                </Typography>
+                                <Slider
+                                    value={valueCostOfAttendance}
+                                    onChange={handleChangeCostOfAttendance}
+                                    valueLabelDisplay="auto"
+                                    aria-labelledby="range-slider"
+                                    min={0}
+                                    max={100000}
+                                    step={1000}
+                                />
+                            </div>
+                        </Grid>
+
+                        <Grid item md={12}>
+                            <div className={classes.root}>
+                                <Typography id="range-slider" gutterBottom align='left'>
+                                    Ranking: {valueRanking[0]} - {valueRanking[1]} %
+                                </Typography>
+                                <Slider
+                                    value={valueRanking}
+                                    onChange={handleChangeRanking}
+                                    valueLabelDisplay="auto"
+                                    aria-labelledby="range-slider"
+                                    min={1}
+                                    max={100}
+                                />
+                            </div>
+                        </Grid>
+
+                        <Grid item md={12}>
                             <Typography id="size-checkbox" gutterBottom align='left'>
-                                Student Body Size:
+                                Undegraduate Enrollment:
                             </Typography>
                             <FormGroup column>
                                 <FormControlLabel
@@ -323,7 +379,7 @@ export default function Search(props) {
                                             color="primary"
                                         />
                                     }
-                                    label="Small"
+                                    label="Small (up to 5000)"
                                 />
                                 <FormControlLabel
                                     control={
@@ -334,7 +390,7 @@ export default function Search(props) {
                                             color="primary"
                                         />
                                     }
-                                    label="Medium"
+                                    label="Medium (5000 - 15000)" 
                                 />
                                 <FormControlLabel
                                     control={
@@ -345,7 +401,7 @@ export default function Search(props) {
                                             color="primary"
                                         />
                                     }
-                                    label="Large"
+                                    label="Large (15000 and more)"
                                 />
                             </FormGroup>
                         </Grid>

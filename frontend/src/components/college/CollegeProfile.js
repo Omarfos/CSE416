@@ -85,7 +85,7 @@ export default function CollegeProfile(props) {
     }
 
     return (
-        <Container className={classes.backgound}>
+        <div className={classes.backgound}>
             <Container maxWidth="md">
             {!college &&
                 <div className={classes.body}>
@@ -134,6 +134,6 @@ export default function CollegeProfile(props) {
                 </div>
             }
             </Container>
-        </Container>
+        </div>
     );
 }
