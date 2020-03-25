@@ -70,6 +70,19 @@ const AntSwitch = withStyles(theme => ({
         },
       },
     },
+    thumb: {
+      width: 12,
+      height: 12,
+      boxShadow: 'none',
+    },
+    track: {
+      border: `1px solid ${theme.palette.grey[500]}`,
+      borderRadius: 16 / 2,
+      opacity: 1,
+      backgroundColor: theme.palette.common.white,
+    },
+    checked: {},
+  }))(Switch);
 
 
 export default function Search(props) {
@@ -81,6 +94,14 @@ export default function Search(props) {
     const [colleges, setColleges] = useState([{ "name": "Stony Brook" }, { "name": "Wagner College" }, { "name": "New York University" }, 
             {"name": "Boston University"}, {"name": "Princeton University"}, {"name": "Harvard University"}]);
     // const [filters, setFilters] = useState([{ "name": "Stony Brook" }, { "name": "Wagner College" }, { "name": "N" }]);
+    const [valueAdmissionRate, setValueAdmissionRate] = useState([25, 75]);
+    const [valueSATmath, setValueSATmath] = useState([600, 700]);
+    const [valueSATebrw, setValueSATebrw] = useState([600, 700]);
+    const [valueACTcomposite, setValueACTcomposite] = useState([28, 32]);
+    const [valueCostOfAttendance, setValueCostOfAttendance] = useState([5000, 35000]);
+    const [valueRanking, setValueRanking] = useState([10, 50]);
+
+    const [stateSmallSize, setStateSmallSize] = useState({
         checkedSmallSize: false
     });
     const [stateMediumSize, setStateMediumSize] = useState({
