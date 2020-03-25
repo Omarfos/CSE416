@@ -49,12 +49,12 @@ def register(request):
         student = Student(userid=d['userid'])
         student.save()
     except IntegrityError: 
-        return HttpResponse("ERROR: User already exists")
+        return JsonResponse("ERROR: User already exists")
     except json.decoder.JSONDecodeError:
-        return HttpResponse(status=400)
+        return JsonResponse(status=400)
 
 
-    return HttpResponse("SUCCESS: User Created")
+    return JsonResponse({"SUCCESS": "User Created"})
 
 def college(request, name):
     college = get_object_or_404(College, name=name)
