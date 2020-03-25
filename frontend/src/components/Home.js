@@ -13,9 +13,13 @@ import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles(theme => ({
     search: {
-        marginTop: "250px",
-        minWidth: "400px",
+        minWidth:"300px",
+        width: "30vw",
         marginBottom: "10px"
+    },
+    grid: {
+        position: "absolute",
+        top: "40%",
     },
     input:{
         width: "80%"
@@ -45,10 +49,9 @@ export default function Home() {
     }
 
     return (
-        <div>
-            <Container className={classes.backgound}>
-            <Grid container direction="column" justify="center" alignItems="center">
-                <Grid item xs={8}>
+        <div className={classes.backgound}>
+            <Grid container direction="column" justify="center" alignItems="center" className={classes.grid}>
+                <Grid item>
                     <Paper component="form" className={classes.search} onSubmit={handleSearch}>
                     <InputBase
                         name="searchQuery"
@@ -65,7 +68,6 @@ export default function Home() {
                     <Typography variant="h6" className={classes.bingo}>Plan your path to college</Typography>
                 </Grid>
                 </Grid>
-            </Container>
         </div>
     );
 }
