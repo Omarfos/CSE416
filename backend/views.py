@@ -49,7 +49,7 @@ def register(request):
         student = Student(userid=d['userid'])
         student.save()
     except IntegrityError: 
-        return JsonResponse("ERROR: User already exists")
+        return JsonResponse({"ERROR": "User already exists"})
     except json.decoder.JSONDecodeError:
         return JsonResponse(status=400)
 
