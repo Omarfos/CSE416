@@ -4,7 +4,7 @@ import { useLocation, Link, useHistory } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -15,6 +15,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
+import CollegeCard from './CollegeCard'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -36,12 +37,12 @@ const useStyles = makeStyles(theme => ({
 // sliders
 function valuetextAdmissionRate(value) {
     return `${value}%`;
-}   
+}
 
 function valuetextSATmath(value) {
     return `${value}%`;
-} 
-  
+}
+
 
 
 export default function Search(props) {
@@ -50,15 +51,17 @@ export default function Search(props) {
     const location = useLocation();
     const history = useHistory();
     const classes = useStyles();
-    const [valueAdmissionRate, setValueAdmissionRate] = React.useState([25, 75]);
-    const [valueSATmath, setValueSATmath] = React.useState([600, 700]);
-    const [stateSmallSize, setStateSmallSize] = React.useState({
+    const [colleges, setColleges] = useState([{ "name": "Stony Brook" }, { "name": "Wagner College" }, { "name": "NYU" }]);
+    const [filters, setFilters] = useState([{ "name": "Stony Brook" }, { "name": "Wagner College" }, { "name": "NYU" }]);
+    const [valueAdmissionRate, setValueAdmissionRate] = useState([25, 75]);
+    const [valueSATmath, setValueSATmath] = useState([600, 700]);
+    const [stateSmallSize, setStateSmallSize] = useState({
         checkedSmallSize: false
     });
-    const [stateMediumSize, setStateMediumSize] = React.useState({
+    const [stateMediumSize, setStateMediumSize] = useState({
         checkedMediumSize: true
     });
-    const [stateLargeSize, setStateLargeSize] = React.useState({
+    const [stateLargeSize, setStateLargeSize] = useState({
         checkedLargeSize: false
     });
 
@@ -73,7 +76,7 @@ export default function Search(props) {
     const handleChangeSmallSize = event => {
         setStateSmallSize({ ...stateSmallSize, [event.target.name]: event.target.checked });
     };
-    
+
     const handleChangeMediumSize = event => {
         setStateMediumSize({ ...stateMediumSize, [event.target.name]: event.target.checked });
     };
@@ -92,7 +95,7 @@ export default function Search(props) {
         fetchData();
     });
 
-    async function handleSearch(event){
+    async function handleSearch(event) {
         event.preventDefault();
         history.push('/search/' + event.target.searchQuery.value);
         //refresh. or whatever
@@ -103,7 +106,7 @@ export default function Search(props) {
             <Grid container spacing={2}>
 
                 {/* left side - filters */}
-                <Grid item md={2} className={classes.filters}> 
+                <Grid item md={2} className={classes.filters}>
                     <Grid container spacing={2}>
 
                         <Grid item md={12}>
@@ -111,56 +114,56 @@ export default function Search(props) {
                                 multiple
                                 id="tags-outlined"
                                 options={[
-                                    { title: 'Alabama'},
-                                    { title: 'Alaska'},
-                                    { title: 'Arizona'},
-                                    { title: 'Arkansas'},
-                                    { title: 'California'},
-                                    { title: 'Colorado'},
-                                    { title: 'Connecticut'},
-                                    { title: 'Delaware'},
-                                    { title: 'Florida'},
-                                    { title: 'Georgia'},
-                                    { title: 'Hawaii'},
-                                    { title: 'Idaho'},
-                                    { title: 'Illinois'},
-                                    { title: 'Indiana'},
-                                    { title: 'Iowa'},
-                                    { title: 'Kansas'},
-                                    { title: 'Kentucky'},
-                                    { title: 'Louisiana'},
-                                    { title: 'Maine'},
-                                    { title: 'Maryland'},
-                                    { title: 'Massachusetts'},
-                                    { title: 'Michigan'},
-                                    { title: 'Minnesota'},
-                                    { title: 'Mississippi'},
-                                    { title: 'Missouri'},
-                                    { title: 'Montana'},
-                                    { title: 'Nebraska'},
-                                    { title: 'Nevada'},
-                                    { title: 'New Hampshire'},
-                                    { title: 'New Jersey'},
-                                    { title: 'New Mexico'},
-                                    { title: 'New York'},
-                                    { title: 'North Carolina'},
-                                    { title: 'North Dakota'},
-                                    { title: 'Ohio'},
-                                    { title: 'Oklahoma'},
-                                    { title: 'Oregon'},
-                                    { title: 'Pennsylvania'},
-                                    { title: 'Rhode Island'},
-                                    { title: 'South Carolina'},
-                                    { title: 'South Dakota'},
-                                    { title: 'Tennessee'},
-                                    { title: 'Texas'},
-                                    { title: 'Utah'},
-                                    { title: 'Vermont'},
-                                    { title: 'Virginia'},
-                                    { title: 'Washington'},
-                                    { title: 'West Virginia'},
-                                    { title: 'Wisconsin'},
-                                    { title: 'Wyoming'}
+                                    { title: 'Alabama' },
+                                    { title: 'Alaska' },
+                                    { title: 'Arizona' },
+                                    { title: 'Arkansas' },
+                                    { title: 'California' },
+                                    { title: 'Colorado' },
+                                    { title: 'Connecticut' },
+                                    { title: 'Delaware' },
+                                    { title: 'Florida' },
+                                    { title: 'Georgia' },
+                                    { title: 'Hawaii' },
+                                    { title: 'Idaho' },
+                                    { title: 'Illinois' },
+                                    { title: 'Indiana' },
+                                    { title: 'Iowa' },
+                                    { title: 'Kansas' },
+                                    { title: 'Kentucky' },
+                                    { title: 'Louisiana' },
+                                    { title: 'Maine' },
+                                    { title: 'Maryland' },
+                                    { title: 'Massachusetts' },
+                                    { title: 'Michigan' },
+                                    { title: 'Minnesota' },
+                                    { title: 'Mississippi' },
+                                    { title: 'Missouri' },
+                                    { title: 'Montana' },
+                                    { title: 'Nebraska' },
+                                    { title: 'Nevada' },
+                                    { title: 'New Hampshire' },
+                                    { title: 'New Jersey' },
+                                    { title: 'New Mexico' },
+                                    { title: 'New York' },
+                                    { title: 'North Carolina' },
+                                    { title: 'North Dakota' },
+                                    { title: 'Ohio' },
+                                    { title: 'Oklahoma' },
+                                    { title: 'Oregon' },
+                                    { title: 'Pennsylvania' },
+                                    { title: 'Rhode Island' },
+                                    { title: 'South Carolina' },
+                                    { title: 'South Dakota' },
+                                    { title: 'Tennessee' },
+                                    { title: 'Texas' },
+                                    { title: 'Utah' },
+                                    { title: 'Vermont' },
+                                    { title: 'Virginia' },
+                                    { title: 'Washington' },
+                                    { title: 'West Virginia' },
+                                    { title: 'Wisconsin' },
+                                    { title: 'Wyoming' }
                                 ]}
                                 getOptionLabel={option => option.title}
                                 filterSelectedOptions
@@ -168,12 +171,12 @@ export default function Search(props) {
                                 //     {width: 300}
                                 // }
                                 renderInput={params => (
-                                <TextField
-                                    {...params}
-                                    variant="outlined"
-                                    label="Location"
-                                    placeholder="Select State"
-                                />
+                                    <TextField
+                                        {...params}
+                                        variant="outlined"
+                                        label="Location"
+                                        placeholder="Select State"
+                                    />
                                 )}
                             />
                         </Grid>
@@ -183,42 +186,42 @@ export default function Search(props) {
                                 multiple
                                 id="tags-outlined"
                                 options={[
-                                    { title: 'Accounting'},
-                                    { title: 'Anthropology'},
-                                    { title: 'Biochemistry'},
-                                    { title: 'Biology'},
-                                    { title: 'Business Management'},
-                                    { title: 'Chemistry'},
-                                    { title: 'Civil Engineering'},
-                                    { title: 'Computer Engineering'},
-                                    { title: 'Civil Engineering'},
-                                    { title: 'Computer Science'},
-                                    { title: 'Economics'},
-                                    { title: 'Electrical Engineering'},
-                                    { title: 'English'},
-                                    { title: 'Geology'},
-                                    { title: 'Health Science'},
-                                    { title: 'History'},
-                                    { title: 'Journalism'},
-                                    { title: 'Mathematics'},
-                                    { title: 'Mechanical Engineering'},
-                                    { title: 'Music'},
-                                    { title: 'Nursing'},
-                                    { title: 'Philosophy'},
-                                    { title: 'Physics'},
-                                    { title: 'Political Science'},
-                                    { title: 'Sociology'},
-                                    { title: 'Theatre Arts'},
+                                    { title: 'Accounting' },
+                                    { title: 'Anthropology' },
+                                    { title: 'Biochemistry' },
+                                    { title: 'Biology' },
+                                    { title: 'Business Management' },
+                                    { title: 'Chemistry' },
+                                    { title: 'Civil Engineering' },
+                                    { title: 'Computer Engineering' },
+                                    { title: 'Civil Engineering' },
+                                    { title: 'Computer Science' },
+                                    { title: 'Economics' },
+                                    { title: 'Electrical Engineering' },
+                                    { title: 'English' },
+                                    { title: 'Geology' },
+                                    { title: 'Health Science' },
+                                    { title: 'History' },
+                                    { title: 'Journalism' },
+                                    { title: 'Mathematics' },
+                                    { title: 'Mechanical Engineering' },
+                                    { title: 'Music' },
+                                    { title: 'Nursing' },
+                                    { title: 'Philosophy' },
+                                    { title: 'Physics' },
+                                    { title: 'Political Science' },
+                                    { title: 'Sociology' },
+                                    { title: 'Theatre Arts' },
                                 ]}
                                 getOptionLabel={option => option.title}
                                 filterSelectedOptions
                                 renderInput={params => (
-                                <TextField
-                                    {...params}
-                                    variant="outlined"
-                                    label="Major"
-                                    placeholder="Select Subject"
-                                />
+                                    <TextField
+                                        {...params}
+                                        variant="outlined"
+                                        label="Major"
+                                        placeholder="Select Subject"
+                                    />
                                 )}
                             />
                         </Grid>
@@ -262,34 +265,34 @@ export default function Search(props) {
                             <FormGroup column>
                                 <FormControlLabel
                                     control={
-                                    <Checkbox
-                                        checked={stateSmallSize.checkedSmallSize}
-                                        onChange={handleChangeSmallSize}
-                                        name="checkedSmallSize"
-                                        color="primary"
-                                    />
+                                        <Checkbox
+                                            checked={stateSmallSize.checkedSmallSize}
+                                            onChange={handleChangeSmallSize}
+                                            name="checkedSmallSize"
+                                            color="primary"
+                                        />
                                     }
                                     label="Small"
                                 />
                                 <FormControlLabel
                                     control={
-                                    <Checkbox
-                                        checked={stateMediumSize.checkedMediumSize}
-                                        onChange={handleChangeMediumSize}
-                                        name="checkedMediumSize"
-                                        color="primary"
-                                    />
+                                        <Checkbox
+                                            checked={stateMediumSize.checkedMediumSize}
+                                            onChange={handleChangeMediumSize}
+                                            name="checkedMediumSize"
+                                            color="primary"
+                                        />
                                     }
                                     label="Medium"
                                 />
                                 <FormControlLabel
                                     control={
-                                    <Checkbox
-                                        checked={stateLargeSize.checkedLargeSize}
-                                        onChange={handleChangeLargeSize}
-                                        name="checkedLargeSize"
-                                        color="primary"
-                                    />
+                                        <Checkbox
+                                            checked={stateLargeSize.checkedLargeSize}
+                                            onChange={handleChangeLargeSize}
+                                            name="checkedLargeSize"
+                                            color="primary"
+                                        />
                                     }
                                     label="Large"
                                 />
@@ -301,29 +304,13 @@ export default function Search(props) {
 
                 {/* right side - colleges */}
                 <Grid item md={9}>
+                    {colleges.map((college) =>
+                        <CollegeCard college={college} />
+                    )}
 
-                    <Card className={classes.card}>
-                        <CardActionArea>
-                            <CardContent>
-                                <Typography gutterBottom variant="h5" component="h2" align='left'>
-                                    Lizard
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary" component="p" align='left'>
-                                    Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                                    across all continents except Antarctica
-                                </Typography>
-                            </CardContent>
-                        </CardActionArea>
-                        <CardActions>
-                            <Button size="small" color="primary">
-                            Learn More
-                            </Button>
-                        </CardActions>
-                    </Card>
-                    
                 </Grid>
 
             </Grid>
         </div>
-      );
+    );
 }

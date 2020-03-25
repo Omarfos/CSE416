@@ -22,7 +22,7 @@ class HighSchool(models.Model):
 
 class Student(models.Model):
     userid = models.CharField(max_length=100, unique=True)
-    password = models.CharField(max_length=100)
+    password = models.CharField(max_length=100, null=True)
     residence_state = models.CharField(max_length=2, null=True)
     
     high_school = models.ForeignKey(HighSchool, on_delete=models.CASCADE, null=True)
