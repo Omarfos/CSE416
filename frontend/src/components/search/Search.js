@@ -11,12 +11,6 @@ import SortOptions from './Sorting.js'
 import LocationFilter from './filters/LocationFilter';
 import MajorFilter from './filters/MajorFilter';
 import SizeFilter from './filters/SizeFilter';
-import AdmissionRateFilter from './filters/AdmissionRateFilter';
-import SATmathFilter from './filters/SATmathFilter';
-import SATebrwFilter from './filters/SATebrwFilter';
-import ACTcompositeFilter from './filters/ACTcompositeFilter';
-import CostOfAttendanceFilter from './filters/CostOfAttendanceFilter';
-import RankingFilter from './filters/RankingFilter';
 import SliderFactory from './filters/SliderFactory';
 
 const useStyles = makeStyles(theme => ({
@@ -48,6 +42,11 @@ export default function Search(props) {
     { "name": "Boston University" }, { "name": "Princeton University" }, { "name": "Harvard University" }]);
     // const [filters, setFilters] = useState([{ "name": "Stony Brook" }, { "name": "Wagner College" }, { "name": "N" }]);
     const [act, setACT] = useState([28, 32]);
+    const [cost, setCost] = useState([5000, 35000]);
+    const [ranking, setRanking] = useState([10, 50]);
+    const [SATebrw, setSATebrw] = useState([600, 700]);
+    const [SATmath, setSATmath] = useState([600, 700]);
+    const [admissionRate, setAdmissionRate] = useState([25, 75]);
 
     useEffect(() => {
         async function fetchData() {
@@ -85,37 +84,37 @@ export default function Search(props) {
 
                         <Grid item md={12}>
                             <div className={classes.root}>
-                                <AdmissionRateFilter />
+                            <SliderFactory value={admissionRate} setValue={setAdmissionRate} min={1} max={100} startText={"Admission Rate"} endText={"%"} step={1}/>
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
                             <div className={classes.root}>
-                                <SATmathFilter />
+                                <SliderFactory value={SATmath} setValue={setSATmath} min={200} max={800} startText={"Average SAT Math"} endText={""} step={10}/>
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
                             <div className={classes.root}>
-                                <SATebrwFilter />
+                                <SliderFactory value={SATebrw} setValue={setSATebrw} min={200} max={800} startText={"Average SAT EBRW"} endText={""} step={10}/>
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
                             <div className={classes.root}>
-                                <SliderFactory value={act} setValue={setACT} min={1} max={36} />
+                                <SliderFactory value={act} setValue={setACT} min={1} max={36} startText={"Average ACT Composite"} endText={""} step={1}/>
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
                             <div className={classes.root}>
-                                <CostOfAttendanceFilter />
+                                <SliderFactory value={cost} setValue={setCost} min={0} max={100000} startText={"Cost of Attendance"} endText={"$"} step={1000}/>
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
                             <div className={classes.root}>
-                                <RankingFilter />
+                                <SliderFactory value={ranking} setValue={setRanking} min={1} max={100} startText={"Ranking"} endText={"%"} step={1}/>
                             </div>
                         </Grid>
 

@@ -7,16 +7,12 @@ import Slider from '@material-ui/core/Slider';
 export default function SliderFactory(props) {
     const [value, setValue] = useState(props.value);
 
-    // const handleChangeACTcomposite = (event, newValue) => {
-    //     setValueACTcomposite(newValue);
-    // };
-
     return (
         < div >
             {console.log('RENDER')}
 
             <Typography id="range-slider" gutterBottom align='left'>
-                Average ACT Composite: {props.value[0]} - {props.value[1]}
+                {props.startText}: {props.value[0]} - {props.value[1]} {props.endText}
             </Typography>
             <Slider
                 value={value}
@@ -26,6 +22,7 @@ export default function SliderFactory(props) {
                 aria-labelledby="range-slider"
                 min={props.min}
                 max={props.max}
+                step={props.step}
             />
         </div >
 
