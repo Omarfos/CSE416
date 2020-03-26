@@ -13,6 +13,7 @@ import MajorFilter from './filters/MajorFilter';
 import SizeFilter from './filters/SizeFilter';
 import SliderFactory from './filters/SliderFactory';
 import Image from '../../images/homeBackground_blur.png';
+import { Button } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -94,6 +95,10 @@ export default function Search(props) {
                 {/* left side - filters */}
                 <Grid item md={2} className={classes.filters}>
                     <Grid container spacing={2}>
+
+                    <Grid item md={12}>
+                            <Button onClick={() => handleSearch()}> Hello </Button>
+                        </Grid>
 
                         <Grid item md={12}>
                             <LocationFilter />

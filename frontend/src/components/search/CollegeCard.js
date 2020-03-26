@@ -39,6 +39,42 @@ const useStyles = makeStyles(theme => ({
 export default function CollegeCard(props) {
     const classes = useStyles();
 
+    const renderCost = ()=>{
+        {console.log(props.college.institution_type)}
+        if(props.college.institution_type=="Public"){
+          return <div>
+                <Grid container direction="row" justify="flex-start" alignItems="flex-start">
+                <Typography variant="h6" color="textSecondary" component="h4" align='left' className={classes.comma}>
+                    ,
+                </Typography>
+                <Chip variant="outlined" size="small" label={"# Public"} color="primary" className={classes.hashtag}/>
+                <Typography variant="h6" color="textSecondary" component="h4" align='left' className={classes.comma}>
+                    ,
+                </Typography>
+                <Chip variant="outlined" size="small" label={"# In-state Cost of Attendance "+Math.round(props.college.in_state_cost/1000) + ",000 $"} color="primary" className={classes.hashtag}/>
+                <Typography variant="h6" color="textSecondary" component="h4" align='left' className={classes.comma}>
+                    ,
+                </Typography>
+                <Chip variant="outlined" size="small" label={"# Out-of-state Cost of Attendance "+Math.round(props.college.out_state_cost/1000) + ",000 $"} color="primary" className={classes.hashtag}/>
+                </Grid>
+          </div>
+          
+        } else{
+            return <div>
+                <Grid container direction="row" justify="flex-start" alignItems="flex-start">
+                <Typography variant="h6" color="textSecondary" component="h4" align='left' className={classes.comma}>
+                    ,
+                </Typography>
+                <Chip variant="outlined" size="small" label={"# Private"} color="primary" className={classes.hashtag}/>
+                <Typography variant="h6" color="textSecondary" component="h4" align='left' className={classes.comma}>
+                    ,
+                </Typography>
+                <Chip variant="outlined" size="small" label={"# Cost of Attendance "+Math.round(props.college.in_state_cost/1000) + ",000 $"} color="primary" className={classes.hashtag}/>                
+                </Grid>
+            </div>
+        }
+    }
+
     return (
         <Card className={classes.card}>
             {console.log(props.college)}
@@ -55,11 +91,8 @@ export default function CollegeCard(props) {
                         <Typography variant="h6" color="textSecondary" component="h4" align='left' className={classes.comma}>
                             ,
                         </Typography>
-                        <Chip variant="outlined" size="small" label={"# "+props.college.institution_type} color="primary" className={classes.hashtag}/>
-                        <Typography variant="h6" color="textSecondary" component="h4" align='left' className={classes.comma}>
-                            ,
-                        </Typography>
-                        <Chip variant="outlined" size="small" label={"# Admission Rate "+props.college.adm_rate*100 + " %"} color="primary" className={classes.hashtag}/>
+                        <Chip variant="outlined" size="small" label={"# Admission Rate "+Math.round(props.college.adm_rate*100) + " %"} color="primary" className={classes.hashtag}/>
+                        {renderCost()}
                     </Grid>
                 </CardContent>
             </CardActionArea>
