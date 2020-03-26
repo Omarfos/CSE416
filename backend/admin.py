@@ -34,6 +34,7 @@ class CollegeAdmin(ImportExportModelAdmin, admin.ModelAdmin):
             import_college_score_card]
 
 class ApplicationInline(admin.TabularInline):
+    list_display = ['status']
     model = Application
 
 
@@ -47,10 +48,10 @@ class HighSchoolAdmin(ImportExportModelAdmin, admin.ModelAdmin):
                     'ap_enroll', 'num_students']
 
 
-class ApplicationAdmin(admin.ModelAdmin):
+class ApplicationAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    list_display = ['status', 'college', 'student']
+    list_filter = ['status']
     pass
-    # list_display = ['status']
-    # list_filter = ['status']
 
 
 admin.site.register(Student, StudentAdmin)

@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from backend.models import College, Student, HighSchool
+from backend.models import College, Student, HighSchool, Application
 from backend.scrape import scrape_high_school, scrape_college_data
 from faker import Faker
 import random
@@ -19,11 +19,23 @@ def import_students():
     fake = Faker()
     d = {}
     hs_list = HighSchool.objects.all()
+    college_list = College.objects.all()
+
+    status = [ 'pending', 
+            'accepted', 
+            'denied', 
+            'deferred', 
+            'wait', 
+            'listed', 
+            'withdrawn', 
+            'questionable' 
+            ]
+
     majors = []
     with open('backend/data/majors.txt', 'r') as f:
         majors = f.read().split('\n')
 
-    for i in range(10):
+    for i in range(100):
         d['userid'] = fake.user_name()
         d['password'] = fake.password(length=random.randint(8,20), special_chars=False)
 
@@ -37,8 +49,9 @@ def import_students():
         d['college_class'] = random.randint(2023,2028)
         d['GPA'] = min(random.gauss(3.0,0.4), 4.0)
         
-        act = lambda mean,std : max(0, min(36, int(random.gauss(mean,std))))
+        act = lambda mean,std : max(1, min(36, int(random.gauss(mean,std))))
         sat = lambda mean,std : max(400, min(800, int(random.gauss(mean,std))))
+
         #https://www.act.org/content/dam/act/unsecured/documents/MultipleChoiceStemComposite.pdf
         d['ACT_composite'] = act(21.0, 5.8)
         d['ACT_english'] = act(21.2, 7.0)
@@ -61,10 +74,18 @@ def import_students():
         d['SAT_chemistry'] = sat(668, 104)
         d['SAT_physics'] = sat(671, 108)
         d['num_AP_passed'] = random.randint(0, 10)
-
+        
         s = Student(**d)
         s.high_school = hs
         s.save()
+
+        for i in range(random.randint(0,3)):
+            a = Application()
+            a.college = random.choice(college_list)
+            a.status = random.choice(status)
+            a.student = s
+            a.save()
+
 
 def import_hs():
     with open('backend/data/hs.txt', 'r') as f:
@@ -79,6 +100,22 @@ def import_hs():
             hs = HighSchool(**d)
             if len(HighSchool.objects.filter(name=d['name'])) == 0:
                 hs.save() 
+
+def import_hs():
+    with open('backend/data/hs.txt', 'r') as f:
+        hs_urls = f.read().split('\n')
+        for hs_url in hs_urls:
+            try:
+                d = scrape_high_school(hs_url)
+            except Warning:
+                print('Niche.com Wins again...')
+                return
+
+            hs = HighSchool(**d)
+            if len(HighSchool.objects.filter(name=d['name'])) == 0:
+                hs.save() 
+
+
 
 class Command(BaseCommand):
     help = 'Import either the Student dataset or Colleges from college.txt'
@@ -96,7 +133,9 @@ class Command(BaseCommand):
         elif options['data_type'] == 'student':
             self.stdout.write(self.style.SUCCESS('Importing Students'))
             import_students()
+            self.stdout.write(self.style.SUCCESS('Importing Successful'))
 
         else:
             self.stdout.write(self.style.SUCCESS('Importing HS'))
             import_hs()
+            self.stdout.write(self.style.SUCCESS('Importing Successful'))
