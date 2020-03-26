@@ -7,12 +7,31 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
+import Chip from '@material-ui/core/Chip';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles(theme => ({
 
     card: {
         marginTop: "40px",
         marginLeft: "60px"
+    },
+
+    learnMore: {
+        marginLeft: "4px"
+    },
+
+    comma: {
+        marginTop: "7px"
+    },
+
+    hashtagFirst: {
+        marginTop: "10px"
+    },
+
+    hashtag: {
+        marginTop: "10px",
+        marginLeft: "10px"
     }
 
 }));
@@ -27,15 +46,24 @@ export default function CollegeCard(props) {
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2" align='left'>
                         {props.college.name}
-                        {props.college.ranking}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p" align='left'>
-                        Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                        across all continents except Antarctica
-                                </Typography>
+                    <Typography variant="h6" color="textSecondary" component="h4" align='left'>
+                        {props.college.ranking} in National Universities
+                    </Typography>
+                    <Grid container direction="row" justify="flex-start" alignItems="flex-start">
+                        <Chip variant="outlined" size="small" label={"# "+props.college.state} color="primary" className={classes.hashtagFirst}/>
+                        <Typography variant="h6" color="textSecondary" component="h4" align='left' className={classes.comma}>
+                            ,
+                        </Typography>
+                        <Chip variant="outlined" size="small" label={"# "+props.college.institution_type} color="primary" className={classes.hashtag}/>
+                        <Typography variant="h6" color="textSecondary" component="h4" align='left' className={classes.comma}>
+                            ,
+                        </Typography>
+                        <Chip variant="outlined" size="small" label={"# Admission Rate "+props.college.adm_rate*100 + " %"} color="primary" className={classes.hashtag}/>
+                    </Grid>
                 </CardContent>
             </CardActionArea>
-            <CardActions>
+            <CardActions className={classes.learnMore}>
                 <Button size="small" color="primary">
                     Learn More
                 </Button>

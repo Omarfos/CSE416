@@ -12,11 +12,14 @@ import LocationFilter from './filters/LocationFilter';
 import MajorFilter from './filters/MajorFilter';
 import SizeFilter from './filters/SizeFilter';
 import SliderFactory from './filters/SliderFactory';
-import { Button } from '@material-ui/core'
+import Image from '../../images/homeBackground_blur.png';
 
 const useStyles = makeStyles(theme => ({
     root: {
-        flexGrow: 1
+        flexGrow: 1,
+        backgroundImage: 'url('+ Image+')',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat'
     },
 
     filters: {
@@ -39,7 +42,7 @@ export default function Search(props) {
     const location = useLocation();
     const history = useHistory();
     const classes = useStyles();
-    const [colleges, setColleges] = useState([{ "name": "Stony Brook" }, { "name": "Wagner College" }, { "name": "New York University" },
+    const [colleges, setColleges] = useState([{ "name": "Stony Brook", "ranking": "56", "adm_rate": "0.5", "state": "NY", "institution_type": "Public"}, { "name": "Wagner College" }, { "name": "New York University" },
     { "name": "Boston University" }, { "name": "Princeton University" }, { "name": "Harvard University" }]);
     // const [filters, setFilters] = useState([{ "name": "Stony Brook" }, { "name": "Wagner College" }, { "name": "N" }]);
     const [act, setACT] = useState([0, 36]);
@@ -84,12 +87,6 @@ export default function Search(props) {
         });
     }
 
-    // async function handleSearch(event) {
-    //     event.preventDefault();
-    //     history.push('/search/' + event.target.searchQuery.value);
-    //     //refresh. or whatever
-    // }
-
     return (
         <div className={classes.root}>
             <Grid container spacing={2}>
@@ -97,9 +94,6 @@ export default function Search(props) {
                 {/* left side - filters */}
                 <Grid item md={2} className={classes.filters}>
                     <Grid container spacing={2}>
-                        <Grid item md={12}>
-                            <Button onClick={() => handleSearch()}> Hello </Button>
-                        </Grid>
 
                         <Grid item md={12}>
                             <LocationFilter />
@@ -110,37 +104,37 @@ export default function Search(props) {
                         </Grid>
 
                         <Grid item md={12}>
-                            <div className={classes.root}>
+                            <div>
                                 <SliderFactory value={admissionRate} setValue={setAdmissionRate} min={1} max={100} startText={"Admission Rate"} endText={"%"} step={1} />
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
-                            <div className={classes.root}>
+                            <div>
                                 <SliderFactory value={SATmath} setValue={setSATmath} min={200} max={800} startText={"Average SAT Math"} endText={""} step={10} />
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
-                            <div className={classes.root}>
+                            <div>
                                 <SliderFactory value={SATebrw} setValue={setSATebrw} min={200} max={800} startText={"Average SAT EBRW"} endText={""} step={10} />
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
-                            <div className={classes.root}>
+                            <div>
                                 <SliderFactory value={act} setValue={setACT} min={1} max={36} startText={"Average ACT Composite"} endText={""} step={1} />
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
-                            <div className={classes.root}>
+                            <div>
                                 <SliderFactory value={cost} setValue={setCost} min={0} max={100000} startText={"Cost of Attendance"} endText={"$"} step={1000} />
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
-                            <div className={classes.root}>
+                            <div>
                                 <SliderFactory value={ranking} setValue={setRanking} min={1} max={100} startText={"Ranking"} endText={"%"} step={1} />
                             </div>
                         </Grid>
