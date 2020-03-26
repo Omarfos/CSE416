@@ -42,9 +42,9 @@ export default function Search(props) {
     const [colleges, setColleges] = useState([{ "name": "Stony Brook" }, { "name": "Wagner College" }, { "name": "New York University" },
     { "name": "Boston University" }, { "name": "Princeton University" }, { "name": "Harvard University" }]);
     // const [filters, setFilters] = useState([{ "name": "Stony Brook" }, { "name": "Wagner College" }, { "name": "N" }]);
-    const [act, setACT] = useState([28, 32]);
+    const [act, setACT] = useState([0, 36]);
     const [cost, setCost] = useState([5000, 35000]);
-    const [ranking, setRanking] = useState([10, 50]);
+    const [ranking, setRanking] = useState([0, 100]);
     const [SATebrw, setSATebrw] = useState([600, 700]);
     const [SATmath, setSATmath] = useState([600, 700]);
     const [admissionRate, setAdmissionRate] = useState([25, 75]);
@@ -59,7 +59,8 @@ export default function Search(props) {
         axios.get('http://localhost:8000/search', {
             responseType: 'json',
             params: {
-                ranking: '1,20'
+                ranking: ranking[0] + ',' + ranking[1],
+                sort: 'ranking'
             }
         }).then((response) => {
             // let d = JSON.parse(response.body)
@@ -110,37 +111,37 @@ export default function Search(props) {
 
                         <Grid item md={12}>
                             <div className={classes.root}>
-                            <SliderFactory value={admissionRate} setValue={setAdmissionRate} min={1} max={100} startText={"Admission Rate"} endText={"%"} step={1}/>
+                                <SliderFactory value={admissionRate} setValue={setAdmissionRate} min={1} max={100} startText={"Admission Rate"} endText={"%"} step={1} />
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
                             <div className={classes.root}>
-                                <SliderFactory value={SATmath} setValue={setSATmath} min={200} max={800} startText={"Average SAT Math"} endText={""} step={10}/>
+                                <SliderFactory value={SATmath} setValue={setSATmath} min={200} max={800} startText={"Average SAT Math"} endText={""} step={10} />
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
                             <div className={classes.root}>
-                                <SliderFactory value={SATebrw} setValue={setSATebrw} min={200} max={800} startText={"Average SAT EBRW"} endText={""} step={10}/>
+                                <SliderFactory value={SATebrw} setValue={setSATebrw} min={200} max={800} startText={"Average SAT EBRW"} endText={""} step={10} />
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
                             <div className={classes.root}>
-                                <SliderFactory value={act} setValue={setACT} min={1} max={36} startText={"Average ACT Composite"} endText={""} step={1}/>
+                                <SliderFactory value={act} setValue={setACT} min={1} max={36} startText={"Average ACT Composite"} endText={""} step={1} />
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
                             <div className={classes.root}>
-                                <SliderFactory value={cost} setValue={setCost} min={0} max={100000} startText={"Cost of Attendance"} endText={"$"} step={1000}/>
+                                <SliderFactory value={cost} setValue={setCost} min={0} max={100000} startText={"Cost of Attendance"} endText={"$"} step={1000} />
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
                             <div className={classes.root}>
-                                <SliderFactory value={ranking} setValue={setRanking} min={1} max={100} startText={"Ranking"} endText={"%"} step={1}/>
+                                <SliderFactory value={ranking} setValue={setRanking} min={1} max={100} startText={"Ranking"} endText={"%"} step={1} />
                             </div>
                         </Grid>
 

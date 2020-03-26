@@ -22,10 +22,12 @@ export default function CollegeCard(props) {
 
     return (
         <Card className={classes.card}>
+            {console.log(props.college)}
             <CardActionArea>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2" align='left'>
                         {props.college.name}
+                        {props.college.ranking}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p" align='left'>
                         Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
@@ -36,7 +38,7 @@ export default function CollegeCard(props) {
             <CardActions>
                 <Button size="small" color="primary">
                     Learn More
-                            </Button>
+                </Button>
             </CardActions>
         </Card>
     );
