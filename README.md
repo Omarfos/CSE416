@@ -1,29 +1,48 @@
 # Bingo
 
-## Super User
-    - user: omar
-    - pass: bingo
+## Prerequisites
 
-## Run The Server
-1. pipenv shell 
-2. pipenv install
-3. python3 -m manage runserver
-4. cd frontend 
-5. npm start
+- git: https://git-scm.com/downloads
+- node.js: https://nodejs.org/en/
+- pip: https://pip.pypa.io/en/stable/installing/
+- Python 3.8: https://www.python.org/downloads/
 
+## Installation
+
+- git clone https://github.com/binglingdong/CSE416
+- cd CSE416
+- python3 -m pip install --upgrade pip
+- python3 -m pip install pipenv
+- python3 -m pipenv shell
+- python3 -m pipenv install
+- cd frontend 
+- npm install
+- npm start
+
+## Starting the servers from root directory
+
+- python3 -m manage runserver
+- cd frontend 
+- npm start
+
+## Admin
+
+- http://127.0.0.1:8000/admin/
+- user: admin
+- pass: bingo
 
 
 ## PlantUml Diagram
 
-## Setup
+### Setup
 - Install PlantUml Extension
 1. Open VSCode Settings
 2. Search PlantUML
 3. Set export directory .
 4. Set render server
-5. sSt server https://www.plantuml.com/plantuml
+5. Set server https://www.plantuml.com/plantuml
 
-## Exporting Diagrams
+### Exporting Diagrams
 1. Press CMD or CTRL + SHIFT + P
 2. Type plantUml
 3. Preview diagram first to see your changes
