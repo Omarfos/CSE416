@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation, Link, useHistory } from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import CollegeCard from './CollegeCard';
@@ -17,6 +17,7 @@ import SATebrwFilter from './filters/SATebrwFilter';
 import ACTcompositeFilter from './filters/ACTcompositeFilter';
 import CostOfAttendanceFilter from './filters/CostOfAttendanceFilter';
 import RankingFilter from './filters/RankingFilter';
+import SliderFactory from './filters/SliderFactory';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -43,9 +44,10 @@ export default function Search(props) {
     const location = useLocation();
     const history = useHistory();
     const classes = useStyles();
-    const [colleges, setColleges] = useState([{ "name": "Stony Brook" }, { "name": "Wagner College" }, { "name": "New York University" }, 
-            {"name": "Boston University"}, {"name": "Princeton University"}, {"name": "Harvard University"}]);
+    const [colleges, setColleges] = useState([{ "name": "Stony Brook" }, { "name": "Wagner College" }, { "name": "New York University" },
+    { "name": "Boston University" }, { "name": "Princeton University" }, { "name": "Harvard University" }]);
     // const [filters, setFilters] = useState([{ "name": "Stony Brook" }, { "name": "Wagner College" }, { "name": "N" }]);
+    const [act, setACT] = useState([28, 32]);
 
     useEffect(() => {
         async function fetchData() {
@@ -70,6 +72,8 @@ export default function Search(props) {
                 {/* left side - filters */}
                 <Grid item md={2} className={classes.filters}>
                     <Grid container spacing={2}>
+                        <Grid item md={12}>
+                        </Grid>
 
                         <Grid item md={12}>
                             <LocationFilter />
@@ -99,7 +103,7 @@ export default function Search(props) {
 
                         <Grid item md={12}>
                             <div className={classes.root}>
-                                <ACTcompositeFilter />
+                                <SliderFactory value={act} setValue={setACT} min={1} max={36} />
                             </div>
                         </Grid>
 
@@ -134,7 +138,7 @@ export default function Search(props) {
                     )}
 
                     {/* pagination */}
-                    <Pagination count={10} color="primary" className={classes.pagination}/>
+                    <Pagination count={10} color="primary" className={classes.pagination} />
 
                 </Grid>
 

@@ -8,12 +8,12 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 export default function LocationFilter(props) {
 
     return (
-    
+
         <Autocomplete
             multiple
             id="tags-outlined"
             options={[
-                { title: 'Alabama' },
+                { title: 'Alabama', code: 'AL' },
                 { title: 'Alaska' },
                 { title: 'Arizona' },
                 { title: 'Arkansas' },
