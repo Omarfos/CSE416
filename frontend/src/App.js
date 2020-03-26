@@ -36,7 +36,7 @@ function App() {
       <Switch>
         <Route exact path="/" render={() => (<Home/>)} />
         <Route exact path="/search/:q" render={() => (<Search/>)} />
-        <Route exact path="/view_college/:id" render={() => (<CollegeProfile/>)} />
+        <Route exact path="/college/:id" render={() => (<CollegeProfile errorMessage={errorMessage} setError = {setErrorMessage}/>)} />
         <Route exact path="/profile/:id" render={()=>(<Profile user = {user}/>)} />    
         <Route exact path="/login" render={() => (<Login errorMessage={errorMessage} setError = {setErrorMessage} setUser = {setUser} user = {user}/>)} />
         <Route exact path="/register" render={() => (<Register user = {user} setUser = {setUser} errorMessage={errorMessage} setError = {setErrorMessage}/>)} />
