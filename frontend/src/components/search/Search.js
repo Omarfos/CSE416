@@ -50,10 +50,6 @@ export default function Search(props) {
 
     useEffect(() => {
         async function fetchData() {
-            // const res = await axios.get(location.pathname);
-            // if(!res.data.error){
-            //     console.log(res.data.q);
-            // }
         };
         fetchData();
     });
