@@ -18,6 +18,7 @@ import ACTcompositeFilter from './filters/ACTcompositeFilter';
 import CostOfAttendanceFilter from './filters/CostOfAttendanceFilter';
 import RankingFilter from './filters/RankingFilter';
 import SliderFactory from './filters/SliderFactory';
+import { Button } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -59,11 +60,39 @@ export default function Search(props) {
         fetchData();
     });
 
-    async function handleSearch(event) {
-        event.preventDefault();
-        history.push('/search/' + event.target.searchQuery.value);
-        //refresh. or whatever
+    const handleSearch = () => {
+        axios.get('http://localhost:8000/search', {
+            responseType: 'json',
+            params: {
+                ranking: '1,20'
+            }
+        }).then((response) => {
+            // let d = JSON.parse(response.body)
+            // console.log(d[0]);
+            // console.log(response.status);
+            // console.log(response.body);
+            // console.log(response.data);
+            let colle = response.data.map(c => {
+                return c.fields
+            })
+            setColleges(colle)
+            console.log(colle[0])
+            // console.log('colle', colle);
+            // console.log('colle', [1, 2, 3]);
+
+            // console.log(response.json());
+        }).catch(function (error) {
+            console.log(error);
+        }).finally(function () {
+            // always executed
+        });
     }
+
+    // async function handleSearch(event) {
+    //     event.preventDefault();
+    //     history.push('/search/' + event.target.searchQuery.value);
+    //     //refresh. or whatever
+    // }
 
     return (
         <div className={classes.root}>
@@ -73,6 +102,7 @@ export default function Search(props) {
                 <Grid item md={2} className={classes.filters}>
                     <Grid container spacing={2}>
                         <Grid item md={12}>
+                            <Button onClick={() => handleSearch()}> Hello </Button>
                         </Grid>
 
                         <Grid item md={12}>
