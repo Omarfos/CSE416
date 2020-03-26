@@ -3,8 +3,6 @@ import axios from 'axios';
 import { useLocation, Link, useHistory } from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Slider from '@material-ui/core/Slider';
 import CollegeCard from './CollegeCard';
 import Pagination from '@material-ui/lab/Pagination';
 import SortOptions from './Sorting.js'
@@ -59,12 +57,12 @@ export default function Search(props) {
         fetchData();
     });
 
-    const handleSearch = () => {
+    const handleSearch = (sortType) => {
         axios.get('http://localhost:8000/search', {
             responseType: 'json',
             params: {
                 ranking: ranking[0] + ',' + ranking[1],
-                sort: 'ranking'
+                sort: sortType
             }
         }).then((response) => {
             // let d = JSON.parse(response.body)
@@ -97,7 +95,7 @@ export default function Search(props) {
                     <Grid container spacing={2}>
 
                     <Grid item md={12}>
-                            <Button onClick={() => handleSearch()}> Hello </Button>
+                            <Button onClick={() => handleSearch('adm_rate')}> Hello </Button>
                         </Grid>
 
                         <Grid item md={12}>

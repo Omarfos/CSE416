@@ -62,64 +62,57 @@ const AntSwitch = withStyles(theme => ({
 export default function SortOptions(props) {
     const classes = useStyles();
 
-    const [stateSort, setStateSort] = useState({
-        sortBy: "Ranking"
-    });
+    const [stateSort, setStateSort] = useState("ranking");
 
-    const [stateOrder, setStateOrder] = useState({
-        checkedOrder: false
-    });
+    const [stateOrder, setStateOrder] = useState("Ascending");
 
     const handleChangeSort = event => {
-        const name = event.target.name;
-        setStateSort({
-          ...stateSort,
-          [name]: event.target.value
-        });
+        const name = event.target.value;
+    
     };
     
     const handleChangeOrder = event => {
-        setStateOrder({ ...stateOrder, [event.target.name]: event.target.checked });
+        setStateOrder(event.target.name);
     };
 
     return (
         
         <Grid container spacing={24}>
-                        <Grid item md={3} className={classes.sortOptions}>
-                            {/* sort option */}
-                            <FormControl className={classes.formControl}>
-                                <InputLabel htmlFor="age-native-simple"></InputLabel>
-                                <Select
-                                    native
-                                    value={stateSort.age}
-                                    onChange={handleChangeSort}
-                                    inputProps={{
-                                        sortBy: 'age',
-                                        order: 'age-native-simple',
-                                    }}
-                                    >
-                                    <option value="admissionRate">Admission Rate</option>
-                                    <option value="costOfAttendance">Cost of Attendance</option>
-                                    <option value="ranking">Ranking</option>
-                                    <option value="recommendationScore">Recommendation Score</option>
-                                </Select>
-                            </FormControl>
+            <Grid item md={3} className={classes.sortOptions}>
+                {/* sort option */}
+                <FormControl className={classes.formControl}>
+                    <InputLabel htmlFor="age-native-simple"></InputLabel>
+                    <Select
+                        native
+                        value={stateSort.age}
+                        onChange={handleChangeSort}
+                        inputProps={{
+                            sortBy: 'age',
+                            order: 'age-native-simple',
+                        }}
+                        >
+                        <option value="adm_rate">Admission Rate</option>
+                        <option value="out_state_cost">Cost of Attendance</option>
+                        <option value="ranking">Ranking</option>
+                        <option value="recommendationScore">Recommendation Score</option>
+                    </Select>
+                </FormControl>
+            </Grid>
+            <Grid item md={3}>
+                {/* sortOrder */}
+                <FormGroup className={classes.sortOrder}>
+                    <Typography component="div">
+                        <Grid component="label" container alignItems="center" spacing={1}>
+                        <Grid item>Ascending</Grid>
+                        <Grid item>
+                            <AntSwitch checked={stateOrder.checkedOrder} onChange={handleChangeOrder} name="checkedOrder" />
                         </Grid>
-                        <Grid item md={3}>
-                            {/* sortOrder */}
-                            <FormGroup className={classes.sortOrder}>
-                                <Typography component="div">
-                                    <Grid component="label" container alignItems="center" spacing={1}>
-                                    <Grid item>Ascending</Grid>
-                                    <Grid item>
-                                        <AntSwitch checked={stateOrder.checkedOrder} onChange={handleChangeOrder} name="checkedOrder" />
-                                    </Grid>
-                                    <Grid item>Descending</Grid>
-                                    </Grid>
-                                </Typography>
-                            </FormGroup>
+                        <Grid item>Descending</Grid>
                         </Grid>
-                    </Grid>
+                    </Typography>
+                </FormGroup>
+            </Grid>
+        </Grid>
 
     );
 }
