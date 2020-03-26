@@ -24,6 +24,11 @@ def import_college_data(modeladmin, request, queryset):
     for college in r:
         College.objects.filter(name=college['name']).update(**college)
 
+def import_niche_data(modeladmin, request, queryset):
+    r = scrape_high_school([{"name": hs.name, "city": hs.city, "state": hs.state} for hs in queryset])
+    for hs in r:
+        HighSchool.objects.filter(name=hs['name']).update(**hs)
+
 
 class CollegeAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ['name', 'state', 'ranking', 'institution_type', 'size','adm_rate', 
@@ -45,6 +50,7 @@ class StudentAdmin(ImportExportModelAdmin, admin.ModelAdmin):
 class HighSchoolAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ['name', 'city', 'state', 'sat', 'act', 'grad_rate',
                     'ap_enroll', 'num_students']
+    actions = [import_niche_data]
 
 
 class ApplicationAdmin(admin.ModelAdmin):

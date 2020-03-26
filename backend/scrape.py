@@ -5,7 +5,7 @@ import os
 from bs4 import BeautifulSoup
 import time
 import random
-#from .models import HighSchool
+from faker import Faker
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
@@ -16,39 +16,13 @@ headers = {
     "Upgrade-Insecure-Requests": "1",
 }
 
-user_agent_list = [
-   #Chrome
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 5.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36',
-    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
-    'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
-    #Firefox
-    'Mozilla/4.0 (compatible; MSIE 9.0; Windows NT 6.1)',
-    'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko',
-    'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)',
-    'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko',
-    'Mozilla/5.0 (Windows NT 6.2; WOW64; Trident/7.0; rv:11.0) like Gecko',
-    'Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko',
-    'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.0; Trident/5.0)',
-    'Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko',
-    'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)',
-    'Mozilla/5.0 (Windows NT 6.1; Win64; x64; Trident/7.0; rv:11.0) like Gecko',
-    'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)',
-    'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)',
-    'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)'
-]
-
 college_scorecard_api_key = '9yXtfpTsEQjDu6zfPz6eWZqimWZe0hac1LcbXsAL'
+college_scorecard_url = 'https://api.data.gov/ed/collegescorecard/v1/schools.json?&api_key=' + college_scorecard_api_key
 college_ranking_url = 'http://allv22.all.cs.stonybrook.edu/~stoller/cse416/WSJ_THE/united_states_rankings_2020_limit0_25839923f8b1714cf54659d4e4af6c3b.json' 
+#college_data_url = 'http://allv22.all.cs.stonybrook.edu/~stoller/cse416/collegedata/'
+college_data_url = 'https://www.collegedata.com/college/'
+niche_url = 'https://www.niche.com/k12/'
 
-college_scorecard_url = 'https://api.data.gov/ed/collegescorecard/v1/schools.json?&api_key=9yXtfpTsEQjDu6zfPz6eWZqimWZe0hac1LcbXsAL'
- 
 def scrape_college_rankings(colleges):
     r = requests.get(college_ranking_url, headers=headers)
     rankings_list = r.json()['data']
@@ -89,7 +63,7 @@ def scrape_college_score_card(colleges):
 
         r = requests.get(college_scorecard_url, {'school.name': college,
             'fields': fields}).json()['results']
-        print('SCRAPING: ', college) 
+
         d = list(filter(lambda x : x['school.name'] == college, r))
         d = d and d[0] or r[0]
         scraped['size'] = d[f['size']]
@@ -133,9 +107,8 @@ def scrape_college_data(colleges_list):
 
     result = []
     for college, cleaned_college in colleges.items():
-        print(cleaned_college)
 
-        url = f"https://www.collegedata.com/college/{cleaned_college.replace(' ', '-')}"
+        url = college_data_url + cleaned_college.replace(' ', '-')
 
         r = requests.get(url, headers=headers)
         if r.status_code != 200:
@@ -189,9 +162,6 @@ def scrape_college_data(colleges_list):
 
     return result
 
-#if __name__ == '__main__':
-#    scrape_college_data(['Stony Brook University']) #, 'Williams College'])
-
 
 def scrape_high_school_location():
     """
@@ -210,53 +180,63 @@ def scrape_high_school_location():
     return results
 
 
-def scrape_high_school(url):
+def scrape_high_school(hs_list):
+    result = []
+    for hs in hs_list:
+        end_point = f'{hs["name"]} {hs["city"]} {hs["state"]}'
+        end_point = end_point.replace(' ', '-')
+        url = niche_url + end_point
 
-    headers["User-Agent"] = random.choice(user_agent_list)
-    print(f"scraping {url}")
-    
-    time.sleep(random.randint(0,5))
-    d = {}
-    r = requests.get(url, headers=headers)
+        faker = Faker()
+        headers["User-Agent"] = faker.user_agent() 
+        print(f"scraping {url}")
+        
+        d = {}
+        r = requests.get(url, headers=headers)
 
-    if r.status_code != 200:
-        print(f"ERROR: unable to scrape {url}")
-        print("ERROR: Being blocked by niche.com")
-        raise Warning
+        if r.status_code != 200:
+            print(f"ERROR: unable to scrape {url}")
+            print("ERROR: Being blocked by niche.com")
+            raise Warning
 
-    soup = BeautifulSoup(r.text, 'html.parser')
-    name = soup.find('h1','postcard__title').contents[0]
-    d['name'] = name
+        soup = BeautifulSoup(r.text, 'html.parser')
+        name = soup.find('h1','postcard__title').contents[0]
+        d['name'] = name
 
-    extracted_json = re.search(
-        '<script>window.App=(.*?);</script>', r.text).group(1)
-    serialized_json = json.loads(extracted_json)
-    data = serialized_json['context']['dispatcher']['stores']['ProfileStore']['content']['blocks']
+        extracted_json = re.search(
+            '<script>window.App=(.*?);</script>', r.text).group(1)
+        serialized_json = json.loads(extracted_json)
+        data = serialized_json['context']['dispatcher']['stores']['ProfileStore']['content']['blocks']
 
-    for i in data:
-        for j in i['buckets'].values():
-            for k in j['contents']:
-                if 'label' in k and 'value' in k:
-                    label = k['label']
-                    value = k['value']
-                    if label == 'Address':
-                        d['city'] = value['City']
-                        d['state'] = value['State']
+        for i in data:
+            for j in i['buckets'].values():
+                for k in j['contents']:
+                    if 'label' in k and 'value' in k:
+                        label = k['label']
+                        value = k['value']
+                        if label == 'Address':
+                            d['city'] = value['City']
+                            d['state'] = value['State']
 
-                    if label == 'Average Graduation Rate':
-                        d['grad_rate'] = value
+                        if label == 'Average Graduation Rate':
+                            d['grad_rate'] = value
 
-                    if label == 'Average SAT':
-                        d['sat'] = value['average']
+                        if label == 'Average SAT':
+                            d['sat'] = value['average']
 
-                    if label == 'Average ACT':
-                        d['act'] = value['average']
+                        if label == 'Average ACT':
+                            d['act'] = value['average']
 
-                    if label == 'AP Enrollment':
-                        d['ap_enroll'] = value
-                
-                    if label == 'Students':
-                        d['num_students'] = value
-    return(d)
+                        if label == 'AP Enrollment':
+                            d['ap_enroll'] = value
+                    
+                        if label == 'Students':
+                            d['num_students'] = value
+        result.append(d)
+
+    return(result)
+
+#if __name__ == '__main__':
+#    scrape_high_school('http://allv22.all.cs.stonybrook.edu/~stoller/cse416/niche/academic-magnet-high-school-north-charleston-sc/') 
 
 
