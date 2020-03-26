@@ -33,7 +33,7 @@ def import_niche_data(modeladmin, request, queryset):
 class CollegeAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ['name', 'state', 'ranking', 'institution_type', 'size','adm_rate', 
     'SAT_math', 'SAT_EBRW', 'ACT_composite', 'in_state_cost', 'out_state_cost',
-    'institution_type', 'grad_debt_median', 'completion_rate']
+    'grad_debt_median', 'completion_rate']
 
     actions = [import_college_rankings, import_college_data,
             import_college_score_card]
@@ -44,7 +44,7 @@ class ApplicationInline(admin.TabularInline):
 
 
 class StudentAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-    list_display = ['userid']
+    list_display = ['userid', 'high_school_name', 'high_school_city','high_school_state',  'GPA', 'SAT_EBRW', 'ACT_composite']
     inlines = [ApplicationInline]
 
 

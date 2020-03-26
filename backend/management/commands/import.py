@@ -86,21 +86,6 @@ def import_students():
             a.student = s
             a.save()
 
-
-def import_hs():
-    with open('backend/data/hs.txt', 'r') as f:
-        hs_urls = f.read().split('\n')
-        for hs_url in hs_urls:
-            try:
-                d = scrape_high_school(hs_url)
-            except Warning:
-                print('Niche.com Wins again...')
-                return
-
-            hs = HighSchool(**d)
-            if len(HighSchool.objects.filter(name=d['name'])) == 0:
-                hs.save() 
-
 def import_hs():
     with open('backend/data/hs.txt', 'r') as f:
         hs_urls = f.read().split('\n')
