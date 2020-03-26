@@ -5,59 +5,49 @@
 "Montana": "MT",
 "Arizona": "AZ",
 "Nebraska": "NE",
-
 "Arkansas": "AR",
 "Nevada": "NV",
-
 "California": "CA",
 "New Hampshire": "NH",
 "Colorado": "CO",
 "New Jersey": "NJ",
 "Connecticut": "CT",
-New Mexico NM
+"New Mexico": "NM",
 "Delaware": "DE",
 "New York": "NY",
-District of Columbia DC 
-North Carolina NC
+"District of Columbia": "DC",
+"North Carolina": "NC",
 "Florida": "FL",
-North Dakota ND
+"North Dakota": "ND";
 "Georgia": "GA",
 "Ohio": "OH",
 "Hawaii": "HI",
 "Oklahoma": "OK",
 "Idaho": "ID",
 "Oregon": "OR",
-
 "Illinois": "IL",
 "Pennsylvania": "PA",
-
 "Indiana": "IN",
-Rhode Island RI
+"Rhode Island": "RI",
 "Iowa": "IA",
-South Carolina SC
+"South Carolina"; "SC",
 "Kansas": "KS",
-South Dakota SD
+"South Dakota": "SD",
 "Kentucky": "KY",
 "Tennessee": "TN",
-
 "Louisiana": "LA",
 "Texas": "TX",
-
 "Maine": "ME",
 "Utah": "UT",
-
 "Maryland": "MD",
 "Vermont": "VT",
-
 "Massachusetts": "MA",
 "Virginia": "VA",
-
 "Michigan": "MI",
 "Washington": "WA",
 "Minnesota": "MN",
-West Virginia WV
+"West Virginia": "WV",
 "Mississippi": "MS",
 "Wisconsin": "WI",
-
-"Wyoming": "WY",
+"Wyoming": "WY"
 ]
