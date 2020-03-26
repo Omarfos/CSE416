@@ -67,19 +67,19 @@ class College(models.Model):
     ]
 
     name = models.CharField(max_length=100, unique=True)
-    ranking = models.IntegerField(null=True)
-    adm_rate = models.FloatField(null=True)
-    size = models.IntegerField(null=True)
-    SAT_math = models.IntegerField(null=True)
-    SAT_EBRW = models.IntegerField(null=True)
-    ACT_composite = models.IntegerField(null=True)
-    in_state_cost = models.IntegerField(null=True)
-    out_state_cost = models.IntegerField(null=True)
-    institution_type = models.CharField(max_length=30, choices=INS_TYPE)
-    grad_debt_median = models.IntegerField(null=True)
-    completion_rate = models.FloatField(null=True)
-    state = models.CharField(max_length=2, null=True)
-    majors = models.CharField(max_length=2000, null=True)
+    ranking = models.IntegerField(null=True, blank=True)
+    adm_rate = models.FloatField(null=True, blank=True)
+    size = models.IntegerField(null=True, blank=True)
+    SAT_math = models.IntegerField(null=True, blank=True)
+    SAT_EBRW = models.IntegerField(null=True, blank=True)
+    ACT_composite = models.IntegerField(null=True, blank=True)
+    in_state_cost = models.IntegerField(null=True, blank=True)
+    out_state_cost = models.IntegerField(null=True, blank=True)
+    institution_type = models.CharField(max_length=30, choices=INS_TYPE, blank=True)
+    grad_debt_median = models.IntegerField(null=True, blank=True)
+    completion_rate = models.FloatField(null=True, blank=True)
+    state = models.CharField(max_length=2, null=True, blank=True)
+    majors = models.CharField(max_length=2000, null=True, blank=True)
 
     def __str__(self):
         return f'{self.name}'
@@ -98,6 +98,7 @@ class Application(models.Model):
     ]
 
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    college = models.OneToOneField(College, on_delete=models.CASCADE)
     status = models.CharField(max_length=12, choices=APP_STATUS)
 
     def __str__(self):
