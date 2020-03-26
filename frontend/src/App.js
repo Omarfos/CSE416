@@ -39,11 +39,8 @@ function App() {
         <Route exact path="/view_college/:id" render={() => (<CollegeProfile/>)} />
         <Route exact path="/profile/:id" render={()=>(<Profile user = {user}/>)} />    
         <Route exact path="/login" render={() => (<Login errorMessage={errorMessage} setError = {setErrorMessage} setUser = {setUser} user = {user}/>)} />
-        {!user && 
-          <React.Fragment>
-            <Route exact path="/register" render={() => (<Register setUser = {setUser} errorMessage={errorMessage} setError = {setErrorMessage}/>)} />
-          </React.Fragment>
-        }   
+        <Route exact path="/register" render={() => (<Register user = {user} setUser = {setUser} errorMessage={errorMessage} setError = {setErrorMessage}/>)} />
+          
 
         <Route render={() => <NotFound/>}/>
       </Switch>
