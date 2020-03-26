@@ -13,7 +13,8 @@ import {Route,Switch, Redirect} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    marginTop: "65px"
   }, 
   navBar: {
     backgroundColor: "#eef5ff"
