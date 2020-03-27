@@ -141,6 +141,8 @@ export default function CollegeProfile(props) {
                         </Grid>
                         <SimpleCard college={college} />
 
+                        
+
                     </div>
                 }
             </Container>

@@ -33,8 +33,12 @@ const useStyles = makeStyles({
 export default function SimpleCard(props) {
   const classes = useStyles();
   // const res = JSON.parse(props.college.majors)
-  const majorArray = JSON.parse(props.college.majors)
+  let majorArray = null;
 
+  if(props.college.majors){
+      majorArray = JSON.parse(props.college.majors);
+  }
+ 
   return (
     <div>
       <Card className={classes.root}>
@@ -62,10 +66,11 @@ export default function SimpleCard(props) {
     </Typography>
           <div>
             <ul className={classes.list}>
-              {majorArray.map((major, key) =>
+              {majorArray &&  majorArray.map((major, key) =>
                 <li key={key} >{major}</li>
               )}
             </ul>
+            {!majorArray && <p>No Major Information Available</p>}
           </div>
 
 
