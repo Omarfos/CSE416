@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useLocation, Link, useHistory } from "react-router-dom";
+import { useLocation, Link, useHistory, useParams } from "react-router-dom";
+import queryString from 'query-string'
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import CollegeCard from './CollegeCard';
@@ -16,7 +17,7 @@ import { Button } from '@material-ui/core'
 const useStyles = makeStyles(theme => ({
     root: {
         flexGrow: 1,
-        backgroundImage: 'url('+ Image+')',
+        backgroundImage: 'url(' + Image + ')',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat'
     },
@@ -41,7 +42,7 @@ export default function Search(props) {
     const location = useLocation();
     const history = useHistory();
     const classes = useStyles();
-    const [colleges, setColleges] = useState([{ "name": "Stony Brook", "ranking": "56", "adm_rate": "0.5", "state": "NY", "institution_type": "Public"}, { "name": "Wagner College" }, { "name": "New York University" },
+    const [colleges, setColleges] = useState([{ "name": "Stony Brook", "ranking": "56", "adm_rate": "0.5", "state": "NY", "institution_type": "Public" }, { "name": "Wagner College" }, { "name": "New York University" },
     { "name": "Boston University" }, { "name": "Princeton University" }, { "name": "Harvard University" }]);
     // const [filters, setFilters] = useState([{ "name": "Stony Brook" }, { "name": "Wagner College" }, { "name": "N" }]);
     const [act, setACT] = useState([0, 36]);
@@ -51,50 +52,71 @@ export default function Search(props) {
     const [SATmath, setSATmath] = useState([600, 700]);
     const [admissionRate, setAdmissionRate] = useState([25, 75]);
 
-    useEffect(() => {
-        async function fetchData() {
-        };
-        fetchData();
-    });
 
-    const handleSearch = (sortType) => {
-        axios.get('http://localhost:8000/search', {
+    let slug = useParams()
+
+    let query = new URLSearchParams(useLocation().search);
+
+    useEffect(() => {
+        // const values = queryString.parse(useLocation().search)
+        // values.ACT_composite = act[0] + ',' + act[1]
+        // console.log('values', values)
+        // for (let [k, v] in query.keys())
+        //     console.log(k, v)
+        // for (const [key, value] of query) {
+        //     console.log('key', key)
+        //     console.log('value', value)
+        // }
+        // handleSearch(location.search)
+        // navigateUrl();
+        // console.log('USE EFFECT');
+    }, [])
+
+    const navigateUrl = () => {
+        const values = queryString.parse(location.search)
+        console.log('values', values)
+        values.ACT_composite = [1, 2]
+        console.log('values', values)
+        // history.push(queryString.stringify(values)
+        let s = { ACT_composite: act }
+        console.log('values', queryString.stringify({ ACT_composite: [1, 2] }, { arrayFormat: 'comma' }))
+        let a = queryString.stringify(s, { arrayFormat: 'comma' });
+        console.log('values : a', a)
+        // history.push(a)
+
+    }
+
+
+
+
+    const handleSearch = (query) => {
+        console.log('query', query)
+        axios.get('http://localhost:8000/search' + query, {
             responseType: 'json',
-            params: {
-                ranking: ranking[0] + ',' + ranking[1],
-                sort: sortType
-            }
+            // params: {
+            //     ranking: ranking[0] + ',' + ranking[1],
+            //     sort: sortType
+            // }
         }).then((response) => {
-            // let d = JSON.parse(response.body)
-            // console.log(d[0]);
-            // console.log(response.status);
-            // console.log(response.body);
-            // console.log(response.data);
             let colle = response.data.map(c => {
                 return c.fields
             })
             setColleges(colle)
             console.log(colle[0])
-            // console.log('colle', colle);
-            // console.log('colle', [1, 2, 3]);
-
-            // console.log(response.json());
-        }).catch(function (error) {
-            console.log(error);
-        }).finally(function () {
-            // always executed
-        });
+        })
     }
 
     return (
+
         <div className={classes.root}>
+
             <Grid container spacing={2}>
 
                 {/* left side - filters */}
                 <Grid item md={2} className={classes.filters}>
                     <Grid container spacing={2}>
 
-                    <Grid item md={12}>
+                        <Grid item md={12}>
                             <Button onClick={() => handleSearch('adm_rate')}> Hello </Button>
                         </Grid>
 

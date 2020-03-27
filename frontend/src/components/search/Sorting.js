@@ -27,37 +27,37 @@ const useStyles = makeStyles(theme => ({
 
 const AntSwitch = withStyles(theme => ({
     root: {
-      width: 28,
-      height: 16,
-      padding: 2,
-      display: 'flex',
+        width: 28,
+        height: 16,
+        padding: 2,
+        display: 'flex',
     },
     switchBase: {
-      padding: 3,
-      color: theme.palette.grey[500],
-      '&$checked': {
-        transform: 'translateX(12px)',
-        color: theme.palette.common.white,
-        '& + $track': {
-          opacity: 1,
-          backgroundColor: theme.palette.primary.main,
-          borderColor: theme.palette.primary.main,
+        padding: 3,
+        color: theme.palette.grey[500],
+        '&$checked': {
+            transform: 'translateX(12px)',
+            color: theme.palette.common.white,
+            '& + $track': {
+                opacity: 1,
+                backgroundColor: theme.palette.primary.main,
+                borderColor: theme.palette.primary.main,
+            },
         },
-      },
     },
     thumb: {
-      width: 12,
-      height: 12,
-      boxShadow: 'none',
+        width: 12,
+        height: 12,
+        boxShadow: 'none',
     },
     track: {
-      border: `1px solid ${theme.palette.grey[500]}`,
-      borderRadius: 16 / 2,
-      opacity: 1,
-      backgroundColor: theme.palette.common.white,
+        border: `1px solid ${theme.palette.grey[500]}`,
+        borderRadius: 16 / 2,
+        opacity: 1,
+        backgroundColor: theme.palette.common.white,
     },
     checked: {},
-  }))(Switch);
+}))(Switch);
 
 export default function SortOptions(props) {
     const classes = useStyles();
@@ -68,18 +68,19 @@ export default function SortOptions(props) {
 
     const handleChangeSort = event => {
         const name = event.target.value;
-    
+        console.log('name', name)
+
     };
-    
+
     const handleChangeOrder = event => {
         setStateOrder(event.target.name);
+        console.log('order', event.target.name)
     };
 
     return (
-        
+
         <Grid container spacing={24}>
             <Grid item md={3} className={classes.sortOptions}>
-                {/* sort option */}
                 <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="age-native-simple"></InputLabel>
                     <Select
@@ -90,7 +91,7 @@ export default function SortOptions(props) {
                             sortBy: 'age',
                             order: 'age-native-simple',
                         }}
-                        >
+                    >
                         <option value="adm_rate">Admission Rate</option>
                         <option value="out_state_cost">Cost of Attendance</option>
                         <option value="ranking">Ranking</option>
@@ -103,11 +104,11 @@ export default function SortOptions(props) {
                 <FormGroup className={classes.sortOrder}>
                     <Typography component="div">
                         <Grid component="label" container alignItems="center" spacing={1}>
-                        <Grid item>Ascending</Grid>
-                        <Grid item>
-                            <AntSwitch checked={stateOrder.checkedOrder} onChange={handleChangeOrder} name="checkedOrder" />
-                        </Grid>
-                        <Grid item>Descending</Grid>
+                            <Grid item>Ascending</Grid>
+                            <Grid item>
+                                <AntSwitch checked={stateOrder.checkedOrder} onChange={handleChangeOrder} name="checkedOrder" />
+                            </Grid>
+                            <Grid item>Descending</Grid>
                         </Grid>
                     </Typography>
                 </FormGroup>
