@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import {Link, useHistory}  from "react-router-dom";
 import SearchIcon from "@material-ui/icons/Search";
 import Paper from '@material-ui/core/Paper';
@@ -27,19 +26,9 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 1
   },
-  // borderLeft:{
-  //   borderLeft: "1px solid #8493d3",
-  //   '&:hover': {
-  //     background: "hsla(240, 48%, 41%, 0.1)",
-  //     color: "#5d6896",
-  //     paddingTop: "18px",
-  //     paddingBottom: "18px",
-  //   } 
-  // },
   button:{
     textDecoration:"none",
     color:'#8493d3',
-    //fontWeight:"bold",
     fontSize: 25,
     paddingLeft: "15px",
     paddingRight: "15px",
@@ -85,8 +74,8 @@ export default function Navbar (props){
   let history = useHistory();
 
   async function handleLogout(){
+    console.log("logingout");
     props.setUser(null);
-    history.push('/');
   }
 
   async function handleSearch(event){
@@ -121,8 +110,8 @@ export default function Navbar (props){
           {props.user &&
               <React.Fragment>
                   <Link className={classes.button} to={"/profile/"+props.user}>Profile</Link>
-                  <Divider orientation="vertical" />
-                  <Button className={classes.button} onClick={handleLogout}>Log out</Button>
+                  <Divider orientation="vertical" className={classes.divider}/>
+                  <Link className={classes.button} to="/" onClick={handleLogout}>Log out</Link>
               </React.Fragment>
           }
           {!props.user &&
