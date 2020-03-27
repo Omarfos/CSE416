@@ -10,7 +10,9 @@ import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import {Route,Switch, Redirect} from "react-router-dom";
-import logoImage from "../images/logo.png"
+import logoImage from "../images/logo.png";
+import Divider from '@material-ui/core/Divider';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,20 +20,34 @@ const useStyles = makeStyles(theme => ({
     marginTop: "65px"
   }, 
   navBar: {
-    backgroundColor: "#eef5ff"
+    backgroundColor: "#eef5ff",
+    minHeight: 65,
+    height:65,
   },
   title: {
     flexGrow: 1
   },
+  // borderLeft:{
+  //   borderLeft: "1px solid #8493d3",
+  //   '&:hover': {
+  //     background: "hsla(240, 48%, 41%, 0.1)",
+  //     color: "#5d6896",
+  //     paddingTop: "18px",
+  //     paddingBottom: "18px",
+  //   } 
+  // },
   button:{
     textDecoration:"none",
-    marginRight:"20px",
     color:'#8493d3',
-    fontSize: 20,
-    padding: "8px",
+    //fontWeight:"bold",
+    fontSize: 25,
+    paddingLeft: "15px",
+    paddingRight: "15px",
     '&:hover': {
       background: "hsla(240, 48%, 41%, 0.1)",
-      color: "#5d6896"
+      color: "#5d6896",
+      paddingTop: "18px",
+      paddingBottom: "18px",
     }
   },
   search: {
@@ -47,10 +63,18 @@ const useStyles = makeStyles(theme => ({
   },
   logo:{
     height: "40px",
+    minHeight:"40px",
+    paddingLeft:"10px",
+    paddingRight:"10px",
     '&:hover': {
       background: "hsla(240, 48%, 41%, 0.1)",
-      color: "#5d6896"
+      color: "#5d6896",
+      paddingTop: "16px",
+      paddingBottom: "16px",
     }
+  },
+  divider:{
+    height:"60%",
   }
 }));
 
@@ -75,7 +99,8 @@ export default function Navbar (props){
       <AppBar position="fixed" className={classes.navBar}>
         <Toolbar>
           <Typography align="left" className={classes.title}>
-              <Link to="/"> <img src={logoImage} className={classes.logo}/>
+              <Link to="/"> 
+                <img src={logoImage} className={classes.logo}/>
               </Link>
           </Typography>
 
@@ -96,12 +121,14 @@ export default function Navbar (props){
           {props.user &&
               <React.Fragment>
                   <Link className={classes.button} to={"/profile/"+props.user}>Profile</Link>
+                  <Divider orientation="vertical" />
                   <Button className={classes.button} onClick={handleLogout}>Log out</Button>
               </React.Fragment>
           }
           {!props.user &&
               <React.Fragment>
-                  <Link className={classes.button} to="/login">Login</Link>
+                  <Link className={classes.button}to="/login">Login</Link>
+                  <Divider orientation="vertical" className={classes.divider}/>
                   <Link className={classes.button} to="/register">Register</Link>
               </React.Fragment>
           }
