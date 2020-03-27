@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Image from '../images/homeBackground_blur.png';
+import notFoundImage from "../images/404.png"
 
 
 const useStyles = makeStyles(theme => ({
-    body: {
-        marginTop: "100px",
+    image: {
+        width:"27%",
+        left: "37%",
+        position: "absolute",
+        top: "23%",
     },
     backgound2: {
         position: 'absolute',
@@ -26,7 +30,7 @@ export default function NotFound(props) {
 
     return (
         <div className={classes.backgound2}>
-            <h1 className={classes.body}>Oops! Page not found!</h1>
+            <img src={notFoundImage} className={classes.image}/>
         </div>
     );
 }

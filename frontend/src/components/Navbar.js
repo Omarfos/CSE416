@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import {Route,Switch, Redirect} from "react-router-dom";
+import logoImage from "../images/logo.png"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -36,14 +37,20 @@ const useStyles = makeStyles(theme => ({
   search: {
     minWidth:"300px",
     width: "30vw",
-    height: "35px",
+    height: "45px",
     marginBottom: "5px",
     marginTop: "5px",
     marginRight: "300px"
   },
   input:{
     width: "85%",
-    marginBottom: "20px"
+  },
+  logo:{
+    height: "40px",
+    '&:hover': {
+      background: "hsla(240, 48%, 41%, 0.1)",
+      color: "#5d6896"
+    }
   }
 }));
 
@@ -60,7 +67,7 @@ export default function Navbar (props){
 
   async function handleSearch(event){
     event.preventDefault();
-    history.push('/search/' + event.target.searchQuery.value);
+    history.push('/search/college?name=' + event.target.searchQuery.value);
   }
 
   return (
@@ -68,11 +75,12 @@ export default function Navbar (props){
       <AppBar position="fixed" className={classes.navBar}>
         <Toolbar>
           <Typography align="left" className={classes.title}>
-              <Link className={classes.button} to="/" >C4ME</Link>
+              <Link to="/"> <img src={logoImage} className={classes.logo}/>
+              </Link>
           </Typography>
 
           {/* search on navigation bar for some pages */}
-          <Route exact path={["/search/:q", "/view_college/:id"]}>
+          <Route exact path={["/search/:q", "/college/:id"]}>
             <Paper component="form" className={classes.search} onSubmit={handleSearch}>
             <InputBase
                 name="searchQuery"

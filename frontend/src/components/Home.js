@@ -8,8 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Image from '../images/homeBackground.png';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-
+import logoImage from "../images/logo.png"
 
 const useStyles = makeStyles(theme => ({
     search: {
@@ -37,6 +36,12 @@ const useStyles = makeStyles(theme => ({
     },
     bingo: {
         color: "#657ECD",
+        
+    },
+    logo:{
+        margin:"15px",
+        minWidth: "200px",
+        width: "23vw",
     }
 }));
 export default function Home() {
@@ -64,7 +69,7 @@ export default function Home() {
                     </Paper>
                 </Grid>
                 <Grid item>
-                    <Typography variant="h1" className={classes.bingo} >BinGo</Typography>
+                    <img src={logoImage} className={classes.logo}/>
                     <Typography variant="h6" className={classes.bingo}>Plan your path to college</Typography>
                 </Grid>
             </Grid>
