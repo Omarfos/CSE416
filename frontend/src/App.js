@@ -6,7 +6,7 @@ import Search from './components/search/Search'
 import CollegeProfile from './components/college/CollegeProfile'
 import Profile from './components/user/Profile'
 import Navbar from './components/Navbar.js';
-import {Route,Switch, Redirect} from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import './App.css';
 
 
@@ -32,17 +32,17 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar user = {user} setUser = {setUser}/>
+      <Navbar user={user} setUser={setUser} />
       <Switch>
-        <Route exact path="/" render={() => (<Home/>)} />
-        <Route exact path="/search/:q" render={() => (<Search/>)} />
-        <Route exact path="/view_college/:id" render={() => (<CollegeProfile/>)} />
-        <Route exact path="/profile/:id" render={()=>(<Profile user = {user}/>)} />    
-        <Route exact path="/login" render={() => (<Login errorMessage={errorMessage} setError = {setErrorMessage} setUser = {setUser} user = {user}/>)} />
-        <Route exact path="/register" render={() => (<Register user = {user} setUser = {setUser} errorMessage={errorMessage} setError = {setErrorMessage}/>)} />
-          
+        <Route exact path="/" render={() => (<Home />)} />
+        <Route exact path="/search/:q" render={() => (<Search />)} />
+        <Route exact path="/college/:id" render={() => (<CollegeProfile />)} />
+        <Route exact path="/profile/:id" render={() => (<Profile user={user} />)} />
+        <Route exact path="/login" render={() => (<Login errorMessage={errorMessage} setError={setErrorMessage} setUser={setUser} user={user} />)} />
+        <Route exact path="/register" render={() => (<Register user={user} setUser={setUser} errorMessage={errorMessage} setError={setErrorMessage} />)} />
 
-        <Route render={() => <NotFound/>}/>
+
+        <Route render={() => <NotFound />} />
       </Switch>
     </div>
   );
@@ -52,7 +52,7 @@ function App() {
 //DESIGN
 function NotFound(props) {
   return (
-      <h1>Not found or please log out first</h1>
+    <h1>Not found or please log out first</h1>
   )
 }
 export default App;

@@ -11,34 +11,23 @@ export default function SliderFactory(props) {
     const history = useHistory()
 
     const navigateUrl = () => {
-        console.log('value: location.search', location.search)
-        const values = queryString.parse(location)
-        console.log('values', values)
-        values.ACT_composite = value
-        console.log('values', values)
-        // history.push(queryString.stringify(values)
-        let s = { ACT_composite: value }
-        console.log('values', queryString.stringify({ ACT_composite: [1, 2] }, { arrayFormat: 'comma' }))
-        let a = queryString.stringify(s, { arrayFormat: 'comma' });
-        // location.search = a
-        console.log('values : a', a)
-        console.log('value: location.search', location.search)
-        history.push('v1?' + a)
-
+        const values = queryString.parse(location.search, { arrayFormat: 'comma' })
+        values[props.id] = value
+        let s = queryString.stringify(values, { arrayFormat: 'comma' })
+        history.push('college?' + s)
     }
 
 
     return (
         < div >
-            {console.log('RENDER')}
-
             <Typography id="range-slider" gutterBottom align='left'>
                 {props.startText}: {props.value[0]} - {props.value[1]} {props.endText}
             </Typography>
             <Slider
                 value={value}
                 onChange={(e, v) => { setValue(v) }}
-                onMouseUp={(e) => { navigateUrl(); props.setValue(value) }}
+                onMouseUp={(e) => { props.setValue(value); navigateUrl(); }}
+                // onMouseUp={(e) => { navigateUrl() }}
                 valueLabelDisplay="auto"
                 aria-labelledby="range-slider"
                 min={props.min}

@@ -7,6 +7,9 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
+import queryString from 'query-string'
+import { useLocation, Link, useHistory, useParams } from "react-router-dom";
+
 
 const useStyles = makeStyles(theme => ({
 
@@ -60,15 +63,24 @@ const AntSwitch = withStyles(theme => ({
 }))(Switch);
 
 export default function SortOptions(props) {
+
     const classes = useStyles();
 
     const [stateSort, setStateSort] = useState("ranking");
-
     const [stateOrder, setStateOrder] = useState("Ascending");
+
+    const location = useLocation()
+    const history = useHistory()
+
 
     const handleChangeSort = event => {
         const name = event.target.value;
+        props.setSort(name)
         console.log('name', name)
+        const values = queryString.parse(location.search, { arrayFormat: 'comma' })
+        values['sort'] = name
+        let s = queryString.stringify(values, { arrayFormat: 'comma' })
+        history.push('college?' + s)
 
     };
 
@@ -76,6 +88,14 @@ export default function SortOptions(props) {
         setStateOrder(event.target.name);
         console.log('order', event.target.name)
     };
+
+    const navigateUrl = () => {
+        const values = queryString.parse(location.search, { arrayFormat: 'comma' })
+        values['sort'] = stateSort
+        let s = queryString.stringify(values, { arrayFormat: 'comma' })
+        history.push('college?' + s)
+    }
+
 
     return (
 

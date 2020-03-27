@@ -13,7 +13,7 @@ import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles(theme => ({
     search: {
-        minWidth:"300px",
+        minWidth: "300px",
         width: "30vw",
         marginBottom: "10px"
     },
@@ -21,21 +21,21 @@ const useStyles = makeStyles(theme => ({
         position: "absolute",
         top: "40%",
     },
-    input:{
+    input: {
         width: "80%"
     },
-    backgound:{
+    backgound: {
         position: 'absolute',
         left: 0,
         right: 0,
-        top:0,
-        bottom:0,
-        backgroundImage: 'url('+ Image+')',
+        top: 0,
+        bottom: 0,
+        backgroundImage: 'url(' + Image + ')',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         zIndex: "-1",
     },
-    bingo:{
+    bingo: {
         color: "#657ECD",
     }
 }));
@@ -43,9 +43,9 @@ export default function Home() {
     let history = useHistory();
     const classes = useStyles();
 
-    async function handleSearch(event){
+    async function handleSearch(event) {
         event.preventDefault();
-        history.push('/search/' + event.target.searchQuery.value);
+        history.push('/search/college?name=' + event.target.searchQuery.value);
     }
 
     return (
@@ -53,21 +53,21 @@ export default function Home() {
             <Grid container direction="column" justify="center" alignItems="center" className={classes.grid}>
                 <Grid item>
                     <Paper component="form" className={classes.search} onSubmit={handleSearch}>
-                    <InputBase
-                        name="searchQuery"
-                        className={classes.input}
-                        placeholder="Search for College"
-                    />
-                    <IconButton type="submit" className={classes.iconButton} aria-label="search">
-                        <SearchIcon />
-                    </IconButton>
+                        <InputBase
+                            name="searchQuery"
+                            className={classes.input}
+                            placeholder="Search for College"
+                        />
+                        <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                            <SearchIcon />
+                        </IconButton>
                     </Paper>
                 </Grid>
                 <Grid item>
                     <Typography variant="h1" className={classes.bingo} >BinGo</Typography>
                     <Typography variant="h6" className={classes.bingo}>Plan your path to college</Typography>
                 </Grid>
-                </Grid>
+            </Grid>
         </div>
     );
 }

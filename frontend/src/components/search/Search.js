@@ -51,6 +51,7 @@ export default function Search(props) {
     const [SATebrw, setSATebrw] = useState([600, 700]);
     const [SATmath, setSATmath] = useState([600, 700]);
     const [admissionRate, setAdmissionRate] = useState([25, 75]);
+    const [sort, setSort] = useState("ranking")
 
 
     let slug = useParams()
@@ -67,29 +68,17 @@ export default function Search(props) {
         //     console.log('key', key)
         //     console.log('value', value)
         // }
-        // handleSearch(location.search)
+        handleSearch(location.search)
         // navigateUrl();
         // console.log('USE EFFECT');
-    }, [])
+    }, [act, ranking, cost, SATebrw, SATmath, admissionRate, sort])
 
-    const navigateUrl = () => {
-        const values = queryString.parse(location.search)
-        console.log('values', values)
-        values.ACT_composite = [1, 2]
-        console.log('values', values)
-        // history.push(queryString.stringify(values)
-        let s = { ACT_composite: act }
-        console.log('values', queryString.stringify({ ACT_composite: [1, 2] }, { arrayFormat: 'comma' }))
-        let a = queryString.stringify(s, { arrayFormat: 'comma' });
-        console.log('values : a', a)
-        // history.push(a)
-
-    }
 
 
 
 
     const handleSearch = (query) => {
+        { console.log('Search.js handlesearch') }
         console.log('query', query)
         axios.get('http://localhost:8000/search' + query, {
             responseType: 'json',
@@ -109,6 +98,9 @@ export default function Search(props) {
     return (
 
         <div className={classes.root}>
+            {console.log('Search.js render')}
+            {console.log('act', act)
+            }
 
             <Grid container spacing={2}>
 
@@ -130,37 +122,37 @@ export default function Search(props) {
 
                         <Grid item md={12}>
                             <div>
-                                <SliderFactory value={admissionRate} setValue={setAdmissionRate} min={1} max={100} startText={"Admission Rate"} endText={"%"} step={1} />
+                                <SliderFactory id='adm_rate' value={admissionRate} setValue={setAdmissionRate} min={1} max={100} startText={"Admission Rate"} endText={"%"} step={1} />
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
                             <div>
-                                <SliderFactory value={SATmath} setValue={setSATmath} min={200} max={800} startText={"Average SAT Math"} endText={""} step={10} />
+                                <SliderFactory id='SAT_math' value={SATmath} setValue={setSATmath} min={200} max={800} startText={"Average SAT Math"} endText={""} step={10} />
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
                             <div>
-                                <SliderFactory value={SATebrw} setValue={setSATebrw} min={200} max={800} startText={"Average SAT EBRW"} endText={""} step={10} />
+                                <SliderFactory id='SAT_EBRW' value={SATebrw} setValue={setSATebrw} min={200} max={800} startText={"Average SAT EBRW"} endText={""} step={10} />
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
                             <div>
-                                <SliderFactory value={act} setValue={setACT} min={1} max={36} startText={"Average ACT Composite"} endText={""} step={1} />
+                                <SliderFactory id='ACT_composite' value={act} setValue={setACT} min={1} max={36} startText={"Average ACT Composite"} endText={""} step={1} />
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
                             <div>
-                                <SliderFactory value={cost} setValue={setCost} min={0} max={100000} startText={"Cost of Attendance"} endText={"$"} step={1000} />
+                                <SliderFactory id='out_state_cost' value={cost} setValue={setCost} min={0} max={100000} startText={"Cost of Attendance"} endText={"$"} step={1000} />
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
                             <div>
-                                <SliderFactory value={ranking} setValue={setRanking} min={1} max={100} startText={"Ranking"} endText={"%"} step={1} />
+                                <SliderFactory id='ranking' value={ranking} setValue={setRanking} min={1} max={100} startText={"Ranking"} endText={"%"} step={1} />
                             </div>
                         </Grid>
 
@@ -175,11 +167,12 @@ export default function Search(props) {
                 <Grid item md={9}>
 
                     {/* Sorting */}
-                    <SortOptions />
+                    <SortOptions setSort={setSort} />
 
                     {/* college cards */}
                     {colleges.map((college) =>
                         <CollegeCard college={college} />
+
                     )}
 
                     {/* pagination */}
