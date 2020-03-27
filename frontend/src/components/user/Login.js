@@ -45,17 +45,18 @@ export default function SignIn(props) {
     let userid = e.target.userid.value;
     let password = e.target.password.value;
     fetch('http://localhost:8000/login', {
-      method: 'POST', // or 'PUT'
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({userid, password}),
-    }).then((data) => {
-      if (data.status === 200) {
+    }).then((response) => response.json())
+    .then((data) => {
+      if (data.SUCCESS) {
         props.setUser(userid);
         props.setError(null);
       }
-      else if (data.status === 404){
+      else if (data.ERROR){
         props.setError("Wrong username or password");
       }
     })

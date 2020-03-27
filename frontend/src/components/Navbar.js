@@ -74,7 +74,6 @@ export default function Navbar (props){
   let history = useHistory();
 
   async function handleLogout(){
-    console.log("logingout");
     props.setUser(null);
   }
 
