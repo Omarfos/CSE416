@@ -69,7 +69,8 @@ export default function Register(props) {
                 console.error('Error:', error);
             });
         }
-    }
+    } 
+    
     const classes = useStyles();
     return (
         <div>

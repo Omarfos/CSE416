@@ -68,7 +68,6 @@ export default function SimpleTabs(props) {
             </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
-            <br />Average GPA:
             <br />SAT MATH: {props.college.SAT_math}
             <br />SAT EBRW: {props.college.SAT_EBRW}
             <br />ACT: {props.college.ACT_composite}

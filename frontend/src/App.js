@@ -34,15 +34,15 @@ function App() {
     <div className="App">
       <Navbar user={user} setUser={setUser} />
       <Switch>
-        <Route exact path="/" render={() => (<Home />)} />
-        <Route exact path="/search/:q" render={() => (<Search />)} />
-        <Route exact path="/college/:id" render={() => (<CollegeProfile />)} />
-        <Route exact path="/profile/:id" render={() => (<Profile user={user} />)} />
-        <Route exact path="/login" render={() => (<Login errorMessage={errorMessage} setError={setErrorMessage} setUser={setUser} user={user} />)} />
-        <Route exact path="/register" render={() => (<Register user={user} setUser={setUser} errorMessage={errorMessage} setError={setErrorMessage} />)} />
+        <Route exact path="/" render={() => (<Home/>)} />
+        <Route exact path="/search/:q" render={() => (<Search/>)} />
+        <Route exact path="/college/:id" render={() => (<CollegeProfile errorMessage={errorMessage} setError = {setErrorMessage}/>)} />
+        <Route exact path="/profile/:id" render={()=>(<Profile user = {user}/>)} />    
+        <Route exact path="/login" render={() => (<Login errorMessage={errorMessage} setError = {setErrorMessage} setUser = {setUser} user = {user}/>)} />
+        <Route exact path="/register" render={() => (<Register user = {user} setUser = {setUser} errorMessage={errorMessage} setError = {setErrorMessage}/>)} />
+          
 
-
-        <Route render={() => <NotFound />} />
+        <Route render={() => <NotFound/>}/>
       </Switch>
     </div>
   );
