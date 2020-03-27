@@ -12,6 +12,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import NotFound from "../NotFound";
 import SimpleTabs from "./collegeTabComponent";
 import SimpleCard from "./CollegeCard";
 
@@ -88,64 +89,63 @@ export default function CollegeProfile(props) {
     }
 
     return (
-        <div className={classes.backgound}>
-            <Container maxWidth="md">
-                {!college &&
-                    <div className={classes.body}>
-                        <br /><br /><br />
-                        <h1>No College Found</h1>
-                    </div>
-                }
-                {college &&
-                    <div className={classes.body}>
-                        <Grid className={classes.header} container direction="row" justify="space-between" alignItems="flex-start">
-                            <Grid item xs={6}>
-                                <Typography variant="h4">{college.name}</Typography>
-                                <Typography variant="h6">#  {college.ranking} in National Universities</Typography>
-                                <Typography variant="body1">{college.institution_type} University in {college.state}</Typography>
+        <div>
+            {!college &&
+                <NotFound />
+            }
+            {college &&
+                <div className={classes.backgound}>
+                    <Container maxWidth="md">
+                        <div className={classes.body}>
+                            <Grid className={classes.header} container direction="row" justify="space-between" alignItems="flex-start">
+                                <Grid item xs={6}>
+                                    <Typography variant="h4">{college.name}</Typography>
+                                    <Typography variant="h6">#  {college.ranking} in National Universities</Typography>
+                                    <Typography variant="body1">{college.institution_type} University in {college.state}</Typography>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <TableContainer component={Paper} className={classes.table}>
+                                        <Table aria-label="College Quick Stats" >
+                                            <TableHead>
+                                                <TableRow>
+                                                    <TableCell align="left" className={classes.tableHead}>Quick Stats</TableCell>
+                                                    <TableCell className={classes.tableHead}></TableCell>
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                                <TableRow>
+                                                    <TableCell align="left" className={classes.tableCell}>Tuition and Fees (in-state)</TableCell>
+                                                    <TableCell align="right" className={classes.tableCell}>${college.in_state_cost}</TableCell>
+                                                </TableRow>
+                                                <TableRow>
+                                                    <TableCell align="left" className={classes.tableCell}>Tuition and Fees (out-state)</TableCell>
+                                                    <TableCell align="right" className={classes.tableCell}>${college.out_state_cost}</TableCell>
+                                                </TableRow>
+                                                <TableRow>
+                                                    <TableCell align="left" className={classes.tableCell}>Median Graduate Debt</TableCell>
+                                                    <TableCell align="right" className={classes.tableCell}>${college.grad_debt_median}</TableCell>
+                                                </TableRow>
+                                                <TableRow>
+                                                    <TableCell align="left" className={classes.tableCell}>Total Undergradate Enrollment</TableCell>
+                                                    <TableCell align="right" className={classes.tableCell}>{college.size}</TableCell>
+                                                </TableRow>
+                                                <TableRow>
+                                                    <TableCell align="left" className={classes.tableCell}>Completion Rate</TableCell>
+                                                    <TableCell align="right" className={classes.tableCell}>{college.completion_rate} %</TableCell>
+                                                </TableRow>
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={6}>
-                                <TableContainer component={Paper} className={classes.table}>
-                                    <Table aria-label="College Quick Stats" >
-                                        <TableHead>
-                                            <TableRow>
-                                                <TableCell align="left" className={classes.tableHead}>Quick Stats</TableCell>
-                                                <TableCell className={classes.tableHead}></TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            <TableRow>
-                                                <TableCell align="left" className={classes.tableCell}>Tuition and Fees (in-state)</TableCell>
-                                                <TableCell align="right" className={classes.tableCell}>${college.in_state_cost}</TableCell>
-                                            </TableRow>
-                                            <TableRow>
-                                                <TableCell align="left" className={classes.tableCell}>Tuition and Fees (out-state)</TableCell>
-                                                <TableCell align="right" className={classes.tableCell}>${college.out_state_cost}</TableCell>
-                                            </TableRow>
-                                            <TableRow>
-                                                <TableCell align="left" className={classes.tableCell}>Median Graduate Debt</TableCell>
-                                                <TableCell align="right" className={classes.tableCell}>${college.grad_debt_median}</TableCell>
-                                            </TableRow>
-                                            <TableRow>
-                                                <TableCell align="left" className={classes.tableCell}>Total Undergradate Enrollment</TableCell>
-                                                <TableCell align="right" className={classes.tableCell}>{college.size}</TableCell>
-                                            </TableRow>
-                                            <TableRow>
-                                                <TableCell align="left" className={classes.tableCell}>Completion Rate</TableCell>
-                                                <TableCell align="right" className={classes.tableCell}>{college.completion_rate} %</TableCell>
-                                            </TableRow>
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-                            </Grid>
-                        </Grid>
-                        <SimpleCard college={college} />
+                            <SimpleCard college={college} />
 
-                        
+                            
 
-                    </div>
-                }
-            </Container>
+                        </div>
+                    </Container>
+                </div>
+            }
         </div>
     );
 }

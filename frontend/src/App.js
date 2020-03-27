@@ -8,6 +8,7 @@ import Profile from './components/user/Profile'
 import Navbar from './components/Navbar.js';
 import { Route, Switch, Redirect } from "react-router-dom";
 import './App.css';
+import NotFound from './components/NotFound';
 
 
 function App() {
@@ -41,7 +42,6 @@ function App() {
         <Route exact path="/login" render={() => (<Login errorMessage={errorMessage} setError = {setErrorMessage} setUser = {setUser} user = {user}/>)} />
         <Route exact path="/register" render={() => (<Register user = {user} setUser = {setUser} errorMessage={errorMessage} setError = {setErrorMessage}/>)} />
           
-
         <Route render={() => <NotFound/>}/>
       </Switch>
     </div>
@@ -49,10 +49,4 @@ function App() {
 }
 
 
-//DESIGN
-function NotFound(props) {
-  return (
-    <h1>Not found or please log out first</h1>
-  )
-}
 export default App;
