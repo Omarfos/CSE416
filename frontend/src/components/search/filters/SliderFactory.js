@@ -18,11 +18,18 @@ export default function SliderFactory(props) {
     }
 
 
+
     return (
-        < div >
-            <Typography id="range-slider" gutterBottom align='left'>
-                {props.startText}: {props.value[0]} - {props.value[1]} {props.endText}
-            </Typography>
+        <div>
+            {props.id != 'adm_rate' ?
+                <Typography id="range-slider" gutterBottom align='left'>
+                    {props.startText}: {props.value[0]} - {props.value[1]} {props.endText}
+                </Typography> :
+                <Typography id="range-slider" gutterBottom align='left'>
+                    {props.startText}: {props.value[0] * 100} - {props.value[1] * 100} {props.endText}
+                </Typography>
+            }
+
             <Slider
                 value={value}
                 onChange={(e, v) => { setValue(v) }}
@@ -34,7 +41,7 @@ export default function SliderFactory(props) {
                 max={props.max}
                 step={props.step}
             />
-        </div >
+        </div>
 
     );
 
