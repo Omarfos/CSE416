@@ -10,6 +10,7 @@ import LocationFilter from './filters/LocationFilter';
 import MajorFilter from './filters/MajorFilter';
 import SizeFilter from './filters/SizeFilter';
 import SliderFactory from './filters/SliderFactory';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Image from '../../images/homeBackground_blur.png';
 
 const useStyles = makeStyles(theme => ({
@@ -43,10 +44,13 @@ export default function Search(props) {
     const [ranking, setRanking] = useState([0, 100]);
     const [SATebrw, setSATebrw] = useState([0, 800]);
     const [SATmath, setSATmath] = useState([0, 800]);
+    const [size, setSize] = useState([0, 30000]);
     const [admissionRate, setAdmissionRate] = useState([0, 1]);
     const [sort, setSort] = useState(null)
+    const [loading, setLoading] = useState(false)
 
     const handleSearch = (query) => {
+        setLoading(true)
         console.log('query', query)
         axios.get('http://localhost:8000/search' + query, {
             responseType: 'json'
@@ -55,17 +59,18 @@ export default function Search(props) {
                 return c.fields
             }))
         })
+        setLoading(false)
     }
 
 
     useEffect(() => {
         handleSearch(location.search)
-    }, [act, ranking, cost, SATebrw, SATmath, admissionRate, sort])
+    }, [act, ranking, cost, SATebrw, SATmath, admissionRate, sort, size])
 
 
     return (
 
-        <div className={classes.root}>
+        < div className={classes.root} >
             <Grid container spacing={2}>
 
                 {/* left side - filters */}
@@ -121,7 +126,7 @@ export default function Search(props) {
                         </Grid>
 
                         <Grid item md={12}>
-                            <SizeFilter />
+                            <SizeFilter id='size' value={size} setValue={setSize} />
                         </Grid>
 
                     </Grid>
@@ -133,6 +138,13 @@ export default function Search(props) {
                     {/* Sorting */}
                     <SortOptions setSort={setSort} />
 
+                    {loading ?
+                        <LinearProgress variant="query" /> :
+                        colleges.map((college) =>
+                            <CollegeCard college={college} />
+
+                        )
+                    }
                     {/* college cards */}
                     {colleges.map((college) =>
                         <CollegeCard college={college} />
@@ -145,6 +157,6 @@ export default function Search(props) {
                 </Grid>
 
             </Grid>
-        </div>
+        </div >
     );
 }
