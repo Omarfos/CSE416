@@ -12,22 +12,32 @@ import Alert from '@material-ui/lab/Alert';
 
 
 const useStyles = makeStyles((theme) => ({
+  container:{
+    maxWidth:"32%",
+  },
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: "40%",
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
+  title:{
+    margin:"10px",
+  },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: "#8493d3",
   },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
+  input:{
+    fontSize:"1.5vw"
+  },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    marginTop: "35px",
+    fontSize:"1vw"
   },
   alert: {
     width: '100%',
@@ -74,22 +84,34 @@ export default function SignIn(props) {
         </div>
       }
 
-      <Container component="main" maxWidth="xs">
+      <Container component="main" className={classes.container}>
         {props.user && <Redirect to="/" />}
-        <CssBaseline />
+
         <div className={classes.paper}>
-          <Typography component="h1" variant="h5">
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h4" className={classes.title}>
             Sign in
           </Typography>
           <form className={classes.form} onSubmit={handleLogin}>
             <TextField
               variant="outlined" margin="normal" required
               fullWidth id="userid" label="Userid" name="userid" autoFocus
+              InputProps={{
+                classes: {
+                  input: classes.input,
+                },
+              }}
             />
             <TextField
               variant="outlined" margin="normal"
               required fullWidth name="password" label="Password" type="password"
-              id="password" autoComplete="current-password"
+              id="password" autoComplete="current-password" InputProps={{
+                classes: {
+                  input: classes.input,
+                },
+              }}
             />
             <Button type="submit" fullWidth variant="contained" color="primary"
               className={classes.submit}

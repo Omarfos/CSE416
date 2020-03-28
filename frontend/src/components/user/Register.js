@@ -14,22 +14,32 @@ import Alert from '@material-ui/lab/Alert';
 
 
 const useStyles = makeStyles((theme) => ({
+    container:{
+        maxWidth:"32%",
+    },
     paper: {
-        marginTop: theme.spacing(8),
+        marginTop:  "40%",
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
     },
+    title:{
+        marginTop:"10px",
+    },
     avatar: {
         margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: "#8493d3",
+    },
+    input:{
+        fontSize:"1.5vw"
     },
     form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(3),
     },
     submit: {
-        margin: theme.spacing(3, 0, 2),
+        marginTop: "35px",
+        fontSize:"1vw"
     },
 }));
 
@@ -80,47 +90,51 @@ export default function Register(props) {
                 </div>
             }
             {props.user && <Redirect to="/" />}
-            <Container component="main" maxWidth="xs">
-                <CssBaseline />
+            <Container component="main" maxWidth="xs" className={classes.container}>
                 <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>
-                <Typography component="h1" variant="h5">
+                <Typography component="h1" variant="h4" className={classes.title}>
                     Sign up
                 </Typography>
                 <form className={classes.form}  onSubmit={handleRegister}>
                     <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                         <TextField autoComplete="fname" name="firstName" variant="outlined"
-                        required fullWidth id="firstName" label="First Name" autoFocus />
+                        required fullWidth id="firstName" label="First Name" autoFocus InputProps={{classes: {
+                              input: classes.input,},}}/>
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField variant="outlined" required fullWidth id="lastName"
-                        label="Last Name" name="lastName" autoComplete="lname" />
+                        label="Last Name" name="lastName" autoComplete="lname" InputProps={{classes: {
+                            input: classes.input,},}} />
                     </Grid>
                     <Grid item xs={12}>
                         <TextField variant="outlined" required fullWidth id="email"
-                        label="Email Address" name="email" autoComplete="email" />
+                        label="Email Address" name="email" autoComplete="email" InputProps={{classes: {
+                            input: classes.input,},}}/>
                     </Grid>
                     <Grid item xs={12}>
                         <TextField variant="outlined" required fullWidth id="userid"
-                        label="Username use to Login" name="userid" autoComplete="userid" />
+                        label="Username use to Login" name="userid" autoComplete="userid" InputProps={{classes: {
+                            input: classes.input,},}}/>
                     </Grid>
                     <Grid item xs={12}>
                         <TextField variant="outlined" required fullWidth name="password"
-                        label="Password" type="password" id="password" autoComplete="current-password" />
+                        label="Password" type="password" id="password" autoComplete="current-password" InputProps={{classes: {
+                            input: classes.input,},}}/>
                     </Grid>
                     </Grid>
                     <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit} >
                     Sign Up 
                     </Button>
-                    <Grid container justify="flex-end">
-                    <Grid item>
-                        <Link href="/login" variant="body2">
-                        Already have an account? Sign in
-                        </Link>
-                    </Grid>
+                    <Grid container justify="flex-end" className={classes.title}>
+                        <Grid item>
+                            <Link href="/login" variant="body2">
+                            Already have an account? Sign in
+                            </Link>
+                        </Grid>
                     </Grid>
                 </form>
                 </div>
