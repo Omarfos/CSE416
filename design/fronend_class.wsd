@@ -3,6 +3,7 @@
 
 class App{
     +user: state
+    +errorMessage: state
 }
 class "React"{
 }
@@ -11,48 +12,79 @@ App -(0- "react-router"
 App -(0- "material-ui"
 
 
+class NavigationBar{
+    +handleLogout(): void
+    +handleSearch(event): void
+}
+
 class HomeScreen{
     +handleSearch(event): void
 }
 
-class ProfileScreen{
-    +submitEditForm(event): boolean
-}
-
-class NavigationBar{
-    userAvatar: Image
-}
-
-App o-- NavigationBar
-
 class SearchPageScreen{
-    +searchResult: State
-    +recommender: State
-    +sortCriteria: State
-    +filterCriteria: State
-    +updateSearchForm(event): void
+    +colleges: State
+    +act: State
+    +cost: State
+    +ranking: State
+    +SATebrw: State
+    +SATmath: State
+    +size: State
+    +admissionRate: State
+    +sort: State
+    +loading: State
+    +handleSearch(event): void
+    +setOrder():void
     +recommendColleges(): void
 }
 
 class CollegeCard{
-    +collegeName: String 
-    +collegeRanking: Integer
-    +collegeType: String
-    +recommendationScore: Integer
-    +viewCollege():void
+    +renderInfo():View
 }
-SearchPageScreen*--CollegeCard
+class Sorting{
+    +handleChangeSort(event): void
+}
+
+package Filters{
+    class LocationFilter{
+        +handleSelectState(event):void
+    }
+    class MajorFilter{
+        +handleSelectMajor(event):void
+    }
+    class SizeFilter{
+        +checkedSizes: State
+        +handleSizeChange(event):void
+    } 
+    class SliderFactory{
+        +value: State
+    }
+}
+
+SearchPageScreen -(0- "axios"
+SearchPageScreen o-- CollegeCard
+SearchPageScreen o-- Sorting
+SearchPageScreen o-- Filters
+
 
 class CollegeProfileScreen{
-}  
+    +college: State
+} 
+
+class CollegeInfoCard{
+    +majors: [] String
+}
 
 class ApplicationTracker{
     +similarHighSchools: State
     +studentList: State
-    +filterCriteria: State
+    +filterCriteria: [] State
     +handleSearchSimilarHighSchool(event): void
     +handleUpdateFilter(event): void
 }
+
+CollegeProfileScreen o-- ApplicationTracker
+CollegeProfileScreen o-- CollegeInfoCard
+
 class StudentCard{
     +studentName: String    
     +studentGPA: Float
@@ -60,20 +92,28 @@ class StudentCard{
     +studentHighSchool: String
     +viewStudentProfile():void
 }
-StudentCard -* ApplicationTracker
-CollegeProfileScreen *-- ApplicationTracker
+
+StudentCard -o ApplicationTracker
+
+
+class StduentProfileScreen{
+    +currentStudent: State
+    +submitEditForm(event): boolean
+    +checkForQuestionale(string): boolean
+}
 
 class LoginScreen{
-    +submitLoginForm(event): user
+    +handleLogin(event): 
 } 
 
 class RegisterScreen{
-    +submitSignupForm(event): user
+    +handleRegister(event): void
+    +validateEmail(string): boolean
 }
 
-
+App o-- NavigationBar
 App o-- HomeScreen
-App o-- ProfileScreen
+App o-- StduentProfileScreen
 App o-- SearchPageScreen
 App o-- CollegeProfileScreen
 App o-- LoginScreen

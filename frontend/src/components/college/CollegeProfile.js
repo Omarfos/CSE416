@@ -14,7 +14,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import NotFound from "../NotFound";
 import SimpleTabs from "./collegeTabComponent";
-import SimpleCard from "./CollegeCard";
+import SimpleCard from "./CollegeInfo";
 
 const useStyles = makeStyles(theme => ({
     body: {
