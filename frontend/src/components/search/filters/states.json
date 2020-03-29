@@ -1,53 +1,206 @@
 [
-"Alabama": "AL",
-"Missouri": "MO",
-"Alaska": "AK",
-"Montana": "MT",
-"Arizona": "AZ",
-"Nebraska": "NE",
-"Arkansas": "AR",
-"Nevada": "NV",
-"California": "CA",
-"New Hampshire": "NH",
-"Colorado": "CO",
-"New Jersey": "NJ",
-"Connecticut": "CT",
-"New Mexico": "NM",
-"Delaware": "DE",
-"New York": "NY",
-"District of Columbia": "DC",
-"North Carolina": "NC",
-"Florida": "FL",
-"North Dakota": "ND";
-"Georgia": "GA",
-"Ohio": "OH",
-"Hawaii": "HI",
-"Oklahoma": "OK",
-"Idaho": "ID",
-"Oregon": "OR",
-"Illinois": "IL",
-"Pennsylvania": "PA",
-"Indiana": "IN",
-"Rhode Island": "RI",
-"Iowa": "IA",
-"South Carolina"; "SC",
-"Kansas": "KS",
-"South Dakota": "SD",
-"Kentucky": "KY",
-"Tennessee": "TN",
-"Louisiana": "LA",
-"Texas": "TX",
-"Maine": "ME",
-"Utah": "UT",
-"Maryland": "MD",
-"Vermont": "VT",
-"Massachusetts": "MA",
-"Virginia": "VA",
-"Michigan": "MI",
-"Washington": "WA",
-"Minnesota": "MN",
-"West Virginia": "WV",
-"Mississippi": "MS",
-"Wisconsin": "WI",
-"Wyoming": "WY"
+    {
+        "name": "Alabama",
+        "code": "AL"
+    },
+    {
+        "name": "Missouri",
+        "code": "MO"
+    },
+    {
+        "name": "Montana",
+        "code": "MT"
+    },
+    {
+        "name": "Alaska",
+        "code": "AK"
+    },
+    {
+        "name": "Arizona",
+        "code": "AZ"
+    },
+    {
+        "name": "Nebraska",
+        "code": "NE"
+    },
+    {
+        "name": "Arkansas",
+        "code": "AR"
+    },
+    {
+        "name": "Nevada",
+        "code": "NV"
+    },
+    {
+        "name": "California",
+        "code": "CA"
+    },
+    {
+        "name": "New Hampshire",
+        "code": "NH"
+    },
+    {
+        "name": "Colorado",
+        "code": "CO"
+    },
+    {
+        "name": "New Jersey",
+        "code": "NJ"
+    },
+    {
+        "name": "Connecticut",
+        "code": "CT"
+    },
+    {
+        "name": "New Mexico",
+        "code": "NM"
+    },
+    {
+        "name": "Delaware",
+        "code": "DE"
+    },
+    {
+        "name": "New York",
+        "code": "NY"
+    },
+    {
+        "name": "District of Columbia",
+        "code": "DC"
+    },
+    {
+        "name": "North Carolina",
+        "code": "NC"
+    },
+    {
+        "name": "Florida",
+        "code": "FL"
+    },
+    {
+        "name": "North Dakota",
+        "code": "ND"
+    },
+    {
+        "name": "Georgia",
+        "code": "GA"
+    },
+    {
+        "name": "Ohio",
+        "code": "OH"
+    },
+    {
+        "name": "Hawaii",
+        "code": "HI"
+    },
+    {
+        "name": "Oklahoma",
+        "code": "OK"
+    },
+    {
+        "name": "Idaho",
+        "code": "ID"
+    },
+    {
+        "name": "Oregon",
+        "code": "OR"
+    },
+    {
+        "name": "Illinois",
+        "code": "IL"
+    },
+    {
+        "name": "Pennsylvania",
+        "code": "PA"
+    },
+    {
+        "name": "Indiana",
+        "code": "IN"
+    },
+    {
+        "name": "Rhode Island",
+        "code": "RI"
+    },
+    {
+        "name": "Iowa",
+        "code": "IA"
+    },
+    {
+        "name": "South Carolina",
+        "code": "SC"
+    },
+    {
+        "name": "Kansas",
+        "code": "KS"
+    },
+    {
+        "name": "South Dakota",
+        "code": "SD"
+    },
+    {
+        "name": "Kentucky",
+        "code": "KY"
+    },
+    {
+        "name": "Tennessee",
+        "code": "TN"
+    },
+    {
+        "name": "Louisiana",
+        "code": "LA"
+    },
+    {
+        "name": "Texas",
+        "code": "TX"
+    },
+    {
+        "name": "Maine",
+        "code": "ME"
+    },
+    {
+        "name": "Utah",
+        "code": "UT"
+    },
+    {
+        "name": "Maryland",
+        "code": "MD"
+    },
+    {
+        "name": "Vermont",
+        "code": "VT"
+    },
+    {
+        "name": "Massachusetts",
+        "code": "MA"
+    },
+    {
+        "name": "Virginia",
+        "code": "VA"
+    },
+    {
+        "name": "Michigan",
+        "code": "MI"
+    },
+    {
+        "name": "Washington",
+        "code": "WA"
+    },
+    {
+        "name": "Minnesota",
+        "code": "MN"
+    },
+    {
+        "name": "West Virginia",
+        "code": "WV"
+    },
+    {
+        "name": "Mississippi",
+        "code": "MS"
+    },
+    {
+        "name": "Wisconsin",
+        "code": "WI"
+    },
+    {
+        "name": "Wyoming",
+        "code": "WY"
+    }
 ]

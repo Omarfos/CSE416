@@ -44,7 +44,6 @@ export default function CollegeCard(props) {
     let history = useHistory();
 
     const renderCost = () => {
-        { console.log(props.college.institution_type) }
         if (props.college.institution_type == "Public") {
             return <div>
                 <Grid container direction="row" justify="flex-start" alignItems="flex-start">

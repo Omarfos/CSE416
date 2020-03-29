@@ -6,35 +6,33 @@ import { useLocation, Link, useHistory, useParams } from "react-router-dom";
 
 
 export default function SliderFactory(props) {
-    const [value, setValue] = useState(props.value);
+    const [value, setValue] = useState([]);
     const location = useLocation()
-    const history = useHistory()
 
-    const navigateUrl = () => {
-        const values = queryString.parse(location.search, { arrayFormat: 'comma' })
-        values[props.id] = value
-        let s = queryString.stringify(values, { arrayFormat: 'comma' })
-        history.push('college?' + s)
-    }
-
-
+    // on load, set slider values according to url
+    useEffect(() => {
+        const params = queryString.parse(location.search, { arrayFormat: 'comma' });
+        if (!params[props.id])
+            setValue([props.min, props.max])
+        else
+            setValue(params[props.id].map(p => Number(p)))
+    }, [])
 
     return (
         <div>
             {props.id != 'adm_rate' ?
                 <Typography id="range-slider" gutterBottom align='left'>
-                    {props.startText}: {props.value[0]} - {props.value[1]} {props.endText}
+                    {props.startText}: {value[0]} - {value[1]} {props.endText}
                 </Typography> :
                 <Typography id="range-slider" gutterBottom align='left'>
-                    {props.startText}: {props.value[0] * 100} - {props.value[1] * 100} {props.endText}
+                    {props.startText}: {value[0] * 100} - {value[1] * 100} {props.endText}
                 </Typography>
             }
 
             <Slider
                 value={value}
                 onChange={(e, v) => { setValue(v) }}
-                onMouseUp={(e) => { props.setValue(value); navigateUrl(); }}
-                // onMouseUp={(e) => { navigateUrl() }}
+                onMouseUp={(e) => { props.navigate(props.id, value) }}
                 valueLabelDisplay="auto"
                 aria-labelledby="range-slider"
                 min={props.min}

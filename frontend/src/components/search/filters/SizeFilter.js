@@ -10,7 +10,19 @@ import { useLocation, Link, useHistory, useParams } from "react-router-dom";
 export default function SizeFilter(props) {
 
     const location = useLocation()
-    const history = useHistory()
+
+    useEffect(() => {
+        const params = queryString.parse(location.search, { arrayFormat: 'comma' });
+        if (!params[props.id])
+            return
+        let size = Number(params[props.id][0]);
+        if (size < 5000)
+            setChecked({ small: true })
+        else if (size < 15000)
+            setChecked({ medium: true })
+        else
+            setChecked({ large: true })
+    }, [])
 
     const [checkedSizes, setChecked] = useState({
         small: false,
@@ -18,42 +30,38 @@ export default function SizeFilter(props) {
         large: false
     });
 
-    const navigateUrl = (e) => {
+    const handleSizeChange = (e) => {
         const { checked, name } = e.target;
         setChecked({ ...checkedSizes, [name]: checked })
-        const values = queryString.parse(location.search, { arrayFormat: 'comma' })
-
+        let newSize;
         if (!checked) {
-            values[props.id] = [0, 100000]
+            newSize = [0, 100000]
         } else {
             switch (name) {
                 case 'small':
-                    values[props.id] = [0, 5000];
+                    newSize = [0, 5000];
                     break;
                 case 'medium':
-                    values[props.id] = [5000, 15000];
+                    newSize = [5000, 15000];
                     break;
                 case 'large':
-                    values[props.id] = [15000, 100000];
+                    newSize = [15000, 100000];
             }
         }
-        props.setValue(values[props.id])
-
-        let s = queryString.stringify(values, { arrayFormat: 'comma' })
-        history.push('college?' + s)
+        props.navigate(props.id, newSize);
     };
 
     return (
         <div>
             <Typography id="size-checkbox" gutterBottom align='left'>
-                Undegraduate Enrollment:
+                Undergraduate Enrollment:
             </Typography>
             <FormGroup column>
                 <FormControlLabel
                     control={
                         <Checkbox
                             checked={checkedSizes.small}
-                            onChange={e => navigateUrl(e)}
+                            onChange={e => handleSizeChange(e)}
                             name="small"
                             color="primary"
                         />
@@ -64,7 +72,7 @@ export default function SizeFilter(props) {
                     control={
                         <Checkbox
                             checked={checkedSizes.medium}
-                            onChange={e => navigateUrl(e)}
+                            onChange={e => handleSizeChange(e)}
                             name="medium"
                             color="primary"
                         />
@@ -75,7 +83,7 @@ export default function SizeFilter(props) {
                     control={
                         <Checkbox
                             checked={checkedSizes.large}
-                            onChange={e => navigateUrl(e)}
+                            onChange={e => handleSizeChange(e)}
                             name="large"
                             color="primary"
                         />

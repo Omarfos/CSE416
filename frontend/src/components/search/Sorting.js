@@ -66,36 +66,10 @@ export default function SortOptions(props) {
 
     const classes = useStyles();
 
-    const [stateSort, setStateSort] = useState("ranking");
-    const [stateOrder, setStateOrder] = useState("Ascending");
-
-    const location = useLocation()
-    const history = useHistory()
-
-
     const handleChangeSort = event => {
         const name = event.target.value;
-        props.setSort(name)
-        console.log('name', name)
-        const values = queryString.parse(location.search, { arrayFormat: 'comma' })
-        values['sort'] = name
-        let s = queryString.stringify(values, { arrayFormat: 'comma' })
-        history.push('college?' + s)
-
+        props.navigate(props.id, name)
     };
-
-    const handleChangeOrder = event => {
-        setStateOrder(event.target.name);
-        console.log('order', event.target.name)
-    };
-
-    const navigateUrl = () => {
-        const values = queryString.parse(location.search, { arrayFormat: 'comma' })
-        values['sort'] = stateSort
-        let s = queryString.stringify(values, { arrayFormat: 'comma' })
-        history.push('college?' + s)
-    }
-
 
     return (
 
@@ -105,13 +79,13 @@ export default function SortOptions(props) {
                     <InputLabel htmlFor="age-native-simple"></InputLabel>
                     <Select
                         native
-                        value={stateSort.age}
                         onChange={handleChangeSort}
-                        inputProps={{
-                            sortBy: 'age',
-                            order: 'age-native-simple',
-                        }}
+                    // inputProps={{
+                    //     sortBy: 'age',
+                    //     order: 'age-native-simple',
+                    // }}
                     >
+                        <option value="sort">Sort</option>
                         <option value="adm_rate">Admission Rate</option>
                         <option value="out_state_cost">Cost of Attendance</option>
                         <option value="ranking">Ranking</option>

@@ -24,8 +24,9 @@ class Student(models.Model):
     userid = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100, null=True)
     residence_state = models.CharField(max_length=2, null=True)
-    
-    high_school = models.ForeignKey(HighSchool, on_delete=models.CASCADE, null=True)
+
+    high_school = models.ForeignKey(
+        HighSchool, on_delete=models.CASCADE, null=True)
     high_school_name = models.CharField(max_length=100, null=True)
     high_school_city = models.CharField(max_length=100, null=True)
     high_school_state = models.CharField(max_length=2, null=True)
@@ -75,11 +76,12 @@ class College(models.Model):
     ACT_composite = models.IntegerField(null=True, blank=True)
     in_state_cost = models.IntegerField(null=True, blank=True)
     out_state_cost = models.IntegerField(null=True, blank=True)
-    institution_type = models.CharField(max_length=30, choices=INS_TYPE, blank=True)
+    institution_type = models.CharField(
+        max_length=30, choices=INS_TYPE, blank=True)
     grad_debt_median = models.IntegerField(null=True, blank=True)
     completion_rate = models.FloatField(null=True, blank=True)
     state = models.CharField(max_length=2, null=True, blank=True)
-    majors = models.CharField(max_length=2000, null=True, blank=True)
+    majors = models.CharField(max_length=2048, null=True, blank=True)
 
     def __str__(self):
         return f'{self.name}'

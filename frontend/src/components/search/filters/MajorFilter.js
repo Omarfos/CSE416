@@ -1,25 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import majors from './majors.json'
 
 
 export default function MajorFilter(props) {
+
+    const handleSelectMajor = (values) => {
+        props.navigate(props.id, values)
+    }
 
     return (
         <Autocomplete
             multiple
             id="tags-outlined"
-            options={[
-                { title: 'Accounting' },
-                { title: 'Anthropology' },
-                { title: 'Biochemistry' },
-                { title: 'Biology' },
-                { title: 'Business Management' },
-                { title: 'Chemistry' },
-                { title: 'Civil Engineering' },
-                { title: 'Theatre Arts' },
-            ]}
-            getOptionLabel={option => option.title}
+            options={majors}
+            onChange={(e, v) => handleSelectMajor(v)}
             filterSelectedOptions
             renderInput={params => (
                 <TextField

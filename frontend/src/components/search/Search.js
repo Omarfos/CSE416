@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import queryString from 'query-string'
 import { useLocation, Link, useHistory, useParams } from "react-router-dom";
 import { Grid, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -37,6 +38,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Search(props) {
     const location = useLocation();
+    const history = useHistory()
     const classes = useStyles();
     const [colleges, setColleges] = useState([]);
     const [act, setACT] = useState([0, 36]);
@@ -72,6 +74,11 @@ export default function Search(props) {
         handleSearch(location.search)
     }, [location.search])
 
+    const navigate = (id, value) => {
+        const params = queryString.parse(location.search, { arrayFormat: 'comma' })
+        params[id] = value
+        history.push('college?' + queryString.stringify(params, { arrayFormat: 'comma' }))
+    }
 
     return (
 
@@ -83,55 +90,51 @@ export default function Search(props) {
                     <Grid container spacing={2}>
 
                         <Grid item md={12}>
-                            <Button onClick={() => handleSearch('adm_rate')}> Hello </Button>
+                            <LocationFilter id="states" navigate={navigate} />
                         </Grid>
 
                         <Grid item md={12}>
-                            <LocationFilter />
-                        </Grid>
-
-                        <Grid item md={12}>
-                            <MajorFilter />
+                            <MajorFilter id="majors" navigate={navigate} />
                         </Grid>
 
                         <Grid item md={12}>
                             <div>
-                                <SliderFactory id='adm_rate' value={admissionRate} setValue={setAdmissionRate} min={0} max={1} startText={"Admission Rate"} endText={"%"} step={0.1} />
+                                <SliderFactory id='adm_rate' navigate={navigate} min={0} max={1} startText={"Admission Rate"} endText={"%"} step={0.1} />
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
                             <div>
-                                <SliderFactory id='SAT_math' value={SATmath} setValue={setSATmath} min={200} max={800} startText={"Average SAT Math"} endText={""} step={50} />
+                                <SliderFactory id='SAT_math' navigate={navigate} min={200} max={800} startText={"Average SAT Math"} endText={""} step={50} />
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
                             <div>
-                                <SliderFactory id='SAT_EBRW' value={SATebrw} setValue={setSATebrw} min={200} max={800} startText={"Average SAT EBRW"} endText={""} step={50} />
+                                <SliderFactory id='SAT_EBRW' navigate={navigate} min={200} max={800} startText={"Average SAT EBRW"} endText={""} step={50} />
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
                             <div>
-                                <SliderFactory id='ACT_composite' value={act} setValue={setACT} min={1} max={36} startText={"Average ACT Composite"} endText={""} step={2} />
+                                <SliderFactory id='ACT_composite' navigate={navigate} min={1} max={36} startText={"Average ACT Composite"} endText={""} step={2} />
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
                             <div>
-                                <SliderFactory id='out_state_cost' value={cost} setValue={setCost} min={0} max={100000} startText={"Cost of Attendance"} endText={"$"} step={1000} />
+                                <SliderFactory id='out_state_cost' navigate={navigate} min={0} max={100000} startText={"Cost of Attendance"} endText={"$"} step={1000} />
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
                             <div>
-                                <SliderFactory id='ranking' value={ranking} setValue={setRanking} min={0} max={500} startText={"Ranking"} endText={""} step={25} />
+                                <SliderFactory id='ranking' navigate={navigate} min={0} max={500} startText={"Ranking"} endText={""} step={25} />
                             </div>
                         </Grid>
 
                         <Grid item md={12}>
-                            <SizeFilter id='size' value={size} setValue={setSize} />
+                            <SizeFilter id='size' navigate={navigate} />
                         </Grid>
 
                     </Grid>
@@ -139,9 +142,7 @@ export default function Search(props) {
 
                 {/* right side - colleges */}
                 <Grid item md={9}>
-
-                    {/* Sorting */}
-                    <SortOptions setSort={setSort} setOrder={setOrder} />
+                    <SortOptions id='sort' navigate={navigate} setOrder={setOrder} />
 
                     {loading ?
                         <LinearProgress variant="query" /> :
@@ -150,11 +151,6 @@ export default function Search(props) {
 
                         )
                     }
-                    {/* college cards */}
-                    {colleges.map((college) =>
-                        <CollegeCard college={college} />
-
-                    )}
 
                     {/* pagination */}
                     <Pagination count={10} color="primary" className={classes.pagination} />
