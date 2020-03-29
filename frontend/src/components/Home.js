@@ -61,7 +61,7 @@ export default function Home() {
                         <InputBase
                             name="searchQuery"
                             className={classes.input}
-                            placeholder="Search for College"
+                            placeholder="Type name of college or just click search"
                         />
                         <IconButton type="submit" className={classes.iconButton} aria-label="search">
                             <SearchIcon />
