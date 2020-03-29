@@ -32,7 +32,7 @@ export default function SliderFactory(props) {
             <Slider
                 value={value}
                 onChange={(e, v) => { setValue(v) }}
-                onMouseUp={(e) => { props.navigate(props.id, value) }}
+                onChangeCommitted={(e) => { props.navigate(props.id, value) }}
                 valueLabelDisplay="auto"
                 aria-labelledby="range-slider"
                 min={props.min}
