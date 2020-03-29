@@ -76,6 +76,9 @@ def search(request):
     if 'adm_rate' in d:
         low, high = tuple(d['adm_rate'].split(','))
         q = q.filter(adm_rate__range=(low,high))
+    if 'out_state_cost' in d:
+        low, high = tuple(d['adm_rate'].split(','))
+        q = q.filter(out_state_cost__range=(low,high))
     if 'SAT_math' in d:
         low, high = tuple(d['SAT_math'].split(','))
         q = q.filter(SAT_math__range=(low,high))

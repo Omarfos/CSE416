@@ -41,7 +41,7 @@ export default function Search(props) {
     const [colleges, setColleges] = useState([]);
     const [act, setACT] = useState([0, 36]);
     const [cost, setCost] = useState([0, 100000]);
-    const [ranking, setRanking] = useState([0, 100]);
+    const [ranking, setRanking] = useState([0, 500]);
     const [SATebrw, setSATebrw] = useState([0, 800]);
     const [SATmath, setSATmath] = useState([0, 800]);
     const [size, setSize] = useState([0, 30000]);
@@ -62,10 +62,15 @@ export default function Search(props) {
         setLoading(false)
     }
 
+    const setOrder = () => {
+        setLoading(true)
+        setColleges(colleges.slice().reverse())
+        setLoading(false)
+    }
 
     useEffect(() => {
         handleSearch(location.search)
-    }, [act, ranking, cost, SATebrw, SATmath, admissionRate, sort, size])
+    }, [location.search])
 
 
     return (
@@ -121,7 +126,7 @@ export default function Search(props) {
 
                         <Grid item md={12}>
                             <div>
-                                <SliderFactory id='ranking' value={ranking} setValue={setRanking} min={1} max={500} startText={"Ranking"} endText={""} step={1} />
+                                <SliderFactory id='ranking' value={ranking} setValue={setRanking} min={0} max={500} startText={"Ranking"} endText={""} step={25} />
                             </div>
                         </Grid>
 
@@ -136,7 +141,7 @@ export default function Search(props) {
                 <Grid item md={9}>
 
                     {/* Sorting */}
-                    <SortOptions setSort={setSort} />
+                    <SortOptions setSort={setSort} setOrder={setOrder} />
 
                     {loading ?
                         <LinearProgress variant="query" /> :

@@ -126,7 +126,7 @@ export default function SortOptions(props) {
                         <Grid component="label" container alignItems="center" spacing={1}>
                             <Grid item>Ascending</Grid>
                             <Grid item>
-                                <AntSwitch checked={stateOrder.checkedOrder} onChange={handleChangeOrder} name="checkedOrder" />
+                                <AntSwitch onChange={() => props.setOrder()} name="checkedOrder" />
                             </Grid>
                             <Grid item>Descending</Grid>
                         </Grid>
