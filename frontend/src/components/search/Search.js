@@ -7,10 +7,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import CollegeCard from './college-card.js';
 import Pagination from '@material-ui/lab/Pagination';
 import SortOptions from './sorting.js'
-import LocationFilter from './filters/LocationFilter';
-import MajorFilter from './filters/MajorFilter';
-import SizeFilter from './filters/SizeFilter';
-import SliderFactory from './filters/SliderFactory';
+import LocationFilter from './filters/location-filter';
+import MajorFilter from './filters/major-filter';
+import SizeFilter from './filters/size-filter';
+import SliderFactory from './filters/slider-factory';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Image from '../../images/homeBackground_blur.png';
 import Box from '@material-ui/core/Box';
