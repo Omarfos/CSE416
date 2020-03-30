@@ -1,3 +1,8 @@
+/**
+ * @fileOverview Custom code for the Not Found Page.
+ * See 'design' directory to understand the behavior of the page 
+ */
+
 import React, { useState, useEffect } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Image from '../images/homeBackground_blur.png';

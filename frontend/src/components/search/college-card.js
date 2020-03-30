@@ -1,3 +1,8 @@
+/**
+ * @fileOverview Custom code for the College Card.
+ * See 'design' directory to understand the behavior of the page 
+ */
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';

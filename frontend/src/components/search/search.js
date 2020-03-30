@@ -1,3 +1,8 @@
+/**
+ * @fileOverview Custom code for the Search Page.
+ * See 'design' directory to understand the behavior of the page 
+ */
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import queryString from 'query-string'

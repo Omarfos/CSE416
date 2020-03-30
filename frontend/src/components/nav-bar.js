@@ -1,3 +1,8 @@
+/**
+ * @fileOverview Custom code for the Navigation Bar.
+ * See 'design' directory to understand the behavior of the page 
+ */
+
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';

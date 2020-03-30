@@ -1,3 +1,8 @@
+/**
+ * @fileOverview Custom code for the Sorting of College Cards.
+ * See 'design' directory to understand the behavior of the page 
+ */
+
 import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
