@@ -12,7 +12,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Alert from '@material-ui/lab/Alert';
 
-
 const useStyles = makeStyles((theme) => ({
     container: {
         maxWidth: "32%",

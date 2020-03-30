@@ -49,6 +49,7 @@ const useStyles = makeStyles(theme => ({
         width: "23vw",
     }
 }));
+
 export default function Home() {
     let history = useHistory();
     const classes = useStyles();

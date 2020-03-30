@@ -36,7 +36,6 @@ const useStyles = makeStyles(theme => ({
 
 }));
 
-
 export default function Search(props) {
     const location = useLocation();
     const history = useHistory()
