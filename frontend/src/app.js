@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import Login from './components/user/Login'
-import Register from './components/user/Register'
-import Home from './components/Home'
+import Login from './components/user/login.js'
+import Register from './components/user/register.js'
+import Home from './components/home.js'
 import Search from './components/search/search.js'
-import CollegeProfile from './components/college/CollegeProfile'
-import Profile from './components/user/Profile'
-import Navbar from './components/Navbar.js';
+import CollegeProfile from './components/college/college-profile.js'
+import Profile from './components/user/profile.js'
+import Navbar from './components/nav-bar.js';
 import { Route, Switch, Redirect } from "react-router-dom";
-import './App.css';
-import NotFound from './components/NotFound';
+import './app.css';
+import NotFound from './components/not-found';
 
 
 function App() {
