@@ -12,9 +12,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import NotFound from "../NotFound";
-import SimpleTabs from "./collegeTabComponent";
-import SimpleCard from "./CollegeInfo";
+import NotFound from "../not-found.js";
+import SimpleTabs from "./college-tab-component.js";
+import SimpleCard from "./college-info.js";
 
 const useStyles = makeStyles(theme => ({
     body: {
