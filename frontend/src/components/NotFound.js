@@ -6,7 +6,7 @@ import notFoundImage from "../images/404.png"
 
 const useStyles = makeStyles(theme => ({
     image: {
-        width:"27%",
+        width: "27%",
         left: "37%",
         position: "absolute",
         top: "23%",
@@ -30,7 +30,7 @@ export default function NotFound(props) {
 
     return (
         <div className={classes.backgound2}>
-            <img src={notFoundImage} className={classes.image}/>
+            <img src={notFoundImage} className={classes.image} />
         </div>
     );
 }

@@ -44,9 +44,9 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
   },
 
-  tabs:{
+  tabs: {
     backgroundColor: "white",
-    color:"rgb(80,81,85)",
+    color: "rgb(80,81,85)",
   }
 }));
 
@@ -60,25 +60,25 @@ export default function SimpleTabs(props) {
 
   return (
     <div className={classes.root}>
-        <AppBar position="static">
-            <Tabs variant="fullWidth" className={classes.tabs} value={value} onChange={handleChange} aria-label="simple tabs example">
-            <Tab className={classes.tab}  label="Overview" {...a11yProps(0)}/>
-            <Tab className={classes.tab}  label="Majors" {...a11yProps(1)}/>
-            <Tab className={classes.tab}  label="Admissions" {...a11yProps(2)}/>
-            </Tabs>
-        </AppBar>
-        <TabPanel value={value} index={0}>
-            <br />SAT MATH: {props.college.SAT_math}
-            <br />SAT EBRW: {props.college.SAT_EBRW}
-            <br />ACT: {props.college.ACT_composite}
+      <AppBar position="static">
+        <Tabs variant="fullWidth" className={classes.tabs} value={value} onChange={handleChange} aria-label="simple tabs example">
+          <Tab className={classes.tab} label="Overview" {...a11yProps(0)} />
+          <Tab className={classes.tab} label="Majors" {...a11yProps(1)} />
+          <Tab className={classes.tab} label="Admissions" {...a11yProps(2)} />
+        </Tabs>
+      </AppBar>
+      <TabPanel value={value} index={0}>
+        <br />SAT MATH: {props.college.SAT_math}
+        <br />SAT EBRW: {props.college.SAT_EBRW}
+        <br />ACT: {props.college.ACT_composite}
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        Item Two
         </TabPanel>
-        <TabPanel value={value} index={1}>
-            Item Two
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-            <br />Admission Rate: {props.college.adm_rate}
-            <ApplicationTracker/>
-        </TabPanel>
+      <TabPanel value={value} index={2}>
+        <br />Admission Rate: {props.college.adm_rate}
+        <ApplicationTracker />
+      </TabPanel>
     </div>
   );
 }

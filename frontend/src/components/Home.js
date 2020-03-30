@@ -1,3 +1,8 @@
+/**
+ * @fileOverview Custom code for the Home Page.
+ * See 'design' directory to understand the behavior of the page 
+ */
+
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -36,10 +41,10 @@ const useStyles = makeStyles(theme => ({
     },
     bingo: {
         color: "#657ECD",
-        
+
     },
-    logo:{
-        margin:"15px",
+    logo: {
+        margin: "15px",
         minWidth: "200px",
         width: "23vw",
     }
@@ -69,7 +74,7 @@ export default function Home() {
                     </Paper>
                 </Grid>
                 <Grid item>
-                    <img src={logoImage} className={classes.logo}/>
+                    <img src={logoImage} className={classes.logo} />
                     <Typography variant="h6" className={classes.bingo}>Plan your path to college</Typography>
                 </Grid>
             </Grid>

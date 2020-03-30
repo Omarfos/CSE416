@@ -4,9 +4,9 @@ import queryString from 'query-string'
 import { useLocation, Link, useHistory, useParams } from "react-router-dom";
 import { Grid, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import CollegeCard from './CollegeCard';
+import CollegeCard from './college-card.js';
 import Pagination from '@material-ui/lab/Pagination';
-import SortOptions from './Sorting.js'
+import SortOptions from './sorting.js'
 import LocationFilter from './filters/LocationFilter';
 import MajorFilter from './filters/MajorFilter';
 import SizeFilter from './filters/SizeFilter';
