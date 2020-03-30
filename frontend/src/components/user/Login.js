@@ -12,8 +12,8 @@ import Alert from '@material-ui/lab/Alert';
 
 
 const useStyles = makeStyles((theme) => ({
-  container:{
-    maxWidth:"32%",
+  container: {
+    maxWidth: "32%",
   },
   paper: {
     marginTop: "40%",
@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  title:{
-    margin:"10px",
+  title: {
+    margin: "10px",
   },
   avatar: {
     margin: theme.spacing(1),
@@ -32,12 +32,12 @@ const useStyles = makeStyles((theme) => ({
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
-  input:{
-    fontSize:"1.5vw"
+  input: {
+    fontSize: "1.5vw"
   },
   submit: {
     marginTop: "35px",
-    fontSize:"1vw"
+    fontSize: "1vw"
   },
   alert: {
     width: '100%',
@@ -54,22 +54,22 @@ export default function SignIn(props) {
     e.preventDefault();
     let userid = e.target.userid.value;
     let password = e.target.password.value;
-    fetch('http://localhost:8000/login', {
+    fetch('http://localhost:8000/login/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({userid, password}),
+      body: JSON.stringify({ userid, password }),
     }).then((response) => response.json())
-    .then((data) => {
-      if (data.SUCCESS) {
-        props.setUser(userid);
-        props.setError(null);
-      }
-      else if (data.ERROR){
-        props.setError("Wrong username or password");
-      }
-    })
+      .then((data) => {
+        if (data.SUCCESS) {
+          props.setUser(userid);
+          props.setError(null);
+        }
+        else if (data.ERROR) {
+          props.setError("Wrong username or password");
+        }
+      })
       .catch((error) => {
         console.error('Error:', error);
       });
@@ -80,7 +80,7 @@ export default function SignIn(props) {
     <div>
       {props.errorMessage &&
         <div className={classes.alert}>
-          <Alert severity="error" onClose={() => {props.setError(null)}}>{props.errorMessage}</Alert>
+          <Alert severity="error" onClose={() => { props.setError(null) }}>{props.errorMessage}</Alert>
         </div>
       }
 

@@ -1,7 +1,5 @@
 from django.db import models
 
-# Create your models here.
-
 
 class HighSchool(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -97,8 +95,8 @@ class Application(models.Model):
     ]
 
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    college = models.OneToOneField(College, on_delete=models.CASCADE)
+    college = models.ForeignKey(College, on_delete=models.CASCADE)
     status = models.CharField(max_length=12, choices=APP_STATUS)
 
     def __str__(self):
-        return f"Application "
+        return f"{self.student} application for {self.college}: {self.status}"

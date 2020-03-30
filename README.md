@@ -14,16 +14,25 @@
 - python3 -m pip install --upgrade pip
 - python3 -m pip install pipenv
 - python3 -m pipenv shell
-- python3 -m pipenv install
+- python3 -m pipenv install --dev
 - cd frontend 
 - npm install
-- npm start
 
 ## Starting the servers from root directory
 
 - python3 -m manage runserver
 - cd frontend 
 - npm start
+
+## Testing
+
+### Unit Tests
+- python -m manage test 
+### Integration Tests
+- google chrome driver: https://chromedriver.chromium.org/
+- close the django server, if it's running
+- make sure react server is running
+- python -m manage test backend.integration_tests 
 
 ## Admin
 

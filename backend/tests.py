@@ -1,11 +1,16 @@
 import json
+import os
+import time
 
-from django.test import TestCase
+from django.test import TestCase, LiveServerTestCase
 from django.test import Client
 from django.test import RequestFactory
-from django.test.utils import setup_test_environment
-from django.urls import reverse
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.common.keys import Keys
 
 from .models import *
 from .views import *
@@ -84,7 +89,6 @@ class StudentProfileTests(TestCase):
 
 class SearchTests(TestCase):
     def setUp(self):
-        self.client = Client()
         College.objects.create(
             name="Columbia", out_state_cost=70000, ranking=1, state="NY"
         )
@@ -178,7 +182,7 @@ class ScrapeCollegeScoreCardTests(TestCase):
         self.assertListEqual(r, self.expected)
 
 
-class ScrapeCollegeData(TestCase):
+class ScrapeCollegeDataTests(TestCase):
     def setUp(self):
         self.colleges = ["Stony Brook University"]
         self.expected = [
