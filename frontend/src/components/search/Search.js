@@ -135,8 +135,8 @@ export default function Search(props) {
 
                         <Grid item md={12}>
                             <SizeFilter id='size' navigate={navigate} />
+                            <br /><br /><br /><br />  <br /><br /><br /><br />
                         </Grid>
-
                     </Grid>
                 </Grid>
 
