@@ -7,8 +7,7 @@ import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
-import queryString from 'query-string'
-import { useLocation, Link, useHistory, useParams } from "react-router-dom";
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -77,14 +76,7 @@ export default function SortOptions(props) {
             <Grid item md={3} className={classes.sortOptions}>
                 <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="age-native-simple"></InputLabel>
-                    <Select
-                        native
-                        onChange={handleChangeSort}
-                    // inputProps={{
-                    //     sortBy: 'age',
-                    //     order: 'age-native-simple',
-                    // }}
-                    >
+                    <Select native onChange={handleChangeSort}>
                         <option value="sort">Sort</option>
                         <option value="adm_rate">Admission Rate</option>
                         <option value="out_state_cost">Cost of Attendance</option>

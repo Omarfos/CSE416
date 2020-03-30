@@ -13,6 +13,7 @@ import SizeFilter from './filters/SizeFilter';
 import SliderFactory from './filters/SliderFactory';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Image from '../../images/homeBackground_blur.png';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     },
 
     filters: {
-        marginLeft: "20px",
+        marginLeft: "60px",
         marginTop: "60px"
     },
 
@@ -98,39 +99,27 @@ export default function Search(props) {
                         </Grid>
 
                         <Grid item md={12}>
-                            <div>
-                                <SliderFactory id='adm_rate' navigate={navigate} min={0} max={1} startText={"Admission Rate"} endText={"%"} step={0.1} />
-                            </div>
+                            <SliderFactory id='adm_rate' navigate={navigate} min={0} max={1} startText={"Admission Rate"} endText={"%"} step={0.1} />
                         </Grid>
 
                         <Grid item md={12}>
-                            <div>
-                                <SliderFactory id='SAT_math' navigate={navigate} min={200} max={800} startText={"Average SAT Math"} endText={""} step={50} />
-                            </div>
+                            <SliderFactory id='SAT_math' navigate={navigate} min={200} max={800} startText={"Average SAT Math"} endText={""} step={50} />
                         </Grid>
 
                         <Grid item md={12}>
-                            <div>
-                                <SliderFactory id='SAT_EBRW' navigate={navigate} min={200} max={800} startText={"Average SAT EBRW"} endText={""} step={50} />
-                            </div>
+                            <SliderFactory id='SAT_EBRW' navigate={navigate} min={200} max={800} startText={"Average SAT EBRW"} endText={""} step={50} />
                         </Grid>
 
                         <Grid item md={12}>
-                            <div>
-                                <SliderFactory id='ACT_composite' navigate={navigate} min={1} max={36} startText={"Average ACT Composite"} endText={""} step={2} />
-                            </div>
+                            <SliderFactory id='ACT_composite' navigate={navigate} min={1} max={36} startText={"Average ACT Composite"} endText={""} step={2} />
                         </Grid>
 
                         <Grid item md={12}>
-                            <div>
-                                <SliderFactory id='out_state_cost' navigate={navigate} min={0} max={100000} startText={"Cost of Attendance"} endText={"$"} step={1000} />
-                            </div>
+                            <SliderFactory id='out_state_cost' navigate={navigate} min={0} max={100000} startText={"Cost of Attendance"} endText={"$"} step={1000} />
                         </Grid>
 
                         <Grid item md={12}>
-                            <div>
-                                <SliderFactory id='ranking' navigate={navigate} min={0} max={500} startText={"Ranking"} endText={""} step={25} />
-                            </div>
+                            <SliderFactory id='ranking' navigate={navigate} min={0} max={500} startText={"Ranking"} endText={""} step={25} />
                         </Grid>
 
                         <Grid item md={12}>
