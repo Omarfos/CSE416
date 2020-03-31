@@ -122,42 +122,62 @@ def search(request):
         ACT_composite, states, majors, sort
     """
     params = request.GET
-    q = College.objects.all()
+    query = Q()
+    colleges = College.objects.all()
+    lax = False
+
+    if "lax" in params:
+        if params["lax"] == "true":
+            lax = True
     if "ranking" in params:
         low, high = tuple(params["ranking"].split(","))
-        q = q.filter(ranking__range=(low, high))
+        query = query & Q(ranking__range=(low, high))
+        if lax:
+            query = query | Q(ranking=None)
     if "name" in params:
-        q = q.filter(name__icontains=params["name"])
+        query = query & Q(name__icontains=params["name"])
+        if lax:
+            query = query | Q(name=None)
     if "size" in params:
         low, high = tuple(params["size"].split(","))
-        q = q.filter(size__range=(low, high))
+        query = query & Q(size__range=(low, high))
+        if lax:
+            query = query | Q(size=None)
     if "adm_rate" in params:
         low, high = tuple(params["adm_rate"].split(","))
-        q = q.filter(adm_rate__range=(low, high))
+        query = query & Q(adm_rate__range=(low, high))
+        if lax:
+            query = query | Q(adm_rate=None)
     if "out_state_cost" in params:
         low, high = tuple(params["out_state_cost"].split(","))
-        q = q.filter(out_state_cost__range=(low, high))
+        query = query & Q(out_state_cost__range=(low, high))
+        if lax:
+            query = query | Q(out_state_cost=None)
     if "SAT_math" in params:
         low, high = tuple(params["SAT_math"].split(","))
-        q = q.filter(SAT_math__range=(low, high))
+        query = query & Q(SAT_math__range=(low, high))
+        if lax:
+            query = query | Q(SAT_math=None)
     if "SAT_EBRW" in params:
         low, high = tuple(params["SAT_EBRW"].split(","))
-        q = q.filter(SAT_EBRW__range=(low, high))
+        query = query & Q(SAT_EBRW__range=(low, high))
+        if lax:
+            query = query | Q(SAT_EBRW=None)
     if "ACT_composite" in params:
         low, high = tuple(params["ACT_composite"].split(","))
-        q = q.filter(ACT_composite__range=(low, high))
+        query = query & Q(ACT_composite__range=(low, high))
+        if lax:
+            query = query | Q(ACT_composite=None)
     if "states" in params:
-        query = Q()
         for state in params["states"].split(","):
             query = query | Q(state=state)
-        q = q.filter(query)
     if "majors" in params:
-        query = Q()
         for major in params["majors"].split(","):
             query = query | Q(majors__icontains=major)
-        q = q.filter(query)
-    if "sort" in params:
-        q = q.order_by(params["sort"])
 
-    r = serializers.serialize("json", q)
+    colleges = College.objects.filter(query)
+    if "sort" in params:
+        colleges = colleges.order_by(params["sort"])
+
+    r = serializers.serialize("json", colleges)
     return JsonResponse(r, safe=False)

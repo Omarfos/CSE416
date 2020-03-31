@@ -135,7 +135,6 @@ def scrape_college_data(colleges_list: List[str]) -> List[dict]:
         "ACT_composite": "ACT Composite",
     }
 
-
     colleges = []
     for c in colleges_list:
         college = c.replace(",", "")
@@ -204,27 +203,11 @@ def scrape_college_data(colleges_list: List[str]) -> List[dict]:
     return result
 
 
-def scrape_high_school_location():
-    """
-    Scrapes Niche.com for links to various high schools
-    """
-
-    results = []
-    for i in range(1, 9):
-        url = f"https://www.niche.com/k12/search/best-schools/?page={i}"
-        print(url)
-        r = requests.get(url, headers=headers)
-        soup = BeautifulSoup(r.text, "html.parser")
-        for link in soup.find_all("a", "search-result__link"):
-            results.append(link["href"])
-
-    return results
-
-
 def scrape_high_school(hs_list):
     result = []
     for hs in hs_list:
         end_point = f'{hs["name"]} {hs["city"]} {hs["state"]}'
+        end_point = end_point.lower()
         end_point = end_point.replace(" ", "-")
         url = niche_url + end_point
 

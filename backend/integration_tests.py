@@ -18,8 +18,9 @@ from .scrape import *
 
 # Selenium Tests
 
+
 class MySeleniumTests(LiveServerTestCase):
-    #fixtures = ['user-data.json']
+    # fixtures = ['user-data.json']
     port = 8000
 
     def setUp(self):
@@ -30,41 +31,38 @@ class MySeleniumTests(LiveServerTestCase):
         self.selenium.quit()
 
     def test_register(self):
-        self.selenium.get('localhost:3000/register/')
+        self.selenium.get("localhost:3000/register/")
         first_name_input = self.selenium.find_element_by_name("firstName")
-        first_name_input.send_keys('Bonya')
+        first_name_input.send_keys("Bonya")
         last_name_input = self.selenium.find_element_by_name("lastName")
-        last_name_input.send_keys('Fous')
+        last_name_input.send_keys("Fous")
         username_input = self.selenium.find_element_by_name("userid")
-        username_input.send_keys('bonya')
+        username_input.send_keys("bonya")
         password_input = self.selenium.find_element_by_name("password")
-        password_input.send_keys('meowmeow')
+        password_input.send_keys("meowmeow")
         email_input = self.selenium.find_element_by_name("email")
-        email_input.send_keys('bonya@gmail.com')
-        self.selenium.find_element_by_xpath('//button').click()
-        time.sleep(1) # wait for database
-        user = authenticate(username='bonya', password='meowmeow')
+        email_input.send_keys("bonya@gmail.com")
+        self.selenium.find_element_by_xpath("//button").click()
+        time.sleep(1)  # wait for database
+        user = authenticate(username="bonya", password="meowmeow")
         self.assertIsNotNone(user)
 
-
-
     def test_login(self):
-        self.user = User.objects.create_user(username="bonya",
-                password="meowmeow")
-        self.selenium.get('localhost:3000/login/')
+        self.user = User.objects.create_user(username="bonya", password="meowmeow")
+        self.selenium.get("localhost:3000/login/")
         username_input = self.selenium.find_element_by_name("userid")
-        username_input.send_keys('bonya')
+        username_input.send_keys("bonya")
         password_input = self.selenium.find_element_by_name("password")
-        password_input.send_keys('meowmeow')
-        self.selenium.find_element_by_xpath('//button').click()
-        home = self.selenium.find_element_by_name('searchQuery')
+        password_input.send_keys("meowmeow")
+        self.selenium.find_element_by_xpath("//button").click()
+        home = self.selenium.find_element_by_name("searchQuery")
         self.assertIsNotNone(home)
 
     def test_search(self):
-        College.objects.create(name='stony')
-        self.selenium.get('localhost:3000/')
-        search = self.selenium.find_element_by_name('searchQuery')
-        search.send_keys('Stony')
+        College.objects.create(name="stony")
+        self.selenium.get("localhost:3000/")
+        search = self.selenium.find_element_by_name("searchQuery")
+        search.send_keys("Stony")
         search.send_keys(Keys.RETURN)
-        college = self.selenium.find_element_by_id('college_name')
+        college = self.selenium.find_element_by_id("college_name")
         self.assertIsNotNone(college)

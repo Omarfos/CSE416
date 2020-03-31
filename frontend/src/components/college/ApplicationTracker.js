@@ -1,8 +1,5 @@
-import React from 'react';
+import React from "react";
 
 export default function ApplicationTracker(props) {
-    
-    return (
-        <div>Application Tracker Component</div>
-    );
+  return <div>Application Tracker Component</div>;
 }

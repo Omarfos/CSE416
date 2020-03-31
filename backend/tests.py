@@ -123,15 +123,15 @@ class SearchTests(TestCase):
 
 # Scraping tests
 class ScrapeCollegeRankingsTests(TestCase):
-    def setUp(self):
-        self.colleges = [
+    def test_scrape_colleges(self):
+        colleges = [
             "Harvard University",
             "Cornell University",
             "Columbia University",
             "New York University",
             "Stony Brook University",
         ]
-        self.ranking_dict = {
+        ranking_dict = {
             "Harvard University": 1,
             "Cornell University": 9,
             "Columbia University": 15,
@@ -139,53 +139,30 @@ class ScrapeCollegeRankingsTests(TestCase):
             "Stony Brook University": 105,
         }
 
-    def test_scrape_colleges(self):
-        r = scrape_college_rankings(self.colleges)
-        self.assertDictEqual(r, self.ranking_dict)
-
+        r = scrape_college_rankings(colleges)
+        self.assertDictEqual(r, ranking_dict)
 
 class ScrapeCollegeScoreCardTests(TestCase):
-    def setUp(self):
-        self.colleges = ["Stony Brook University"]
-        self.expected = [
+    def test_scrape_colleges(self):
+        colleges = ["Stony Brook University"]
+        expected = [
             {
                 "name": "Stony Brook University",
-                "size": 17215,
+                "size": 17407,
                 "grad_debt_median": 19000.0,
-                "adm_rate": 0.4219,
+                "adm_rate": 0.4198,
                 "institution_type": "Public",
                 "state": "NY",
             }
         ]
-
-    def test_scrape_colleges(self):
-        r = scrape_college_score_card(self.colleges)
-        self.assertListEqual(r, self.expected)
-
-
-class ScrapeCollegeScoreCardTests(TestCase):
-    def setUp(self):
-        self.colleges = ["Stony Brook University"]
-        self.expected = [
-            {
-                "name": "Stony Brook University",
-                "size": 17215,
-                "grad_debt_median": 19000.0,
-                "adm_rate": 0.4219,
-                "institution_type": "Public",
-                "state": "NY",
-            }
-        ]
-
-    def test_scrape_colleges(self):
-        r = scrape_college_score_card(self.colleges)
-        self.assertListEqual(r, self.expected)
+        r = scrape_college_score_card(colleges)
+        self.assertListEqual(r, expected)
 
 
 class ScrapeCollegeDataTests(TestCase):
-    def setUp(self):
-        self.colleges = ["Stony Brook University"]
-        self.expected = [
+    def test_scrape_colleges(self):
+        colleges = ["Stony Brook University"]
+        expected = [
             {
                 "name": "Stony Brook University",
                 "majors": [
@@ -229,11 +206,28 @@ class ScrapeCollegeDataTests(TestCase):
                 "completion_rate": 52.8,
             }
         ]
-
-    def test_scrape_colleges(self):
-        r = scrape_college_data(self.colleges)
+        r = scrape_college_data(colleges)
         test_r = []
         for entry in r:
             entry["majors"] = json.loads(entry["majors"])
             test_r.append(entry)
-        self.assertEqual(test_r, self.expected)
+        self.assertListEqual(test_r, expected)
+
+
+class ScrapeNiche(TestCase):
+    def test_one(self):
+        hs = [{"name": "Whitney High School", "city": "cerritos", "state": "CA"}]
+        expected = [
+            {
+                "name": "Whitney High School",
+                "city": "Cerritos",
+                "state": "CA",
+                "grad_rate": 0.95,
+                "sat": 1400,
+                "act": 32,
+                "ap_enroll": 0.600883,
+                "num_students": 1011,
+            }
+        ]
+        r = scrape_high_school(hs)
+        self.assertListEqual(r, expected)
