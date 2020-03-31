@@ -13,13 +13,13 @@
 - cd CSE416
 - python3 -m pip install --upgrade pip
 - python3 -m pip install pipenv
-- python3 -m pipenv shell
 - python3 -m pipenv install --dev
 - cd frontend 
 - npm install
 
 ## Starting the servers from root directory
 
+- python3 -m pipenv shell
 - python3 -m manage runserver
 - cd frontend 
 - npm start
