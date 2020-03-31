@@ -62,12 +62,12 @@ class ApplicationInline(admin.TabularInline):
 class StudentAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = [
         "userid",
+        "GPA",
+        "SAT",
+        "ACT_composite",
         "high_school_name",
         "high_school_city",
-        "high_school_state",
-        "GPA",
-        "SAT_EBRW",
-        "ACT_composite",
+        "high_school_state"
     ]
     inlines = [ApplicationInline]
 
@@ -87,8 +87,8 @@ class HighSchoolAdmin(ImportExportModelAdmin, admin.ModelAdmin):
 
 
 class ApplicationAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-    list_display = ["status", "college", "student"]
-    list_filter = ["status"]
+    list_display = ["college", "student", "status", "questionable"]
+    list_filter = ["status", "questionable"]
     pass
 
 

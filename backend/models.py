@@ -30,6 +30,7 @@ class Student(models.Model):
     major_2 = models.CharField(max_length=100, null=True)
 
     GPA = models.DecimalField(max_digits=3, decimal_places=2, null=True)
+    similar_score = models.FloatField(null=True)
 
     college_class = models.IntegerField(null=True)
     ACT_english = models.IntegerField(null=True)
@@ -37,7 +38,7 @@ class Student(models.Model):
     ACT_reading = models.IntegerField(null=True)
     ACT_science = models.IntegerField(null=True)
     ACT_composite = models.IntegerField(null=True)
-
+    SAT = models.IntegerField(null=True)
     SAT_math = models.IntegerField(null=True)
     SAT_EBRW = models.IntegerField(null=True)
     SAT_literature = models.IntegerField(null=True)
@@ -88,15 +89,14 @@ class Application(models.Model):
         ("accepted", "accepted"),
         ("denied", "denied"),
         ("deferred", "deferred"),
-        ("wait", "wait"),
-        ("listed", "listed"),
+        ("waitlisted", "waitlisted"),
         ("withdrawn", "withdrawn"),
-        ("questionable", "questionable"),
     ]
 
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     college = models.ForeignKey(College, on_delete=models.CASCADE)
-    status = models.CharField(max_length=12, choices=APP_STATUS)
+    status = models.CharField(max_length=10, choices=APP_STATUS)
+    questionable = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.student} application for {self.college}: {self.status}"

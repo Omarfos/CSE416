@@ -11,7 +11,6 @@ from django.forms.models import model_to_dict
 
 from .models import Student, College
 
-
 def index(request):
     return HttpResponse("Welcome to the Bingo API")
 

@@ -15,6 +15,7 @@ from selenium.webdriver.common.keys import Keys
 from .models import *
 from .views import *
 from .scrape import *
+from .algorithms import *
 
 
 class RegisterTests(TestCase):
@@ -214,7 +215,7 @@ class ScrapeCollegeDataTests(TestCase):
         self.assertListEqual(test_r, expected)
 
 
-class ScrapeNiche(TestCase):
+class ScrapeNicheTests(TestCase):
     def test_one(self):
         hs = [{"name": "Whitney High School", "city": "cerritos", "state": "CA"}]
         expected = [
@@ -231,3 +232,49 @@ class ScrapeNiche(TestCase):
         ]
         r = scrape_high_school(hs)
         self.assertListEqual(r, expected)
+
+# AlgorithmsTest
+
+class SimilarStudentsTests(TestCase):
+    #fixtures = ['test_data.json']
+    def setUp(self):
+        Student.objects.create(userid='Ayoub', SAT=1000, ACT_composite=31)
+        Student.objects.create(userid='Idrees', SAT_math=600, SAT_EBRW=500)
+        Student.objects.create(userid='Eisa', SAT_math=600, SAT_EBRW=700,
+                ACT_composite=31, GPA=3.0, high_school_name="Stuy")
+        Student.objects.create(userid='Ryan', SAT_math=800, SAT_EBRW=800,
+                ACT_composite=36, GPA=4.0, high_school_name="Stuy")
+        Student.objects.create(userid='Andy', high_school_name="Stuy", SAT=1300)
+        Student.objects.create(userid='Boodoo', num_AP_passed=10)
+        Student.objects.create(userid='DooDoo', num_AP_passed=10)
+
+    def test_one(self):
+        r = similar_students('Ayoub')
+        print(r)
+        #  similar_students('Idrees')
+        #  similar_students('Andy')
+        #  similar_students('Ryan')
+         
+
+class RecommendationScoresTests(TestCase):
+    fixtures = ['test_data.json']
+    def setUp(self):
+        Student.objects.create(userid='Ayoub', SAT=1600, ACT_composite=36)
+        # Student.objects.create(userid='Idrees', SAT_math=600, SAT_EBRW=500)
+        #  Student.objects.create(userid='Eisa', SAT_math=600, SAT_EBRW=700,
+                #  ACT_composite=31, GPA=3.0, high_school_name="Stuy")
+        #  Student.objects.create(userid='Ryan', SAT_math=800, SAT_EBRW=800,
+                #  ACT_composite=36, GPA=4.0, high_school_name="Stuy")
+        #  Student.objects.create(userid='Andy', high_school_name="Stuy", SAT=1300)
+        #  Student.objects.create(userid='Boodoo', num_AP_passed=10)
+        #  Student.objects.create(userid='DooDoo', num_AP_passed=10)
+
+    def test_one(self):
+        r = recommend_colleges('Ayoub', 'Stony Brook University')
+        print(r)
+        #  similar_students('Idrees')
+        #  similar_students('Andy')
+        #  similar_students('Ryan')
+         
+
+
