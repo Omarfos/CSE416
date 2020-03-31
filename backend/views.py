@@ -169,11 +169,15 @@ def search(request):
         if lax:
             query = query | Q(ACT_composite=None)
     if "states" in params:
+        states_query = Q()
         for state in params["states"].split(","):
-            query = query | Q(state=state)
+            states_query = states_query | Q(state=state)
+        query = query & states_query
     if "majors" in params:
+        major_query = Q()
         for major in params["majors"].split(","):
-            query = query | Q(majors__icontains=major)
+            major_query = major_query | Q(majors__icontains=major)
+        query = query & major__query
 
     colleges = College.objects.filter(query)
     if "sort" in params:
