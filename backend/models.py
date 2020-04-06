@@ -1,7 +1,4 @@
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
-
-# Create your models here.
 
 
 class HighSchool(models.Model):
@@ -17,7 +14,7 @@ class HighSchool(models.Model):
     ap_enroll = models.FloatField(null=True, blank=True)
 
     def __str__(self):
-        return f'{self.name}'
+        return f"{self.name}"
 
 
 class Student(models.Model):
@@ -25,8 +22,7 @@ class Student(models.Model):
     password = models.CharField(max_length=100, null=True)
     residence_state = models.CharField(max_length=2, null=True)
 
-    high_school = models.ForeignKey(
-        HighSchool, on_delete=models.CASCADE, null=True)
+    high_school = models.ForeignKey(HighSchool, on_delete=models.CASCADE, null=True)
     high_school_name = models.CharField(max_length=100, null=True)
     high_school_city = models.CharField(max_length=100, null=True)
     high_school_state = models.CharField(max_length=2, null=True)
@@ -34,6 +30,7 @@ class Student(models.Model):
     major_2 = models.CharField(max_length=100, null=True)
 
     GPA = models.DecimalField(max_digits=3, decimal_places=2, null=True)
+    similar_score = models.FloatField(null=True)
 
     college_class = models.IntegerField(null=True)
     ACT_english = models.IntegerField(null=True)
@@ -41,7 +38,7 @@ class Student(models.Model):
     ACT_reading = models.IntegerField(null=True)
     ACT_science = models.IntegerField(null=True)
     ACT_composite = models.IntegerField(null=True)
-
+    SAT = models.IntegerField(null=True)
     SAT_math = models.IntegerField(null=True)
     SAT_EBRW = models.IntegerField(null=True)
     SAT_literature = models.IntegerField(null=True)
@@ -56,15 +53,15 @@ class Student(models.Model):
     num_AP_passed = models.IntegerField(null=True)
 
     def __str__(self):
-        return f'{self.userid}'
+        return f"{self.userid}"
 
 
 class College(models.Model):
 
     INS_TYPE = [
-        ('Public', 'Public'),
-        ('Private nonprofit', 'Private nonprofit'),
-        ('Private for-profit', 'Private for-profit'),
+        ("Public", "Public"),
+        ("Private nonprofit", "Private nonprofit"),
+        ("Private for-profit", "Private for-profit"),
     ]
 
     name = models.CharField(max_length=100, unique=True)
@@ -76,32 +73,30 @@ class College(models.Model):
     ACT_composite = models.IntegerField(null=True, blank=True)
     in_state_cost = models.IntegerField(null=True, blank=True)
     out_state_cost = models.IntegerField(null=True, blank=True)
-    institution_type = models.CharField(
-        max_length=30, choices=INS_TYPE, blank=True)
+    institution_type = models.CharField(max_length=30, choices=INS_TYPE, blank=True)
     grad_debt_median = models.IntegerField(null=True, blank=True)
     completion_rate = models.FloatField(null=True, blank=True)
     state = models.CharField(max_length=2, null=True, blank=True)
     majors = models.CharField(max_length=2048, null=True, blank=True)
 
     def __str__(self):
-        return f'{self.name}'
+        return f"{self.name}"
 
 
 class Application(models.Model):
     APP_STATUS = [
-        ('pending', 'pending'),
-        ('accepted', 'accepted'),
-        ('denied', 'denied'),
-        ('deferred', 'deferred'),
-        ('wait', 'wait'),
-        ('listed', 'listed'),
-        ('withdrawn', 'withdrawn'),
-        ('questionable', 'questionable')
+        ("pending", "pending"),
+        ("accepted", "accepted"),
+        ("denied", "denied"),
+        ("deferred", "deferred"),
+        ("waitlisted", "waitlisted"),
+        ("withdrawn", "withdrawn"),
     ]
 
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    college = models.OneToOneField(College, on_delete=models.CASCADE)
-    status = models.CharField(max_length=12, choices=APP_STATUS)
+    college = models.ForeignKey(College, on_delete=models.CASCADE)
+    status = models.CharField(max_length=10, choices=APP_STATUS)
+    questionable = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'Application '
+        return f"{self.student} application for {self.college}: {self.status}"

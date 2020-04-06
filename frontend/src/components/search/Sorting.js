@@ -1,113 +1,76 @@
-import React, { useState, useEffect } from 'react';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import FormGroup from '@material-ui/core/FormGroup';
+import React, { useState, useEffect } from "react";
+
+import Grid from "@material-ui/core/Grid";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import FormGroup from "@material-ui/core/FormGroup";
 import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
-import Select from '@material-ui/core/Select';
-import Switch from '@material-ui/core/Switch';
-import queryString from 'query-string'
+import Select from "@material-ui/core/Select";
+import Switch from "@material-ui/core/Switch";
+import Checkbox from "@material-ui/core/Checkbox";
+import { ArrowDropUp, ArrowDropDown } from "@material-ui/icons";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import MenuItem from "@material-ui/core/MenuItem";
+import IconButton from "@material-ui/core/IconButton";
+
+import queryString from "query-string";
 import { useLocation, Link, useHistory, useParams } from "react-router-dom";
 
-
-const useStyles = makeStyles(theme => ({
-
-    formControl: {
-        marginTop: "20px",
-        width: "200px"
-    },
-
-    sortOrder: {
-        marginTop: "40px"
-    },
-
-    sortOptions: {
-        marginLeft: "50%"
-    }
-
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    marginTop: theme.spacing(1),
+    minWidth: 120,
+  },
 }));
 
-const AntSwitch = withStyles(theme => ({
-    root: {
-        width: 28,
-        height: 16,
-        padding: 2,
-        display: 'flex',
-    },
-    switchBase: {
-        padding: 3,
-        color: theme.palette.grey[500],
-        '&$checked': {
-            transform: 'translateX(12px)',
-            color: theme.palette.common.white,
-            '& + $track': {
-                opacity: 1,
-                backgroundColor: theme.palette.primary.main,
-                borderColor: theme.palette.primary.main,
-            },
-        },
-    },
-    thumb: {
-        width: 12,
-        height: 12,
-        boxShadow: 'none',
-    },
-    track: {
-        border: `1px solid ${theme.palette.grey[500]}`,
-        borderRadius: 16 / 2,
-        opacity: 1,
-        backgroundColor: theme.palette.common.white,
-    },
-    checked: {},
-}))(Switch);
-
 export default function SortOptions(props) {
+  const classes = useStyles();
+  const [asc, setAsc] = useState(true);
+  const [strict, setStrict] = useState(false);
 
-    const classes = useStyles();
+  const handleChangeSort = (event) => {
+    const name = event.target.value;
+    props.navigate(props.id, name);
+  };
 
-    const handleChangeSort = event => {
-        const name = event.target.value;
-        props.navigate(props.id, name)
-    };
-
-    return (
-
-        <Grid container spacing={24}>
-            <Grid item md={3} className={classes.sortOptions}>
-                <FormControl className={classes.formControl}>
-                    <InputLabel htmlFor="age-native-simple"></InputLabel>
-                    <Select
-                        native
-                        onChange={handleChangeSort}
-                    // inputProps={{
-                    //     sortBy: 'age',
-                    //     order: 'age-native-simple',
-                    // }}
-                    >
-                        <option value="sort">Sort</option>
-                        <option value="adm_rate">Admission Rate</option>
-                        <option value="out_state_cost">Cost of Attendance</option>
-                        <option value="ranking">Ranking</option>
-                        <option value="recommendationScore">Recommendation Score</option>
-                    </Select>
-                </FormControl>
-            </Grid>
-            <Grid item md={3}>
-                {/* sortOrder */}
-                <FormGroup className={classes.sortOrder}>
-                    <Typography component="div">
-                        <Grid component="label" container alignItems="center" spacing={1}>
-                            <Grid item>Ascending</Grid>
-                            <Grid item>
-                                <AntSwitch onChange={() => props.setOrder()} name="checkedOrder" />
-                            </Grid>
-                            <Grid item>Descending</Grid>
-                        </Grid>
-                    </Typography>
-                </FormGroup>
-            </Grid>
-        </Grid>
-
-    );
+  return (
+    <Grid container justify="flex-end" alignItems="stretch">
+      <Grid item>
+        <FormControl className={classes.formControl}>
+          <Select onChange={handleChangeSort}>
+            <MenuItem value="adm_rate">Admission Rate</MenuItem>
+            <MenuItem value="out_state_cost">Cost of Attendance</MenuItem>
+            <MenuItem value="ranking">Ranking</MenuItem>
+            <MenuItem value="recommendationScore">
+              Recommendation Score
+            </MenuItem>
+          </Select>
+          <FormHelperText>Sort</FormHelperText>
+        </FormControl>
+        {asc ? (
+          <IconButton
+            size="medium"
+            onClick={() => {
+              setAsc(!asc);
+              props.setOrder();
+            }}
+          >
+            <ArrowDropDown fontSize="inherit" color="primary" />
+          </IconButton>
+        ) : (
+          <IconButton
+            size="medium"
+            onClick={() => {
+              setAsc(!asc);
+              props.setOrder();
+            }}
+          >
+            <ArrowDropUp fontSize="inherit" color="primary" />
+          </IconButton>
+        )}
+      </Grid>
+    </Grid>
+  );
 }
