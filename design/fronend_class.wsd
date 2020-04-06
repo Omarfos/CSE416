@@ -8,8 +8,6 @@ class App{
 class "React"{
 }
 App -(0- "React"
-App -(0- "react-router"
-App -(0- "material-ui"
 
 
 class NavigationBar{
@@ -60,7 +58,6 @@ package Filters{
     }
 }
 
-SearchPageScreen -(0- "axios"
 SearchPageScreen o-- CollegeCard
 SearchPageScreen o-- Sorting
 SearchPageScreen o-- Filters
