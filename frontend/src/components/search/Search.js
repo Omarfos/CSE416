@@ -20,6 +20,7 @@ import Image from "../../images/header.png";
 const useStyles = makeStyles((theme) => ({
   root: {
     // margin: "auto"
+    backgroundColor: "rgb(241,247,251)",
   },
   header: {
     height: 200,
