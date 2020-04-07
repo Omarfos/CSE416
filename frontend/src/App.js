@@ -14,20 +14,6 @@ function App() {
   //Set it to this right now.
   const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  // useEffect(() => {
-  //   // Update the document title using the browser API
-  //   fetch('http://localhost:8000/student/omar')
-  //       .then(response => response.json())
-  //       .then(
-  //           data => {
-  //               // console.log('data', data);
-  //               // setUser(data[0]);
-  //           }
-  //           //PaymentResponse.ur
-  //           //return <Redirect data={data}></Redirect>
-  //       )
-  // }, []);
-
   return (
     <div className="App">
       <Navbar user={user} setUser={setUser} />
@@ -46,7 +32,7 @@ function App() {
         />
         <Route
           exact
-          path="/profile/:id"
+          path="/student/:id"
           render={() => <Profile user={user} />}
         />
         <Route

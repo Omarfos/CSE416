@@ -113,7 +113,7 @@ export default function Navbar(props) {
 
           {props.user && (
             <React.Fragment>
-              <Link className={classes.button} to={"/profile/" + props.user}>
+              <Link className={classes.button} to={"/student/" + props.user}>
                 Profile
               </Link>
               <Divider orientation="vertical" className={classes.divider} />

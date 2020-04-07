@@ -1,24 +1,46 @@
 import React, { useState, useEffect } from "react";
-import { Container } from "@material-ui/core";
+import { useLocation, Link, useHistory, useParams } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    // margin: "auto"
+  },
+  header: {
+    height: 200,
+    backgroundImage: "url(" + Image + ")",
+    backgroundSize: "cover",
+  },
+  // filters: {
+  //     margin: "10%"
+  // }
+}));
+
 
 export default function Profile(props) {
+  const location = useLocation();
   const [userprofile, setUserProfile] = useState(null);
   const [editing, setEditing] = useState(false);
-  //    contact backend to get the information for props.user
-  //     Compare if it's the current logged in user, display edit profile option.
-  // useEffect(() => {
-  //     // fetch('http://localhost:8000/student/Omar')
-  //     // .then(response => response.json())
-  //     // .then(
-  //     //     data => {
-  //     //         console.log
-  //     //     }
+  const classes = useStyles();
 
-  //     // )
-  // }, []);
+  useEffect(() => {
+    let url = "http://localhost:8000" + location.pathname; //    /student/q
+    fetch(url)
+      //.then(response => response.json())
+      .then((data) => {
+        if (data.status === 200) {
+          async function getData() {
+            // let college = await data.json();
+            // setCollege(college);
+          }
+          getData();
+        }
+      });
+  }, []);
+
   return (
     <div>
-      {console.log(props.user)}
       if current_user == requested_user:
       <br /> Account ID
       <br /> Email / changeable
