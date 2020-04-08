@@ -10,39 +10,63 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Chip from "@material-ui/core/Chip";
 import Grid from "@material-ui/core/Grid";
-import { Redirect } from "react-router-dom";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Fab from '@material-ui/core/Fab';
 
 const useStyles = makeStyles((theme) => ({
   card: {
     marginTop: "20px",
     marginLeft: "60px",
-    // backgroundColor: "#B388FF",
-    borderColor: "#5d6896",
-    // border: "solid"
+    borderColor: "#5d6896"
   },
 
-  // learnMore: {
-  //     marginLeft: "4px"
-  // },
+  learnMore: {
+      marginLeft: "4px"
+  },
 
   comma: {
       marginRight: "3px"
   },
 
-  // hashtagFirst: {
-  //     marginTop: "10px"
-  // },
+  progress: {
+    position: 'absolute',
+    top: '32%',
+    left: '69%',
+  },
 
-  // hashtag: {
-  //     marginTop: "10px",
-  //     marginLeft: "10px"
-  // }
+  percent: {
+      position: 'absolute',
+      top: '40%',
+      left: '70%',
+      color: 'black'
+  },
+
+  viewprofilesbutton: {
+    position: 'absolute',
+    top: '35%',
+    left: '75%'
+  }
+
 }));
 
 export default function CollegeCard(props) {
   const classes = useStyles();
   const location = useLocation();
   let history = useHistory();
+  const [completed, setCompleted] = React.useState(0);
+
+  useEffect(() => {
+    function progress() {
+      setCompleted(prevCompleted =>
+        prevCompleted >= 70 ? 70 : prevCompleted + 10
+      );
+    }
+
+    const timer = setInterval(progress, 100);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   const renderCost = () => {
     if (props.college.institution_type == "Public") {
@@ -176,6 +200,24 @@ export default function CollegeCard(props) {
     >
       <CardActionArea>
         <CardContent>
+
+          {/* Recommendation Score, absolute position */}
+          <CircularProgress variant="static" value={completed} className={classes.progress}/>
+          <Typography variant="subtitle2" gutterBottom className={classes.percent}>
+            78%
+          </Typography>
+
+          {/* View Similar Profiles, absolute position */}
+          <Fab
+            variant="extended"
+            size="small"
+            color="primary"
+            aria-label="add"
+            className={classes.viewprofilesbutton}
+          >
+            View Similar Profiles
+          </Fab>
+
           <Typography
             id="college_name"
             gutterBottom
@@ -184,7 +226,7 @@ export default function CollegeCard(props) {
             align="left"
           >
             {props.college.name}
-          </Typography>
+          </Typography>   
           <Typography
             variant="h6"
             color="textSecondary"
@@ -230,11 +272,12 @@ export default function CollegeCard(props) {
           </Grid>
         </CardContent>
       </CardActionArea>
-      <CardActions className={classes.learnMore}>
+      {/* <CardActions className={classes.learnMore}>
         <Button size="small" color="primary">
           Learn More
         </Button>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 }
+

@@ -34,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
   recommendation_score: {
     marginTop: "15px"
   },
+  sort: {
+    marginLeft: "40px"
+  },
   above_cards_bar: {
     marginLeft: "60px"
   }
@@ -144,7 +147,7 @@ export default function Search(props) {
               navigate={navigate}
               min={200}
               max={800}
-              startText={"SAT Ecd BRW"}
+              startText={"SAT EBRW"}
               step={50}
             />
           </Grid>
@@ -199,7 +202,7 @@ export default function Search(props) {
       </Grid>
       <Grid item md={8}>
         <Grid container className={classes.above_cards_bar}>
-          <Grid item md={9} className={classes.recommendation_score} align = "left">
+          <Grid item md={8} className={classes.recommendation_score} align = "left">
             <Button
               variant={RSVariant}
               color="primary"
@@ -218,7 +221,7 @@ export default function Search(props) {
               {RSText}
             </Button>
           </Grid>
-          <Grid item md={3} align = "right">
+          <Grid item md={3} align = "right" className={classes.sort}>
             <SortOptions id="sort" navigate={navigate} setOrder={setOrder} />
           </Grid>
         </Grid>
