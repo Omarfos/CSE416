@@ -14,7 +14,7 @@ import { Redirect } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    marginTop: "40px",
+    marginTop: "20px",
     marginLeft: "60px",
     // backgroundColor: "#B388FF",
     borderColor: "#5d6896",
@@ -25,9 +25,9 @@ const useStyles = makeStyles((theme) => ({
   //     marginLeft: "4px"
   // },
 
-  // comma: {
-  //     marginTop: "7px"
-  // },
+  comma: {
+      marginRight: "3px"
+  },
 
   // hashtagFirst: {
   //     marginTop: "10px"

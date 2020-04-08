@@ -16,6 +16,7 @@ import SizeFilter from "./filters/SizeFilter";
 import SliderFactory from "./filters/SliderFactory";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Image from "../../images/header.png";
+import SyncRoundedIcon from "@material-ui/icons/SyncRounded";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,9 +28,15 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: "url(" + Image + ")",
     backgroundSize: "cover",
   },
-  // filters: {
-  //     margin: "10%"
-  // }
+  filters: {
+      marginTop: "80px"
+  },
+  recommendation_score: {
+    marginTop: "15px"
+  },
+  above_cards_bar: {
+    marginLeft: "60px"
+  }
 }));
 
 export default function Search(props) {
@@ -39,6 +46,8 @@ export default function Search(props) {
   const [colleges, setColleges] = useState([]);
   const [loading, setLoading] = useState(false);
   const [lax, setLax] = useState(false);
+  const [RSText, setRSText] = useState("Compute Recommendation Score");
+  const [RSVariant, setRSVariant] = useState("contained");
 
   useEffect(() => {
     handleSearch(location.search);
@@ -73,6 +82,10 @@ export default function Search(props) {
     history.push(
       "college?" + queryString.stringify(params, { arrayFormat: "comma" })
     );
+  };
+
+  const handleRSButtonClick = (e) => {
+    console.log("clicked")
   };
 
   return (
@@ -185,7 +198,30 @@ export default function Search(props) {
         {/* right side - colleges */}
       </Grid>
       <Grid item md={8}>
-        <SortOptions id="sort" navigate={navigate} setOrder={setOrder} />
+        <Grid container className={classes.above_cards_bar}>
+          <Grid item md={9} className={classes.recommendation_score} align = "left">
+            <Button
+              variant={RSVariant}
+              color="primary"
+              className={classes.button}
+              endIcon={<SyncRoundedIcon />}
+              onClick={() => {
+                if (RSText=="Compute Recommendation Score"){
+                  setRSText("Hide Recommendation Score");
+                  setRSVariant("outlined")
+                }else{
+                  setRSText("Compute Recommendation Score");
+                  setRSVariant("contained")
+                }
+              }}
+            >
+              {RSText}
+            </Button>
+          </Grid>
+          <Grid item md={3} align = "right">
+            <SortOptions id="sort" navigate={navigate} setOrder={setOrder} />
+          </Grid>
+        </Grid>
 
         {loading ? (
           <LinearProgress variant="query" />
@@ -199,3 +235,4 @@ export default function Search(props) {
     </Grid>
   );
 }
+
