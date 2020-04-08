@@ -1,38 +1,70 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, Link, useHistory, useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import Image from "../../images/homeBackground_blur.png";
+import Container from "@material-ui/core/Container";
+import VerticalTabs from "./ProfileTabs";
+import Avatar from '@material-ui/core/Avatar';
+import PortraitImage from "../../images/student_portrait.png";
+import Grid from '@material-ui/core/Grid';
+import NotFound from "../NotFound";
+import Typography from '@material-ui/core/Typography';
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // margin: "auto"
-  },
-  header: {
-    height: 200,
+    position: "absolute",
+    left: 0,
+    right: 0,
+    // top: 0,
+    // bottom: 0,
     backgroundImage: "url(" + Image + ")",
     backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    zIndex: "-1",
+    color:"#4b4b4b"
   },
-  // filters: {
-  //     margin: "10%"
-  // }
+  header:{
+    marginTop: 70,
+    maxWidth:"70%"
+  },
+  body:{
+    maxWidth:"70%",
+    marginTop:40,
+  },
+  portraitDiv:{
+    width:"20%",
+    marginRight: "40px"
+  },
+  portrait:{
+    width:"100%",
+    height:"100%"
+  },
+  information:{
+    marginTop:"40px",
+    marginLeft:"40px"
+  }, 
+  username:{
+    color: "#8493d3",
+    marginBottom: "30px"
+  }
 }));
 
 
 export default function Profile(props) {
   const location = useLocation();
-  const [userprofile, setUserProfile] = useState(null);
+  const [student, setStudent] = useState(null);
   const [editing, setEditing] = useState(false);
   const classes = useStyles();
 
   useEffect(() => {
     let url = "http://localhost:8000" + location.pathname; //    /student/q
     fetch(url)
-      //.then(response => response.json())
       .then((data) => {
         if (data.status === 200) {
           async function getData() {
-            // let college = await data.json();
-            // setCollege(college);
+            let student = await data.json();
+            setStudent(student);
           }
           getData();
         }
@@ -41,22 +73,33 @@ export default function Profile(props) {
 
   return (
     <div>
-      if current_user == requested_user:
-      <br /> Account ID
-      <br /> Email / changeable
-      <br /> Password / change
-      <br /> Name / change
-      <br /> DOB / change
-      <br /> Gender / change
-      <br /> Address / change (City, State)
-      <br /> Phone / change and everything below else:
-      <br /> Expected College Graduation
-      <br /> SAT, ACT Scores, Other Scores
-      <br /> Current College (if any)
-      <br /> College City, State, Major, College GPA, College Classes taken
-      <br /> Current/Last High School(if any)
-      <br /> High School City, State, High School GPA, AP classes taken/scores
-      <br /> Colleges Applied, Status (Whether Questionable)
+      {!student && <NotFound />}
+      {student && (
+        <div className = {classes.root}>
+          <Container className = {classes.header}>
+            <Grid container direction="row"
+                    justify="flex-start"
+                    alignItems="flex-start">
+              <Grid item className={classes.portraitDiv}>
+                <Avatar alt="student"  src={PortraitImage} className ={classes.portrait}/>
+              </Grid>
+              <Grid item className={classes.information}>
+                <Typography variant="h3" className = {classes.username}>
+                  {student.userid}
+                </Typography>
+                <Typography variant="h5">
+                  State: {student.residence_state}
+                </Typography>
+              
+              
+              </Grid>
+            </Grid>
+          </Container>
+          <Container className = {classes.body}>
+            <VerticalTabs student = {student}/>
+          </Container>
+        </div>
+      )}
     </div>
   );
 }

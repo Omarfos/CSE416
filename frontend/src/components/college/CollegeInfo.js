@@ -43,7 +43,7 @@ export default function SimpleCard(props) {
       <Card className={classes.root}>
         <CardContent>
           <Typography variant="h6" align="left" className={classes.title}>
-            Scores
+            Average Scores
           </Typography>
           <Grid
             container
