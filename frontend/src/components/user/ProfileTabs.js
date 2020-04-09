@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import { Container } from '@material-ui/core';
 
 
 function TabPanel(props) {
@@ -52,14 +54,21 @@ const useStyles = makeStyles((theme) => ({
       fontSize:"1.3vw",
       height: "70px"
   },
-  grid:{
-      width:"100%"
-  }
+  container:{
+      width:"68%",
+      marginLeft:"5%"
+  },
+  title:{
+    textAlign:"left",
+    margin: "20px"
+  },
+  textfield:{}
 }));
 
 export default function VerticalTabs(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [disable, setDisable] = useState(true);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -79,60 +88,39 @@ export default function VerticalTabs(props) {
         <Tab label="College" {...a11yProps(2)} className={classes.tab}/>
         <Tab label="Account Setting" {...a11yProps(3)} className={classes.tab}/>
       </Tabs>
-      <TabPanel value={value} index={0}>
-          <Grid container direction="column" justify="flex-start" alignItems="center" className={classes.grid}>
-            <Grid item xs={12}>
-                <Typography variant="h6">
-                ACT Scores
-                </Typography>
-                
-                ACT Composite:  {props.student.ACT_composite}
-                ACT English: {props.student.ACT_english}
-                <br />
-                ACT MATH: {props.student.ACT_math}
-                ACT Reading: {props.student.ACT_reading}
-                <br />
-                ACT Science: {props.student.ACT_science}
-                <br />
-            </Grid>
-            <Grid>
-                <Typography variant="h6">
-                SAT Scores
-                </Typography>
-                SAT: {props.student.SAT}
-                <br />
-                SAT MATH: {props.student.SAT_math}
-                <br />
-                SAT EBRW: {props.student.SAT_EBRW}
-                <br />
-                Literature: {props.student.SAT_literature}
-                <br />
-                US History: {props.student.SAT_US_hist}
-                <br />
-                World History: {props.student.SAT_world_hist}
-                <br />
-                Math Subject I: {props.student.SAT_math_I}
-                <br />
-                Math Subject II:{props.student.SAT_math_II}
-                <br />
-                Economic: {props.student.SAT_eco_bio}
-                <br />
-                Biology: {props.student.SAT_mol_bio}
-                <br />
-                Chemistry: {props.student.SAT_chemistry}
-                <br />
-                Physics: {props.student.SAT_physics}
-                <br />
-            </Grid>
-
-          </Grid>
-       
-        
-        <Divider variant="fullWidth"/>
-        
-        
-        
-        AP test passed: {props.student.num_AP_passed}
+      <TabPanel value={value} index={0}  className={classes.container}>
+          <Typography variant="h6" className={classes.title}>
+            ACT Scores
+          </Typography>
+            <TextField id="ACT_composite" label="ACT Composite" disabled={disable} defaultValue={props.student.ACT_composite} className={classes.textfield}/>
+            <TextField id="ACT_english" label="ACT English" disabled={disable} defaultValue={props.student.ACT_english}/>
+            <TextField id="ACT_math" label="ACT MATH" disabled={disable} defaultValue={props.student.ACT_math}/>
+            <TextField id="ACT_reading" label="ACT Reading" disabled={disable} defaultValue={props.student.ACT_reading}/>
+            <TextField id="ACT_science" label="ACT Science" disabled={disable} defaultValue={props.student.ACT_science}/>
+   
+          <br /> <br /> <br />
+          <Divider variant="fullWidth"/>
+          <Typography variant="h6" className={classes.title}>
+          SAT Scores
+          </Typography>
+          <TextField id="SAT" label="SAT" disabled={disable} defaultValue={props.student.SAT}/>
+          <TextField id="SAT_math" label="SAT MATH" disabled={disable} defaultValue={props.student.SAT_math}/>
+          <TextField id="SAT_EBRW" label="SAT EBRW" disabled={disable} defaultValue={props.student.SAT_EBRW}/>
+          <TextField id="SAT_literature" label="Literature" disabled={disable} defaultValue={props.student.SAT_literature}/>
+          <TextField id="SAT_US_hist" label="US History" disabled={disable} defaultValue={props.student.SAT_US_hist}/>
+          <TextField id="SAT_world_hist" label="World History" disabled={disable} defaultValue={props.student.SAT_world_hist}/>
+          <TextField id="SAT_math_I" label="Math Subject I" disabled={disable} defaultValue={props.student.SAT_math_I}/>
+          <TextField id="SAT_math_II" label="Math Subject II" disabled={disable} defaultValue={props.student.SAT_math_II}/>
+          <TextField id="SAT_eco_bio" label="Economic" disabled={disable} defaultValue={props.student.SAT_eco_bio}/>
+          <TextField id="SAT_mol_bio" label="Biology" disabled={disable} defaultValue={props.student.SAT_mol_bio}/>
+          <TextField id="SAT_chemistry" label="Chemistry" disabled={disable} defaultValue={props.student.SAT_chemistry}/>
+          <TextField id="SAT_physics" label="Physics" disabled={disable} defaultValue={props.student.SAT_physics}/>
+          
+          <Divider variant="fullWidth"/>
+          <Typography variant="h6" className={classes.title}>
+          AP
+          </Typography>
+          <TextField id="num_AP_passed" label="AP exams passed" disabled={disable} defaultValue={props.student.num_AP_passed}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         High School Name: {props.student.high_school_name}
