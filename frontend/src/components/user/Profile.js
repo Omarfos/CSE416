@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Profile(props) {
   const location = useLocation();
   const [student, setStudent] = useState(null);
-  const [editing, setEditing] = useState(false);
+  const [disable, setDisable] = useState(true);
   const classes = useStyles();
 
   useEffect(() => {
@@ -64,7 +64,10 @@ export default function Profile(props) {
         if (data.status === 200) {
           async function getData() {
             let student = await data.json();
-            setStudent(student);
+            await setStudent(student);
+            if(location.pathname.substring(9) == props.user){
+              setDisable(false);
+            };
           }
           getData();
         }
@@ -96,9 +99,11 @@ export default function Profile(props) {
             </Grid>
           </Container>
           <Container className = {classes.body}>
-            <VerticalTabs student = {student}/>
+            <VerticalTabs student = {student} disable = {disable}/>
           </Container>
+          <br /><br />
           <br />
+          <br /><br />
           <br />
           <br />
         </div>
