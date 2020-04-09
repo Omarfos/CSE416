@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
+import colleges from "../../docs/colleges.json";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -180,9 +180,22 @@ export default function VerticalTabs(props) {
           Interested Majors: 
           </Typography>
           <TextField id="major_1" label="1" disabled={props.disable} defaultValue={props.student.major_1} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}} fullWidth/>
-          
           <TextField id="major_2" label="2" disabled={props.disable} defaultValue={props.student.major_2} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}} fullWidth/>
-          <br /><br />
+          <br /><br /><br />
+
+          {props.application &&
+            <div>
+              <Typography variant="h6" className={classes.title2}>
+              Colleges Applied: 
+              </Typography>
+             <AppliedCollege />
+            </div>
+          }
+          
+          
+          
+          
+         
         </TabPanel>
         <TabPanel value={value} index={3}>
           <Typography variant="h6" className={classes.title2}>
@@ -201,3 +214,8 @@ export default function VerticalTabs(props) {
     </div>
   );
 }
+function AppliedCollege(){
+  
+}
+
+

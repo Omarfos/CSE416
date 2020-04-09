@@ -101,13 +101,11 @@ def student_profile(request, userid):
         Student JSON
     """
     s = get_object_or_404(Student, userid=userid)
-    r1 = ""
-    try:
-        ap = Application.objects.get(student = s)
-        r1 = model_to_dict(ap)
-    except Application.DoesNotExist:
-        pass
     r = model_to_dict(s)
+
+    applications = Application.objects.filter(student = s)
+    r1 = serializers.serialize("json", applications)
+   
     obj = {"student":r, "application":r1}
     return JsonResponse(obj)
 
