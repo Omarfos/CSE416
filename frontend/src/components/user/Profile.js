@@ -98,6 +98,9 @@ export default function Profile(props) {
           <Container className = {classes.body}>
             <VerticalTabs student = {student}/>
           </Container>
+          <br />
+          <br />
+          <br />
         </div>
       )}
     </div>
