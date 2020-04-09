@@ -115,7 +115,7 @@ export default function Profile(props) {
             </Grid>
           </Container>
           <Container className = {classes.body}>
-            <VerticalTabs student = {student} disable = {disable}/>
+            <VerticalTabs student = {student} disable = {disable} application ={application}/>
             
           </Container>
           <br /><br /><br /><br /><br /><br /><br />
