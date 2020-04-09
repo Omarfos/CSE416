@@ -51,12 +51,12 @@ const useStyles = makeStyles((theme) => ({
   },
   tab:{
       fontSize:"1.3vw",
-      height: "70px"
+      height: "70px",
   },
   container:{
-      width:"68%",
-      marginLeft:"5%",
-      textAlign:"left"
+    width:"68%",
+    marginLeft:"5%",
+    textAlign:"left"
   },
   title:{
     textAlign:"left",
@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
   button:{
     textDecoration: "none",
     color: "#8493d3",
-    fontSize: 25,
+    fontSize: 18,
     padding: "15px",
     "&:hover": {
       background: "hsla(240, 48%, 41%, 0.1)",
@@ -92,12 +92,7 @@ const useStyles = makeStyles((theme) => ({
 export default function VerticalTabs(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  
-  
-  async function handleUpdateProfile(event) {
-    event.preventDefault();
-    console.log(event.target.ACT_composite.value);
-  }
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -110,7 +105,7 @@ export default function VerticalTabs(props) {
         <Tab label="College" {...a11yProps(2)} className={classes.tab}/>
         <Tab label="Account Setting" {...a11yProps(3)} className={classes.tab}/>
       </Tabs>
-      <form onSubmit={handleUpdateProfile} className={classes.container}>
+      <div className={classes.container}>
         <TabPanel value={value} index={0} >
           <Typography variant="h6" className={classes.title}>
             ACT Scores
@@ -196,12 +191,13 @@ export default function VerticalTabs(props) {
           <TextField id="major_1" disabled defaultValue="NULL" variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}}/>
           
           change password
-          
         </TabPanel>
-        <div className = {classes.buttonDiv}>
-          <Button type="submit" className={classes.button} variant="outlined">Update Profile</Button>
-        </div>
-      </form>
+        {!props.disable &&
+              <div className = {classes.buttonDiv}>
+                <Button type="submit" className={classes.button} variant="outlined">Update Profile</Button>
+              </div>
+        }
+      </div>
     </div>
   );
 }

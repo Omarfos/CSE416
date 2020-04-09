@@ -9,7 +9,7 @@ from django.db.utils import IntegrityError
 from django.db.models import Q
 from django.forms.models import model_to_dict
 
-from .models import Student, College
+from .models import Student, College, Application
 
 def index(request):
     return HttpResponse("Welcome to the Bingo API")
@@ -101,8 +101,11 @@ def student_profile(request, userid):
         Student JSON
     """
     s = get_object_or_404(Student, userid=userid)
+    ap = Application.objects.get(student = s)
     r = model_to_dict(s)
-    return JsonResponse(r)
+    r1 = model_to_dict(ap)
+    obj = {"student":r, "application":r1}
+    return JsonResponse(obj)
 
 
 def search(request):

@@ -9,6 +9,7 @@ import PortraitImage from "../../images/student_portrait.png";
 import Grid from '@material-ui/core/Grid';
 import NotFound from "../NotFound";
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,16 +47,27 @@ const useStyles = makeStyles((theme) => ({
   }, 
   username:{
     color: "#8493d3",
-    marginBottom: "30px"
-  }
+    marginBottom: "30px",
+    textAlign:"left"
+  },
+  resize:{
+    fontSize:"1.5vw",
+    padding:10,
+  },
 }));
 
 
 export default function Profile(props) {
   const location = useLocation();
   const [student, setStudent] = useState(null);
+  const [application, setApplication] = useState(null);
   const [disable, setDisable] = useState(true);
   const classes = useStyles();
+
+  async function handleUpdateProfile(event) {
+    event.preventDefault();
+    console.log(event.target.ACT_composite.value);
+  }
 
   useEffect(() => {
     let url = "http://localhost:8000" + location.pathname; //    /student/q
@@ -63,8 +75,9 @@ export default function Profile(props) {
       .then((data) => {
         if (data.status === 200) {
           async function getData() {
-            let student = await data.json();
-            await setStudent(student);
+            let object = await data.json();
+            await setStudent(object["student"]);
+            setApplication(object["application"]);
             if(location.pathname.substring(9) == props.user){
               setDisable(false);
             };
@@ -79,6 +92,8 @@ export default function Profile(props) {
       {!student && <NotFound />}
       {student && (
         <div className = {classes.root}>
+          <form onSubmit={handleUpdateProfile} >
+      
           <Container className = {classes.header}>
             <Grid container direction="row"
                     justify="flex-start"
@@ -90,9 +105,10 @@ export default function Profile(props) {
                 <Typography variant="h3" className = {classes.username}>
                   {student.userid}
                 </Typography>
-                <Typography variant="h5">
-                  State: {student.residence_state}
-                </Typography>
+                <Typography variant="h4">
+                  Residence State:  <TextField id="residence_state" disabled={disable} defaultValue={student.residence_state} variant="outlined" InputProps={{classes: {input: classes.resize}}} />
+                </Typography> 
+                
               
               
               </Grid>
@@ -100,12 +116,11 @@ export default function Profile(props) {
           </Container>
           <Container className = {classes.body}>
             <VerticalTabs student = {student} disable = {disable}/>
+            
           </Container>
-          <br /><br />
-          <br />
-          <br /><br />
-          <br />
-          <br />
+          <br /><br /><br /><br /><br /><br /><br />
+          
+      </form>
         </div>
       )}
     </div>
