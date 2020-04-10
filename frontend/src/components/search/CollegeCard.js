@@ -21,6 +21,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import EnhancedTable from "./ViewProfilesTable";
+
+
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -290,7 +293,7 @@ export default function CollegeCard(props) {
         >
           <DialogTitle id="scroll-dialog-title">Subscribe</DialogTitle>
           <DialogContent dividers={ scroll === "paper" }>
-            <DialogContentText
+            {/* <DialogContentText
               id="scroll-dialog-description"
               ref={ descriptionElementRef }
               tabIndex={ -1 }
@@ -303,7 +306,8 @@ export default function CollegeCard(props) {
     Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
                 )
                 .join("\n") }
-            </DialogContentText>
+            </DialogContentText> */}
+            {EnhancedTable()}
           </DialogContent>
           <DialogActions>
             <Button onClick={ handleClose } color="primary">
