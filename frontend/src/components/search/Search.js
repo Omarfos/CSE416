@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: "cover",
   },
   filters: {
-      marginTop: "125px"
+      marginTop: "95px"
   },
   recommendation_score: {
     marginTop: "15px"

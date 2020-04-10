@@ -23,7 +23,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    marginTop: "30px",
+    marginTop: "0px",
     marginLeft: "60px",
     borderColor: "#5d6896",
   },
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
   viewprofilesbutton: {
     position: 'relative',
-    top: "35px",
+    top: "5px",
     left: "40%"
     // position: 'absolute',
     // top: '-10%',
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   emptyspace: {
-    marginTop: "64px"
+    marginTop: "34px"
   }
 
 }));
