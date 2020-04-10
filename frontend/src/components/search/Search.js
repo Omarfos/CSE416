@@ -7,6 +7,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
 import Switch from "@material-ui/core/Switch";
 
+import Tooltip from '@material-ui/core/Tooltip';
+
 import CollegeCard from "./CollegeCard";
 import Pagination from "@material-ui/lab/Pagination";
 import SortOptions from "./Sorting.js";
@@ -211,6 +213,7 @@ export default function Search(props) {
       <Grid item md={8}>
         <Grid container className={classes.above_cards_bar}>
           <Grid item md={8} className={classes.recommendation_score} align = "left">
+          <Tooltip title="The recommendation score is based on where students with similar profiles applied and college ranking." placement="top" arrow>
             <Button
               variant={RSVariant}
               color="primary"
@@ -230,6 +233,7 @@ export default function Search(props) {
             >
               {RSText}
             </Button>
+            </Tooltip>
           </Grid>
           <Grid item md={3} align = "right" className={classes.sort}>
             <SortOptions id="sort" navigate={navigate} setOrder={setOrder} />
