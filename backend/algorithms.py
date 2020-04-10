@@ -116,6 +116,9 @@ def recommend_colleges(user_id, college_name):
 
             student_application_status = student_application[0].status
             student_score = student.similar_score
+            
+            print("STUDENT SCORE")
+            print(student_score)
 
             if(student_application_status == "accepted"):
                 sum_similarity_score_accepted += student_score
@@ -132,20 +135,21 @@ def recommend_colleges(user_id, college_name):
     rank_position = college.ranking
     college_r = 1 - (rank_position - 1) / total_rank
     
+    
     accepted_ratio = sum_similarity_score_accepted/n_accepted if n_accepted > 0 else 0
     pending_ratio = sum_similary_score_pending/n_pending if n_pending > 0 else 0
     waitlisted_ratio = sum_similary_score_waitlisted/n_waitlisted if n_waitlisted > 0 else 0
     deferred_ratio = sum_similarity_score_deferred/n_deferred if n_deferred > 0 else 0
     withdrawn_ratio = sum_similarity_score_withdrawn/n_withdrawn if n_withdrawn > 0 else 0
-    
+    # print(accepted_ratio, pending_ratio, waitlisted_ratio, deferred_ratio, withdrawn_ratio)
+    # print(n_accepted, n_pending, n_waitlisted, n_deferred, n_withdrawn)
     
     total_similarity = 0.7*accepted_ratio + 0.1*pending_ratio + 0.1*waitlisted_ratio + 0.05*deferred_ratio + 0.05*waitlisted_ratio
     result = 0.8*total_similarity + 0.2*college_r
-    result = round(result)
+    result = round(result)*100
 
     # for s in students[:50]:
     #    print(s.similar_score)
-    print(n_pending, n_accepted, n_waitlisted, n_withdrawn, n_deferred)
     return result
 
 
