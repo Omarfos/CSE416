@@ -82,7 +82,7 @@ def similar_students(userid):
             if u.num_AP_passed == s.num_AP_passed:
                 ap = 1
 
-        s.similar_score = hs + ap + composite + float(gpa)
+        s.similar_score = 0.2*hs + 0.2*ap + 0.4*composite + 0.2*float(gpa)
 
     #result.sort(key=lambda s: s.similar_score)
     #all_students = sorted(all_students,key=lambda s: s.similar_score)
@@ -146,7 +146,7 @@ def recommend_colleges(user_id, college_name):
     
     total_similarity = 0.7*accepted_ratio + 0.1*pending_ratio + 0.1*waitlisted_ratio + 0.05*deferred_ratio + 0.05*waitlisted_ratio
     result = 0.8*total_similarity + 0.2*college_r
-    result = round(result)*100
+    result = round(result*100)
 
     # for s in students[:50]:
     #    print(s.similar_score)
