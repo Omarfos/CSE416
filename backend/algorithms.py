@@ -97,10 +97,10 @@ def recommend_colleges(user_id, college_name):
     n_deferred = len(applications.filter(status='deferred'))
 
     students = similar_students(user_id)
-    for s in students[:50]:
-        print(s.similar_score)
+    #for s in students[:50]:
+    #    print(s.similar_score)
     print(n_pending, n_accepted, n_denied, n_waitlisted, n_withdrawn, n_deferred) 
-    return random.randint(0,2000)
+    return random.randint(0,100)
 
 def similar_hs(hs_name):
     pass

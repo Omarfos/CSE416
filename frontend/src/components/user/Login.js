@@ -76,30 +76,30 @@ export default function SignIn(props) {
 
   return (
     <div>
-      {props.errorMessage && (
-        <div className={classes.alert}>
+      { props.errorMessage && (
+        <div className={ classes.alert }>
           <Alert
             severity="error"
-            onClose={() => {
+            onClose={ () => {
               props.setError(null);
-            }}
+            } }
           >
-            {props.errorMessage}
+            { props.errorMessage }
           </Alert>
         </div>
-      )}
+      ) }
 
-      <Container component="main" className={classes.container}>
-        {props.user && <Redirect to="/" />}
+      <Container component="main" className={ classes.container }>
+        { props.user && <Redirect to="/" /> }
 
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
+        <div className={ classes.paper }>
+          <Avatar className={ classes.avatar }>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h4" className={classes.title}>
+          <Typography component="h1" variant="h4" className={ classes.title }>
             Sign in
           </Typography>
-          <form className={classes.form} onSubmit={handleLogin}>
+          <form className={ classes.form } onSubmit={ handleLogin }>
             <TextField
               variant="outlined"
               margin="normal"
@@ -109,11 +109,11 @@ export default function SignIn(props) {
               label="Userid"
               name="userid"
               autoFocus
-              InputProps={{
+              InputProps={ {
                 classes: {
                   input: classes.input,
                 },
-              }}
+              } }
             />
             <TextField
               variant="outlined"
@@ -125,18 +125,18 @@ export default function SignIn(props) {
               type="password"
               id="password"
               autoComplete="current-password"
-              InputProps={{
+              InputProps={ {
                 classes: {
                   input: classes.input,
                 },
-              }}
+              } }
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
-              className={classes.submit}
+              className={ classes.submit }
             >
               Sign In
             </Button>

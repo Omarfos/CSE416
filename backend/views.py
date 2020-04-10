@@ -10,6 +10,7 @@ from django.db.models import Q
 from django.forms.models import model_to_dict
 
 from .models import Student, College, Application
+from .algorithms import *
 
 def index(request):
     return HttpResponse("Welcome to the Bingo API")
@@ -189,3 +190,31 @@ def search(request):
 
     r = serializers.serialize("json", colleges)
     return JsonResponse(r, safe=False)
+
+def recommend(request):
+    """Return JSON of specified college 
+
+    Parameters:
+        request: GET, JSON 
+        url: college/<name>
+
+    Returns:
+        404: College not found
+        College JSON
+    """
+    params = request.GET
+    colleges = json.loads(params['colleges'])
+    userid = params['userid']
+
+    result = []
+    for college in colleges:
+        score = recommend_colleges(userid, college)
+        result.append(score)
+
+    print(result)
+    #  college = get_object_or_404(College, name=name)
+    #  r = model_to_dict(college)
+    return JsonResponse(result, safe=False)
+
+
+

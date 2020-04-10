@@ -11,4 +11,5 @@ urlpatterns = [
     path("college/", views.college),
     path("college/<str:name>/", views.college, name="College"),
     path("student/<slug:userid>/", views.student_profile, name="Student Profile"),
+    path("recommend/", views.recommend)
 ]

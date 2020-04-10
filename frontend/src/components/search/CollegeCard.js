@@ -30,11 +30,11 @@ const useStyles = makeStyles((theme) => ({
   },
 
   learnMore: {
-      marginLeft: "4px"
+    marginLeft: "4px"
   },
 
   comma: {
-      marginRight: "3px"
+    marginRight: "3px"
   },
 
   progress: {
@@ -44,10 +44,10 @@ const useStyles = makeStyles((theme) => ({
   },
 
   percent: {
-      position: 'absolute',
-      top: '22%',
-      left: '87%',
-      color: 'black'
+    position: 'absolute',
+    top: '22%',
+    left: '87%',
+    color: 'black'
   },
 
   viewprofilesbutton: {
@@ -93,8 +93,8 @@ export default function CollegeCard(props) {
   //   };
   // }, []);
 
-  const [open, setOpen] = React.useState(false);
-  const [scroll, setScroll] = React.useState("paper");
+  const [ open, setOpen ] = React.useState(false);
+  const [ scroll, setScroll ] = React.useState("paper");
 
   const handleClickOpen = scrollType => () => {
     setOpen(true);
@@ -113,49 +113,49 @@ export default function CollegeCard(props) {
         descriptionElement.focus();
       }
     }
-  }, [open]);
+  }, [ open ]);
 
   const renderCostNextLine = () => {
-    if(props.college.institution_type == "Public"){
+    if (props.college.institution_type == "Public") {
       return <div>
-                 <Grid
-            container
-            direction="row"
-            justify="flex-start"
-            alignItems="flex-start"
+        <Grid
+          container
+          direction="row"
+          justify="flex-start"
+          alignItems="flex-start"
+        >
+          <Chip
+            variant="outlined"
+            size="small"
+            label={
+              "# In-state Cost of Attendance " +
+              Math.round(props.college.in_state_cost / 1000) +
+              ",000 $"
+            }
+            color="primary"
+          />
+          <Typography
+            variant="h6"
+            color="textSecondary"
+            component="h4"
+            align="left"
+            className={ classes.comma }
           >
-            <Chip
-              variant="outlined"
-              size="small"
-              label={
-                "# In-state Cost of Attendance " +
-                Math.round(props.college.in_state_cost / 1000) +
-                ",000 $"
-              }
-              color="primary"
-            />
-            <Typography
-              variant="h6"
-              color="textSecondary"
-              component="h4"
-              align="left"
-              className={classes.comma}
-            >
-              ,
+            ,
             </Typography>
-            <Chip
-              variant="outlined"
-              size="small"
-              label={
-                "# Out-of-state Cost of Attendance " +
-                Math.round(props.college.out_state_cost / 1000) +
-                ",000 $"
-              }
-              color="primary"
-            />
-          </Grid>
-        </div>
-    }else{
+          <Chip
+            variant="outlined"
+            size="small"
+            label={
+              "# Out-of-state Cost of Attendance " +
+              Math.round(props.college.out_state_cost / 1000) +
+              ",000 $"
+            }
+            color="primary"
+          />
+        </Grid>
+      </div>
+    } else {
       return <div></div>
     }
 
@@ -176,28 +176,28 @@ export default function CollegeCard(props) {
               color="textSecondary"
               component="h4"
               align="left"
-              className={classes.comma}
+              className={ classes.comma }
             >
               ,
             </Typography>
             <Chip
               variant="outlined"
               size="small"
-              label={"# Public"}
+              label={ "# Public" }
               color="primary"
-              className={classes.hashtag}
+              className={ classes.hashtag }
             />
             <Typography
               variant="h6"
               color="textSecondary"
               component="h4"
               align="left"
-              className={classes.comma}
+              className={ classes.comma }
             >
               ,
             </Typography>
           </Grid>
-          <Rating name="read-only" value={Math.round(Math. random()*4)+1} readOnly className={classes.rating}/>
+          <Rating name="read-only" value={ Math.round(Math.random() * 4) + 1 } readOnly className={ classes.rating } />
         </div>
       );
     } else {
@@ -214,23 +214,23 @@ export default function CollegeCard(props) {
               color="textSecondary"
               component="h4"
               align="left"
-              className={classes.comma}
+              className={ classes.comma }
             >
               ,
             </Typography>
             <Chip
               variant="outlined"
               size="small"
-              label={"# Private"}
+              label={ "# Private" }
               color="primary"
-              className={classes.hashtag}
+              className={ classes.hashtag }
             />
             <Typography
               variant="h6"
               color="textSecondary"
               component="h4"
               align="left"
-              className={classes.comma}
+              className={ classes.comma }
             >
               ,
             </Typography>
@@ -243,70 +243,70 @@ export default function CollegeCard(props) {
                 ",000 $"
               }
               color="primary"
-              className={classes.hashtag}
+              className={ classes.hashtag }
             />
           </Grid>
-          <Rating name="read-only" value={Math.round(Math. random()*4)+1} readOnly className={classes.rating}/>
+          <Rating name="read-only" value={ Math.round(Math.random() * 4) + 1 } readOnly className={ classes.rating } />
         </div>
       );
     }
   };
 
   function RecommendationScore() {
-    if(props.rec_score){
+    if (props.rec_score) {
       return <div>
-            {/* Recommendation Score, absolute position */}
-            <CircularProgress variant="static" size={55} value={Math. random()*50+50} thickness={2} className={classes.progress}/>
-            <Typography variant="h6" gutterBottom className={classes.percent}>
-              {Math.round(Math. random()*50+50)}%
+        {/* Recommendation Score, absolute position */ }
+        <CircularProgress variant="static" size={ 55 } value={ props.college.score } thickness={ 2 } className={ classes.progress } />
+        <Typography variant="h6" gutterBottom className={ classes.percent }>
+          { props.college.score }%
             </Typography>
       </div>
-    }else{
+    } else {
       return <div></div>
     }
   }
 
 
   function fab() {
-    if(props.rec_score){
+    if (props.rec_score) {
       return <div>
         <Fab
           variant="extended"
           size="small"
           color="primary"
           aria-label="add"
-          className={classes.viewprofilesbutton}
-          onClick={handleClickOpen("paper")}
+          className={ classes.viewprofilesbutton }
+          onClick={ handleClickOpen("paper") }
         >
           View Similar Profiles
         </Fab>
 
         <Dialog
-          open={open}
-          onClose={handleClose}
-          scroll={scroll}
+          open={ open }
+          onClose={ handleClose }
+          scroll={ scroll }
           aria-labelledby="scroll-dialog-title"
           aria-describedby="scroll-dialog-description"
         >
           <DialogTitle id="scroll-dialog-title">Subscribe</DialogTitle>
-          <DialogContent dividers={scroll === "paper"}>
+          <DialogContent dividers={ scroll === "paper" }>
             <DialogContentText
               id="scroll-dialog-description"
-              ref={descriptionElementRef}
-              tabIndex={-1}
+              ref={ descriptionElementRef }
+              tabIndex={ -1 }
             >
-              {[...new Array(50)]
+              { [ ...new Array(50) ]
                 .map(
                   () => `Cras mattis consectetur purus sit amet fermentum.
     Cras justo odio, dapibus ac facilisis in, egestas eget quam.
     Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
     Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
                 )
-                .join("\n")}
+                .join("\n") }
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={ handleClose } color="primary">
               Close
             </Button>
           </DialogActions>
@@ -314,8 +314,8 @@ export default function CollegeCard(props) {
 
 
       </div>
-    }else{
-      return <div className={classes.emptyspace}></div>
+    } else {
+      return <div className={ classes.emptyspace }></div>
     }
   }
 
@@ -324,12 +324,12 @@ export default function CollegeCard(props) {
   return (
     <div>
 
-      {fab()}      
+      { fab() }
 
-      <Card 
+      <Card
         raised
-        className={classes.card}
-        onClick={() => {
+        className={ classes.card }
+        onClick={ () => {
           history.push({
             pathname: "/college/" + props.college.name,
           })
@@ -339,7 +339,7 @@ export default function CollegeCard(props) {
         <CardActionArea>
           <CardContent>
 
-            {RecommendationScore()}
+            { RecommendationScore() }
 
             <Typography
               id="college_name"
@@ -348,17 +348,17 @@ export default function CollegeCard(props) {
               component="h2"
               align="left"
             >
-              {props.college.name}
-            </Typography>   
+              { props.college.name }
+            </Typography>
             <Typography
               variant="h6"
               color="textSecondary"
               component="h4"
               align="left"
             >
-              {props.college.ranking} in National Universities
+              { props.college.ranking } in National Universities
             </Typography>
-            <Divider className={classes.divider}/>
+            <Divider className={ classes.divider } />
             <Grid
               container
               direction="row"
@@ -368,16 +368,16 @@ export default function CollegeCard(props) {
               <Chip
                 variant="outlined"
                 size="small"
-                label={"# " + props.college.state}
+                label={ "# " + props.college.state }
                 color="primary"
-                className={classes.hashtagFirst}
+                className={ classes.hashtagFirst }
               />
               <Typography
                 variant="h6"
                 color="textSecondary"
                 component="h4"
                 align="left"
-                className={classes.comma}
+                className={ classes.comma }
               >
                 ,
               </Typography>
@@ -390,11 +390,11 @@ export default function CollegeCard(props) {
                   " %"
                 }
                 color="primary"
-                className={classes.hashtag}
+                className={ classes.hashtag }
               />
-              {renderCost()}
+              { renderCost() }
             </Grid>
-              {renderCostNextLine()}
+            { renderCostNextLine() }
           </CardContent>
         </CardActionArea>
       </Card>
