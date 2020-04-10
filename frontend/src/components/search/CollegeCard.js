@@ -12,6 +12,7 @@ import Chip from "@material-ui/core/Chip";
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Fab from '@material-ui/core/Fab';
+import Rating from '@material-ui/lab/Rating';
 
 import Divider from '@material-ui/core/Divider';
 
@@ -65,7 +66,9 @@ const useStyles = makeStyles((theme) => ({
   },
 
   rating: {
-    left: "65%"
+    position: 'absolute',
+    top: "70%",
+    right: "3%"
   }
 
 }));
@@ -112,6 +115,52 @@ export default function CollegeCard(props) {
     }
   }, [open]);
 
+  const renderCostNextLine = () => {
+    if(props.college.institution_type == "Public"){
+      return <div>
+                 <Grid
+            container
+            direction="row"
+            justify="flex-start"
+            alignItems="flex-start"
+          >
+            <Chip
+              variant="outlined"
+              size="small"
+              label={
+                "# In-state Cost of Attendance " +
+                Math.round(props.college.in_state_cost / 1000) +
+                ",000 $"
+              }
+              color="primary"
+            />
+            <Typography
+              variant="h6"
+              color="textSecondary"
+              component="h4"
+              align="left"
+              className={classes.comma}
+            >
+              ,
+            </Typography>
+            <Chip
+              variant="outlined"
+              size="small"
+              label={
+                "# Out-of-state Cost of Attendance " +
+                Math.round(props.college.out_state_cost / 1000) +
+                ",000 $"
+              }
+              color="primary"
+            />
+          </Grid>
+        </div>
+    }else{
+      return <div></div>
+    }
+
+  }
+
   const renderCost = () => {
     if (props.college.institution_type == "Public") {
       return (
@@ -147,38 +196,8 @@ export default function CollegeCard(props) {
             >
               ,
             </Typography>
-            <Chip
-              variant="outlined"
-              size="small"
-              label={
-                "# In-state Cost of Attendance " +
-                Math.round(props.college.in_state_cost / 1000) +
-                ",000 $"
-              }
-              color="primary"
-              className={classes.hashtag}
-            />
-            <Typography
-              variant="h6"
-              color="textSecondary"
-              component="h4"
-              align="left"
-              className={classes.comma}
-            >
-              ,
-            </Typography>
-            <Chip
-              variant="outlined"
-              size="small"
-              label={
-                "# Out-of-state Cost of Attendance " +
-                Math.round(props.college.out_state_cost / 1000) +
-                ",000 $"
-              }
-              color="primary"
-              className={classes.hashtag}
-            />
           </Grid>
+          <Rating name="read-only" value={Math.round(Math. random()*4)+1} readOnly className={classes.rating}/>
         </div>
       );
     } else {
@@ -227,6 +246,7 @@ export default function CollegeCard(props) {
               className={classes.hashtag}
             />
           </Grid>
+          <Rating name="read-only" value={Math.round(Math. random()*4)+1} readOnly className={classes.rating}/>
         </div>
       );
     }
@@ -245,9 +265,6 @@ export default function CollegeCard(props) {
       return <div></div>
     }
   }
-
-
-
 
 
   function fab() {
@@ -377,6 +394,7 @@ export default function CollegeCard(props) {
               />
               {renderCost()}
             </Grid>
+              {renderCostNextLine()}
           </CardContent>
         </CardActionArea>
       </Card>
