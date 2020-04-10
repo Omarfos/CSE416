@@ -99,7 +99,7 @@ export default function Search(props) {
   const handleRecommend = (query) => {
     setLoading(true)
     console.log("query", query);
-    console.log('props.user', props.user)
+    console.log('props.userju', props.user)
     const college_names = colleges.map(c => c.name)
     // console.log('college_names', college_names)
     axios
@@ -117,23 +117,6 @@ export default function Search(props) {
       });
   };
 
-  const handleViewSimilarProfiles = (college, userid) => {
-
-    axios.get("http://localhost:8000/similar", {
-      responseType: "json",
-      params: {
-        userid: userid,
-        college: college
-      }
-    }).then((response) => {
-
-      let r = response.data.map((s) => {
-        return s.fields;
-      })
-      console.log('r', r)
-    });
-  };
-
 
   // const handleRSButtonClick = (e) => {
   //   console.log("clicked")
@@ -147,7 +130,7 @@ export default function Search(props) {
       margins={ 3 }
       justify="center"
     >
-      { handleViewSimilarProfiles('Stony Brook University', 'allenhaley') }
+      {/* { handleViewSimilarProfiles('Stony Brook University', 'allenhaley') } */ }
       <Grid className={ classes.header } item md={ 12 }></Grid>
       <Grid item md={ 2 } className={ classes.filters }>
         <Grid container spacing={ 2 }>
@@ -284,7 +267,7 @@ export default function Search(props) {
         { loading ? (
           <LinearProgress variant="query" />
         ) : (
-            colleges.map((college) => <CollegeCard college={ college } rec_score={ compute } />)
+            colleges.map((college) => <CollegeCard college={ college } rec_score={ compute } user={ props.user } />)
           ) }
       </Grid>
 
