@@ -39,7 +39,13 @@ const useStyles = makeStyles((theme) => ({
   },
   above_cards_bar: {
     marginLeft: "60px"
+  },
+  pagination: {
+    marginTop: "40px",
+    marginBottom: "40px",
+    marginLeft: "20%"
   }
+
 }));
 
 export default function Search(props) {
@@ -238,7 +244,7 @@ export default function Search(props) {
       </Grid>
 
       {/* pagination */}
-      {/* <Pagination count={10} color="primary" className={classes.pagination} /> */}
+      <Pagination count={10} color="primary" className={classes.pagination} />
     </Grid>
   );
 }
