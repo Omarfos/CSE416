@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: "cover",
   },
   filters: {
-      marginTop: "80px"
+      marginTop: "125px"
   },
   recommendation_score: {
     marginTop: "15px"
@@ -88,9 +88,9 @@ export default function Search(props) {
     );
   };
 
-  const handleRSButtonClick = (e) => {
-    console.log("clicked")
-  };
+  // const handleRSButtonClick = (e) => {
+  //   console.log("clicked")
+  // };
 
   return (
     <Grid
@@ -215,12 +215,10 @@ export default function Search(props) {
                   setRSText("Hide Recommendation Score");
                   setRSVariant("outlined")
                   setCompute(true)
-                  console.log("clicked, now true")
                 }else{
                   setRSText("Compute Recommendation Score");
                   setRSVariant("contained")
                   setCompute(false)
-                  console.log("clicked, now false")
                 }
               }}
             >
