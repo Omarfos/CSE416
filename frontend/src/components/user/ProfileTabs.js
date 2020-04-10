@@ -93,6 +93,7 @@ export default function VerticalTabs(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -182,20 +183,25 @@ export default function VerticalTabs(props) {
           <TextField id="major_1" label="1" disabled={props.disable} defaultValue={props.student.major_1} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}} fullWidth/>
           <TextField id="major_2" label="2" disabled={props.disable} defaultValue={props.student.major_2} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}} fullWidth/>
           <br /><br /><br />
-
-          {props.application &&
-            <div>
-              <Typography variant="h6" className={classes.title2}>
-              Colleges Applied: 
-              </Typography>
-             <AppliedCollege />
-            </div>
-          }
+          <Divider variant="fullWidth"/>
           
+          <div>
+            <Typography variant="h6" className={classes.title2}>
+            Colleges Applied: 
+            </Typography>
+            {props.application.length > 0  &&
+             <div>
+                {props.application.map((app, key) => (
+                  <AppliedCollege application={app} key={key} keyID={key} disable={props.disable}/>
+                ))}
+             </div> 
+            }
+            {props.application.length == 0  &&
+              <div>NONE</div>
+            }
+            <br /> <br /><br /> <br />
+          </div>
           
-          
-          
-         
         </TabPanel>
         <TabPanel value={value} index={3}>
           <Typography variant="h6" className={classes.title2}>
@@ -214,8 +220,19 @@ export default function VerticalTabs(props) {
     </div>
   );
 }
-function AppliedCollege(){
-  
+function AppliedCollege(props){
+  const classes = useStyles();
+
+  return(
+    <div>
+      <Typography variant="h6" className={classes.title2}>
+         {props.keyID+1}:
+      </Typography>
+      <TextField id={props.keyID+"college"} label ="College Name" disabled={props.disable} defaultValue={props.application.college} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}} fullWidth/>
+      <TextField id={props.keyID+"status"} label ="Status" disabled={props.disable} defaultValue={props.application.status} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}}/>
+      <TextField id={props.keyID+"questionable"} label ="Questionable" disabled={props.disable} defaultValue={props.application.questionable} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}}/>
+    </div>
+  );
 }
 
 

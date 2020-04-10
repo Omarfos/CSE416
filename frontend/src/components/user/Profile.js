@@ -60,9 +60,10 @@ const useStyles = makeStyles((theme) => ({
 export default function Profile(props) {
   const location = useLocation();
   const [student, setStudent] = useState(null);
-  const [application, setApplication] = useState(null);
+  const [application, setApplication] = useState([]);
   const [disable, setDisable] = useState(true);
   const classes = useStyles();
+
 
   async function handleUpdateProfile(event) {
     event.preventDefault();
@@ -77,7 +78,11 @@ export default function Profile(props) {
           async function getData() {
             let object = await data.json();
             await setStudent(object["student"]);
-            setApplication(object["application"]);
+            await setApplication(
+              JSON.parse(object["application"]).map((c) => {
+                return c.fields;
+              })
+            );
             if(location.pathname.substring(9) == props.user){
               setDisable(false);
             };
