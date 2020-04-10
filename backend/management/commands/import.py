@@ -34,7 +34,7 @@ def import_students():
     with open("backend/data/majors.txt", "r") as f:
         majors = f.read().split("\n")
 
-    for i in range(100):
+    for i in range(1000):
         d["userid"] = fake.user_name()
         d["password"] = fake.password(length=random.randint(8, 20), special_chars=False)
 
@@ -87,7 +87,7 @@ def import_students():
         except:
             continue
 
-        for i in range(random.randint(0, 5)):
+        for i in range(random.randint(5, 15)):
             a = Application()
             a.college = random.choice(college_list)
             a.status = random.choice(status)

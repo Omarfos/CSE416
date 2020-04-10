@@ -12,55 +12,55 @@ import NotFound from "./components/NotFound";
 
 function App() {
   //Set it to this right now.
-  const [user, setUser] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [ user, setUser ] = useState(null);
+  const [ errorMessage, setErrorMessage ] = useState(null);
   return (
     <div className="App">
-      <Navbar user={user} setUser={setUser} />
+      <Navbar user={ user } setUser={ setUser } />
       <Switch>
-        <Route exact path="/" render={() => <Home />} />
-        <Route exact path="/search/:q" render={() => <Search />} />
+        <Route exact path="/" render={ () => <Home /> } />
+        <Route exact path="/search/:q" render={ () => <Search user={ user } /> } />
         <Route
           exact
           path="/college/:id"
-          render={() => (
+          render={ () => (
             <CollegeProfile
-              errorMessage={errorMessage}
-              setError={setErrorMessage}
+              errorMessage={ errorMessage }
+              setError={ setErrorMessage }
             />
-          )}
+          ) }
         />
         <Route
           exact
           path="/student/:id"
-          render={() => <Profile user={user} />}
+          render={ () => <Profile user={ user } /> }
         />
         <Route
           exact
           path="/login"
-          render={() => (
+          render={ () => (
             <Login
-              errorMessage={errorMessage}
-              setError={setErrorMessage}
-              setUser={setUser}
-              user={user}
+              errorMessage={ errorMessage }
+              setError={ setErrorMessage }
+              setUser={ setUser }
+              user={ user }
             />
-          )}
+          ) }
         />
         <Route
           exact
           path="/register"
-          render={() => (
+          render={ () => (
             <Register
-              user={user}
-              setUser={setUser}
-              errorMessage={errorMessage}
-              setError={setErrorMessage}
+              user={ user }
+              setUser={ setUser }
+              errorMessage={ errorMessage }
+              setError={ setErrorMessage }
             />
-          )}
+          ) }
         />
 
-        <Route render={() => <NotFound />} />
+        <Route render={ () => <NotFound /> } />
       </Switch>
     </div>
   );

@@ -9,7 +9,8 @@ from django.db.utils import IntegrityError
 from django.db.models import Q
 from django.forms.models import model_to_dict
 
-from .models import Student, College
+from .models import Student, College, Application
+from .algorithms import *
 
 def index(request):
     return HttpResponse("Welcome to the Bingo API")
@@ -102,7 +103,12 @@ def student_profile(request, userid):
     """
     s = get_object_or_404(Student, userid=userid)
     r = model_to_dict(s)
-    return JsonResponse(r)
+
+    applications = Application.objects.filter(student = s)
+    r1 = serializers.serialize("json", applications)
+   
+    obj = {"student":r, "application":r1}
+    return JsonResponse(obj)
 
 
 def search(request):
@@ -184,3 +190,50 @@ def search(request):
 
     r = serializers.serialize("json", colleges)
     return JsonResponse(r, safe=False)
+
+def recommend(request):
+    """Return JSON of specified college 
+
+    Parameters:
+        request: GET, JSON 
+        url: college/<name>
+
+    Returns:
+        404: College not found
+        College JSON
+    """
+    params = request.GET
+    colleges = json.loads(params['colleges'])
+    userid = params['userid']
+
+    result = []
+    for college in colleges:
+        score = recommend_colleges(userid, college)
+        result.append(score)
+
+    print(result)
+    #  college = get_object_or_404(College, name=name)
+    #  r = model_to_dict(college)
+    return JsonResponse(result, safe=False)
+
+def get_similar_profiles(request):
+    params = request.GET
+    userid = params["userid"]
+    college = params["college"]
+    college = College.objects.get(name=college)
+
+    students = similar_students(userid)
+    
+    results = []
+    for student in students:
+        student_application = college.application_set.all().filter(
+            questionable=False, student=student)
+        if student_application:
+            results.append(student)
+
+    r = serializers.serialize("json", results)
+    return JsonResponse(r, safe=False)
+
+
+
+
