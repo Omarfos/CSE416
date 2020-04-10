@@ -6,6 +6,7 @@ from django.db.models import Avg
 
 from .models import *
 
+
 def similar_students(userid):
     u = Student.objects.get(userid=userid)
 
@@ -27,10 +28,12 @@ def similar_students(userid):
     # user specified a high school, but not test scores and gpa
     # Aggregate with averages of classmaets
     if u.high_school_name:
-        classmates = Student.objects.filter(high_school_name=u.high_school_name)
+        classmates = Student.objects.filter(
+            high_school_name=u.high_school_name)
         if not u.SAT and not u.ACT_composite:
             u.ACT_composite = int(
-                classmates.aggregate(Avg("ACT_composite"))["ACT_composite__avg"]
+                classmates.aggregate(Avg("ACT_composite"))[
+                    "ACT_composite__avg"]
             )
             u.SAT = int(classmates.aggregate(Avg("SAT"))["SAT__avg"])
         if not u.GPA:
@@ -49,7 +52,7 @@ def similar_students(userid):
     for s in all_students:
         hs = ap = gpa = composite = 0
 
-        s.GPA = s.GPA or 0 
+        s.GPA = s.GPA or 0
         if s.GPA < u.GPA:
             gpa = (s.GPA - (s.GPA - u.GPA) / 2) / u.GPA
         else:
@@ -63,9 +66,11 @@ def similar_students(userid):
 
         if s.ACT_composite:
             if s.ACT_composite < u.ACT_composite:
-                composite = (s.ACT_composite - (s.ACT_composite - u.ACT_composite) / 2) / u.ACT_composite
+                composite = (s.ACT_composite - (s.ACT_composite -
+                                                u.ACT_composite) / 2) / u.ACT_composite
             else:
-                composite = (u.ACT_composite - (u.ACT_composite - s.ACT_composite) / 2) / s.ACT_composite
+                composite = (u.ACT_composite - (u.ACT_composite -
+                                                s.ACT_composite) / 2) / s.ACT_composite
 
         if u.high_school_name is not None and s.high_school_name is not None:
             if u.high_school_name == s.high_school_name:
@@ -77,33 +82,76 @@ def similar_students(userid):
             if u.num_AP_passed == s.num_AP_passed:
                 ap = 1
 
-        s.similar_score = hs + ap + composite + float(gpa) 
+        s.similar_score = hs + ap + composite + float(gpa)
 
- 
     #result.sort(key=lambda s: s.similar_score)
-    #all_students = sorted(all_students,key=lambda s: s.similar_score) 
+    #all_students = sorted(all_students,key=lambda s: s.similar_score)
     all_students.order_by('-similar_score')
 
     return all_students
 
+
 def recommend_colleges(user_id, college_name):
-    c = College.objects.get(name = college_name)
-    applications = c.application_set.all().filter(questionable=False)
+    college = College.objects.get(name=college_name)
+    applications = college.application_set.all().filter(questionable=False)  # ??
     n_pending = len(applications.filter(status='pending'))
     n_accepted = len(applications.filter(status='accepted'))
-    n_denied = len(applications.filter(status='denied'))
+    # n_denied = len(applications.filter(status='denied'))
     n_waitlisted = len(applications.filter(status='waitlisted'))
     n_withdrawn = len(applications.filter(status='withdrawn'))
     n_deferred = len(applications.filter(status='deferred'))
 
     students = similar_students(user_id)
-    #for s in students[:50]:
+
+    sum_similary_score_pending = 0
+    sum_similarity_score_accepted = 0
+    sum_similary_score_waitlisted = 0
+    sum_similarity_score_withdrawn = 0
+    sum_similarity_score_deferred = 0
+
+    for student in students:
+        student_application = college.application_set.all().filter(
+            questionable=False, student=student)
+        if(len(student_application) == 1):
+
+            student_application_status = student_application[0].status
+            student_score = student.similar_score
+
+            if(student_application_status == "accepted"):
+                sum_similarity_score_accepted += student_score
+            elif(student_application_status == "pending"):
+                sum_similary_score_pending += student_score
+            elif(student_application_status == "waitlisted"):
+                sum_similary_score_waitlisted += student_score
+            elif(student_application_status == "withdrawn"):
+                sum_similarity_score_withdrawn += student_score
+            elif(student_application_status == "deferred"):
+                sum_similarity_score_deferred += student_score
+                
+    total_rank = 600
+    rank_position = college.ranking
+    college_r = 1 - (rank_position - 1) / total_rank
+    
+    accepted_ratio = sum_similarity_score_accepted/n_accepted if n_accepted > 0 else 0
+    pending_ratio = sum_similary_score_pending/n_pending if n_pending > 0 else 0
+    waitlisted_ratio = sum_similary_score_waitlisted/n_waitlisted if n_waitlisted > 0 else 0
+    deferred_ratio = sum_similarity_score_deferred/n_deferred if n_deferred > 0 else 0
+    withdrawn_ratio = sum_similarity_score_withdrawn/n_withdrawn if n_withdrawn > 0 else 0
+    
+    
+    total_similarity = 0.7*accepted_ratio + 0.1*pending_ratio + 0.1*waitlisted_ratio + 0.05*deferred_ratio + 0.05*waitlisted_ratio
+    result = 0.8*total_similarity + 0.2*college_r
+    result = round(result)
+
+    # for s in students[:50]:
     #    print(s.similar_score)
-    print(n_pending, n_accepted, n_denied, n_waitlisted, n_withdrawn, n_deferred) 
-    return random.randint(0,100)
+    print(n_pending, n_accepted, n_waitlisted, n_withdrawn, n_deferred)
+    return result
+
 
 def similar_hs(hs_name):
     pass
+
 
 def verify_acceptance_decision(app):
     pass
