@@ -51,6 +51,7 @@ export default function Search(props) {
   const [lax, setLax] = useState(false);
   const [RSText, setRSText] = useState("Compute Recommendation Score");
   const [RSVariant, setRSVariant] = useState("contained");
+  const [compute, setCompute] = useState(false);
 
   useEffect(() => {
     handleSearch(location.search);
@@ -198,6 +199,7 @@ export default function Search(props) {
           </Grid>
         </Grid>
 
+
         {/* right side - colleges */}
       </Grid>
       <Grid item md={8}>
@@ -212,9 +214,13 @@ export default function Search(props) {
                 if (RSText=="Compute Recommendation Score"){
                   setRSText("Hide Recommendation Score");
                   setRSVariant("outlined")
+                  setCompute(true)
+                  console.log("clicked, now true")
                 }else{
                   setRSText("Compute Recommendation Score");
                   setRSVariant("contained")
+                  setCompute(false)
+                  console.log("clicked, now false")
                 }
               }}
             >
@@ -229,7 +235,7 @@ export default function Search(props) {
         {loading ? (
           <LinearProgress variant="query" />
         ) : (
-          colleges.map((college) => <CollegeCard college={college} />)
+          colleges.map((college) => <CollegeCard college={college} rec_score={compute} />)
         )}
       </Grid>
 

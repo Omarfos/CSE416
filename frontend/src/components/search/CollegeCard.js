@@ -49,24 +49,25 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+
 export default function CollegeCard(props) {
   const classes = useStyles();
   const location = useLocation();
   let history = useHistory();
-  const [completed, setCompleted] = React.useState(0);
+  // const [completed, setCompleted] = React.useState(0);
 
-  useEffect(() => {
-    function progress() {
-      setCompleted(prevCompleted =>
-        prevCompleted >= 70 ? 70 : prevCompleted + 10
-      );
-    }
+  // useEffect(() => {
+  //   function progress() {
+  //     setCompleted(prevCompleted =>
+  //       prevCompleted >= 70 ? 70 : prevCompleted + 10
+  //     );
+  //   }
 
-    const timer = setInterval(progress, 100);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+  //   const timer = setInterval(progress, 100);
+  //   return () => {
+  //     clearInterval(timer);
+  //   };
+  // }, []);
 
   const renderCost = () => {
     if (props.college.institution_type == "Public") {
@@ -188,6 +189,33 @@ export default function CollegeCard(props) {
     }
   };
 
+  function RecommendationScore() {
+    // computeValue = false
+    console.log("computeValue "+JSON.stringify(props.rec_score))
+    if(props.rec_score){
+      return <div>
+            {/* Recommendation Score, absolute position */}
+            <CircularProgress variant="static" value={70} className={classes.progress}/>
+            <Typography variant="subtitle2" gutterBottom className={classes.percent}>
+              78%
+            </Typography>
+
+            {/* View Similar Profiles, absolute position */}
+            <Fab
+              variant="extended"
+              size="small"
+              color="primary"
+              aria-label="add"
+              className={classes.viewprofilesbutton}
+            >
+              View Similar Profiles
+            </Fab>
+      </div>
+    }else{
+      return <div></div>
+    }
+  }
+
   return (
     <Card
       raised
@@ -202,13 +230,13 @@ export default function CollegeCard(props) {
         <CardContent>
 
           {/* Recommendation Score, absolute position */}
-          <CircularProgress variant="static" value={completed} className={classes.progress}/>
+          {/* <CircularProgress variant="static" value={completed} className={classes.progress}/>
           <Typography variant="subtitle2" gutterBottom className={classes.percent}>
             78%
-          </Typography>
+          </Typography> */}
 
           {/* View Similar Profiles, absolute position */}
-          <Fab
+          {/* <Fab
             variant="extended"
             size="small"
             color="primary"
@@ -216,7 +244,9 @@ export default function CollegeCard(props) {
             className={classes.viewprofilesbutton}
           >
             View Similar Profiles
-          </Fab>
+          </Fab> */}
+
+          {RecommendationScore()}
 
           <Typography
             id="college_name"
