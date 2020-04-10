@@ -106,31 +106,32 @@ export default function Search(props) {
       .get("http://localhost:8000/recommend", {
         responseType: "json",
         params: {
-          userid: 'juan59',
+          userid: 'gshea',
           colleges: JSON.stringify(college_names)
         }
       })
       .then((response) => {
-        // console.log('response', response)
-        // var zip = (a, b) => a.map((x, i) => [ x, b[ i ] ]);
-        // // for a, b in zip(list1, list2):
-        // for (let [ a, b ] of zip(list1, list2))
-        //   //     print(a + b)
-        //   console.log(a + b);
-        // setColleges(
-        //   response.data.map((c) => {
-        //     console.log('c', c);
-        //     return c;
-        //     // return { ...c, rec_score: }
-        //   })
-        // );
-        console.log('response.data', response.data)
         let new_colleges = Object.assign([], colleges);
-        console.log('new_colleges', new_colleges)
         response.data.map((score, index) => { console.log(score, index); new_colleges[ index ].score = score })
-        console.log('new_co', new_colleges)
         setColleges(new_colleges, setLoading(false))
       });
+  };
+
+  const handleViewSimilarProfiles = (college, userid) => {
+
+    axios.get("http://localhost:8000/similar", {
+      responseType: "json",
+      params: {
+        userid: userid,
+        college: college
+      }
+    }).then((response) => {
+
+      let r = response.data.map((s) => {
+        return s.fields;
+      })
+      console.log('r', r)
+    });
   };
 
 
@@ -146,6 +147,7 @@ export default function Search(props) {
       margins={ 3 }
       justify="center"
     >
+      { handleViewSimilarProfiles('Stony Brook University', 'allenhaley') }
       <Grid className={ classes.header } item md={ 12 }></Grid>
       <Grid item md={ 2 } className={ classes.filters }>
         <Grid container spacing={ 2 }>

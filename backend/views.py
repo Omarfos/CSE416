@@ -216,5 +216,24 @@ def recommend(request):
     #  r = model_to_dict(college)
     return JsonResponse(result, safe=False)
 
+def get_similar_profiles(request):
+    params = request.GET
+    userid = params["userid"]
+    college = params["college"]
+    college = College.objects.get(name=college)
+
+    students = similar_students(userid)
+    
+    results = []
+    for student in students:
+        student_application = college.application_set.all().filter(
+            questionable=False, student=student)
+        if student_application:
+            results.append(student)
+
+    r = serializers.serialize("json", results)
+    return JsonResponse(r, safe=False)
+
+
 
 

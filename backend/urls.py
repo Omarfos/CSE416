@@ -11,5 +11,6 @@ urlpatterns = [
     path("college/", views.college),
     path("college/<str:name>/", views.college, name="College"),
     path("student/<slug:userid>/", views.student_profile, name="Student Profile"),
+    path("similar/", views.get_similar_profiles),
     path("recommend/", views.recommend)
 ]
