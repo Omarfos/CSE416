@@ -96,11 +96,14 @@ export default function CollegeCard(props) {
   //   };
   // }, []);
 
+  const [ students, setStudents ] = useState([]);
+
   const [ open, setOpen ] = React.useState(false);
   const [ scroll, setScroll ] = React.useState("paper");
 
   const handleClickOpen = scrollType => () => {
     setOpen(true);
+    handleViewSimilarProfiles(props.college.name, 'gshea')
     setScroll(scrollType);
   };
 
@@ -270,6 +273,23 @@ export default function CollegeCard(props) {
   }
 
 
+  const handleViewSimilarProfiles = (college, userid) => {
+
+    axios.get("http://localhost:8000/similar", {
+      responseType: "json",
+      params: {
+        userid: userid,
+        college: college
+      }
+    }).then((response) => {
+      let r = response.data.map((s) => {
+        return s.fields;
+      })
+      console.log('r', r)
+      setStudents(r)
+    });
+  };
+
   function fab() {
     if (props.rec_score) {
       return <div>
@@ -307,7 +327,7 @@ export default function CollegeCard(props) {
                 )
                 .join("\n") }
             </DialogContentText> */}
-            {EnhancedTable()}
+            <EnhancedTable students={ students } />
           </DialogContent>
           <DialogActions>
             <Button onClick={ handleClose } color="primary">
