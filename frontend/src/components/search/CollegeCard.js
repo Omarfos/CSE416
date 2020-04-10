@@ -12,7 +12,6 @@ import Chip from "@material-ui/core/Chip";
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Fab from '@material-ui/core/Fab';
-import Rating from '@material-ui/lab/Rating';
 
 import Divider from '@material-ui/core/Divider';
 
@@ -227,7 +226,6 @@ export default function CollegeCard(props) {
               color="primary"
               className={classes.hashtag}
             />
-            <Rating name="read-only" value={Math.round(Math. random()*4)+1} readOnly className={classes.rating}/>
           </Grid>
         </div>
       );
