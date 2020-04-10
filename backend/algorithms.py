@@ -2,7 +2,7 @@ import json
 import random
 
 from django.db import models
-from django.db.models import Avg
+from django.db.models import Avg, Max
 
 from .models import *
 
@@ -48,11 +48,14 @@ def similar_students(userid):
         u.SAT = int(all_students.aggregate(Avg("SAT"))["SAT__avg"])
     if not u.GPA:
         u.GPA = all_students.aggregate(Avg("GPA"))["GPA__avg"]
-
+        
+    # At this point, user has GPA, SAT, and ACT
     for s in all_students:
         hs = ap = gpa = composite = 0
 
         s.GPA = s.GPA or 0
+        # Why not just subtract?
+        # abs (4.0 - (s.Gpa - u.gpa)) / 4.0
         if s.GPA < u.GPA:
             gpa = (s.GPA - (s.GPA - u.GPA) / 2) / u.GPA
         else:
@@ -79,8 +82,9 @@ def similar_students(userid):
                 hs = 0.5
 
         if u.num_AP_passed is not None and s.num_AP_passed is not None:
-            if u.num_AP_passed == s.num_AP_passed:
-                ap = 1
+            max_num = Student.objects.all().aggregate(Max('num_AP_passed'))['num_AP_passed__max']
+            ap = (max_num - abs(u.num_AP_passed - s.num_AP_passed)) / max_num
+
 
         s.similar_score = 0.2*hs + 0.2*ap + 0.4*composite + 0.2*float(gpa)
 
@@ -94,9 +98,9 @@ def similar_students(userid):
 def recommend_colleges(user_id, college_name):
     college = College.objects.get(name=college_name)
     applications = college.application_set.all().filter(questionable=False)  # ??
+    
     n_pending = len(applications.filter(status='pending'))
     n_accepted = len(applications.filter(status='accepted'))
-    # n_denied = len(applications.filter(status='denied'))
     n_waitlisted = len(applications.filter(status='waitlisted'))
     n_withdrawn = len(applications.filter(status='withdrawn'))
     n_deferred = len(applications.filter(status='deferred'))

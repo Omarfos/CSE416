@@ -97,6 +97,7 @@ export default function Search(props) {
   }
 
   const handleRecommend = (query) => {
+    setLoading(true)
     console.log("query", query);
     console.log('props.user', props.user)
     const college_names = colleges.map(c => c.name)
@@ -128,9 +129,8 @@ export default function Search(props) {
         console.log('new_colleges', new_colleges)
         response.data.map((score, index) => { console.log(score, index); new_colleges[ index ].score = score })
         console.log('new_co', new_colleges)
-        setColleges(new_colleges)
+        setColleges(new_colleges, setLoading(false))
       });
-    setLoading(false);
   };
 
 
