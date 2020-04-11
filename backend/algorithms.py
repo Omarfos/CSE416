@@ -121,7 +121,7 @@ def recommend_colleges(user_id, college_name):
             student_application_status = student_application[0].status
             student_score = student.similar_score
             
-            print("STUDENT SCORE")
+            print("STUDENT SCORE") 
             print(student_score)
 
             if(student_application_status == "accepted"):
@@ -158,6 +158,44 @@ def recommend_colleges(user_id, college_name):
 
 
 def similar_hs(hs_name):
+    # 1) Deal with missing data in profile of entered high school
+    # 2) Filter out high schools that have similarity with the entered high school
+    # 3) Calculate similarity score
+    # 4) Return a sorted list of top 50% similar high school
+
+    hs = HighSchool.objects.get(name=hs_name)
+
+
+    hs_grade = 0
+    composite  = 0
+    ap = 0
+    ce = 0
+    str = 0
+    hs2_ap = 0
+    hs1_ap= 0
+
+    if (hs2_ap < hs1_ap):
+        ap = hs2_ap/hs1_ap 
+    else:
+        ap = hs1_ap/hs2_ap
+
+    # if s.SAT:
+    #         if s.SAT < u.SAT:
+    #             composite = (s.SAT - (s.SAT - u.SAT) / 2) / u.SAT
+    #         else:
+    #             composite = (u.SAT - (u.SAT - s.SAT) / 2) / s.SAT
+
+    #     if s.ACT_composite:
+    #         if s.ACT_composite < u.ACT_composite:
+    #             composite = (s.ACT_composite - (s.ACT_composite -
+    #                                             u.ACT_composite) / 2) / u.ACT_composite
+    #         else:
+    #             composite = (u.ACT_composite - (u.ACT_composite -
+    #                                             s.ACT_composite) / 2) / s.ACT_composite
+    
+    result = 0.4*hs_grade + 0.2*composite + 0.2*ap + 0.1*ce + 0.1*str
+    result = round(result*100)
+    # return result
     pass
 
 
