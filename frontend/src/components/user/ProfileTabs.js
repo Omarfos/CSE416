@@ -103,6 +103,11 @@ export default function VerticalTabs(props) {
     setValue(newValue);
   };
 
+  async function handleAddCollege(event) {
+    event.preventDefault();
+    console.log("here");
+  };
+
   return (
     <div className={classes.root}>
       <Tabs orientation="vertical" value={value} onChange={handleChange} aria-label="Vertical tabs example" className={classes.tabs}>
@@ -210,7 +215,7 @@ export default function VerticalTabs(props) {
             {!props.disable &&
               <div className = {classes.buttonDiv}>
                 <IconButton>
-                  <Icon className={classes.addButton} onclick={handle}>add_circle</Icon>
+                  <Icon className={classes.addButton} onclick={handleAddCollege}>add_circle</Icon>
                 </IconButton>
               </div>
             }

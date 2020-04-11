@@ -78,11 +78,7 @@ export default function Profile(props) {
           async function getData() {
             let object = await data.json();
             await setStudent(object["student"]);
-            await setApplication(
-              JSON.parse(object["application"]).map((c) => {
-                return c.fields;
-              })
-            );
+            setApplication(object["application"]);
             if(location.pathname.substring(9) == props.user){
               setDisable(false);
             };
