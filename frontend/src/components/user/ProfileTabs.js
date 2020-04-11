@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
     color:"green"
   },
   removeButtonDiv:{
-    marginTop:"20px",
+    width:"5%",
   },
   removeButton:{
     color:"red"
@@ -256,11 +256,13 @@ function AppliedCollege(props){
       </Typography>
       <TextField id={props.keyID+"college"} label ="College Name" disabled={props.disable} defaultValue={props.application.college} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}} fullWidth/>
       <TextField id={props.keyID+"status"} label ="Status" disabled={props.disable} defaultValue={props.application.status} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}}/>
+      <TextField id={props.keyID+"questionable"} label ="Questionable" disabled={props.disable} defaultValue={props.application.questionable} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}}/>
       {!props.disable &&
-        
+        <div className={classes.removeButtonDiv}>
           <IconButton>
             <Icon className={classes.removeButton}>remove_circle</Icon>
           </IconButton>
+        </div>
       }
     </div>
   );
