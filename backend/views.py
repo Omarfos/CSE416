@@ -92,7 +92,7 @@ def college(request, name="Stony Brook University"):
     return JsonResponse(r)
 
 
-def student_profile(request, userid):
+def get_student_profile(request, userid):
     """Return JSON of specified student 
 
     Parameters:
@@ -112,6 +112,20 @@ def student_profile(request, userid):
 
     return JsonResponse({"student": model_to_dict(s), "application": applications}, safe=False)
 
+def post_student_profile(request, userid):
+    """Update student's information
+
+    Parameters:
+        request: POST, JSON 
+    Returns:
+        404: Student not found
+        200: Success 
+    """
+    s = get_object_or_404(Student, userid=userid)
+    updated_info = json.loads(request.body)
+    Student.objects.filter(userid=userid).update(**updated_info)
+
+    return JsonResponse({"SUCCESS": "User Created"})
 
 def search(request):
     """Return colleges matching filter/search parameters of request
