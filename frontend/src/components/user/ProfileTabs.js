@@ -11,6 +11,9 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
 import colleges from "../../docs/colleges.json";
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -87,17 +90,24 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonDiv:{
     textAlign:"right",
-    margin:"20px"
+    margin:"20px",
+    float:"right"
   },
   addButton:{
     color:"green"
   },
   removeButtonDiv:{
-    width:"5%",
+    marginTop:"23px",
+    marginLeft:"20px"
   },
   removeButton:{
     color:"red"
   },
+  float:{
+    float:"right",
+    marginTop:"15px",
+    marginRight:"15px"
+  }
 }));
 
 export default function VerticalTabs(props) {
@@ -109,9 +119,9 @@ export default function VerticalTabs(props) {
     setValue(newValue);
   };
 
-  async function handleAddCollege(event) {
-    event.preventDefault();
-    console.log("here");
+  async function handleAddApplication(event) {
+    console.log("asdf");
+    
   };
 
   return (
@@ -199,7 +209,7 @@ export default function VerticalTabs(props) {
           <TextField id="major_1" label="1" disabled={props.disable} defaultValue={props.student.major_1} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}} fullWidth/>
           <TextField id="major_2" label="2" disabled={props.disable} defaultValue={props.student.major_2} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}} fullWidth/>
           <br /><br /><br />
-          <Divider variant="fullWidth"/>
+          
           
           <div>
             <Typography variant="h6" className={classes.title2}>
@@ -220,8 +230,8 @@ export default function VerticalTabs(props) {
             <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
             {!props.disable &&
               <div className = {classes.buttonDiv}>
-                <IconButton>
-                  <Icon className={classes.addButton} onclick={handleAddCollege}>add_circle</Icon>
+                <IconButton onClick={handleAddApplication}>
+                  <Icon className={classes.addButton}>add_circle</Icon>
                 </IconButton>
               </div>
             }
@@ -249,21 +259,26 @@ export default function VerticalTabs(props) {
 function AppliedCollege(props){
   const classes = useStyles();
 
+  async function handleRemoveCollege(id){
+    console.log(id);
+  }
   return(
     <div>
-      <Typography variant="h6" className={classes.title2}>
+      <Typography className={classes.title2}>
          {props.keyID+1}:
       </Typography>
       <TextField id={props.keyID+"college"} label ="College Name" disabled={props.disable} defaultValue={props.application.college} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}} fullWidth/>
       <TextField id={props.keyID+"status"} label ="Status" disabled={props.disable} defaultValue={props.application.status} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}}/>
-      <TextField id={props.keyID+"questionable"} label ="Questionable" disabled={props.disable} defaultValue={props.application.questionable} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}}/>
-      {!props.disable &&
-        <div className={classes.removeButtonDiv}>
-          <IconButton>
-            <Icon className={classes.removeButton}>remove_circle</Icon>
+      <FormControlLabel className={classes.removeButtonDiv} control={<Checkbox color="primary" disabled checked={props.application.questionable}/>} label="Questionable" labelPlacement="start"/>
+      <div className={classes.float}>
+        {!props.disable &&
+          <IconButton id={props.keyID} onClick={()=> handleRemoveCollege(props.keyID)}>
+            <DeleteIcon fontSize="large"/>
           </IconButton>
-        </div>
-      }
+        }
+      </div>
+      <br /><br />
+      <Divider variant="fullWidth"/>
     </div>
   );
 }
