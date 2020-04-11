@@ -10,7 +10,8 @@ urlpatterns = [
     path("search/", views.search, name="Search"),
     path("college/", views.college),
     path("college/<str:name>/", views.college, name="College"),
-    path("student/<slug:userid>/", views.student_profile, name="Student Profile"),
+    path("student/<slug:userid>/", views.get_student_profile),
+    path("student/<slug:userid>/edit/general", views.post_student_profile),
     path("similar/", views.get_similar_profiles),
     path("recommend/", views.recommend)
 ]
