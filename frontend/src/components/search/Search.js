@@ -113,6 +113,8 @@ export default function Search(props) {
       .then((response) => {
         let new_colleges = Object.assign([], colleges);
         response.data.map((score, index) => { console.log(score, index); new_colleges[ index ].score = score })
+        console.log("COLLEGES")
+        console.log(new_colleges)
         setColleges(new_colleges, setLoading(false))
       });
   };

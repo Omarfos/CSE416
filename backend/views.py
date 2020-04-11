@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login
 from django.db.utils import IntegrityError
 from django.db.models import Q
 from django.forms.models import model_to_dict
+#from django.core.exceptions import DoesNotExist
 
 from .models import Student, College, Application
 from .algorithms import *
@@ -114,18 +115,36 @@ def get_student_profile(request, userid):
 
 def post_student_profile(request, userid):
     """Update student's information
-
-    Parameters:
-        request: POST, JSON 
-    Returns:
-        404: Student not found
-        200: Success 
     """
     s = get_object_or_404(Student, userid=userid)
     updated_info = json.loads(request.body)
     Student.objects.filter(userid=userid).update(**updated_info)
 
-    return JsonResponse({"SUCCESS": "User Created"})
+    return JsonResponse({"SUCCESS": "User updated"})
+
+def post_student_application(request, userid):
+    """Update student's application 
+    """
+    s = get_object_or_404(Student, userid=userid)
+    old_apps = s.application_set.all()
+    new_apps = json.loads(request.body)
+    for app in new_apps:
+        college = College.objects.get(name=app["college"])
+        try:
+            a = old_apps.get(college=college)
+            a.status = app["status"]
+        except Application.DoesNotExist:
+            a = Application(student=s, college=college, status=app["status"])
+        finally:
+            questionable = verify_acceptance_decision(userid, app)
+            a.questionable = questionable
+            app["questionable"] = questionable
+
+            a.save()
+
+
+    return JsonResponse(new_apps, safe=False)
+
 
 def search(request):
     """Return colleges matching filter/search parameters of request
