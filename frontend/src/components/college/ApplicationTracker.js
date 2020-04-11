@@ -19,6 +19,7 @@ import StatusFilter from "./StatusFilter"
 import HighSchoolFilter from "./HighSchoolFilter"
 import EnhancedTable from "./ViewApplicationsTable";
 import CustomizedTables from "./StatisticsTable";
+import Switch from "@material-ui/core/Switch";
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -38,12 +39,13 @@ const useStyles = makeStyles((theme) => ({
 export default function ApplicationTracker(props) {
   const classes = useStyles();
 
-  const [ step, setStep ] = useState(2); // step 0 - enter hs, step 1 - select among simimlar, step 3 - view applications
+  const [ step, setStep ] = useState(2); // step 0 - enter hs, step 1 - select among simimlar, step 2 - view applications
   const [ schools, setSchools ] = useState([{name:"Witney High School", city:"New York City", state:"NY", sat:1200, act:30, num_students:4000, grad_rate:0.81, ap_enroll:0.3},
   {name:"Witney High School", city:"New York City", state:"NY", sat:1200, act:30, num_students:4000, grad_rate:0.81, ap_enroll:0.3},
   {name:"Witney High School", city:"New York City", state:"NY", sat:1200, act:30, num_students:4000, grad_rate:0.81, ap_enroll:0.3},
   {name:"Witney High School", city:"New York City", state:"NY", sat:1200, act:30, num_students:4000, grad_rate:0.81, ap_enroll:0.3}]); // high schools
   const [ loading, setLoading ] = useState(false);
+  const [ lax, setLax ] = useState(false);
 
   if(step==0){
     return <div>
@@ -116,6 +118,7 @@ export default function ApplicationTracker(props) {
 
     </div>
   }else{
+    // LIST OF PROFILES TAB
     return <div>
 
     <Grid
@@ -144,10 +147,25 @@ export default function ApplicationTracker(props) {
               step={ 1 }
             />
           </Grid>
+          <Grid item md={ 12 }>
+            strict
+            <Switch
+              color="primary"
+              checked={ lax }
+              onChange={ () => {
+                // navigate("lax", !lax);
+                setLax(!lax);
+              } }
+              name="checkedA"
+              inputProps={ { "aria-label": "secondary checkbox" } }
+            />
+            lax
+          </Grid>
         </Grid>
 
 
-        {/* right side - high schools */ }
+        {/* right side - high schools, CustomizedTable is Statistics*/ }
+        
       </Grid>
       <Grid item md={ 8 }>
         <EnhancedTable students={ [{userid: "bob", "high_school_name": "Whitney High School"}] } />
