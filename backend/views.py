@@ -107,7 +107,8 @@ def student_profile(request, userid):
 
     applications = []
     for app in s.application_set.all():
-        applications.append({'college':app.college.name, 'status':app.status})
+        applications.append({'college':app.college.name, 'status':app.status,
+            'questionable': app.questionable})
 
     return JsonResponse({"student": model_to_dict(s), "application": applications}, safe=False)
 
