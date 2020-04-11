@@ -158,6 +158,14 @@ def recommend_colleges(user_id, college_name):
 
 
 def similar_hs(hs_name):
+    hs_grade = 0
+    composite  = 0;
+    ap = 0;
+    ce = 0;
+    str = 0;
+    
+    result = 0.4*hs_grade + 0.2*composite + 0.2*ap + 0.1*ce + 0.1*str
+    result = round(result*100);
     pass
 
 
