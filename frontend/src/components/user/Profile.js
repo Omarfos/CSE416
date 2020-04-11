@@ -94,34 +94,28 @@ export default function Profile(props) {
       {student && (
         <div className = {classes.root}>
           <form onSubmit={handleUpdateProfile} >
-      
-          <Container className = {classes.header}>
-            <Grid container direction="row"
-                    justify="flex-start"
-                    alignItems="flex-start">
-              <Grid item className={classes.portraitDiv}>
-                <Avatar alt="student"  src={PortraitImage} className ={classes.portrait}/>
+            <Container className = {classes.header}>
+              <Grid container direction="row"
+                      justify="flex-start"
+                      alignItems="flex-start">
+                <Grid item className={classes.portraitDiv}>
+                  <Avatar alt="student"  src={PortraitImage} className ={classes.portrait}/>
+                </Grid>
+                <Grid item className={classes.information}>
+                  <Typography variant="h3" className = {classes.username}>
+                    {student.userid}
+                  </Typography>
+                  <Typography variant="h4">
+                    Residence State:  <TextField id="residence_state" disabled={disable} defaultValue={student.residence_state} variant="outlined" InputProps={{classes: {input: classes.resize}}} />
+                  </Typography> 
+                </Grid>
               </Grid>
-              <Grid item className={classes.information}>
-                <Typography variant="h3" className = {classes.username}>
-                  {student.userid}
-                </Typography>
-                <Typography variant="h4">
-                  Residence State:  <TextField id="residence_state" disabled={disable} defaultValue={student.residence_state} variant="outlined" InputProps={{classes: {input: classes.resize}}} />
-                </Typography> 
-                
-              
-              
-              </Grid>
-            </Grid>
-          </Container>
-          <Container className = {classes.body}>
-            <VerticalTabs student = {student} disable = {disable} application ={application}/>
-            
-          </Container>
-          <br /><br /><br /><br /><br /><br /><br />
-          
-      </form>
+            </Container>
+            <Container className = {classes.body}>
+              <VerticalTabs student = {student} disable = {disable} application ={application} setApplication={setApplication}/>
+            </Container>
+            <br /><br /><br /><br /><br /><br /><br />
+          </form>
         </div>
       )}
     </div>

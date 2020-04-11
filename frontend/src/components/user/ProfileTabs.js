@@ -14,6 +14,8 @@ import colleges from "../../docs/colleges.json";
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Tooltip from '@material-ui/core/Tooltip';
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -230,9 +232,11 @@ export default function VerticalTabs(props) {
             <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
             {!props.disable &&
               <div className = {classes.buttonDiv}>
-                <IconButton onClick={handleAddApplication}>
-                  <Icon className={classes.addButton}>add_circle</Icon>
-                </IconButton>
+                <Tooltip title="Add more college application">
+                  <IconButton onClick={handleAddApplication}>
+                    <Icon className={classes.addButton}>add_circle</Icon>
+                  </IconButton>
+                </Tooltip>
               </div>
             }
             <br /> <br /><br /> <br />
@@ -258,8 +262,8 @@ export default function VerticalTabs(props) {
 }
 function AppliedCollege(props){
   const classes = useStyles();
-
   async function handleRemoveCollege(id){
+
     console.log(id);
   }
   return(
@@ -269,12 +273,17 @@ function AppliedCollege(props){
       </Typography>
       <TextField id={props.keyID+"college"} label ="College Name" disabled={props.disable} defaultValue={props.application.college} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}} fullWidth/>
       <TextField id={props.keyID+"status"} label ="Status" disabled={props.disable} defaultValue={props.application.status} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}}/>
+      <Tooltip title="Delete this college application. Nothing will be saved until clicking 'update profile'">
+        
       <FormControlLabel className={classes.removeButtonDiv} control={<Checkbox color="primary" disabled checked={props.application.questionable}/>} label="Questionable" labelPlacement="start"/>
+      </Tooltip>
       <div className={classes.float}>
         {!props.disable &&
+        <Tooltip title="Delete this college application. Nothing will be saved until clicking 'update profile'">
           <IconButton id={props.keyID} onClick={()=> handleRemoveCollege(props.keyID)}>
             <DeleteIcon fontSize="large"/>
           </IconButton>
+        </Tooltip>
         }
       </div>
       <br /><br />
