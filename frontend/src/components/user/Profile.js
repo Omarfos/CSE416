@@ -61,7 +61,7 @@ export default function Profile(props) {
   const location = useLocation();
   const [student, setStudent] = useState(null);
   const [application, setApplication] = useState([]);
-  const [disable, setDisable] = useState(true);
+  const [disable, setDisable] = useState(false);
   const classes = useStyles();
 
 

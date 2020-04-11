@@ -91,7 +91,13 @@ const useStyles = makeStyles((theme) => ({
   },
   addButton:{
     color:"green"
-  }
+  },
+  removeButtonDiv:{
+    marginTop:"20px",
+  },
+  removeButton:{
+    color:"red"
+  },
 }));
 
 export default function VerticalTabs(props) {
@@ -250,7 +256,12 @@ function AppliedCollege(props){
       </Typography>
       <TextField id={props.keyID+"college"} label ="College Name" disabled={props.disable} defaultValue={props.application.college} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}} fullWidth/>
       <TextField id={props.keyID+"status"} label ="Status" disabled={props.disable} defaultValue={props.application.status} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}}/>
-      <TextField id={props.keyID+"questionable"} label ="Questionable" disabled={props.disable} defaultValue={props.application.questionable} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}}/>
+      {!props.disable &&
+        
+          <IconButton>
+            <Icon className={classes.removeButton}>remove_circle</Icon>
+          </IconButton>
+      }
     </div>
   );
 }
