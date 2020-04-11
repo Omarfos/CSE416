@@ -1,4 +1,5 @@
 import json
+import cProfile
 
 from django.http import HttpResponse, JsonResponse, HttpRequest
 from django.core import serializers
@@ -11,6 +12,7 @@ from django.forms.models import model_to_dict
 
 from .models import Student, College, Application
 from .algorithms import *
+
 
 def index(request):
     return HttpResponse("Welcome to the Bingo API")
@@ -102,13 +104,12 @@ def student_profile(request, userid):
         Student JSON
     """
     s = get_object_or_404(Student, userid=userid)
-    r = model_to_dict(s)
 
-    applications = Application.objects.filter(student = s)
-    r1 = serializers.serialize("json", applications)
-   
-    obj = {"student":r, "application":r1}
-    return JsonResponse(obj)
+    applications = []
+    for app in s.application_set.all():
+        applications.append({'college':app.college.name, 'status':app.status})
+
+    return JsonResponse({"student": model_to_dict(s), "application": applications}, safe=False)
 
 
 def search(request):

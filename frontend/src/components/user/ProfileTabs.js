@@ -8,6 +8,8 @@ import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import Icon from '@material-ui/core/Icon';
 import colleges from "../../docs/colleges.json";
 
 function TabPanel(props) {
@@ -86,6 +88,9 @@ const useStyles = makeStyles((theme) => ({
   buttonDiv:{
     textAlign:"right",
     margin:"20px"
+  },
+  addButton:{
+    color:"green"
   }
 }));
 
@@ -96,6 +101,11 @@ export default function VerticalTabs(props) {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  async function handleAddCollege(event) {
+    event.preventDefault();
+    console.log("here");
   };
 
   return (
@@ -197,7 +207,17 @@ export default function VerticalTabs(props) {
              </div> 
             }
             {props.application.length == 0  &&
-              <div>NONE</div>
+              <Typography variant="h6" className={classes.title2}>
+              NONE
+              </Typography>
+            }
+            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+            {!props.disable &&
+              <div className = {classes.buttonDiv}>
+                <IconButton>
+                  <Icon className={classes.addButton} onclick={handleAddCollege}>add_circle</Icon>
+                </IconButton>
+              </div>
             }
             <br /> <br /><br /> <br />
           </div>
@@ -212,9 +232,9 @@ export default function VerticalTabs(props) {
           change password
         </TabPanel>
         {!props.disable &&
-              <div className = {classes.buttonDiv}>
-                <Button type="submit" className={classes.button} variant="outlined">Update Profile</Button>
-              </div>
+          <div className = {classes.buttonDiv}>
+            <Button type="submit" className={classes.button} variant="outlined">Update Profile</Button>
+          </div>
         }
       </div>
     </div>
