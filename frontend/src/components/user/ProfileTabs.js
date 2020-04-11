@@ -121,9 +121,17 @@ export default function VerticalTabs(props) {
     setValue(newValue);
   };
 
-  async function handleAddApplication(event) {
-    console.log("asdf");
-    
+  async function handleRemoveCollege(id){
+    console.log(props.application);
+    console.log(id);
+    const newlist = [].concat(props.application);
+    newlist.splice(id,1);
+    props.setApplication(newlist);
+  }
+
+  async function handleAddApplication() {
+    let newApp = props.application.concat([{college: "", status: "", questionable: false}]);
+    props.setApplication(newApp);
   };
 
   return (
@@ -219,8 +227,9 @@ export default function VerticalTabs(props) {
             </Typography>
             {props.application.length > 0  &&
              <div>
+               {console.log("here")}
                 {props.application.map((app, key) => (
-                  <AppliedCollege application={app} key={key} keyID={key} disable={props.disable}/>
+                  <AppliedCollege application={app} key={key} keyID={key} disable={props.disable} handleRemoveCollege={handleRemoveCollege}/>
                 ))}
              </div> 
             }
@@ -262,17 +271,14 @@ export default function VerticalTabs(props) {
 }
 function AppliedCollege(props){
   const classes = useStyles();
-  async function handleRemoveCollege(id){
-
-    console.log(id);
-  }
+  
   return(
     <div>
       <Typography className={classes.title2}>
          {props.keyID+1}:
       </Typography>
-      <TextField id={props.keyID+"college"} label ="College Name" disabled={props.disable} defaultValue={props.application.college} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}} fullWidth/>
-      <TextField id={props.keyID+"status"} label ="Status" disabled={props.disable} defaultValue={props.application.status} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}}/>
+      <TextField id={props.keyID+"college"} label ="College Name" disabled={props.disable} value={props.application.college} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}} fullWidth/>
+      <TextField id={props.keyID+"status"} label ="Status" disabled={props.disable} value={props.application.status} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}}/>
       <Tooltip title="Delete this college application. Nothing will be saved until clicking 'update profile'">
         
       <FormControlLabel className={classes.removeButtonDiv} control={<Checkbox color="primary" disabled checked={props.application.questionable}/>} label="Questionable" labelPlacement="start"/>
@@ -280,7 +286,7 @@ function AppliedCollege(props){
       <div className={classes.float}>
         {!props.disable &&
         <Tooltip title="Delete this college application. Nothing will be saved until clicking 'update profile'">
-          <IconButton id={props.keyID} onClick={()=> handleRemoveCollege(props.keyID)}>
+          <IconButton id={props.keyID} onClick={()=> props.handleRemoveCollege(props.keyID)}>
             <DeleteIcon fontSize="large"/>
           </IconButton>
         </Tooltip>
