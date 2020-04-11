@@ -27,6 +27,12 @@ const useStyles = makeStyles({
     columnCount: 2,
     textAlign: "left",
   },
+  // trackercard: {
+  //   minWidth: 275,
+  //   // minHeight: 650,
+  //   paddingBottom: 20,
+  //   marginBottom: 20,
+  // }
 });
 
 export default function SimpleCard(props) {
@@ -81,12 +87,13 @@ export default function SimpleCard(props) {
         </CardContent>
       </Card>
       <Card className={classes.root}>
-        <CardContent>
+        <CardContent align="center">
           <Typography variant="h6" align="left" className={classes.title}>
-            Admission
+            Applications Tracker
           </Typography>
-          Admission Rate: {props.college.adm_rate}
-          <ApplicationTracker />
+          {/* Admission Rate: {props.college.adm_rate} */}
+          <ApplicationTracker/>
+          {/* <br />
           <br />
           <br />
           <br />
@@ -102,8 +109,7 @@ export default function SimpleCard(props) {
           <br />
           <br />
           <br />
-          <br />
-          <br />
+          <br /> */}
         </CardContent>
       </Card>
     </div>
