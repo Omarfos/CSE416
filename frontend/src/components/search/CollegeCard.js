@@ -305,13 +305,14 @@ export default function CollegeCard(props) {
         </Fab>
 
         <Dialog
+          maxWidth="lg"
           open={ open }
           onClose={ handleClose }
           scroll={ scroll }
           aria-labelledby="scroll-dialog-title"
           aria-describedby="scroll-dialog-description"
         >
-          <DialogTitle id="scroll-dialog-title">Subscribe</DialogTitle>
+          <DialogTitle id="scroll-dialog-title">Similar Profiles in {props.college.name}</DialogTitle>
           <DialogContent dividers={ scroll === "paper" }>
             {/* <DialogContentText
               id="scroll-dialog-description"
