@@ -55,9 +55,9 @@ export default function ApplicationTracker(props) {
   }, [ lax ]);
 
   const filterStatus = (status_array) => {
-    if (status_array.length == 0){
+    if (status_array.length == 0) {
       setCurrentStudents(students)
-    }else{
+    } else {
       setCurrentStudents(students.filter(s => status_array.includes(s.status)));
     }
   }
@@ -96,20 +96,21 @@ export default function ApplicationTracker(props) {
   }
 
   const aggregateSATmath_accepted = (items) => {
-    return 1;
-    // let new_items = Object.assign([], items);
-    // return new_items.filter(item => item.status="accepted").map(({ SAT_math }) => SAT_math).reduce((sum, i) => sum + i, 0) / items.length;
+    const accepted_students = items.filter(item => item.status == "accepted");
+    return accepted_students.filter(item => item.status == "accepted").map(({ SAT_math }) => SAT_math).reduce((sum, i) => sum + i, 0) / accepted_students.length;
   }
+
   const aggregateSATebrw_accepted = (items) => {
     return 2;
     // let new_items = Object.assign([], items);
     // return new_items.filter(status => status="accepted").map(({ SAT_EBRW }) => SAT_EBRW).reduce((sum, i) => sum + i, 0) / items.length;
   }
+
   const aggregateGPA_accepted = (items) => {
-    return 3;
-    // let new_items = Object.assign([], items);
-    // return new_items.filter(status => status="accepted").map(({ GPA }) => GPA).reduce((sum, i) => sum + parseFloat(i), 0) / items.length;
+    return items.filter(s => s.status == "accepted").map(({ GPA }) => GPA).reduce((sum, i) => sum + parseFloat(i), 0) / items.length;
   }
+
+
   const aggregateACT_accepted = (items) => {
     return 4
     // let new_items = Object.assign([], items);
@@ -240,7 +241,7 @@ export default function ApplicationTracker(props) {
           <Grid item md={ 8 }>
             <EnhancedTable students={ cur_students } />
             <br></br>
-            <CustomizedTables SAT_math={ aggregateSATmath(students) } SAT_EBRW={aggregateSATebrw(students)} GPA={aggregateGPA(students)} ACT={aggregateACT(students)} SAT_math_accepted={ aggregateSATmath_accepted(students) } SAT_EBRW_accepted={aggregateSATebrw_accepted(students)} GPA_accepted={aggregateGPA_accepted(students)} ACT_accepted={aggregateACT_accepted(students)}/>
+            <CustomizedTables SAT_math={ aggregateSATmath(students) } SAT_EBRW={ aggregateSATebrw(students) } GPA={ aggregateGPA(students) } ACT={ aggregateACT(students) } SAT_math_accepted={ aggregateSATmath_accepted(students) } SAT_EBRW_accepted={ aggregateSATebrw_accepted(students) } GPA_accepted={ aggregateGPA_accepted(students) } ACT_accepted={ aggregateACT_accepted(students) } />
           </Grid>
         </Grid>
 
