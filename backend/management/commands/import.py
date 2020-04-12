@@ -86,10 +86,11 @@ def import_students():
             s.save()
         except:
             continue
-
-        for i in range(random.randint(5, 15)):
+        
+        colleges = random.sample(list(college_list), random.randint(5,15))
+        for c in colleges:
             a = Application()
-            a.college = random.choice(college_list)
+            a.college = c
             a.status = random.choice(status)
             a.student = s
             a.questionable = True if random.random() < 0.05 else False

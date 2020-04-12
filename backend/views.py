@@ -104,8 +104,6 @@ def get_college_applications(request, name):
         s["status"] = app.status
         response.append(s)
 
-    print(response)
-    print(applications)
     return JsonResponse(response, safe=False)
 
 
@@ -260,15 +258,9 @@ def recommend(request):
     colleges = json.loads(params["colleges"])
     userid = params["userid"]
 
-    result = []
-    for college in colleges:
-        score = recommend_colleges(userid, college)
-        result.append(score)
+    scores = recommend_colleges(userid, colleges)
 
-    print(result)
-    #  college = get_object_or_404(College, name=name)
-    #  r = model_to_dict(college)
-    return JsonResponse(result, safe=False)
+    return JsonResponse(scores, safe=False)
 
 
 def get_similar_profiles(request):

@@ -25,15 +25,12 @@ def similar_students(userid):
                         u.ACT_composite = int(act)
                         break
 
-    # user specified a high school, but not test scores and gpa
-    # Aggregate with averages of classmaets
+    # aggregate with class mates
     if u.high_school_name:
-        classmates = Student.objects.filter(
-            high_school_name=u.high_school_name)
+        classmates = Student.objects.filter(high_school_name=u.high_school_name)
         if not u.SAT and not u.ACT_composite:
             u.ACT_composite = int(
-                classmates.aggregate(Avg("ACT_composite"))[
-                    "ACT_composite__avg"]
+                classmates.aggregate(Avg("ACT_composite"))["ACT_composite__avg"]
             )
             u.SAT = int(classmates.aggregate(Avg("SAT"))["SAT__avg"])
         if not u.GPA:
@@ -92,69 +89,65 @@ def similar_students(userid):
     #all_students = sorted(all_students,key=lambda s: s.similar_score)
     all_students.order_by('-similar_score')
 
-    return all_students
+    return all_students[:100]
 
 
-def recommend_colleges(user_id, college_name):
-    college = College.objects.get(name=college_name)
-    applications = college.application_set.all().filter(questionable=False)  # ??
-    
-    n_pending = len(applications.filter(status='pending'))
-    n_accepted = len(applications.filter(status='accepted'))
-    n_waitlisted = len(applications.filter(status='waitlisted'))
-    n_withdrawn = len(applications.filter(status='withdrawn'))
-    n_deferred = len(applications.filter(status='deferred'))
-
+def recommend_colleges(user_id, colleges):
+    scores = []
     students = similar_students(user_id)
 
-    sum_similary_score_pending = 0
-    sum_similarity_score_accepted = 0
-    sum_similary_score_waitlisted = 0
-    sum_similarity_score_withdrawn = 0
-    sum_similarity_score_deferred = 0
+    for college in colleges:
+        college = College.objects.get(name=college)
+        applications = college.application_set.all().filter(questionable=False)
+        
+        n_pending = len(applications.filter(status='pending'))
+        n_accepted = len(applications.filter(status='accepted'))
+        n_waitlisted = len(applications.filter(status='waitlisted'))
+        n_withdrawn = len(applications.filter(status='withdrawn'))
+        n_deferred = len(applications.filter(status='deferred'))
 
-    for student in students:
-        student_application = college.application_set.all().filter(
-            questionable=False, student=student)
-        if(len(student_application) == 1):
+        sum_similary_score_pending = 0
+        sum_similarity_score_accepted = 0
+        sum_similary_score_waitlisted = 0
+        sum_similarity_score_withdrawn = 0
+        sum_similarity_score_deferred = 0
 
-            student_application_status = student_application[0].status
-            student_score = student.similar_score
-            
-            print("STUDENT SCORE") 
-            print(student_score)
-
-            if(student_application_status == "accepted"):
-                sum_similarity_score_accepted += student_score
-            elif(student_application_status == "pending"):
-                sum_similary_score_pending += student_score
-            elif(student_application_status == "waitlisted"):
-                sum_similary_score_waitlisted += student_score
-            elif(student_application_status == "withdrawn"):
-                sum_similarity_score_withdrawn += student_score
-            elif(student_application_status == "deferred"):
-                sum_similarity_score_deferred += student_score
+        for student in students:
+            try:
+                app = student.application_set.get(college__name=college)
+                student_application_status = app.status
+                student_score = student.similar_score
                 
-    total_rank = 600
-    rank_position = college.ranking
-    college_r = 1 - (rank_position - 1) / total_rank
-    
-    
-    accepted_ratio = sum_similarity_score_accepted/n_accepted if n_accepted > 0 else 0
-    pending_ratio = sum_similary_score_pending/n_pending if n_pending > 0 else 0
-    waitlisted_ratio = sum_similary_score_waitlisted/n_waitlisted if n_waitlisted > 0 else 0
-    deferred_ratio = sum_similarity_score_deferred/n_deferred if n_deferred > 0 else 0
-    withdrawn_ratio = sum_similarity_score_withdrawn/n_withdrawn if n_withdrawn > 0 else 0
-    # print(accepted_ratio, pending_ratio, waitlisted_ratio, deferred_ratio, withdrawn_ratio)
-    # print(n_accepted, n_pending, n_waitlisted, n_deferred, n_withdrawn)
-    
-    total_similarity = 0.7*accepted_ratio + 0.1*pending_ratio + 0.1*waitlisted_ratio + 0.05*deferred_ratio + 0.05*waitlisted_ratio
-    result = 0.8*total_similarity + 0.2*college_r
-    result = round(result*100)
+                if(student_application_status == "accepted"):
+                    sum_similarity_score_accepted += student_score
+                elif(student_application_status == "pending"):
+                    sum_similary_score_pending += student_score
+                elif(student_application_status == "waitlisted"):
+                    sum_similary_score_waitlisted += student_score
+                elif(student_application_status == "withdrawn"):
+                    sum_similarity_score_withdrawn += student_score
+                elif(student_application_status == "deferred"):
+                    sum_similarity_score_deferred += student_score
 
-    # for s in students[:50]:
-    #    print(s.similar_score)
-    return result
+            except Application.DoesNotExist:
+                continue
+                    
+        total_rank = 600
+        rank_position = college.ranking
+        college_r = 1 - (rank_position - 1) / total_rank
+        
+        accepted_ratio = sum_similarity_score_accepted/n_accepted if n_accepted > 0 else 0
+        pending_ratio = sum_similary_score_pending/n_pending if n_pending > 0 else 0
+        waitlisted_ratio = sum_similary_score_waitlisted/n_waitlisted if n_waitlisted > 0 else 0
+        deferred_ratio = sum_similarity_score_deferred/n_deferred if n_deferred > 0 else 0
+        withdrawn_ratio = sum_similarity_score_withdrawn/n_withdrawn if n_withdrawn > 0 else 0
+        
+        total_similarity = 0.7*accepted_ratio + 0.1*pending_ratio + 0.1*waitlisted_ratio + 0.05*deferred_ratio + 0.05*waitlisted_ratio
+        result = 0.8*total_similarity + 0.2*college_r
+        result = round(result*100)
+        scores.append(result)
+
+    return scores
 
 
 def similar_hs(hs_name):
