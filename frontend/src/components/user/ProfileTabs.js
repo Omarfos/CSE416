@@ -15,6 +15,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Tooltip from '@material-ui/core/Tooltip';
 import MultipleSelect from "./CollegeDropdown";
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -111,6 +115,11 @@ const useStyles = makeStyles((theme) => ({
     float:"right",
     marginTop:"15px",
     marginRight:"15px"
+  },
+  statusDropdown:{
+    marginTop: "10px",
+    marginBottom: "20px",
+    marginRight: "40px",
   }
 }));
 
@@ -138,7 +147,13 @@ export default function VerticalTabs(props) {
   async function handleAddApplication() {
     let newApp = props.application.concat([{college: "", status: "", questionable: false}]);
     props.setApplication(newApp);
-  };
+  }
+
+  async function  handleStatusChange (event, index){
+    const newlist = [].concat(props.application);
+    newlist[index].status=event.target.value;
+    props.setApplication(newlist);
+  }
 
   return (
     <div className={classes.root}>
@@ -234,7 +249,7 @@ export default function VerticalTabs(props) {
             {props.application.length > 0  &&
              <div>
                 {props.application.map((app, key) => (
-                  <AppliedCollege application={app} key={key} keyID={key} disable={props.disable} handleRemoveCollege={handleRemoveCollege} handleEditCollege={handleEditCollege}/>
+                  <AppliedCollege application={app} key={key} keyID={key} disable={props.disable} handleRemoveCollege={handleRemoveCollege} handleEditCollege={handleEditCollege} handleStatusChange={handleStatusChange}/>
                 ))}
              </div> 
             }
@@ -284,9 +299,30 @@ function AppliedCollege(props){
       </Typography>
 
       <MultipleSelect application={props.application} keyID={props.keyID} disable={props.disable} handleEditCollege={props.handleEditCollege}/>
-      <TextField id={props.keyID+"status"} label ="Status" disabled={props.disable} value={props.application.status} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}}/>
+      
+      <FormControl className={classes.statusDropdown}>
+        <InputLabel shrink htmlFor="status" >
+          Status
+        </InputLabel>
+        <Select
+          value={props.application.status}
+          onChange={(e) => {props.handleStatusChange(e, props.keyID)}}
+          inputProps={{
+            name: 'status',
+            id: 'status',
+          }}
+        >
+          <MenuItem value="withdrawn">withdrawn</MenuItem>
+          <MenuItem value="pending">pending</MenuItem>
+          <MenuItem value="waitlisted">waitlisted</MenuItem>
+          <MenuItem value="denied">denied</MenuItem>
+          <MenuItem value="deferred">deferred</MenuItem>
+          <MenuItem value="accepted">accepted</MenuItem>
+
+        </Select>
+      </FormControl>
+
       <Tooltip title="Delete this college application. Nothing will be saved until clicking 'update profile'">
-        
       <FormControlLabel className={classes.removeButtonDiv} control={<Checkbox color="primary" disabled checked={props.application.questionable}/>} label="Questionable" labelPlacement="start"/>
       </Tooltip>
       <div className={classes.float}>
