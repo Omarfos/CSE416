@@ -35,15 +35,15 @@ const useStyles = makeStyles((theme) => ({
   },
   recommendation_score: {
     marginTop: "15px",
-    width:"60%",
-    display:"inline-block",
+    width: "60%",
+    display: "inline-block",
   },
   sort: {
     marginLeft: "40px"
   },
   above_cards_bar: {
     marginLeft: "60px",
-    textAlign:"left",
+    textAlign: "left",
   },
   pagination: {
     marginTop: "40px",
@@ -109,7 +109,7 @@ export default function Search(props) {
       .get("http://localhost:8000/recommend", {
         responseType: "json",
         params: {
-          userid: 'gshea',
+          userid: "amanda82",
           colleges: JSON.stringify(college_names)
         }
       })
@@ -264,7 +264,7 @@ export default function Search(props) {
               </Button>
             </Tooltip>
           </div>
-           <SortOptions id="sort" navigate={ navigate } setOrder={ setOrder } />
+          <SortOptions id="sort" navigate={ navigate } setOrder={ setOrder } />
         </div>
 
         { loading ? (

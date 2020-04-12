@@ -151,7 +151,23 @@ def recommend_colleges(user_id, colleges):
 
 
 def similar_hs(hs_name):
-    pass
+    u_hs = HighSchool.objects.get(name=hs_name)
+    res = []
+    for hs in HighSchool.objects.all():
+        score = 0
+        if u_hs.city == hs.city:
+            score = score + 1
+        if u_hs.state == hs.city:
+            score = score + 0.5
+        score += (800 - abs(u_hs.sat - hs.sat)) / 800
+        score += (800 - abs(u_hs.act - hs.act)) / 800
+        if u_hs.grad_rate and hs.grad_rate:
+            score += 1 - abs(u_hs.grad_rate - hs.grad_rate)
+        if u_hs.ap_enroll and hs.ap_enroll:
+            score += 1 - abs(u_hs.ap_enroll - hs.ap_enroll)
+        e = {"hs": hs.name,"score": score}
+        res.append(e)
+    return sorted(res, reverse=True, key=lambda x: x["score"])
 
 
 def verify_acceptance_decision(userid, app):

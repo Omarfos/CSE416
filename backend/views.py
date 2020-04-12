@@ -262,6 +262,17 @@ def recommend(request):
 
     return JsonResponse(scores, safe=False)
 
+def get_similar_hs(request):
+    params = request.GET
+    high_school = params["high_school"]
+    high_school_city = params["high_school_city"]
+    high_school_state = params["high_school_state"]
+
+    high_schools = similar_hs(high_school)
+
+    return JsonResponse(high_schools, safe=False)
+
+
 
 def get_similar_profiles(request):
     params = request.GET

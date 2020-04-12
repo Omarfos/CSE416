@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: "70%",
     right: "3%",
-    zIndex:"99"
+    zIndex: "99"
   },
 
   divider: {
@@ -101,11 +101,10 @@ export default function CollegeCard(props) {
   const [ open, setOpen ] = React.useState(false);
   const [ scroll, setScroll ] = React.useState("paper");
 
-  const handleClickOpen = scrollType => (e) => {
-    e.stopPropagation();
+  const handleClickOpen = scrollType => {
     setOpen(true);
-    handleViewSimilarProfiles(props.college.name, 'gshea')
-    setScroll(scrollType);
+    handleViewSimilarProfiles(props.college.name, 'amanda82')
+    // setScroll(scrollType);
   };
 
   const handleClose = () => {
@@ -113,6 +112,7 @@ export default function CollegeCard(props) {
   };
 
   const descriptionElementRef = React.useRef(null);
+
   React.useEffect(() => {
     if (open) {
       const { current: descriptionElement } = descriptionElementRef;
@@ -205,7 +205,7 @@ export default function CollegeCard(props) {
             </Typography>
           </Grid>
           { fab() }
-          {/* <Rating name="read-only" value={ Math.round(Math.random() * 4) + 1 } readOnly className={ classes.rating } /> */}
+          {/* <Rating name="read-only" value={ Math.round(Math.random() * 4) + 1 } readOnly className={ classes.rating } /> */ }
         </div>
       );
     } else {
@@ -255,7 +255,7 @@ export default function CollegeCard(props) {
             />
           </Grid>
           { fab() }
-          {/* <Rating name="read-only" value={ Math.round(Math.random() * 4) + 1 } readOnly className={ classes.rating } /> */}
+          {/* <Rating name="read-only" value={ Math.round(Math.random() * 4) + 1 } readOnly className={ classes.rating } /> */ }
         </div>
       );
     }
@@ -278,13 +278,14 @@ export default function CollegeCard(props) {
 
   const handleViewSimilarProfiles = (college, userid) => {
 
-    axios.get("http://localhost:8000/similar", {
+    axios.get("http://localhost:8000/similar/student", {
       responseType: "json",
       params: {
         userid: userid,
         college: college
       }
     }).then((response) => {
+      console.log('data', response)
       let r = response.data.map((s) => {
         return s.fields;
       })
@@ -295,38 +296,39 @@ export default function CollegeCard(props) {
   function fab() {
     if (props.rec_score) {
       return <div>
-        <Fab
+        <Button
           variant="extended"
           size="small"
           color="primary"
           aria-label="add"
           className={ classes.viewprofilesbutton }
-          onClick={ (e)=>handleClickOpen(e) }
+          // onClick={ (e) => handleClickOpen(e) }
+          // onClick={ (e) => { handleClickOpen(); e.stopPropagation(); } }
+          onClick={ (e) => { e.stopPropagation(); console.log('button clicked'); handleClickOpen() } }
         >
           View Similar Profiles
-        </Fab>
+        </Button>
 
         <Dialog
           maxWidth="lg"
           open={ open }
-          onClose={ handleClose }
+          // onClose={ handleClose }
           scroll={ scroll }
           aria-labelledby="scroll-dialog-title"
           aria-describedby="scroll-dialog-description"
+          onClick={ e => e.stopPropagation() }
         >
-          <DialogTitle id="scroll-dialog-title">Similar Profiles in {props.college.name}</DialogTitle>
+          <DialogTitle id="scroll-dialog-title">Similar Profiles in { props.college.name }</DialogTitle>
           <DialogContent dividers={ scroll === "paper" }>
-            
+
             <EnhancedTable students={ students } />
           </DialogContent>
           <DialogActions>
-            <Button onClick={ handleClose } color="primary">
+            <Button onClick={ (e) => { e.stopPropagation(); handleClose() } } color="primary">
               Close
             </Button>
           </DialogActions>
         </Dialog>
-
-
       </div>
     } else {
       return <div className={ classes.emptyspace }></div>
@@ -340,6 +342,7 @@ export default function CollegeCard(props) {
       <Card
         className={ classes.card }
         onClick={ () => {
+          console.log('COllege card clicked')
           history.push({
             pathname: "/college/" + props.college.name,
           })
@@ -348,7 +351,7 @@ export default function CollegeCard(props) {
       >
         <CardActionArea>
           <CardContent>
-            {/* { fab() } */}
+            {/* { fab() } */ }
             { RecommendationScore() }
 
             <Typography
