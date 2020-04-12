@@ -93,18 +93,20 @@ export default function ApplicationTracker(props) {
   }
 
   const filter = (name, value) => {
-
     console.log('name', name)
     console.log('value', value)
     setFilters({
       ...filters,
       [ name ]: value
     })
-
-    let new_students = cur_students.filter(s => filters[ "status" ].includes(s.status) && filters[ "high_schools" ].includes(s.high_school_name));
-    setCurrentStudents(new_students)
   }
 
+  useEffect(() => {
+    console.log('filters', filters)
+    let new_students = students.filter(s => filters[ "status" ].length == 0 || filters[ "status" ].includes(s.status))
+      .filter(s => filters[ "high_schools" ].length == 0 || filters[ "high_schools" ].includes(s.high_school_name));
+    setCurrentStudents(new_students)
+  }, [ filters ]);
 
 
   const filterStatus = (status_array) => {
@@ -149,7 +151,6 @@ export default function ApplicationTracker(props) {
   }
 
   const aggregateSATmath = () => {
-    console.log(students)
     return cur_students.map(({ SAT_math }) => SAT_math).reduce((sum, i) => sum + i, 0) / cur_students.length;
   }
   const aggregateSATebrw = () => {
