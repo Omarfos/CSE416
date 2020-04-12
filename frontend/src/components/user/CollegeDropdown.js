@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MultipleSelect(props) {
     const classes = useStyles();
-
+    
     const handleSelectName = (value) => {
       if(value!=null){
         props.handleEditCollege(value.name, props.keyID);

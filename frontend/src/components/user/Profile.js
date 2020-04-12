@@ -69,19 +69,18 @@ export default function Profile(props) {
 
   async function handleUpdateProfile(event) {
     event.preventDefault();
-
+    console.log(event.target.GPA.value);
     let changeStudent =
     {"id": student.id, "userid": student.userid, 
       "password": student.password,
       "residence_state": event.target.residence_state.value,
-      "high_school": 165,
       "high_school_name": event.target.high_school_name.value,
       "high_school_city":event.target.high_school_city.value,
       "high_school_state": event.target.high_school_state.value,
       "major_1": event.target.major_1.value,
       "major_2": event.target.major_2.value,
       "GPA": event.target.GPA.value,
-      "similar_score": null,
+      "similar_score": student.similar_score,
       "college_class": event.target.college_class.value,
       "ACT_english": event.target.ACT_english.value,
       "ACT_math":event.target.ACT_math.value,
