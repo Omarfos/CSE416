@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ApplicationTracker(props) {
   const classes = useStyles();
 
-  const [ step, setStep ] = useState(0); // step 0 - enter hs, step 1 - select among simimlar, step 2 - view applications
+  const [ step, setStep ] = useState(2); // step 0 - enter hs, step 1 - select among simimlar, step 2 - view applications
   const [ schools, setSchools ] = useState([ { name: "Witney High School", city: "New York City", state: "NY", sat: 1200, act: 30, num_students: 4000, grad_rate: 0.81, ap_enroll: 0.3 },
   { name: "Witney High School", city: "New York City", state: "NY", sat: 1200, act: 30, num_students: 4000, grad_rate: 0.81, ap_enroll: 0.3 },
   { name: "Witney High School", city: "New York City", state: "NY", sat: 1200, act: 30, num_students: 4000, grad_rate: 0.81, ap_enroll: 0.3 },
@@ -112,36 +112,36 @@ export default function ApplicationTracker(props) {
 
   const aggregateSATmath = () => {
     console.log(students)
-    return students.map(({ SAT_math }) => SAT_math).reduce((sum, i) => sum + i, 0) / students.length;
+    return cur_students.map(({ SAT_math }) => SAT_math).reduce((sum, i) => sum + i, 0) / cur_students.length;
   }
   const aggregateSATebrw = () => {
-    return students.map(({ SAT_EBRW }) => SAT_EBRW).reduce((sum, i) => sum + i, 0) / students.length;
+    return cur_students.map(({ SAT_EBRW }) => SAT_EBRW).reduce((sum, i) => sum + i, 0) / cur_students.length;
   }
   const aggregateGPA = () => {
-    return students.map(({ GPA }) => GPA).reduce((sum, i) => sum + parseFloat(i), 0) / students.length;
+    return cur_students.map(({ GPA }) => GPA).reduce((sum, i) => sum + parseFloat(i), 0) / cur_students.length;
   }
   const aggregateACT = () => {
-    return students.map(({ ACT_composite }) => ACT_composite).reduce((sum, i) => sum + i, 0) / students.length;
+    return cur_students.map(({ ACT_composite }) => ACT_composite).reduce((sum, i) => sum + i, 0) / cur_students.length;
   }
 
   const aggregateSATmath_accepted = () => {
-    const accepted_students = students.filter(item => item.status == "accepted");
+    const accepted_students = cur_students.filter(item => item.status == "accepted");
     return accepted_students.filter(item => item.status == "accepted").map(({ SAT_math }) => SAT_math).reduce((sum, i) => sum + i, 0) / accepted_students.length;
   }
 
   const aggregateSATebrw_accepted = () => {
-    const accepted_students = students.filter(item => item.status == "accepted");
+    const accepted_students = cur_students.filter(item => item.status == "accepted");
     return accepted_students.filter(item => item.status == "accepted").map(({ SAT_EBRW }) => SAT_EBRW).reduce((sum, i) => sum + i, 0) / accepted_students.length;
   }
 
   const aggregateGPA_accepted = () => {
-    const accepted_students = students.filter(item => item.status == "accepted");
+    const accepted_students = cur_students.filter(item => item.status == "accepted");
     return accepted_students.filter(item => item.status == "accepted").map(({ GPA }) => GPA).reduce((sum, i) => sum + parseFloat(i), 0) / accepted_students.length;
   }
 
 
   const aggregateACT_accepted = () => {
-    const accepted_students = students.filter(item => item.status == "accepted");
+    const accepted_students = cur_students.filter(item => item.status == "accepted");
     return accepted_students.filter(item => item.status == "accepted").map(({ ACT_composite }) => ACT_composite).reduce((sum, i) => sum + i, 0) / accepted_students.length;
   }
 
