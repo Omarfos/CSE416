@@ -14,7 +14,7 @@ import Chip from '@material-ui/core/Chip';
 import DoneIcon from '@material-ui/icons/Done';
 import LinearProgress from "@material-ui/core/LinearProgress";
 import HighSchoolCard from "./HighSchoolCard";
-import SliderFactory from "../search/filters/SliderFactory";
+import SliderFactory from "./SliderCollegeClass";
 import StatusFilter from "./StatusFilter"
 import HighSchoolFilter from "./HighSchoolFilter"
 import EnhancedTable from "./ViewApplicationsTable";
@@ -70,6 +70,10 @@ export default function ApplicationTracker(props) {
     } else {
       setCurrentStudents(students.filter(s => status_array.includes(s.status)));
     }
+  }
+
+  const filterCollegeClass = (college_class) => {
+    setCurrentStudents(students.filter(s => (s.college_class >= college_class[0] && (s.college_class <= college_class[1]))));
   }
 
   const filterHighSchool = (hs_array) => {
@@ -229,6 +233,7 @@ export default function ApplicationTracker(props) {
                 <SliderFactory
                   id="college_class"
                   // navigate={ navigate }
+                  filterCollegeClass={filterCollegeClass}
                   min={ 2000 }
                   max={ 2030 }
                   startText={ "College Class" }
