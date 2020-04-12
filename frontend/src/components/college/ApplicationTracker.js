@@ -54,11 +54,29 @@ export default function ApplicationTracker(props) {
     getApplications();
   }, [ lax ]);
 
+  const getHighSchools = () => {
+    const uniqueTags = [];
+    students.map(img => {
+        if (uniqueTags.indexOf(img.high_school_name) === -1) {
+            uniqueTags.push(img.high_school_name)
+        }
+    });
+    return uniqueTags;
+  }
+
   const filterStatus = (status_array) => {
     if (status_array.length == 0) {
       setCurrentStudents(students)
     } else {
       setCurrentStudents(students.filter(s => status_array.includes(s.status)));
+    }
+  }
+
+  const filterHighSchool = (hs_array) => {
+    if (hs_array.length == 0) {
+      setCurrentStudents(students)
+    } else {
+      setCurrentStudents(students.filter(s => hs_array.includes(s.high_school_name)));
     }
   }
 
@@ -81,38 +99,38 @@ export default function ApplicationTracker(props) {
   };
 
 
-  const aggregateSATmath = (items) => {
-    console.log(items)
-    return items.map(({ SAT_math }) => SAT_math).reduce((sum, i) => sum + i, 0) / items.length;
+  const aggregateSATmath = () => {
+    console.log(students)
+    return students.map(({ SAT_math }) => SAT_math).reduce((sum, i) => sum + i, 0) / students.length;
   }
-  const aggregateSATebrw = (items) => {
-    return items.map(({ SAT_EBRW }) => SAT_EBRW).reduce((sum, i) => sum + i, 0) / items.length;
+  const aggregateSATebrw = () => {
+    return students.map(({ SAT_EBRW }) => SAT_EBRW).reduce((sum, i) => sum + i, 0) / students.length;
   }
-  const aggregateGPA = (items) => {
-    return items.map(({ GPA }) => GPA).reduce((sum, i) => sum + parseFloat(i), 0) / items.length;
+  const aggregateGPA = () => {
+    return students.map(({ GPA }) => GPA).reduce((sum, i) => sum + parseFloat(i), 0) / students.length;
   }
-  const aggregateACT = (items) => {
-    return items.map(({ ACT_composite }) => ACT_composite).reduce((sum, i) => sum + i, 0) / items.length;
+  const aggregateACT = () => {
+    return students.map(({ ACT_composite }) => ACT_composite).reduce((sum, i) => sum + i, 0) / students.length;
   }
 
-  const aggregateSATmath_accepted = (items) => {
-    const accepted_students = items.filter(item => item.status == "accepted");
+  const aggregateSATmath_accepted = () => {
+    const accepted_students = students.filter(item => item.status == "accepted");
     return accepted_students.filter(item => item.status == "accepted").map(({ SAT_math }) => SAT_math).reduce((sum, i) => sum + i, 0) / accepted_students.length;
   }
 
-  const aggregateSATebrw_accepted = (items) => {
-    const accepted_students = items.filter(item => item.status == "accepted");
+  const aggregateSATebrw_accepted = () => {
+    const accepted_students = students.filter(item => item.status == "accepted");
     return accepted_students.filter(item => item.status == "accepted").map(({ SAT_EBRW }) => SAT_EBRW).reduce((sum, i) => sum + i, 0) / accepted_students.length;
   }
 
-  const aggregateGPA_accepted = (items) => {
-    const accepted_students = items.filter(item => item.status == "accepted");
+  const aggregateGPA_accepted = () => {
+    const accepted_students = students.filter(item => item.status == "accepted");
     return accepted_students.filter(item => item.status == "accepted").map(({ GPA }) => GPA).reduce((sum, i) => sum + parseFloat(i), 0) / accepted_students.length;
   }
 
 
-  const aggregateACT_accepted = (items) => {
-    const accepted_students = items.filter(item => item.status == "accepted");
+  const aggregateACT_accepted = () => {
+    const accepted_students = students.filter(item => item.status == "accepted");
     return accepted_students.filter(item => item.status == "accepted").map(({ ACT_composite }) => ACT_composite).reduce((sum, i) => sum + i, 0) / accepted_students.length;
   }
 
@@ -202,7 +220,7 @@ export default function ApplicationTracker(props) {
           <Grid item md={ 3 } className={ classes.filters }>
             <Grid container spacing={ 3 }>
               <Grid item md={ 12 }>
-                <HighSchoolFilter id="high_schools" />
+                <HighSchoolFilter id="high_schools" filterHighSchool={filterHighSchool} allHighSchools={getHighSchools()}/>
               </Grid>
               <Grid item md={ 12 }>
                 <StatusFilter id="status" filterStatus={ filterStatus } />
@@ -240,7 +258,7 @@ export default function ApplicationTracker(props) {
           <Grid item md={ 8 }>
             <EnhancedTable students={ cur_students } />
             <br></br>
-            <CustomizedTables SAT_math={ aggregateSATmath(students) } SAT_EBRW={ aggregateSATebrw(students) } GPA={ aggregateGPA(students) } ACT={ aggregateACT(students) } SAT_math_accepted={ aggregateSATmath_accepted(students) } SAT_EBRW_accepted={ aggregateSATebrw_accepted(students) } GPA_accepted={ aggregateGPA_accepted(students) } ACT_accepted={ aggregateACT_accepted(students) } />
+            <CustomizedTables SAT_math={ aggregateSATmath() } SAT_EBRW={ aggregateSATebrw() } GPA={ aggregateGPA() } ACT={ aggregateACT() } SAT_math_accepted={ aggregateSATmath_accepted() } SAT_EBRW_accepted={ aggregateSATebrw_accepted() } GPA_accepted={ aggregateGPA_accepted() } ACT_accepted={ aggregateACT_accepted() } />
           </Grid>
         </Grid>
 
