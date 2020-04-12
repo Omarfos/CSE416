@@ -124,15 +124,15 @@ export default function VerticalTabs(props) {
   };
 
   async function handleRemoveCollege(id){
-    console.log(props.application);
-    console.log(id);
     const newlist = [].concat(props.application);
     newlist.splice(id,1);
     props.setApplication(newlist);
   }
 
-  async function handleEditCollege(value){
-    console.log("edit"+value);
+  async function handleEditCollege(value, index){
+    const newlist = [].concat(props.application);
+    newlist[index].college=value;
+    props.setApplication(newlist);
   }
 
   async function handleAddApplication() {
@@ -284,8 +284,6 @@ function AppliedCollege(props){
       </Typography>
 
       <MultipleSelect application={props.application} keyID={props.keyID} disable={props.disable} handleEditCollege={props.handleEditCollege}/>
-
-      <TextField id={props.keyID+"college"} label ="College Name" disabled={props.disable} value={props.application.college} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}} fullWidth/>
       <TextField id={props.keyID+"status"} label ="Status" disabled={props.disable} value={props.application.status} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}}/>
       <Tooltip title="Delete this college application. Nothing will be saved until clicking 'update profile'">
         
