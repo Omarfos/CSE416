@@ -65,19 +65,18 @@ export default function Profile(props) {
   const [application, setApplication] = useState([]);
   const [disable, setDisable] = useState(false);
   const classes = useStyles();
-  const [newInfo, setNewInfo] = useState({})
 
 
   async function handleUpdateProfile(event) {
     event.preventDefault();
-    console.log(newInfo);
+    console.log(student);
     let url = "http://localhost:8000/student/"+student.userid + "/edit/";
     fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newInfo),
+      body: JSON.stringify(student),
     })
     .then((response) => response.json())
     .then((data) => {
@@ -130,14 +129,14 @@ export default function Profile(props) {
                   <Typography variant="h4">
                     Residence State:  
                     <TextField id="residence_state" 
-                    onChange={(e) => setNewInfo({ ...newInfo, [e.target.id]: e.target.value})}
+                    onChange={(e) => setStudent({ ...student, [e.target.id]: e.target.value})}
                     disabled={disable} defaultValue={student.residence_state} variant="outlined" InputProps={{ classes: { input: classes.resize } }} />
                   </Typography>
                 </Grid>
               </Grid>
             </Container>
             <Container className={classes.body}>
-              <VerticalTabs student={student} disable={disable} application={application} setApplication={setApplication} setNewInfo={setNewInfo} newInfo={newInfo}/>
+              <VerticalTabs student={student} setStudent={setStudent} disable={disable} application={application} setApplication={setApplication} />
             </Container>
 
             <br /><br /><br /><br /><br /><br /><br />
