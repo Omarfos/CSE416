@@ -30,7 +30,6 @@ class Student(models.Model):
     major_2 = models.CharField(max_length=100, null=True)
 
     GPA = models.DecimalField(max_digits=3, decimal_places=2, null=True)
-    similar_score = models.FloatField(null=True)
 
     college_class = models.IntegerField(null=True)
     ACT_english = models.IntegerField(null=True)
