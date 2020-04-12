@@ -34,13 +34,16 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "95px"
   },
   recommendation_score: {
-    marginTop: "15px"
+    marginTop: "15px",
+    width:"60%",
+    display:"inline-block",
   },
   sort: {
     marginLeft: "40px"
   },
   above_cards_bar: {
-    marginLeft: "60px"
+    marginLeft: "60px",
+    textAlign:"left",
   },
   pagination: {
     marginTop: "40px",
@@ -236,8 +239,8 @@ export default function Search(props) {
         {/* right side - colleges */ }
       </Grid>
       <Grid item md={ 8 }>
-        <Grid container className={ classes.above_cards_bar }>
-          <Grid item md={ 8 } className={ classes.recommendation_score } align="left">
+        <div className={ classes.above_cards_bar }>
+          <div className={ classes.recommendation_score }>
             <Tooltip title="The recommendation score is based on where students with similar profiles applied and college ranking." placement="top" arrow>
               <Button
                 variant={ RSVariant }
@@ -260,11 +263,9 @@ export default function Search(props) {
                 { RSText }
               </Button>
             </Tooltip>
-          </Grid>
-          <Grid item md={ 3 } align="right" className={ classes.sort }>
-            <SortOptions id="sort" navigate={ navigate } setOrder={ setOrder } />
-          </Grid>
-        </Grid>
+          </div>
+           <SortOptions id="sort" navigate={ navigate } setOrder={ setOrder } />
+        </div>
 
         { loading ? (
           <LinearProgress variant="query" />

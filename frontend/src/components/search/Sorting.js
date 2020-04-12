@@ -1,19 +1,12 @@
 import React, { useState, useEffect } from "react";
-
-import Grid from "@material-ui/core/Grid";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import FormGroup from "@material-ui/core/FormGroup";
 import FormControl from "@material-ui/core/FormControl";
-import FormControlLabel from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
-import Switch from "@material-ui/core/Switch";
-import Checkbox from "@material-ui/core/Checkbox";
 import { ArrowDropUp, ArrowDropDown } from "@material-ui/icons";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
+import Tooltip from '@material-ui/core/Tooltip';
 
 import queryString from "query-string";
 import { useLocation, Link, useHistory, useParams } from "react-router-dom";
@@ -23,6 +16,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
     minWidth: 120,
   },
+  divider:{
+    width:"40%",
+    textAlign:"right",
+    display:"inline-block",
+  }
 }));
 
 export default function SortOptions(props) {
@@ -36,8 +34,31 @@ export default function SortOptions(props) {
   };
 
   return (
-    <Grid container justify="flex-end" alignItems="stretch">
-      <Grid item>
+      <div className={classes.divider}>
+        <Tooltip title="sort by ascending or descending order" placement="bottom" arrow>
+          {asc ? (
+            <IconButton
+              size="medium"
+              onClick={() => {
+                setAsc(!asc);
+                props.setOrder();
+              }}
+            >
+              <ArrowDropDown fontSize="inherit" color="primary" />
+            </IconButton>
+          ) : (
+            <IconButton
+              size="medium"
+              onClick={() => {
+                setAsc(!asc);
+                props.setOrder();
+              }}
+            >
+              <ArrowDropUp fontSize="inherit" color="primary" />
+            </IconButton>
+          )}
+        </Tooltip>
+
         <FormControl className={classes.formControl}>
           <Select onChange={handleChangeSort}>
             <MenuItem value="adm_rate">Admission Rate</MenuItem>
@@ -49,28 +70,6 @@ export default function SortOptions(props) {
           </Select>
           <FormHelperText>Sort</FormHelperText>
         </FormControl>
-        {asc ? (
-          <IconButton
-            size="medium"
-            onClick={() => {
-              setAsc(!asc);
-              props.setOrder();
-            }}
-          >
-            <ArrowDropDown fontSize="inherit" color="primary" />
-          </IconButton>
-        ) : (
-          <IconButton
-            size="medium"
-            onClick={() => {
-              setAsc(!asc);
-              props.setOrder();
-            }}
-          >
-            <ArrowDropUp fontSize="inherit" color="primary" />
-          </IconButton>
-        )}
-      </Grid>
-    </Grid>
+    </div>
   );
 }

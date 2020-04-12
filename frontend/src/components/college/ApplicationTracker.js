@@ -53,14 +53,14 @@ export default function ApplicationTracker(props) {
   { name: "Witney High School", city: "New York City", state: "NY", sat: 1200, act: 30, num_students: 4000, grad_rate: 0.81, ap_enroll: 0.3 },
   { name: "Witney High School", city: "New York City", state: "NY", sat: 1200, act: 30, num_students: 4000, grad_rate: 0.81, ap_enroll: 0.3 } ]); // high schools
   const [ loading, setLoading ] = useState(false);
-  const [ lax, setLax ] = useState(false);
+  const [ lax, setLax ] = useState(true);
   const [ students, setStudents ] = useState([]);
   const [ cur_students, setCurrentStudents ] = useState([]);
 
 
   useEffect(() => {
     getApplications();
-  }, [ lax ]);
+  }, []);
 
   const getHighSchools = () => {
     const uniqueTags = [];
@@ -70,6 +70,25 @@ export default function ApplicationTracker(props) {
         }
     });
     return uniqueTags;
+  }
+
+  const filterStrict = () => {
+    console.log(lax)
+    if (lax == false) {
+      setCurrentStudents(students)
+    } else {
+      setCurrentStudents(students.filter(function(student) {
+        let res = true;
+        Object.keys(student).forEach(y => {
+            console.log('key: ' + y)
+            if (student[y] == null) {
+                res = false;
+            }
+        });
+        return res;
+      }));
+    }
+    console.log(lax)
   }
 
   const filterStatus = (status_array) => {
@@ -101,11 +120,6 @@ export default function ApplicationTracker(props) {
         console.log('response', response)
         setStudents(response.data)
         setCurrentStudents(response.data)
-        // setColleges(
-        //   response.data.map((c) => {
-        //     return c.fields;
-        //   })
-        // );
       });
     setLoading(false);
   };
@@ -227,18 +241,6 @@ export default function ApplicationTracker(props) {
                 <HighSchoolFilter id="high_schools" filterHighSchool={filterHighSchool} allHighSchools={getHighSchools()}/>
               </Grid>
 
-              <Fab
-                variant="extended"
-                size="small"
-                color="primary"
-                aria-label="add"
-                className={classes.margin}
-                onClick={() => { console.log('onClick'); setStep(0) }}
-              >
-                <AssignmentIcon />
-                Change List of Similar High Schools
-              </Fab>
-
               <Grid item md={ 12 }>
                 <StatusFilter id="status" filterStatus={ filterStatus } />
               </Grid>
@@ -261,6 +263,7 @@ export default function ApplicationTracker(props) {
                   onChange={ () => {
                     // navigate("lax", !lax);
                     setLax(!lax);
+                    filterStrict();
                   } }
                   name="checkedA"
                   inputProps={ { "aria-label": "secondary checkbox" } }

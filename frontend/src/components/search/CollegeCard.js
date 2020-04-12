@@ -54,9 +54,10 @@ const useStyles = makeStyles((theme) => ({
   },
 
   viewprofilesbutton: {
-    position: 'relative',
-    top: "5px",
-    left: "40%"
+    position: 'absolute',
+    top: "70%",
+    right: "3%",
+    zIndex:"99"
   },
 
   divider: {
@@ -65,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   emptyspace: {
-    marginTop: "34px"
+    //marginTop: "34px"
   },
 
   rating: {
@@ -79,7 +80,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CollegeCard(props) {
   const classes = useStyles();
-  const location = useLocation();
   let history = useHistory();
   // const [completed, setCompleted] = React.useState(0);
 
@@ -101,7 +101,8 @@ export default function CollegeCard(props) {
   const [ open, setOpen ] = React.useState(false);
   const [ scroll, setScroll ] = React.useState("paper");
 
-  const handleClickOpen = scrollType => () => {
+  const handleClickOpen = scrollType => (e) => {
+    e.stopPropagation();
     setOpen(true);
     handleViewSimilarProfiles(props.college.name, 'gshea')
     setScroll(scrollType);
@@ -203,7 +204,8 @@ export default function CollegeCard(props) {
               ,
             </Typography>
           </Grid>
-          <Rating name="read-only" value={ Math.round(Math.random() * 4) + 1 } readOnly className={ classes.rating } />
+          { fab() }
+          {/* <Rating name="read-only" value={ Math.round(Math.random() * 4) + 1 } readOnly className={ classes.rating } /> */}
         </div>
       );
     } else {
@@ -252,7 +254,8 @@ export default function CollegeCard(props) {
               className={ classes.hashtag }
             />
           </Grid>
-          <Rating name="read-only" value={ Math.round(Math.random() * 4) + 1 } readOnly className={ classes.rating } />
+          { fab() }
+          {/* <Rating name="read-only" value={ Math.round(Math.random() * 4) + 1 } readOnly className={ classes.rating } /> */}
         </div>
       );
     }
@@ -285,7 +288,6 @@ export default function CollegeCard(props) {
       let r = response.data.map((s) => {
         return s.fields;
       })
-      console.log('r', r)
       setStudents(r)
     });
   };
@@ -299,7 +301,7 @@ export default function CollegeCard(props) {
           color="primary"
           aria-label="add"
           className={ classes.viewprofilesbutton }
-          onClick={ handleClickOpen("paper") }
+          onClick={ (e)=>handleClickOpen(e) }
         >
           View Similar Profiles
         </Fab>
@@ -314,20 +316,7 @@ export default function CollegeCard(props) {
         >
           <DialogTitle id="scroll-dialog-title">Similar Profiles in {props.college.name}</DialogTitle>
           <DialogContent dividers={ scroll === "paper" }>
-            {/* <DialogContentText
-              id="scroll-dialog-description"
-              ref={ descriptionElementRef }
-              tabIndex={ -1 }
-            >
-              { [ ...new Array(50) ]
-                .map(
-                  () => `Cras mattis consectetur purus sit amet fermentum.
-    Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-    Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-    Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
-                )
-                .join("\n") }
-            </DialogContentText> */}
+            
             <EnhancedTable students={ students } />
           </DialogContent>
           <DialogActions>
@@ -348,11 +337,7 @@ export default function CollegeCard(props) {
 
   return (
     <div>
-
-      { fab() }
-
       <Card
-        raised
         className={ classes.card }
         onClick={ () => {
           history.push({
@@ -363,7 +348,7 @@ export default function CollegeCard(props) {
       >
         <CardActionArea>
           <CardContent>
-
+            {/* { fab() } */}
             { RecommendationScore() }
 
             <Typography
@@ -423,6 +408,7 @@ export default function CollegeCard(props) {
           </CardContent>
         </CardActionArea>
       </Card>
+      <br />
     </div>
   );
 }
