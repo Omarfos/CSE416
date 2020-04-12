@@ -9,7 +9,8 @@ from django.contrib.auth import authenticate, login
 from django.db.utils import IntegrityError
 from django.db.models import Q
 from django.forms.models import model_to_dict
-#from django.core.exceptions import DoesNotExist
+
+# from django.core.exceptions import DoesNotExist
 
 from .models import Student, College, Application
 from .algorithms import *
@@ -108,7 +109,6 @@ def get_college_applications(request, name):
     return JsonResponse(response, safe=False)
 
 
-
 def get_student_profile(request, userid):
     """Return JSON of specified student 
 
@@ -124,32 +124,41 @@ def get_student_profile(request, userid):
 
     applications = []
     for app in s.application_set.all():
-        applications.append({'college':app.college.name, 'status':app.status,
-            'questionable': app.questionable})
+        applications.append(
+            {
+                "college": app.college.name,
+                "status": app.status,
+                "questionable": app.questionable,
+            }
+        )
 
-    return JsonResponse({"student": model_to_dict(s), "application": applications}, safe=False)
+    return JsonResponse(
+        {"student": model_to_dict(s), "application": applications}, safe=False
+    )
+
 
 def post_student_profile(request, userid):
-    """Update student's information
-    """
     s = get_object_or_404(Student, userid=userid)
     updated_info = json.loads(request.body)
     Student.objects.filter(userid=userid).update(**updated_info)
 
     return JsonResponse({"SUCCESS": "User updated"})
 
+
 def post_student_application(request, userid):
-    """Update student's application 
-    """
     s = get_object_or_404(Student, userid=userid)
     s.application_set.all().delete()
     new_apps = json.loads(request.body)
 
     for app in new_apps:
         college = College.objects.get(name=app["college"])
-        a = Application(student=s, college=college, status=app["status"],
-        questionable = verify_acceptance_decision(userid, app))
-        app["questionable"] = a.questionable 
+        a = Application(
+            student=s,
+            college=college,
+            status=app["status"],
+            questionable=verify_acceptance_decision(userid, app),
+        )
+        app["questionable"] = a.questionable
         a.save()
 
     return JsonResponse(new_apps, safe=False)
@@ -235,6 +244,7 @@ def search(request):
     r = serializers.serialize("json", colleges)
     return JsonResponse(r, safe=False)
 
+
 def recommend(request):
     """Return JSON of specified college 
 
@@ -247,8 +257,8 @@ def recommend(request):
         College JSON
     """
     params = request.GET
-    colleges = json.loads(params['colleges'])
-    userid = params['userid']
+    colleges = json.loads(params["colleges"])
+    userid = params["userid"]
 
     result = []
     for college in colleges:
@@ -260,6 +270,7 @@ def recommend(request):
     #  r = model_to_dict(college)
     return JsonResponse(result, safe=False)
 
+
 def get_similar_profiles(request):
     params = request.GET
     userid = params["userid"]
@@ -267,17 +278,14 @@ def get_similar_profiles(request):
     college = College.objects.get(name=college)
 
     students = similar_students(userid)
-    
+
     results = []
     for student in students:
         student_application = college.application_set.all().filter(
-            questionable=False, student=student)
+            questionable=False, student=student
+        )
         if student_application:
             results.append(student)
 
     r = serializers.serialize("json", results)
     return JsonResponse(r, safe=False)
-
-
-
-
