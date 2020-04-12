@@ -11,6 +11,7 @@ import IconButton from "@material-ui/core/IconButton";
 import { Route, Switch, Redirect } from "react-router-dom";
 import logoImage from "../images/logo.png";
 import Divider from "@material-ui/core/Divider";
+import SearchBar from "../components/SearchBar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -74,7 +75,7 @@ export default function Navbar(props) {
     props.setUser(null);
   }
 
-  async function handleSearch(event) {
+  const handleSearch= (event)=> {
     event.preventDefault();
     history.push("/search/college?name=" + event.target.searchQuery.value);
   }
@@ -91,24 +92,7 @@ export default function Navbar(props) {
 
           {/* search on navigation bar for some pages */}
           <Route exact path={["/search/:q", "/college/:id"]}>
-            <Paper
-              component="form"
-              className={classes.search}
-              onSubmit={handleSearch}
-            >
-              <InputBase
-                name="searchQuery"
-                className={classes.input}
-                placeholder="Search for College"
-              />
-              <IconButton
-                type="submit"
-                className={classes.iconButton}
-                aria-label="search"
-              >
-                <SearchIcon />
-              </IconButton>
-            </Paper>
+            <SearchBar classes={classes} handleSearch={handleSearch} placeholder="Search for College"/>
           </Route>
 
           {props.user && (

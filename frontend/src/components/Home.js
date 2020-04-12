@@ -9,6 +9,7 @@ import Image from "../images/homeBackground.png";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import logoImage from "../images/logo.png";
+import SearchBar from "./SearchBar";
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -47,7 +48,7 @@ export default function Home() {
   let history = useHistory();
   const classes = useStyles();
 
-  async function handleSearch(event) {
+  const handleSearch=(event)=> {
     event.preventDefault();
     history.push("/search/college?name=" + event.target.searchQuery.value);
   }
@@ -62,24 +63,7 @@ export default function Home() {
         className={classes.grid}
       >
         <Grid item>
-          <Paper
-            component="form"
-            className={classes.search}
-            onSubmit={handleSearch}
-          >
-            <InputBase
-              name="searchQuery"
-              className={classes.input}
-              placeholder="Type name of college or just click search"
-            />
-            <IconButton
-              type="submit"
-              className={classes.iconButton}
-              aria-label="search"
-            >
-              <SearchIcon />
-            </IconButton>
-          </Paper>
+          <SearchBar classes={classes} handleSearch={handleSearch} placeholder="Type name of college or just click search" />
         </Grid>
         <Grid item>
           <img src={logoImage} className={classes.logo} />
