@@ -11,7 +11,6 @@ import Button from "@material-ui/core/Button";
 import Chip from "@material-ui/core/Chip";
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Fab from '@material-ui/core/Fab';
 import Rating from '@material-ui/lab/Rating';
 
 import Divider from '@material-ui/core/Divider';
@@ -57,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: "70%",
     right: "3%",
-    zIndex: "99"
+    zIndex: "99",
   },
 
   divider: {
@@ -297,14 +296,12 @@ export default function CollegeCard(props) {
     if (props.rec_score) {
       return <div>
         <Button
-          variant="extended"
           size="small"
           color="primary"
+          variant="outlined"
           aria-label="add"
           className={ classes.viewprofilesbutton }
-          // onClick={ (e) => handleClickOpen(e) }
-          // onClick={ (e) => { handleClickOpen(); e.stopPropagation(); } }
-          onClick={ (e) => { e.stopPropagation(); console.log('button clicked'); handleClickOpen() } }
+          onClick={ (e) => { e.stopPropagation(); handleClickOpen() } }
         >
           View Similar Profiles
         </Button>
