@@ -41,10 +41,10 @@ export default function CustomizedTables(props) {
   const classes = useStyles();
 
   const rows = [
-    createData('Average GPA', '3.0', '4.0'),
-    createData('Average SAT Math', props.SAT_math, 800),
-    createData('Average SAT EBRW', props.SAT_math, 800),
-    createData('Average ACT composite', 34, 36),
+    createData('Average GPA', Math.round(props.GPA*100)/100, Math.round(props.GPA_accepted*100)/100),
+    createData('Average SAT Math', Math.round(props.SAT_math), Math.round(props.SAT_math_accepted)),
+    createData('Average SAT EBRW', Math.round(props.SAT_EBRW), Math.round(props.SAT_EBRW_accepted)),
+    createData('Average ACT composite', Math.round(props.ACT), Math.round(props.ACT_accepted)),
   ];
 
 

@@ -117,6 +117,10 @@ const useStyles = makeStyles(theme => ({
     top: 20,
     width: 1
   },
+  tableRow: {
+    backgroundColor: '#FAFAFA',
+    color: "red"
+  }
 }));
 
 export default function EnhancedTable(props) {
@@ -173,13 +177,14 @@ export default function EnhancedTable(props) {
           >
             {/* { console.log('props', props) } */ }
             <EnhancedTableHead
-              classes={ classes }
+              // classes={ classes }
               numSelected={ selected.length }
               order={ order }
               orderBy={ orderBy }
               onSelectAllClick={ handleSelectAllClick }
               onRequestSort={ handleRequestSort }
               rowCount={ rows.length }
+              className={classes.tableRow}
             />
             <TableBody>
               { stableSort(rows, getComparator(order, orderBy))
@@ -197,6 +202,7 @@ export default function EnhancedTable(props) {
                       tabIndex={ -1 }
                       key={ row.name }
                       selected={ isItemSelected }
+                      className={classes.tableRow}
                     >
                       <TableCell align="right">{ row.userid }</TableCell>
                       <TableCell align="right">{ row.status }</TableCell>

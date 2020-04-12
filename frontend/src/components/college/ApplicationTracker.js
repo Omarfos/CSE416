@@ -81,8 +81,39 @@ export default function ApplicationTracker(props) {
   };
 
 
-  const aggregate = (items) => {
+  const aggregateSATmath = (items) => {
+    console.log(items)
     return items.map(({ SAT_math }) => SAT_math).reduce((sum, i) => sum + i, 0) / items.length;
+  }
+  const aggregateSATebrw = (items) => {
+    return items.map(({ SAT_EBRW }) => SAT_EBRW).reduce((sum, i) => sum + i, 0) / items.length;
+  }
+  const aggregateGPA = (items) => {
+    return items.map(({ GPA }) => GPA).reduce((sum, i) => sum + parseFloat(i), 0) / items.length;
+  }
+  const aggregateACT = (items) => {
+    return items.map(({ ACT_composite }) => ACT_composite).reduce((sum, i) => sum + i, 0) / items.length;
+  }
+
+  const aggregateSATmath_accepted = (items) => {
+    return 1;
+    // let new_items = Object.assign([], items);
+    // return new_items.filter(item => item.status="accepted").map(({ SAT_math }) => SAT_math).reduce((sum, i) => sum + i, 0) / items.length;
+  }
+  const aggregateSATebrw_accepted = (items) => {
+    return 2;
+    // let new_items = Object.assign([], items);
+    // return new_items.filter(status => status="accepted").map(({ SAT_EBRW }) => SAT_EBRW).reduce((sum, i) => sum + i, 0) / items.length;
+  }
+  const aggregateGPA_accepted = (items) => {
+    return 3;
+    // let new_items = Object.assign([], items);
+    // return new_items.filter(status => status="accepted").map(({ GPA }) => GPA).reduce((sum, i) => sum + parseFloat(i), 0) / items.length;
+  }
+  const aggregateACT_accepted = (items) => {
+    return 4
+    // let new_items = Object.assign([], items);
+    // return new_items.filter(status => status="accepted").map(({ ACT_composite }) => ACT_composite).reduce((sum, i) => sum + i, 0) / items.length;
   }
 
   if (step == 0) {
@@ -209,7 +240,7 @@ export default function ApplicationTracker(props) {
           <Grid item md={ 8 }>
             <EnhancedTable students={ cur_students } />
             <br></br>
-            <CustomizedTables SAT_math={ aggregate(students) } />
+            <CustomizedTables SAT_math={ aggregateSATmath(students) } SAT_EBRW={aggregateSATebrw(students)} GPA={aggregateGPA(students)} ACT={aggregateACT(students)} SAT_math_accepted={ aggregateSATmath_accepted(students) } SAT_EBRW_accepted={aggregateSATebrw_accepted(students)} GPA_accepted={aggregateGPA_accepted(students)} ACT_accepted={aggregateACT_accepted(students)}/>
           </Grid>
         </Grid>
 
