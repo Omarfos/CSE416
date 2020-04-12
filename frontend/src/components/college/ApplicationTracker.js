@@ -20,6 +20,7 @@ import Fab from "@material-ui/core/Fab";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import SearchBar from "../SearchBar";
+import { BorderAll } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ApplicationTracker(props) {
   const classes = useStyles();
 
-  const [ step, setStep ] = useState(0); // step 0 - enter hs, step 1 - select among simimlar, step 2 - view applications
+  const [ step, setStep ] = useState(2); // step 0 - enter hs, step 1 - select among simimlar, step 2 - view applications
   const [ schools, setSchools ] = useState([ { name: "Witney High School", city: "New York City", state: "NY", sat: 1200, act: 30, num_students: 4000, grad_rate: 0.81, ap_enroll: 0.3 },
   { name: "Witney High School", city: "New York City", state: "NY", sat: 1200, act: 30, num_students: 4000, grad_rate: 0.81, ap_enroll: 0.3 },
   { name: "Witney High School", city: "New York City", state: "NY", sat: 1200, act: 30, num_students: 4000, grad_rate: 0.81, ap_enroll: 0.3 },
@@ -57,41 +58,57 @@ export default function ApplicationTracker(props) {
   const [ students, setStudents ] = useState([]);
   const [ cur_students, setCurrentStudents ] = useState([]);
 
+  const [ filters, setFilters ] = useState({
+    status: [ "accepted", "pending", "denied", "defered", "waitlisted", "withdrawn" ],
+    high_schools: []
+  });
+
 
   useEffect(() => {
     getApplications();
   }, []);
 
+  const getApplications = () => {
+    console.log('props', props);
+    axios.get("http://localhost:8000/college/" + props.college + "/applications", {
+      responseType: "json",
+    })
+      .then((response) => {
+        console.log('response', response)
+        setStudents(response.data, () => setFilters({ ...filters, high_schools: getHighSchools() }))
+        setCurrentStudents(response.data)
+      });
+    setLoading(false);
+  };
+
   const getHighSchools = () => {
     const uniqueTags = [];
     students.map(img => {
-        if (uniqueTags.indexOf(img.high_school_name) === -1) {
-            uniqueTags.push(img.high_school_name)
-        }
+      if (uniqueTags.indexOf(img.high_school_name) === -1) {
+        uniqueTags.push(img.high_school_name)
+      }
     });
+
     return uniqueTags;
   }
 
-  const filterStrict = () => {
-    console.log(lax)
-    if (lax == false) {
-      setCurrentStudents(students)
-    } else {
-      setCurrentStudents(students.filter(function(student) {
-        let res = true;
-        Object.keys(student).forEach(y => {
-            console.log('key: ' + y)
-            if (student[y] == null) {
-                res = false;
-            }
-        });
-        return res;
-      }));
-    }
-    console.log(lax)
+  const filter = (name, value) => {
+
+    console.log('name', name)
+    console.log('value', value)
+    setFilters({
+      ...filters,
+      [ name ]: value
+    })
+
+    let new_students = cur_students.filter(s => filters[ "status" ].includes(s.status) && filters[ "high_schools" ].includes(s.high_school_name));
+    setCurrentStudents(new_students)
   }
 
+
+
   const filterStatus = (status_array) => {
+    console.log('status_array', status_array)
     if (status_array.length == 0) {
       setCurrentStudents(students)
     } else {
@@ -99,9 +116,6 @@ export default function ApplicationTracker(props) {
     }
   }
 
-  const filterCollegeClass = (college_class) => {
-    setCurrentStudents(students.filter(s => (s.college_class >= college_class[0] && (s.college_class <= college_class[1]))));
-  }
 
   const filterHighSchool = (hs_array) => {
     if (hs_array.length == 0) {
@@ -111,19 +125,28 @@ export default function ApplicationTracker(props) {
     }
   }
 
-  const getApplications = () => {
-    console.log('props', props);
-    axios.get("http://localhost:8000/college/" + props.college + "/applications", {
-      responseType: "json",
-    })
-      .then((response) => {
-        console.log('response', response)
-        setStudents(response.data)
-        setCurrentStudents(response.data)
-      });
-    setLoading(false);
-  };
+  const filterCollegeClass = (college_class) => {
+    setCurrentStudents(students.filter(s => (s.college_class >= college_class[ 0 ] && (s.college_class <= college_class[ 1 ]))));
+  }
 
+  const filterStrict = () => {
+    console.log(lax)
+    if (lax == false) {
+      setCurrentStudents(students)
+    } else {
+      setCurrentStudents(students.filter(function (student) {
+        let res = true;
+        Object.keys(student).forEach(y => {
+          console.log('key: ' + y)
+          if (student[ y ] == null) {
+            res = false;
+          }
+        });
+        return res;
+      }));
+    }
+    console.log(lax)
+  }
 
   const aggregateSATmath = () => {
     console.log(students)
@@ -161,15 +184,15 @@ export default function ApplicationTracker(props) {
   }
 
 
-  const handleSearch=(e)=>{
-    setStep(1); 
+  const handleSearch = (e) => {
+    setStep(1);
   }
 
 
   if (step == 0) {
     return <div>
-        <SearchBar classes={classes} handleSearch= {handleSearch} placeholder="Search for Similar High School" />
-      </div>
+      <SearchBar classes={ classes } handleSearch={ handleSearch } placeholder="Search for Similar High School" />
+    </div>
   } else if (step == 1) {
     return <div>
       <Grid
@@ -213,9 +236,9 @@ export default function ApplicationTracker(props) {
           <Button
             variant="contained"
             color="primary"
-            className={classes.button}
-            endIcon={<NavigateNextIcon>send</NavigateNextIcon>}
-            onClick={() => { console.log('onClick'); setStep(2) }}
+            className={ classes.button }
+            endIcon={ <NavigateNextIcon>send</NavigateNextIcon> }
+            onClick={ () => { console.log('onClick'); setStep(2) } }
           >
             Next
           </Button>
@@ -238,17 +261,17 @@ export default function ApplicationTracker(props) {
           <Grid item md={ 3 } className={ classes.filters }>
             <Grid container spacing={ 3 }>
               <Grid item md={ 12 }>
-                <HighSchoolFilter id="high_schools" filterHighSchool={filterHighSchool} allHighSchools={getHighSchools()}/>
+                <HighSchoolFilter id="high_schools" filterHighSchool={ (v) => filter("high_schools", v) } allHighSchools={ getHighSchools() } />
               </Grid>
 
               <Grid item md={ 12 }>
-                <StatusFilter id="status" filterStatus={ filterStatus } />
+                <StatusFilter id="status" filterStatus={ (v) => filter("status", v) } />
               </Grid>
               <Grid item md={ 12 }>
                 <SliderFactory
                   id="college_class"
                   // navigate={ navigate }
-                  filterCollegeClass={filterCollegeClass}
+                  filterCollegeClass={ () => filter("college_class") }
                   min={ 2000 }
                   max={ 2030 }
                   startText={ "College Class" }
