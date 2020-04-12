@@ -10,6 +10,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Paper from "@material-ui/core/Paper";
+import { useLocation, Link, useHistory, useParams } from "react-router-dom";
 
 
 function descendingComparator(a, b, orderBy) {
@@ -128,6 +129,17 @@ export default function EnhancedTable(props) {
   const [ dense, setDense ] = React.useState(false);
   const [ rowsPerPage, setRowsPerPage ] = React.useState(5);
   const rows = props.students;
+  let history = useHistory();
+
+  // click on row -> go to student profile
+  const handleClick = (event, name) => {
+    console.log("CLICKED ON ROW")
+    // console.log(event)
+    console.log(name)
+    history.push({
+      pathname: "/student/" + name,
+    })
+  };
 
 
   const handleRequestSort = (event, property) => {
@@ -191,7 +203,7 @@ export default function EnhancedTable(props) {
                   return (
                     <TableRow
                       hover
-                      // onClick={event => handleClick(event, row.name)}
+                      onClick={event => handleClick(event, row.userid)}
                       role="checkbox"
                       aria-checked={ isItemSelected }
                       tabIndex={ -1 }
