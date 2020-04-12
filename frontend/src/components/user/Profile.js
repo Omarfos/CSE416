@@ -71,6 +71,7 @@ export default function Profile(props) {
     event.preventDefault();
     console.log(student);
     let url = "http://localhost:8000/student/"+student.userid + "/edit/";
+    let url2 = "http://localhost:8000/student/"+student.userid + "/edit/application";
     fetch(url, {
       method: "POST",
       headers: {
@@ -82,13 +83,21 @@ export default function Profile(props) {
     .then((data) => {
       console.log(data);
     });
+
+    fetch(url2, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(application),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    });
 }
 
-    // url = student.userid + "/edit/application";
-    // const res1 = await axios.post(url, {
-    //   application: application,
-    // });
-    // console.log(res);
+    
   
 
   useEffect(() => {
