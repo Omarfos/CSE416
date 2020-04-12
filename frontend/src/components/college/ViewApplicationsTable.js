@@ -40,7 +40,7 @@ function stableSort(array, comparator) {
 
 const headCells = [
   { id: "userid", numeric: false, disablePadding: false, label: "User ID" }, // calories
-  { id: "APP_STATUS", numeric: false, disablePadding: false, label: "Application Status" },
+  { id: "status", numeric: false, disablePadding: false, label: "Application Status" },
   { id: "college_class", numeric: true, disablePadding: false, label: "College Class" },
   { id: "high_school_name", numeric: false, disablePadding: false, label: "High School Name" }, // fat
   { id: "high_school_state", numeric: false, disablePadding: false, label: "High School State" }, // carbs
@@ -58,18 +58,20 @@ function EnhancedTableHead(props) {
 
   return (
     <TableHead>
-      <TableRow>
+      <TableRow className={useStyles().tableRowHeader}>
         { headCells.map(headCell => (
           <TableCell
             key={ headCell.id }
             align={ headCell.numeric ? "right" : "left" }
             padding={ headCell.disablePadding ? "none" : "default" }
             sortDirection={ orderBy === headCell.id ? order : false }
+            style={{color: 'white',}}
           >
             <TableSortLabel
               active={ orderBy === headCell.id }
               direction={ orderBy === headCell.id ? order : "asc" }
               onClick={ createSortHandler(headCell.id) }
+              style={{color: 'white',}}
             >
               { headCell.label }
               { orderBy === headCell.id ? (
@@ -117,12 +119,21 @@ const useStyles = makeStyles(theme => ({
     top: 20,
     width: 1
   },
+  tableRow: {
+    backgroundColor: '#FAFAFA'
+  },
+  tableRowHeader: {
+    backgroundColor: '#3F51B5'
+  },
+  tableCellHeader: {
+    color: 'white'
+  }
 }));
 
 export default function EnhancedTable(props) {
   const classes = useStyles();
   const [ order, setOrder ] = React.useState("asc");
-  const [ orderBy, setOrderBy ] = React.useState("similarity_score");
+  const [ orderBy, setOrderBy ] = React.useState("status");
   const [ selected, setSelected ] = React.useState([]);
   const [ page, setPage ] = React.useState(0);
   const [ dense, setDense ] = React.useState(false);
@@ -171,7 +182,7 @@ export default function EnhancedTable(props) {
             size={ dense ? "small" : "medium" }
             aria-label="enhanced table"
           >
-            {/* { console.log('props', props) } */}
+            {/* { console.log('props', props) } */ }
             <EnhancedTableHead
               classes={ classes }
               numSelected={ selected.length }
@@ -180,6 +191,7 @@ export default function EnhancedTable(props) {
               onSelectAllClick={ handleSelectAllClick }
               onRequestSort={ handleRequestSort }
               rowCount={ rows.length }
+              className={classes.tableRow}
             />
             <TableBody>
               { stableSort(rows, getComparator(order, orderBy))
@@ -197,16 +209,17 @@ export default function EnhancedTable(props) {
                       tabIndex={ -1 }
                       key={ row.name }
                       selected={ isItemSelected }
+                      className={classes.tableRow}
                     >
                       <TableCell align="right">{ row.userid }</TableCell>
-                      <TableCell align="right">{ Math.round(row.APP_STATUS*100) }%</TableCell>
+                      <TableCell align="right">{ row.status }</TableCell>
+                      <TableCell align="right">{ row.college_class }</TableCell>
                       <TableCell align="right">{ row.high_school_name }</TableCell>
                       <TableCell align="right">{ row.high_school_state }</TableCell>
                       <TableCell align="right">{ row.GPA }</TableCell>
                       <TableCell align="right">{ row.SAT }</TableCell>
                       <TableCell align="right">{ row.ACT_composite }</TableCell>
                       <TableCell align="right">{ row.major_1 }</TableCell>
-                      <TableCell align="right">{ row.college_class }</TableCell>
                     </TableRow>
                   );
                 }) }

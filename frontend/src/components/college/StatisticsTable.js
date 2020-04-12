@@ -20,9 +20,9 @@ const StyledTableCell = withStyles((theme) => ({
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
-    '&:nth-of-type(odd)': {
+    // '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.background.default,
-    },
+    // },
   },
 }))(TableRow);
 
@@ -30,12 +30,6 @@ function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
 
-const rows = [
-  createData('Average GPA', '3.0', '4.0'),
-  createData('Average SAT Math', 700, 800),
-  createData('Average SAT EBRW', 700, 800),
-  createData('Average ACT composite', 34, 36),
-];
 
 const useStyles = makeStyles({
   table: {
@@ -43,12 +37,22 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CustomizedTables() {
+export default function CustomizedTables(props) {
   const classes = useStyles();
 
+  const rows = [
+    createData('Average GPA', Math.round(props.GPA*100)/100, Math.round(props.GPA_accepted*100)/100),
+    createData('Average SAT Math', Math.round(props.SAT_math), Math.round(props.SAT_math_accepted)),
+    createData('Average SAT EBRW', Math.round(props.SAT_EBRW), Math.round(props.SAT_EBRW_accepted)),
+    createData('Average ACT composite', Math.round(props.ACT), Math.round(props.ACT_accepted)),
+  ];
+
+
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
+
+    <TableContainer component={ Paper }>
+      { console.log('props', props) }
+      <Table className={ classes.table } aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell>Statistical Summary</StyledTableCell>
@@ -57,15 +61,15 @@ export default function CustomizedTables() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+          { rows.map((row) => (
+            <StyledTableRow key={ row.name }>
               <StyledTableCell component="th" scope="row">
-                {row.name}
+                { row.name }
               </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
+              <StyledTableCell align="right">{ row.calories }</StyledTableCell>
+              <StyledTableCell align="right">{ row.fat }</StyledTableCell>
             </StyledTableRow>
-          ))}
+          )) }
         </TableBody>
       </Table>
     </TableContainer>

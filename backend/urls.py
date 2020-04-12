@@ -10,6 +10,7 @@ urlpatterns = [
     path("search/", views.search, name="Search"),
     path("college/", views.college),
     path("college/<str:name>/", views.college, name="College"),
+    path("college/<str:name>/applications", views.get_college_applications),
     path("student/<slug:userid>/", views.get_student_profile),
     path("student/<slug:userid>/edit/", views.post_student_profile),
     path("student/<slug:userid>/edit/application",

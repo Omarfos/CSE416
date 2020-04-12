@@ -3,25 +3,27 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 export default function StatusFilter(props) {
-  const handleSelectStatus = (values) => {
-    props.navigate(props.id, values);
+  const handleSelectStatus = (status) => {
+    console.log('status', status)
+    props.filterStatus(status)
+    // props.navigate(props.id, values);
   };
 
   return (
     <Autocomplete
       multiple
       id="tags-outlined"
-      options={["pending", "accepted", "denied", "deferred", "waitlisted", "withdrawn"]}
-      onChange={(e, v) => handleSelectStatus(v)}
+      options={ [ "pending", "accepted", "denied", "deferred", "waitlisted", "withdrawn" ] }
+      onChange={ (e, v) => handleSelectStatus(v) }
       filterSelectedOptions
-      renderInput={(params) => (
+      renderInput={ (params) => (
         <TextField
-          {...params}
+          { ...params }
           variant="outlined"
           label="Application Status"
           placeholder="Select Status"
         />
-      )}
+      ) }
     />
   );
 }

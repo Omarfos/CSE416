@@ -93,6 +93,22 @@ def college(request, name="Stony Brook University"):
     return JsonResponse(r)
 
 
+def get_college_applications(request, name):
+    college = get_object_or_404(College, name=name)
+
+    applications = college.application_set.all()
+    response = []
+    for app in applications:
+        s = model_to_dict(app.student)
+        s["status"] = app.status
+        response.append(s)
+
+    print(response)
+    print(applications)
+    return JsonResponse(response, safe=False)
+
+
+
 def get_student_profile(request, userid):
     """Return JSON of specified student 
 
