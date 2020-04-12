@@ -142,22 +142,15 @@ def post_student_application(request, userid):
     """Update student's application 
     """
     s = get_object_or_404(Student, userid=userid)
-    old_apps = s.application_set.all()
+    s.application_set.all().delete()
     new_apps = json.loads(request.body)
+
     for app in new_apps:
         college = College.objects.get(name=app["college"])
-        try:
-            a = old_apps.get(college=college)
-            a.status = app["status"]
-        except Application.DoesNotExist:
-            a = Application(student=s, college=college, status=app["status"])
-        finally:
-            questionable = verify_acceptance_decision(userid, app)
-            a.questionable = questionable
-            app["questionable"] = questionable
-
-            a.save()
-
+        a = Application(student=s, college=college, status=app["status"],
+        questionable = verify_acceptance_decision(userid, app))
+        app["questionable"] = a.questionable 
+        a.save()
 
     return JsonResponse(new_apps, safe=False)
 
