@@ -40,7 +40,7 @@ function stableSort(array, comparator) {
 
 const headCells = [
   { id: "userid", numeric: false, disablePadding: false, label: "User ID" }, // calories
-  { id: "APP_STATUS", numeric: false, disablePadding: false, label: "Application Status" },
+  { id: "status", numeric: false, disablePadding: false, label: "Application Status" },
   { id: "college_class", numeric: true, disablePadding: false, label: "College Class" },
   { id: "high_school_name", numeric: false, disablePadding: false, label: "High School Name" }, // fat
   { id: "high_school_state", numeric: false, disablePadding: false, label: "High School State" }, // carbs
@@ -171,7 +171,7 @@ export default function EnhancedTable(props) {
             size={ dense ? "small" : "medium" }
             aria-label="enhanced table"
           >
-            {/* { console.log('props', props) } */}
+            {/* { console.log('props', props) } */ }
             <EnhancedTableHead
               classes={ classes }
               numSelected={ selected.length }
@@ -199,14 +199,14 @@ export default function EnhancedTable(props) {
                       selected={ isItemSelected }
                     >
                       <TableCell align="right">{ row.userid }</TableCell>
-                      <TableCell align="right">{ Math.round(row.APP_STATUS*100) }%</TableCell>
+                      <TableCell align="right">{ row.status }</TableCell>
+                      <TableCell align="right">{ row.college_class }</TableCell>
                       <TableCell align="right">{ row.high_school_name }</TableCell>
                       <TableCell align="right">{ row.high_school_state }</TableCell>
                       <TableCell align="right">{ row.GPA }</TableCell>
                       <TableCell align="right">{ row.SAT }</TableCell>
                       <TableCell align="right">{ row.ACT_composite }</TableCell>
                       <TableCell align="right">{ row.major_1 }</TableCell>
-                      <TableCell align="right">{ row.college_class }</TableCell>
                     </TableRow>
                   );
                 }) }

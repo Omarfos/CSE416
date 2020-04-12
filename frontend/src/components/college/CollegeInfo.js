@@ -46,9 +46,9 @@ export default function SimpleCard(props) {
 
   return (
     <div>
-      <Card className={classes.root}>
+      <Card className={ classes.root }>
         <CardContent>
-          <Typography variant="h6" align="left" className={classes.title}>
+          <Typography variant="h6" align="left" className={ classes.title }>
             Average Scores
           </Typography>
           <Grid
@@ -57,42 +57,42 @@ export default function SimpleCard(props) {
             justify="space-between"
             alignItems="flex-start"
           >
-            <Grid item xs={3}>
-              <Typography className={classes.title2}>SAT MATH</Typography>{" "}
-              {props.college.SAT_math}
+            <Grid item xs={ 3 }>
+              <Typography className={ classes.title2 }>SAT MATH</Typography>{ " " }
+              { props.college.SAT_math }
             </Grid>
-            <Grid item xs={3}>
-              <Typography className={classes.title2}>SAT EBRW</Typography>{" "}
-              {props.college.SAT_EBRW}
+            <Grid item xs={ 3 }>
+              <Typography className={ classes.title2 }>SAT EBRW</Typography>{ " " }
+              { props.college.SAT_EBRW }
             </Grid>
-            <Grid item xs={3}>
-              <Typography className={classes.title2}>ACT</Typography>{" "}
-              {props.college.ACT_composite}
+            <Grid item xs={ 3 }>
+              <Typography className={ classes.title2 }>ACT</Typography>{ " " }
+              { props.college.ACT_composite }
             </Grid>
           </Grid>
         </CardContent>
       </Card>
-      <Card className={classes.root}>
+      <Card className={ classes.root }>
         <CardContent>
-          <Typography variant="h6" align="left" className={classes.title}>
+          <Typography variant="h6" align="left" className={ classes.title }>
             Majors Offered
           </Typography>
           <div>
-            <ul className={classes.list}>
-              {majorArray &&
-                majorArray.map((major, key) => <li key={key}>{major}</li>)}
+            <ul className={ classes.list }>
+              { majorArray &&
+                majorArray.map((major, key) => <li key={ key }>{ major }</li>) }
             </ul>
-            {!majorArray && <p>No Major Information Available</p>}
+            { !majorArray && <p>No Major Information Available</p> }
           </div>
         </CardContent>
       </Card>
-      <Card className={classes.root}>
+      <Card className={ classes.root }>
         <CardContent align="center">
-          <Typography variant="h6" align="left" className={classes.title}>
+          <Typography variant="h6" align="left" className={ classes.title }>
             Applications Tracker
           </Typography>
-          {/* Admission Rate: {props.college.adm_rate} */}
-          <ApplicationTracker/>
+          {/* Admission Rate: {props.college.adm_rate} */ }
+          <ApplicationTracker college={ props.college.name } />
           {/* <br />
           <br />
           <br />
