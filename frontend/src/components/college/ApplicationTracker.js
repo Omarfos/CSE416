@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
 import axios from "axios";
-import queryString from "query-string";
-import { useLocation, Link, useHistory, useParams } from "react-router-dom";
 import { Grid, Button, Paper } from "@material-ui/core";
 import Chip from '@material-ui/core/Chip';
 import DoneIcon from '@material-ui/icons/Done';
@@ -20,6 +16,9 @@ import HighSchoolFilter from "./HighSchoolFilter"
 import EnhancedTable from "./ViewApplicationsTable";
 import CustomizedTables from "./StatisticsTable";
 import Switch from "@material-ui/core/Switch";
+import Fab from "@material-ui/core/Fab";
+import AssignmentIcon from "@material-ui/icons/Assignment";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -34,12 +33,20 @@ const useStyles = makeStyles((theme) => ({
   input: {
     width: "85%",
   },
+  margin: {
+    margin: theme.spacing(1),
+    minHeight: "55px"
+  },
+  button: {
+    margin: theme.spacing(1),
+    marginLeft: "97%"
+  }
 }));
 
 export default function ApplicationTracker(props) {
   const classes = useStyles();
 
-  const [ step, setStep ] = useState(2); // step 0 - enter hs, step 1 - select among simimlar, step 2 - view applications
+  const [ step, setStep ] = useState(0); // step 0 - enter hs, step 1 - select among simimlar, step 2 - view applications
   const [ schools, setSchools ] = useState([ { name: "Witney High School", city: "New York City", state: "NY", sat: 1200, act: 30, num_students: 4000, grad_rate: 0.81, ap_enroll: 0.3 },
   { name: "Witney High School", city: "New York City", state: "NY", sat: 1200, act: 30, num_students: 4000, grad_rate: 0.81, ap_enroll: 0.3 },
   { name: "Witney High School", city: "New York City", state: "NY", sat: 1200, act: 30, num_students: 4000, grad_rate: 0.81, ap_enroll: 0.3 },
@@ -146,7 +153,7 @@ export default function ApplicationTracker(props) {
       <Paper
         component="form"
         className={ classes.search }
-      // onSubmit={console.log("clicked")}
+        onSubmit={() => { console.log('onClick'); setStep(1); }}
       >
         <InputBase
           name="searchQuery"
@@ -203,6 +210,17 @@ export default function ApplicationTracker(props) {
               schools.map((school) => <HighSchoolCard college={ school } rec_score={ false } user={ props.user } />)
             ) }
         </Grid>
+        <Grid item md={ 8 }>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            endIcon={<NavigateNextIcon>send</NavigateNextIcon>}
+            onClick={() => { console.log('onClick'); setStep(2) }}
+          >
+            Next
+          </Button>
+        </Grid>
       </Grid>
 
 
@@ -226,6 +244,19 @@ export default function ApplicationTracker(props) {
               <Grid item md={ 12 }>
                 <HighSchoolFilter id="high_schools" filterHighSchool={filterHighSchool} allHighSchools={getHighSchools()}/>
               </Grid>
+
+              <Fab
+                variant="extended"
+                size="small"
+                color="primary"
+                aria-label="add"
+                className={classes.margin}
+                onClick={() => { console.log('onClick'); setStep(0) }}
+              >
+                <AssignmentIcon />
+                Change List of Similar High Schools
+              </Fab>
+
               <Grid item md={ 12 }>
                 <StatusFilter id="status" filterStatus={ filterStatus } />
               </Grid>
