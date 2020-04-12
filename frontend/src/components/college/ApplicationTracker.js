@@ -101,20 +101,19 @@ export default function ApplicationTracker(props) {
   }
 
   const aggregateSATebrw_accepted = (items) => {
-    return 2;
-    // let new_items = Object.assign([], items);
-    // return new_items.filter(status => status="accepted").map(({ SAT_EBRW }) => SAT_EBRW).reduce((sum, i) => sum + i, 0) / items.length;
+    const accepted_students = items.filter(item => item.status == "accepted");
+    return accepted_students.filter(item => item.status == "accepted").map(({ SAT_EBRW }) => SAT_EBRW).reduce((sum, i) => sum + i, 0) / accepted_students.length;
   }
 
   const aggregateGPA_accepted = (items) => {
-    return items.filter(s => s.status == "accepted").map(({ GPA }) => GPA).reduce((sum, i) => sum + parseFloat(i), 0) / items.length;
+    const accepted_students = items.filter(item => item.status == "accepted");
+    return accepted_students.filter(item => item.status == "accepted").map(({ GPA }) => GPA).reduce((sum, i) => sum + parseFloat(i), 0) / accepted_students.length;
   }
 
 
   const aggregateACT_accepted = (items) => {
-    return 4
-    // let new_items = Object.assign([], items);
-    // return new_items.filter(status => status="accepted").map(({ ACT_composite }) => ACT_composite).reduce((sum, i) => sum + i, 0) / items.length;
+    const accepted_students = items.filter(item => item.status == "accepted");
+    return accepted_students.filter(item => item.status == "accepted").map(({ ACT_composite }) => ACT_composite).reduce((sum, i) => sum + i, 0) / accepted_students.length;
   }
 
   if (step == 0) {

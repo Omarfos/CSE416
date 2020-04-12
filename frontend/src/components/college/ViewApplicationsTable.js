@@ -58,18 +58,20 @@ function EnhancedTableHead(props) {
 
   return (
     <TableHead>
-      <TableRow>
+      <TableRow className={useStyles().tableRowHeader}>
         { headCells.map(headCell => (
           <TableCell
             key={ headCell.id }
             align={ headCell.numeric ? "right" : "left" }
             padding={ headCell.disablePadding ? "none" : "default" }
             sortDirection={ orderBy === headCell.id ? order : false }
+            style={{color: 'white',}}
           >
             <TableSortLabel
               active={ orderBy === headCell.id }
               direction={ orderBy === headCell.id ? order : "asc" }
               onClick={ createSortHandler(headCell.id) }
+              style={{color: 'white',}}
             >
               { headCell.label }
               { orderBy === headCell.id ? (
@@ -118,15 +120,20 @@ const useStyles = makeStyles(theme => ({
     width: 1
   },
   tableRow: {
-    backgroundColor: '#FAFAFA',
-    color: "red"
+    backgroundColor: '#FAFAFA'
+  },
+  tableRowHeader: {
+    backgroundColor: '#3F51B5'
+  },
+  tableCellHeader: {
+    color: 'white'
   }
 }));
 
 export default function EnhancedTable(props) {
   const classes = useStyles();
   const [ order, setOrder ] = React.useState("asc");
-  const [ orderBy, setOrderBy ] = React.useState("similarity_score");
+  const [ orderBy, setOrderBy ] = React.useState("status");
   const [ selected, setSelected ] = React.useState([]);
   const [ page, setPage ] = React.useState(0);
   const [ dense, setDense ] = React.useState(false);
@@ -177,7 +184,7 @@ export default function EnhancedTable(props) {
           >
             {/* { console.log('props', props) } */ }
             <EnhancedTableHead
-              // classes={ classes }
+              classes={ classes }
               numSelected={ selected.length }
               order={ order }
               orderBy={ orderBy }
