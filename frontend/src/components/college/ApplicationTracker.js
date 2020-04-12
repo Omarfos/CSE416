@@ -55,9 +55,11 @@ export default function ApplicationTracker(props) {
   }, [ lax ]);
 
   const filterStatus = (status_array) => {
-    if (status_array.length == 0)
+    if (status_array.length == 0){
       setCurrentStudents(students)
-    setCurrentStudents(students.filter(s => status_array.includes(s.status)));
+    }else{
+      setCurrentStudents(students.filter(s => status_array.includes(s.status)));
+    }
   }
 
   const getApplications = () => {
