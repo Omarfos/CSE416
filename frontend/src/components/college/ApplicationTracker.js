@@ -72,6 +72,14 @@ export default function ApplicationTracker(props) {
     return uniqueTags;
   }
 
+  const filterStrict = () => {
+    if (lax == true) {
+      setCurrentStudents(students)
+    } else {
+      setCurrentStudents(students.filter(s => s.college_class != null));
+    }
+  }
+
   const filterStatus = (status_array) => {
     if (status_array.length == 0) {
       setCurrentStudents(students)
@@ -261,6 +269,7 @@ export default function ApplicationTracker(props) {
                   onChange={ () => {
                     // navigate("lax", !lax);
                     setLax(!lax);
+                    filterStrict();
                   } }
                   name="checkedA"
                   inputProps={ { "aria-label": "secondary checkbox" } }
