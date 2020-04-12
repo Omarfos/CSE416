@@ -65,54 +65,32 @@ export default function Profile(props) {
   const [application, setApplication] = useState([]);
   const [disable, setDisable] = useState(false);
   const classes = useStyles();
+  const [newInfo, setNewInfo] = useState({})
 
 
   async function handleUpdateProfile(event) {
-    event.persist()
-    console.log(event)
-    console.log('updating profile')
     event.preventDefault();
-    console.log(event.target.value);
-    let changeStudent =
-    {
-      "id": student.id, "userid": student.userid,
-      "password": student.password,
-      "residence_state": event.target.residence_state.value,
-      "high_school_name": event.target.high_school_name.value,
-      "high_school_city": event.target.high_school_city.value,
-      "high_school_state": event.target.high_school_state.value,
-      "major_1": event.target.major_1.value,
-      "major_2": event.target.major_2.value,
-      "GPA": event.target.GPA.value,
-      "similar_score": student.similar_score,
-      "college_class": event.target.college_class.value,
-      "ACT_english": event.target.ACT_english.value,
-      "ACT_math": event.target.ACT_math.value,
-      "ACT_reading": event.target.ACT_reading.value,
-      "ACT_science": event.target.ACT_science.value,
-      "ACT_composite": event.target.ACT_composite.value,
-      "SAT": event.target.SAT.value,
-      "SAT_math": event.target.SAT_math.value,
-      "SAT_EBRW": event.target.SAT_EBRW.value,
-      "SAT_literature": event.target.SAT_literature.value,
-      "SAT_US_hist": event.target.SAT_US_hist.value,
-      "SAT_world_hist": event.target.SAT_world_hist.value,
-      "SAT_math_I": event.target.SAT_math_I.value,
-      "SAT_math_II": event.target.SAT_math_II.value,
-      "SAT_eco_bio": event.target.SAT_eco_bio.value,
-      "SAT_mol_bio": event.target.SAT_mol_bio.value,
-      "SAT_chemistry": event.target.SAT_chemistry.value,
-      "SAT_physics": event.target.SAT_physics.value,
-      "num_AP_passed": event.target.num_AP_passed.value
-    }
-
-    let url = student.userid + "/edit/general";
-    const res = await axios.post(url, {
-      student: changeStudent,
-      application: application
+    console.log(newInfo);
+    let url = "http://localhost:8000/student/"+student.userid + "/edit/";
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newInfo),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
     });
-    console.log(res);
-  }
+}
+
+    // url = student.userid + "/edit/application";
+    // const res1 = await axios.post(url, {
+    //   application: application,
+    // });
+    // console.log(res);
+  
 
   useEffect(() => {
     let url = "http://localhost:8000" + location.pathname; //    /student/q
@@ -150,13 +128,16 @@ export default function Profile(props) {
                     {student.userid}
                   </Typography>
                   <Typography variant="h4">
-                    Residence State:  <TextField id="residence_state" disabled={disable} defaultValue={student.residence_state} variant="outlined" InputProps={{ classes: { input: classes.resize } }} />
+                    Residence State:  
+                    <TextField id="residence_state" 
+                    onChange={(e) => setNewInfo({ ...newInfo, [e.target.id]: e.target.value})}
+                    disabled={disable} defaultValue={student.residence_state} variant="outlined" InputProps={{ classes: { input: classes.resize } }} />
                   </Typography>
                 </Grid>
               </Grid>
             </Container>
             <Container className={classes.body}>
-              <VerticalTabs student={student} disable={disable} application={application} setApplication={setApplication} />
+              <VerticalTabs student={student} disable={disable} application={application} setApplication={setApplication} setNewInfo={setNewInfo} newInfo={newInfo}/>
             </Container>
 
             <br /><br /><br /><br /><br /><br /><br />

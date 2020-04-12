@@ -127,11 +127,6 @@ const useStyles = makeStyles((theme) => ({
 export default function VerticalTabs(props) {
   const classes = useStyles();
   const [value, setValue] = useState(0);
-  const [info, setInfo] = useState({})
-
-  useEffect(() => {
-    console.log('object', info)
-  }, [info])
 
 
   const handleChange = (event, newValue) => {
@@ -175,48 +170,77 @@ export default function VerticalTabs(props) {
             ACT Scores
           </Typography>
           <TextField id="ACT_composite" label="ACT Composite"
-            onChange={(e) => setInfo({ ...info, [e.target.id]: Number(e.target.value) })}
-
-
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: Number(e.target.value) })}
             disabled={props.disable} defaultValue={props.student.ACT_composite} className={classes.textfield} type="number" variant="outlined" InputProps={{ classes: { input: classes.resize } }} />
           <br />
           <TextField id="ACT_english" label="ACT English"
-            onChange={(e) => setInfo({ ...info, [e.target.id]: Number(e.target.value) })}
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: Number(e.target.value) })}
             disabled={props.disable} defaultValue={props.student.ACT_english} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
-          <TextField id="ACT_math" label="ACT MATH" disabled={props.disable} defaultValue={props.student.ACT_math} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
-          <TextField id="ACT_reading" label="ACT Reading" disabled={props.disable} defaultValue={props.student.ACT_reading} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
-          <TextField id="ACT_science" label="ACT Science" disabled={props.disable} defaultValue={props.student.ACT_science} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+          <TextField id="ACT_math" label="ACT MATH" 
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: Number(e.target.value) })}
+            disabled={props.disable} defaultValue={props.student.ACT_math} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+          <TextField id="ACT_reading" label="ACT Reading" 
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: Number(e.target.value) })}
+            disabled={props.disable} defaultValue={props.student.ACT_reading} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+          <TextField id="ACT_science" label="ACT Science" 
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: Number(e.target.value) })}
+            disabled={props.disable} defaultValue={props.student.ACT_science} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
 
           <br /> <br /> <br />
           <Divider variant="fullWidth" />
           <Typography variant="h6" className={classes.title}>
             SAT Scores
           </Typography>
-          <TextField id="SAT" label="SAT" disabled={props.disable} defaultValue={props.student.SAT} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+          <TextField id="SAT" label="SAT" 
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: Number(e.target.value) })}
+            disabled={props.disable} defaultValue={props.student.SAT} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
           <br />
-          <TextField id="SAT_math" label="SAT MATH" disabled={props.disable} defaultValue={props.student.SAT_math} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
-          <TextField id="SAT_EBRW" label="SAT EBRW" disabled={props.disable} defaultValue={props.student.SAT_EBRW} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+          <TextField id="SAT_math" label="SAT MATH" 
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: Number(e.target.value) })}
+            disabled={props.disable} defaultValue={props.student.SAT_math} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+          <TextField id="SAT_EBRW" label="SAT EBRW" 
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: Number(e.target.value) })}
+            disabled={props.disable} defaultValue={props.student.SAT_EBRW} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
 
           <Typography variant="h6" className={classes.title}>
             SAT Subject Test
           </Typography>
-
-          <TextField id="SAT_literature" label="Literature" disabled={props.disable} defaultValue={props.student.SAT_literature} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
-          <TextField id="SAT_US_hist" label="US History" disabled={props.disable} defaultValue={props.student.SAT_US_hist} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
-          <TextField id="SAT_world_hist" label="World History" disabled={props.disable} defaultValue={props.student.SAT_world_hist} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
-          <TextField id="SAT_math_I" label="Math Subject I" disabled={props.disable} defaultValue={props.student.SAT_math_I} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
-          <TextField id="SAT_math_II" label="Math Subject II" disabled={props.disable} defaultValue={props.student.SAT_math_II} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
-          <TextField id="SAT_eco_bio" label="Economic" disabled={props.disable} defaultValue={props.student.SAT_eco_bio} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
-          <TextField id="SAT_mol_bio" label="Biology" disabled={props.disable} defaultValue={props.student.SAT_mol_bio} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
-          <TextField id="SAT_chemistry" label="Chemistry" disabled={props.disable} defaultValue={props.student.SAT_chemistry} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
-          <TextField id="SAT_physics" label="Physics" disabled={props.disable} defaultValue={props.student.SAT_physics} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+          <TextField id="SAT_literature" label="Literature" 
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: Number(e.target.value) })}
+            disabled={props.disable} defaultValue={props.student.SAT_literature} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+          <TextField id="SAT_US_hist" label="US History" 
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: Number(e.target.value) })}
+            disabled={props.disable} defaultValue={props.student.SAT_US_hist} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+          <TextField id="SAT_world_hist" label="World History" 
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: Number(e.target.value) })}
+            disabled={props.disable} defaultValue={props.student.SAT_world_hist} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+          <TextField id="SAT_math_I" label="Math Subject I" 
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: Number(e.target.value) })}
+            disabled={props.disable} defaultValue={props.student.SAT_math_I} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+          <TextField id="SAT_math_II" label="Math Subject II" 
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: Number(e.target.value) })}
+            disabled={props.disable} defaultValue={props.student.SAT_math_II} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+          <TextField id="SAT_eco_bio" label="Economic" 
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: Number(e.target.value) })}
+            disabled={props.disable} defaultValue={props.student.SAT_eco_bio} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+          <TextField id="SAT_mol_bio" label="Biology" 
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: Number(e.target.value) })}
+            disabled={props.disable} defaultValue={props.student.SAT_mol_bio} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+          <TextField id="SAT_chemistry" label="Chemistry" 
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: Number(e.target.value) })}
+            disabled={props.disable} defaultValue={props.student.SAT_chemistry} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+          <TextField id="SAT_physics" label="Physics" 
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: Number(e.target.value) })}
+            disabled={props.disable} defaultValue={props.student.SAT_physics} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
 
           <br /> <br /> <br />
           <Divider variant="fullWidth" />
           <Typography variant="h6" className={classes.title}>
             AP
           </Typography>
-          <TextField id="num_AP_passed" label="AP exams passed" disabled={props.disable} defaultValue={props.student.num_AP_passed} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+          <TextField id="num_AP_passed" label="AP exams passed" 
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: Number(e.target.value) })}
+            disabled={props.disable} defaultValue={props.student.num_AP_passed} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
           <br /><br /> <br />
         </TabPanel>
 
@@ -224,33 +248,47 @@ export default function VerticalTabs(props) {
           <Typography variant="h6" className={classes.title2}>
             High School Name:
           </Typography>
-          <TextField id="high_school_name" disabled={props.disable} defaultValue={props.student.high_school_name} variant="outlined" fullWidth className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+          <TextField id="high_school_name" disabled={props.disable} 
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: e.target.value})}
+            defaultValue={props.student.high_school_name} variant="outlined" fullWidth className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
           <br /><br />
           <Typography variant="h6" className={classes.title2}>
             Location:
           </Typography>
-          <TextField id="high_school_city" label="City" disabled={props.disable} defaultValue={props.student.high_school_city} variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
-          <TextField id="high_school_state" label="State" disabled={props.disable} defaultValue={props.student.high_school_state} variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+          <TextField id="high_school_city" label="City" 
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: e.target.value})}
+            disabled={props.disable} defaultValue={props.student.high_school_city} variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+          <TextField id="high_school_state" label="State" 
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: e.target.value})}
+            disabled={props.disable} defaultValue={props.student.high_school_state} variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
           <br /><br />
 
           <Typography variant="h6" className={classes.title2}>
             GPA:
           </Typography>
-          <TextField id="GPA" disabled={props.disable} defaultValue={props.student.GPA} variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+          <TextField id="GPA" 
+          onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: e.target.value})}
+          disabled={props.disable} defaultValue={props.student.GPA} variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
         </TabPanel>
 
         <TabPanel value={value} index={2}>
           <Typography variant="h6" className={classes.title2}>
             Class of:
           </Typography>
-          <TextField id="college_class" disabled={props.disable} defaultValue={props.student.college_class} variant="outlined" type="number" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+          <TextField id="college_class" 
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: Number(e.target.value)})}
+            disabled={props.disable} defaultValue={props.student.college_class} variant="outlined" type="number" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
           <br /><br /><br />
 
           <Typography variant="h6" className={classes.title2}>
             Interested Majors:
           </Typography>
-          <TextField id="major_1" label="1" disabled={props.disable} defaultValue={props.student.major_1} variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} fullWidth />
-          <TextField id="major_2" label="2" disabled={props.disable} defaultValue={props.student.major_2} variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} fullWidth />
+          <TextField id="major_1" label="1" 
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: e.target.value})}
+            disabled={props.disable} defaultValue={props.student.major_1} variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} fullWidth />
+          <TextField id="major_2" label="2" 
+            onChange={(e) => props.setNewInfo({ ...props.newInfo, [e.target.id]: e.target.value})}
+            disabled={props.disable} defaultValue={props.student.major_2} variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} fullWidth />
           <br /><br /><br />
 
 
