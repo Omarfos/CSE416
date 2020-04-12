@@ -1,0 +1,311 @@
+[
+    {
+        "name": "American University"
+    },
+    {
+        "name": "Barnard College"
+    },
+    {
+        "name": "Berry College"
+    },
+    {
+        "name": "California State University, East Bay"
+    },
+    {
+        "name": "California State University, Fresno"
+    },
+    {
+        "name": "California State University, Monterey Bay"
+    },
+    {
+        "name": "Campbell University"
+    },
+    {
+        "name": "Carnegie Mellon University"
+    },
+    {
+        "name": "Central Connecticut State University"
+    },
+    {
+        "name": "Centre College"
+    },
+    {
+        "name": "Clarkson University"
+    },
+    {
+        "name": "Colgate University"
+    },
+    {
+        "name": "Colorado College"
+    },
+    {
+        "name": "DePaul University"
+    },
+    {
+        "name": "DePauw University"
+    },
+    {
+        "name": "Drake University"
+    },
+    {
+        "name": "Drexel University"
+    },
+    {
+        "name": "Eastern Illinois University"
+    },
+    {
+        "name": "Eastern Washington University"
+    },
+    {
+        "name": "Florida Gulf Coast University"
+    },
+    {
+        "name": "Fordham University"
+    },
+    {
+        "name": "Franklin & Marshall College"
+    },
+    {
+        "name": "Gannon University"
+    },
+    {
+        "name": "Gettysburg College"
+    },
+    {
+        "name": "Gordon College"
+    },
+    {
+        "name": "Hendrix College"
+    },
+    {
+        "name": "Hope College"
+    },
+    {
+        "name": "Idaho State University"
+    },
+    {
+        "name": "Illinois College"
+    },
+    {
+        "name": "Indiana University Bloomington"
+    },
+    {
+        "name": "Iona College"
+    },
+    {
+        "name": "John Carroll University"
+    },
+    {
+        "name": "Kalamazoo College"
+    },
+    {
+        "name": "Kennesaw State University"
+    },
+    {
+        "name": "Lawrence Technological University"
+    },
+    {
+        "name": "Manhattan College"
+    },
+    {
+        "name": "Massachusetts Institute of Technology"
+    },
+    {
+        "name": "Mercer University"
+    },
+    {
+        "name": "Merrimack College"
+    },
+    {
+        "name": "Mississippi State University"
+    },
+    {
+        "name": "Missouri University of Science and Technology"
+    },
+    {
+        "name": "Moravian College"
+    },
+    {
+        "name": "Mount Holyoke College"
+    },
+    {
+        "name": "New Jersey Institute of Technology"
+    },
+    {
+        "name": "New York University"
+    },
+    {
+        "name": "North Park University"
+    },
+    {
+        "name": "Northwestern University"
+    },
+    {
+        "name": "Nova Southeastern University"
+    },
+    {
+        "name": "Pomona College"
+    },
+    {
+        "name": "Princeton University"
+    },
+    {
+        "name": "Providence College"
+    },
+    {
+        "name": "Reed College"
+    },
+    {
+        "name": "Rice University"
+    },
+    {
+        "name": "Rider University"
+    },
+    {
+        "name": "Rochester Institute of Technology"
+    },
+    {
+        "name": "Roger Williams University"
+    },
+    {
+        "name": "SUNY College of Environmental Science and Forestry"
+    },
+    {
+        "name": "Saint Louis University"
+    },
+    {
+        "name": "Salve Regina University"
+    },
+    {
+        "name": "Samford University"
+    },
+    {
+        "name": "San Diego State University"
+    },
+    {
+        "name": "School of the Art Institute of Chicago"
+    },
+    {
+        "name": "Siena College"
+    },
+    {
+        "name": "Smith College"
+    },
+    {
+        "name": "St Bonaventure University"
+    },
+    {
+        "name": "Stevenson University"
+    },
+    {
+        "name": "Stony Brook University"
+    },
+    {
+        "name": "Suffolk University"
+    },
+    {
+        "name": "Temple University"
+    },
+    {
+        "name": "Texas Christian University"
+    },
+    {
+        "name": "Texas Tech University"
+    },
+    {
+        "name": "The College of St Scholastica"
+    },
+    {
+        "name": "The College of Wooster"
+    },
+    {
+        "name": "Transylvania University"
+    },
+    {
+        "name": "University of Alabama"
+    },
+    {
+        "name": "University of Alabama at Birmingham"
+    },
+    {
+        "name": "University of Arizona"
+    },
+    {
+        "name": "University of Arkansas"
+    },
+    {
+        "name": "University of California, Davis"
+    },
+    {
+        "name": "University of California, Santa Barbara"
+    },
+    {
+        "name": "University of California, Santa Cruz"
+    },
+    {
+        "name": "University of Central Florida"
+    },
+    {
+        "name": "University of Delaware"
+    },
+    {
+        "name": "University of Georgia"
+    },
+    {
+        "name": "University of Hartford"
+    },
+    {
+        "name": "University of Houston"
+    },
+    {
+        "name": "University of Illinois at Chicago"
+    },
+    {
+        "name": "University of Kentucky"
+    },
+    {
+        "name": "University of Maine"
+    },
+    {
+        "name": "University of Massachusetts Amherst"
+    },
+    {
+        "name": "University of Montana"
+    },
+    {
+        "name": "University of Nevada},{ Las Vegas"
+    },
+    {
+        "name": "University of Nevada},{ Reno"
+    },
+    {
+        "name": "University of Richmond"
+    },
+    {
+        "name": "University of San Diego"
+    },
+    {
+        "name": "University of Utah"
+    },
+    {
+        "name": "Utah State University"
+    },
+    {
+        "name": "Vassar College"
+    },
+    {
+        "name": "Wagner College"
+    },
+    {
+        "name": "Washington & Jefferson College"
+    },
+    {
+        "name": "Westmont College"
+    },
+    {
+        "name": "William Jewell College"
+    },
+    {
+        "name": "Williams College"
+    }
+]

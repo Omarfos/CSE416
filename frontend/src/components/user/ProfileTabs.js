@@ -10,12 +10,11 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
-import colleges from "../../docs/colleges.json";
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Tooltip from '@material-ui/core/Tooltip';
-
+import MultipleSelect from "./CollegeDropdown";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -67,15 +66,18 @@ const useStyles = makeStyles((theme) => ({
   },
   title:{
     textAlign:"left",
-    margin: "20px"
+    marginTop: "20px",
+    marginBottom: "20px",
+    marginRight: "40px",
   },
   textfield:{
-    margin: "20px"
+    marginTop: "20px",
+    marginBottom: "20px",
+    marginRight: "40px",
   },
   title2:{
     textAlign:"left",
     marginTop: "20px",
-    marginLeft:"20px"
   },
   resize:{
     fontSize:"1.2vw",
@@ -127,6 +129,10 @@ export default function VerticalTabs(props) {
     const newlist = [].concat(props.application);
     newlist.splice(id,1);
     props.setApplication(newlist);
+  }
+
+  async function handleEditCollege(value){
+    console.log("edit"+value);
   }
 
   async function handleAddApplication() {
@@ -227,9 +233,8 @@ export default function VerticalTabs(props) {
             </Typography>
             {props.application.length > 0  &&
              <div>
-               {console.log("here")}
                 {props.application.map((app, key) => (
-                  <AppliedCollege application={app} key={key} keyID={key} disable={props.disable} handleRemoveCollege={handleRemoveCollege}/>
+                  <AppliedCollege application={app} key={key} keyID={key} disable={props.disable} handleRemoveCollege={handleRemoveCollege} handleEditCollege={handleEditCollege}/>
                 ))}
              </div> 
             }
@@ -277,6 +282,9 @@ function AppliedCollege(props){
       <Typography className={classes.title2}>
          {props.keyID+1}:
       </Typography>
+
+      <MultipleSelect application={props.application} keyID={props.keyID} disable={props.disable} handleEditCollege={props.handleEditCollege}/>
+
       <TextField id={props.keyID+"college"} label ="College Name" disabled={props.disable} value={props.application.college} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}} fullWidth/>
       <TextField id={props.keyID+"status"} label ="Status" disabled={props.disable} value={props.application.status} variant="outlined" className={classes.textfield} InputProps={{classes: {input: classes.resize}}}/>
       <Tooltip title="Delete this college application. Nothing will be saved until clicking 'update profile'">
