@@ -60,7 +60,7 @@ export default function ApplicationTracker(props) {
 
   useEffect(() => {
     getApplications();
-  }, [ lax ]);
+  }, []);
 
   const getHighSchools = () => {
     const uniqueTags = [];
@@ -73,11 +73,13 @@ export default function ApplicationTracker(props) {
   }
 
   const filterStrict = () => {
+    console.log(lax)
     if (lax == true) {
       setCurrentStudents(students)
     } else {
-      setCurrentStudents(students.filter(s => s.college_class != null));
+      setCurrentStudents(students.filter(s => s.status =="accepted"));
     }
+    console.log(lax)
   }
 
   const filterStatus = (status_array) => {
