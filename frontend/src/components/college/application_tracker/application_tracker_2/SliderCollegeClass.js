@@ -37,6 +37,7 @@ export default function SliderFactory(props) {
         min={props.min}
         max={props.max}
         step={props.step}
+        // style={{width: ""}}
       />
     </>
   );

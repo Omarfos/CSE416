@@ -1,42 +1,20 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { useLocation, Link, useHistory, useParams } from "react-router-dom";
+import { useHistory} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
 import Chip from "@material-ui/core/Chip";
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Rating from '@material-ui/lab/Rating';
-
-import Divider from '@material-ui/core/Divider';
-
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import EnhancedTable from "./ViewProfilesTable";
-
-
+import ViewProfilesButton from "./ViewProfilesButton";
 
 const useStyles = makeStyles((theme) => ({
   card: {
     marginTop: "0px",
     marginLeft: "60px",
     borderColor: "#5d6896",
-  },
-
-  learnMore: {
-    marginLeft: "4px"
-  },
-
-  comma: {
-    marginRight: "3px"
   },
 
   progress: {
@@ -52,66 +30,15 @@ const useStyles = makeStyles((theme) => ({
     color: 'black'
   },
 
-  viewprofilesbutton: {
-    position: 'absolute',
-    top: "70%",
-    right: "3%",
-    zIndex: "99",
-  },
-
-  divider: {
-    marginTop: "5px",
-    marginBottom: "20px"
-  },
-
-  emptyspace: {
-    //marginTop: "34px"
-  },
-
-  rating: {
-    position: 'absolute',
-    top: "70%",
-    right: "3%"
-  }
-
 }));
 
 
 export default function CollegeCard(props) {
-  const classes = useStyles();
   let history = useHistory();
-  // const [completed, setCompleted] = React.useState(0);
-
-  // useEffect(() => {
-  //   function progress() {
-  //     setCompleted(prevCompleted =>
-  //       prevCompleted >= 70 ? 70 : prevCompleted + 10
-  //     );
-  //   }
-
-  //   const timer = setInterval(progress, 100);
-  //   return () => {
-  //     clearInterval(timer);
-  //   };
-  // }, []);
-
-  const [ students, setStudents ] = useState([]);
-
+  const classes = useStyles();
   const [ open, setOpen ] = React.useState(false);
-  const [ scroll, setScroll ] = React.useState("paper");
-
-  const handleClickOpen = scrollType => {
-    setOpen(true);
-    handleViewSimilarProfiles(props.college.name, 'amanda82')
-    // setScroll(scrollType);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const descriptionElementRef = React.useRef(null);
-
   React.useEffect(() => {
     if (open) {
       const { current: descriptionElement } = descriptionElementRef;
@@ -121,50 +48,13 @@ export default function CollegeCard(props) {
     }
   }, [ open ]);
 
-  const renderCostNextLine = () => {
-    if (props.college.institution_type == "Public") {
-      return <div>
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
-          <Chip
-            variant="outlined"
-            size="small"
-            label={
-              "# In-state Cost of Attendance " +
-              Math.round(props.college.in_state_cost / 1000) +
-              ",000 $"
-            }
-            color="primary"
-          />
-          <Typography
-            variant="h6"
-            color="textSecondary"
-            component="h4"
-            align="left"
-            className={ classes.comma }
-          >
-            ,
-            </Typography>
-          <Chip
-            variant="outlined"
-            size="small"
-            label={
-              "# Out-of-state Cost of Attendance " +
-              Math.round(props.college.out_state_cost / 1000) +
-              ",000 $"
-            }
-            color="primary"
-          />
-        </Grid>
-      </div>
-    } else {
-      return <div></div>
-    }
-
+  function FormChip(label) {
+    return (<Chip
+                variant="outlined"
+                size="small"s
+                label={ label }
+                color="primary"
+              />);
   }
 
   const renderCost = () => {
@@ -177,34 +67,15 @@ export default function CollegeCard(props) {
             justify="flex-start"
             alignItems="flex-start"
           >
-            <Typography
-              variant="h6"
-              color="textSecondary"
-              component="h4"
-              align="left"
-              className={ classes.comma }
-            >
-              ,
-            </Typography>
-            <Chip
-              variant="outlined"
-              size="small"
-              label={ "# Public" }
-              color="primary"
-              className={ classes.hashtag }
-            />
-            <Typography
-              variant="h6"
-              color="textSecondary"
-              component="h4"
-              align="left"
-              className={ classes.comma }
-            >
-              ,
-            </Typography>
+            {FormChip("# Public")}
+            {FormChip("# In-state Cost of Attendance " +
+              Math.round(props.college.in_state_cost / 1000) +
+              ",000 $", true)}
+          {FormChip("# Out-of-state Cost of Attendance " +
+              Math.round(props.college.out_state_cost / 1000) +
+              ",000 $")}
           </Grid>
           { fab() }
-          {/* <Rating name="read-only" value={ Math.round(Math.random() * 4) + 1 } readOnly className={ classes.rating } /> */ }
         </div>
       );
     } else {
@@ -216,45 +87,12 @@ export default function CollegeCard(props) {
             justify="flex-start"
             alignItems="flex-start"
           >
-            <Typography
-              variant="h6"
-              color="textSecondary"
-              component="h4"
-              align="left"
-              className={ classes.comma }
-            >
-              ,
-            </Typography>
-            <Chip
-              variant="outlined"
-              size="small"
-              label={ "# Private" }
-              color="primary"
-              className={ classes.hashtag }
-            />
-            <Typography
-              variant="h6"
-              color="textSecondary"
-              component="h4"
-              align="left"
-              className={ classes.comma }
-            >
-              ,
-            </Typography>
-            <Chip
-              variant="outlined"
-              size="small"
-              label={
-                "# Cost of Attendance " +
+            {FormChip("# Private")}
+            {FormChip("# Cost of Attendance " +
                 Math.round(props.college.in_state_cost / 1000) +
-                ",000 $"
-              }
-              color="primary"
-              className={ classes.hashtag }
-            />
+                ",000 $", true)}
           </Grid>
           { fab() }
-          {/* <Rating name="read-only" value={ Math.round(Math.random() * 4) + 1 } readOnly className={ classes.rating } /> */ }
         </div>
       );
     }
@@ -274,65 +112,13 @@ export default function CollegeCard(props) {
     }
   }
 
-
-  const handleViewSimilarProfiles = (college, userid) => {
-
-    axios.get("http://localhost:8000/similar/student", {
-      responseType: "json",
-      params: {
-        userid: userid,
-        college: college
-      }
-    }).then((response) => {
-      console.log('data', response)
-      let r = response.data.map((s) => {
-        return s.fields;
-      })
-      setStudents(r)
-    });
-  };
-
   function fab() {
     if (props.rec_score) {
-      return <div>
-        <Button
-          size="small"
-          color="primary"
-          variant="outlined"
-          aria-label="add"
-          className={ classes.viewprofilesbutton }
-          onClick={ (e) => { e.stopPropagation(); handleClickOpen() } }
-        >
-          View Similar Profiles
-        </Button>
-
-        <Dialog
-          maxWidth="lg"
-          open={ open }
-          // onClose={ handleClose }
-          scroll={ scroll }
-          aria-labelledby="scroll-dialog-title"
-          aria-describedby="scroll-dialog-description"
-          onClick={ e => e.stopPropagation() }
-        >
-          <DialogTitle id="scroll-dialog-title">Similar Profiles in { props.college.name }</DialogTitle>
-          <DialogContent dividers={ scroll === "paper" }>
-
-            <EnhancedTable students={ students } />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={ (e) => { e.stopPropagation(); handleClose() } } color="primary">
-              Close
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+      return <ViewProfilesButton college={props.college}/>;
     } else {
-      return <div className={ classes.emptyspace }></div>
+      return <div></div>
     }
   }
-
-
 
   return (
     <div>
@@ -348,7 +134,6 @@ export default function CollegeCard(props) {
       >
         <CardActionArea>
           <CardContent>
-            {/* { fab() } */ }
             { RecommendationScore() }
 
             <Typography
@@ -368,43 +153,19 @@ export default function CollegeCard(props) {
             >
               { props.college.ranking } in National Universities
             </Typography>
-            <Divider className={ classes.divider } />
+            <br/>
             <Grid
               container
               direction="row"
               justify="flex-start"
               alignItems="flex-start"
             >
-              <Chip
-                variant="outlined"
-                size="small"
-                label={ "# " + props.college.state }
-                color="primary"
-                className={ classes.hashtagFirst }
-              />
-              <Typography
-                variant="h6"
-                color="textSecondary"
-                component="h4"
-                align="left"
-                className={ classes.comma }
-              >
-                ,
-              </Typography>
-              <Chip
-                variant="outlined"
-                size="small"
-                label={
-                  "# Admission Rate " +
+              {FormChip("# " + props.college.state, true)}
+              {FormChip("# Admission Rate " +
                   Math.round(props.college.adm_rate * 100) +
-                  " %"
-                }
-                color="primary"
-                className={ classes.hashtag }
-              />
+                  " %", true)}
               { renderCost() }
             </Grid>
-            { renderCostNextLine() }
           </CardContent>
         </CardActionArea>
       </Card>

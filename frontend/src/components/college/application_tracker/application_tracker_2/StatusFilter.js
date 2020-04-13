@@ -16,6 +16,7 @@ export default function StatusFilter(props) {
       options={ [ "pending", "accepted", "denied", "deferred", "waitlisted", "withdrawn" ] }
       onChange={ (e, v) => handleSelectStatus(v) }
       filterSelectedOptions
+      style={{width: "100%"}}
       renderInput={ (params) => (
         <TextField
           { ...params }

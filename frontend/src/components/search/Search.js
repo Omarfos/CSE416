@@ -6,9 +6,7 @@ import { Grid, Button, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
 import Switch from "@material-ui/core/Switch";
-
 import Tooltip from '@material-ui/core/Tooltip';
-
 import CollegeCard from "./CollegeCard";
 import Pagination from "@material-ui/lab/Pagination";
 import SortOptions from "./Sorting.js";

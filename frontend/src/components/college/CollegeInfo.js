@@ -4,7 +4,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import ApplicationTracker from "./ApplicationTracker";
+import ApplicationTracker from "./application_tracker/ApplicationTracker";
 
 const useStyles = makeStyles({
   root: {
@@ -93,23 +93,6 @@ export default function SimpleCard(props) {
           </Typography>
           {/* Admission Rate: {props.college.adm_rate} */ }
           <ApplicationTracker college={ props.college.name } />
-          {/* <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br /> */}
         </CardContent>
       </Card>
     </div>

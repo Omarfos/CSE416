@@ -18,6 +18,7 @@ export default function HighSchoolFilter(props) {
       options={ props.allHighSchools }
       onChange={ (e, v) => handleSelectHighSchool(v) }
       filterSelectedOptions
+      style={{width: "100%"}}
       renderInput={ (params) => (
         <TextField
           { ...params }
