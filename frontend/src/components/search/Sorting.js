@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { ArrowDropUp, ArrowDropDown } from "@material-ui/icons";
+import { ArrowDropUp, ArrowDropDown, LocalConvenienceStoreOutlined } from "@material-ui/icons";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
@@ -30,6 +30,9 @@ export default function SortOptions(props) {
 
   const handleChangeSort = (event) => {
     const name = event.target.value;
+    console.log("SORT")
+    console.log(props.id)
+    console.log(name)
     props.navigate(props.id, name);
   };
 

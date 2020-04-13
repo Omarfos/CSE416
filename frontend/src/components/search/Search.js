@@ -17,6 +17,7 @@ import SliderFactory from "./filters/SliderFactory";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Image from "../../images/header.png";
 import SyncRoundedIcon from "@material-ui/icons/SyncRounded";
+import { LocalConvenienceStoreOutlined } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,6 +62,7 @@ export default function Search(props) {
   const [ RSText, setRSText ] = useState("Compute Recommendation Score");
   const [ RSVariant, setRSVariant ] = useState("contained");
   const [ compute, setCompute ] = useState(false);
+  const [ recscores, setRecscores] = useState([])
 
   useEffect(() => {
     handleSearch(location.search);
@@ -92,15 +94,44 @@ export default function Search(props) {
   const navigate = (id, value) => {
     const params = queryString.parse(location.search, { arrayFormat: "comma" });
     params[ id ] = value;
-    history.push(
-      "college?" + queryString.stringify(params, { arrayFormat: "comma" })
-    );
+    if(params.sort == "recommendationScore"){
+      // console.log("COOLLEGES")
+      // console.log(colleges)
+      let new_colleges = Object.assign([], colleges); // names
+      let new_recscores = Object.assign([], recscores); // ages
+      // var names = ["Bob","Tom","Larry"];
+      // var ages =  ["10", "20", "30"];
+
+      //1) combine the arrays:
+      var list = [];
+      for (var j = 0; j < new_colleges.length; j++) 
+          list.push({'college': new_colleges[j], 'rec_score': new_recscores[j]});
+
+      //2) sort:
+      list.sort(function(a, b) {
+          return ((a.rec_score < b.rec_score) ? -1 : ((a.rec_score == b.rec_score) ? 0 : 1));
+          //Sort could be modified to, for example, sort on the age 
+          // if the name is the same.
+      });
+
+      //3) separate them back out:
+      for (var k = 0; k < list.length; k++) {
+          new_colleges[k] = list[k].college;
+          new_recscores[k] = list[k].rec_score;
+      }
+      setRecscores(new_recscores)
+      setColleges(new_colleges)
+    }else{
+      history.push(
+        "college?" + queryString.stringify(params, { arrayFormat: "comma" })
+      );
+    }
   }
 
   const handleRecommend = (query) => {
     setLoading(true)
-    console.log("query", query);
-    console.log('props.userju', props.user)
+    // console.log("query", query);
+    // console.log('props.userju', props.user)
     const college_names = colleges.map(c => c.name)
     // console.log('college_names', college_names)
     axios
@@ -114,8 +145,7 @@ export default function Search(props) {
       .then((response) => {
         let new_colleges = Object.assign([], colleges);
         response.data.map((score, index) => { console.log(score, index); new_colleges[ index ].score = score })
-        console.log("COLLEGES")
-        console.log(new_colleges)
+        setRecscores(response.data)
         setColleges(new_colleges, setLoading(false))
       });
   };
