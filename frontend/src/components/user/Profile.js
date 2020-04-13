@@ -10,8 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import NotFound from "../NotFound";
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import axios from 'axios';
+import Alert from "@material-ui/lab/Alert";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -56,6 +55,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.5vw",
     padding: 10,
   },
+  alert: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
+  },
 }));
 
 
@@ -64,12 +69,22 @@ export default function Profile(props) {
   const [student, setStudent] = useState(null);
   const [application, setApplication] = useState([]);
   const [disable, setDisable] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [errorStatus, setErrorStatus] = useState("error");
+
   const classes = useStyles();
 
 
   async function handleUpdateProfile(event) {
     event.preventDefault();
-    console.log(student);
+
+    if(student.high_school_name == "" || student.high_school_city == "" || student.high_school_state == ""){
+      console.log(student);
+      setErrorStatus("error");
+      setErrorMessage("Please enter high school information. Including city and state.");
+      return;
+    }
+
     let url = "http://localhost:8000/student/"+student.userid + "/edit/";
     let url2 = "http://localhost:8000/student/"+student.userid + "/edit/application";
     fetch(url, {
@@ -82,6 +97,15 @@ export default function Profile(props) {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
+      if(data.SUCCESS){
+        console.log("here");
+        setErrorStatus("success");
+        setErrorMessage("Update Successfully");
+      }
+      else{
+        setErrorStatus("error");
+        setErrorMessage("No High School Information Found. ");
+      }
     });
 
     fetch(url2, {
@@ -101,7 +125,6 @@ export default function Profile(props) {
   
 
   useEffect(() => {
-    console.log("LOCATION")
     let url = "http://localhost:8000" + location.pathname; //    /student/q
     fetch(url)
       .then((data) => {
@@ -113,6 +136,7 @@ export default function Profile(props) {
             if (location.pathname.substring(9) == props.user) {
               setDisable(false);
             };
+            setErrorMessage("");
           }
           getData();
         }
@@ -124,6 +148,18 @@ export default function Profile(props) {
       {!student && <NotFound />}
       {student && (
         <div className={classes.root}>
+            { errorMessage && (
+              <div className={ classes.alert }>
+                <Alert
+                  severity={errorStatus}
+                  onClose={ () => {
+                    setErrorMessage(null);
+                  } }
+                >
+                  { errorMessage }
+                </Alert>
+              </div>
+            ) }
           <form onSubmit={handleUpdateProfile} >
             <Container className={classes.header}>
               <Grid container direction="row"

@@ -162,7 +162,7 @@ export default function VerticalTabs(props) {
         <Tab label="Score" {...a11yProps(0)} className={classes.tab} />
         <Tab label="High School" {...a11yProps(1)} className={classes.tab} />
         <Tab label="College" {...a11yProps(2)} className={classes.tab} />
-        <Tab label="Account Setting" {...a11yProps(3)} className={classes.tab} />
+    {/* <Tab label="Account Setting" {...a11yProps(3)} className={classes.tab} /> */}
       </Tabs>
       <div className={classes.container}>
         <TabPanel value={value} index={0} >
