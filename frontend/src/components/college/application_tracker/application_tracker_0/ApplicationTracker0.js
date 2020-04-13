@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ApplicationTracker1(props) {
     const classes = useStyles();
-
     const handleSearch = (e) => {
       e.preventDefault();
       axios
@@ -44,15 +43,22 @@ export default function ApplicationTracker1(props) {
         }
       })
       .then((response) => {
-        console.log(response);
+        if(response.status == 200){
+          props.setResult(response);
+          props.setStep(1);
+        }
+        else{
+          props.setErrorMessage("No similar high school found.");
+        }
+      })
+      .catch((error) => {
+        props.setErrorMessage("No similar high school found.");
+        console.error("Error:", error);
       });
-        props.setStep(1);
     }
 
     return (
-
       <SearchBar classes={ classes } handleSearch={ handleSearch } placeholder="Search for Similar High School" detail={true}/>
-      
     );
 
 }
