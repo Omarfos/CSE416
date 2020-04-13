@@ -12,7 +12,6 @@ function ScatterPlot(props) {
             let result = 0;
             let weights = 0;
             Object.keys(student).forEach(y => {
-                // console.log('key: ' + y)
                 if (y.substring(0,4)=="SAT_" && y != "SAT_math" && y!= "SAT_EBRW" && student[ y ] != null) {
                   result += 0.05 * (student[y] / 800);
                   weights += 0.05;
@@ -29,8 +28,6 @@ function ScatterPlot(props) {
                 weights = 1;
             }
             result = Math.round(result/weights * 100)
-            // console.log("WAWAWA")
-            // console.log(result)
             student.WA_SAT = result;
         });
     };
@@ -76,9 +73,9 @@ function ScatterPlot(props) {
                     }
 
                 ] }
-                layout={ { width: 1000, height: 800, title: "A Fancy Plot" } }
+                layout={ { width: 1000, height: 800, title: "Scatterplot of Application Status of Matching Student Profiles"} }
             />
-            <Select onChange={ (e) => { setTest(e.target.value) } }>
+            <Select onChange={ (e) => { setTest(e.target.value) } } defaultValue={"ACT_composite"}>
                 <MenuItem value="ACT_composite">ACT </MenuItem>
                 <MenuItem value="SAT">SAT</MenuItem>
                 <MenuItem value="ACT_english">ACT English</MenuItem>
@@ -87,6 +84,7 @@ function ScatterPlot(props) {
                 <MenuItem value="ACT_science">ACT science</MenuItem>
                 <MenuItem value="WA_SAT">Weighted Average of Percentile Scores for Standardized Tests</MenuItem>
             </Select>
+            vs. GPA
         </>
     )
 }
