@@ -37,9 +37,9 @@ export default function SortOptions(props) {
 
   return (
     <Grid container justify="flex-end" alignItems="stretch">
-      <Grid item>
-        <FormControl className={classes.formControl}>
-          <Select onChange={handleChangeSort}>
+      <Grid item name="gridItem">
+        <FormControl className={classes.formControl} name="sortingMenu">
+          <Select onChange={handleChangeSort} name="selectYourOption">
             <MenuItem value="adm_rate">Admission Rate</MenuItem>
             <MenuItem value="out_state_cost">Cost of Attendance</MenuItem>
             <MenuItem value="ranking">Ranking</MenuItem>
@@ -60,16 +60,16 @@ export default function SortOptions(props) {
             <ArrowDropDown fontSize="inherit" color="primary" />
           </IconButton>
         ) : (
-          <IconButton
-            size="medium"
-            onClick={() => {
-              setAsc(!asc);
-              props.setOrder();
-            }}
-          >
-            <ArrowDropUp fontSize="inherit" color="primary" />
-          </IconButton>
-        )}
+            <IconButton
+              size="medium"
+              onClick={() => {
+                setAsc(!asc);
+                props.setOrder();
+              }}
+            >
+              <ArrowDropUp fontSize="inherit" color="primary" />
+            </IconButton>
+          )}
       </Grid>
     </Grid>
   );

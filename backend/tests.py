@@ -8,9 +8,6 @@ from django.test import RequestFactory
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from selenium.webdriver.chrome.webdriver import WebDriver
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.common.keys import Keys
 
 from .models import *
 from .views import *
@@ -81,7 +78,8 @@ class StudentProfileTests(TestCase):
     def test_view_profile(self):
         r = self.client.get("/student/Bonya/")
         self.assertEqual(r.status_code, 200)
-        self.assertEqual(r.json()["major_1"], "Felinology")
+        print(r.json())
+        self.assertEqual(r.json()["student"]["major_1"], "Felinology")
 
     def test_invalid_view_profile(self):
         r = self.client.get("/student/Olesia/")
@@ -257,7 +255,7 @@ class SimilarStudentsTests(TestCase):
          
 
 class RecommendationScoresTests(TestCase):
-    fixtures = ['test_data.json']
+    # fixtures = ['test_data.json']
     def setUp(self):
         Student.objects.create(userid='Ayoub', SAT=1600, ACT_composite=36)
         # Student.objects.create(userid='Idrees', SAT_math=600, SAT_EBRW=500)
@@ -271,6 +269,7 @@ class RecommendationScoresTests(TestCase):
 
     def test_one(self):
         r = recommend_colleges('Ayoub', 'Stony Brook University')
+        asset 
         print(r)
         #  similar_students('Idrees')
         #  similar_students('Andy')
