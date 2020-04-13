@@ -238,7 +238,7 @@ def scrape_high_school(hs_list):
         if r.status_code != 200:
             print(f"ERROR: unable to scrape {url}")
             print("ERROR: Being blocked by niche.com")
-            raise Warning
+            return result
 
         soup = BeautifulSoup(r.text, "html.parser")
         name = soup.find("h1", "postcard__title").contents[0]

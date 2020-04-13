@@ -151,7 +151,7 @@ def recommend_colleges(user_id, colleges):
 
 
 def similar_hs(hs_name):
-    u_hs = HighSchool.objects.get(name=hs_name)
+    u_hs = HighSchool.objects.get(name__icontains=hs_name)
     res = []
     for hs in HighSchool.objects.all():
         score = 0
@@ -167,6 +167,9 @@ def similar_hs(hs_name):
             score += 1 - abs(u_hs.grad_rate - hs.grad_rate)
         if u_hs.ap_enroll and hs.ap_enroll:
             score += 1 - abs(u_hs.ap_enroll - hs.ap_enroll)
+        if u_hs.num_students and hs.num_students:
+            max_students = HighSchool.objects.aggregate(Max('num_students'))['num_students__max']
+            score += 1 - abs(u_hs.num_students - hs.num_students) / max_students
         e = {"hs": hs.name,"score": score}
         res.append(e)
     return sorted(res, reverse=True, key=lambda x: x["score"])

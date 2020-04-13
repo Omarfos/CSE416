@@ -1,35 +1,18 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 
-\title{HW 6}
+\title{HW 7}
 \author{Team Bingo}
-\date{March 2020}
+\date{April 2020}
 
 \begin{document}
 
 \maketitle
 
-\section{Persistance}
+\section{Concurrency}
+As Professor Stoller has mentioned, the project has relatively few concurrency
+issues. There might be small race conditions between an administrator and a student 
 
-\subsection{Data Model}
-Our data is mapped directly by Django's Object Relational Mapper. See models.py
-for details. 
-
-\subsection{Queries}
-Filtering of colleges and user profiles is almost done exclusively through
-django's QuerySet api. The only exception is when lax filtering is specified,
-application code is required to fetch objects whose the filters are not
-reported. See search in views.py for details
-
-\section{Code Convention}
-
-\subsection{Python Backend}
-Adhere to PEP8: https://www.python.org/dev/peps/pep-0008/ \\ 
-Style enforcing using Black: https://github.com/psf/black
-
-
-\subsection{JavaScript Frontend}
-Adhere to prettier: https://prettier.io/docs/en/index.html
 
 
 \section{Implementation Status Report}
