@@ -47,6 +47,7 @@ export default function ApplicationTracker1(props) {
           props.setResult(response);
           props.setStep(1);
           props.setErrorMessage(null);
+          props.setQuery(e.target.searchQuery.value);
         }
         else{
           props.setErrorMessage("No similar high school found.");

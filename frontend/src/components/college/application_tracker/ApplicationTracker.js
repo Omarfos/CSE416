@@ -31,9 +31,9 @@ const useStyles = makeStyles((theme) => ({
 export default function ApplicationTracker(props) {
   const classes = useStyles();
 
-  const [step, setStep] = useState(0);
-  const [result, setResult] = useState("");
-
+  const [step, setStep] = useState(1);
+  const [result, setResult] = useState([]);
+  const [query, setQuery] = useState("");
 
   return (
     <div>
@@ -50,10 +50,10 @@ export default function ApplicationTracker(props) {
         </div>
       )}
       {step == 0 && 
-        <ApplicationTracker0 setStep={setStep} setResult={setResult} setErrorMessage={props.setErrorMessage}/>
+        <ApplicationTracker0 setStep={setStep} setResult={setResult} setErrorMessage={props.setErrorMessage} setQuery={setQuery}/>
       }
       {step == 1 && 
-        <ApplicationTracker1 />
+        <ApplicationTracker1 query={query} result={result} setStep={setStep} setResult={setResult} setQuery={setQuery}/>
       }
       {
         step == 2 && 

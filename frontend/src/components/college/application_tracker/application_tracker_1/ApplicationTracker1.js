@@ -35,15 +35,13 @@ const useStyles = makeStyles((theme) => ({
 export default function ApplicationTracker1(props) {
     const classes = useStyles();
 
-
-    const [ step, setStep ] = useState(2); // step 0 - enter hs, step 1 - select among simimlar, step 2 - view applications
-    const [ schools, setSchools ] = useState([ { name: "Witney High School", city: "New York City", state: "NY", sat: 1200, act: 30, num_students: 4000, grad_rate: 0.81, ap_enroll: 0.3 },
-    { name: "Witney High School", city: "New York City", state: "NY", sat: 1200, act: 30, num_students: 4000, grad_rate: 0.81, ap_enroll: 0.3 },
-    { name: "Witney High School", city: "New York City", state: "NY", sat: 1200, act: 30, num_students: 4000, grad_rate: 0.81, ap_enroll: 0.3 },
-    { name: "Witney High School", city: "New York City", state: "NY", sat: 1200, act: 30, num_students: 4000, grad_rate: 0.81, ap_enroll: 0.3 } ]); // high schools
-    const [ loading, setLoading ] = useState(false);
-
     
+    const handleGoBack = () =>{
+      props.setResult([]);
+      props.setQuery("");
+      props.setStep(0);
+    }
+
     return <div>
     <Grid
       className={ classes.root }
@@ -60,26 +58,26 @@ export default function ApplicationTracker1(props) {
               High School Entered:
           </Typography>
             <Chip
-              size="large"
-              label="Whitney High School"
+              size="medium"
+              label="{props.query}"
               clickable
               color="primary"
-              // onDelete={handleDelete}
-              deleteIcon={ <DoneIcon /> }
+              onDelete={handleGoBack}
+              
             />
           </Grid>
         </Grid>
 
 
-        {/* right side - high schools */ }
+        {/* right side - high school */ }
       </Grid>
       <Grid item md={ 8 }>
 
 
-        { loading ? (
-          <LinearProgress variant="query" />
+        { props.result ? (
+         "No Simlar High School Found"
         ) : (
-            schools.map((school) => <HighSchoolCard college={ school } rec_score={ false } user={ props.user } />)
+            props.result.map((school, index) => <HighSchoolCard college={ school } key={index} rec_score={ false } user={ props.user } />)
           ) }
       </Grid>
       <Grid item md={ 8 }>
@@ -88,7 +86,7 @@ export default function ApplicationTracker1(props) {
           color="primary"
           className={ classes.button }
           endIcon={ <NavigateNextIcon>send</NavigateNextIcon> }
-          onClick={ () => { console.log('onClick'); setStep(2) } }
+          onClick={ () => { console.log('onClick'); props.setStep(2) } }
         >
           Next
         </Button>

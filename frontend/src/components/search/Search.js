@@ -298,7 +298,7 @@ export default function Search(props) {
         { loading ? (
           <LinearProgress variant="query" />
         ) : (
-            colleges.map((college) => <CollegeCard college={ college } rec_score={ compute } user={ props.user } />)
+            colleges.map((college, index) => <CollegeCard key = {index} college={ college } rec_score={ compute } user={ props.user } />)
           ) }
       </Grid>
 
