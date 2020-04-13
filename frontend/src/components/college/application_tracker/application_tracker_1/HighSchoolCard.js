@@ -12,7 +12,7 @@ import CommentIcon from '@material-ui/icons/Comment';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    maxWidth: 360,
+    maxWidth: "100%",
     backgroundColor: theme.palette.background.paper,
     overflow: 'auto',
     maxHeight: 300,
@@ -52,7 +52,8 @@ export default function CheckboxList(props) {
                 inputProps={{ 'aria-labelledby': labelId }}
               />
             </ListItemIcon>
-            <ListItemText id={labelId} primary={value.hs} />
+            <ListItemText id={labelId} primary={value.hs} secondary={`${},${}`} />
+           
           </ListItem>
         );
       })}

@@ -65,8 +65,6 @@ export default function ApplicationTracker1(props) {
       </Grid>
 
       <Grid item md={ 6 } align="right">
-
-      {console.log(props.result)}
         { props.result.length==0 ? (
          "No Simlar High School Found"
         ) : (

@@ -9,15 +9,12 @@ import CustomizedTables from "./StatisticsTable";
 import Switch from "@material-ui/core/Switch";
 
 export default function ApplicationTracker2(props) {
-
-  const [ step, setStep ] = useState(2); // step 0 - enter hs, step 1 - select among simimlar, step 2 - view applications
-  const [ loading, setLoading ] = useState(false);
   const [ lax, setLax ] = useState(true);
   const [ students, setStudents ] = useState([]);
   const [ cur_students, setCurrentStudents ] = useState([]);
   const [ filters, setFilters ] = useState({
     status: [ "accepted", "pending", "denied", "defered", "waitlisted", "withdrawn" ],
-    high_schools: [],
+    high_schools: props.schoolSelected,
     college_class: [],
     strict_lax: false
   });
@@ -28,7 +25,6 @@ export default function ApplicationTracker2(props) {
   }, []);
 
   const getApplications = () => {
-    console.log('props', props);
     axios.get("http://localhost:8000/college/" + props.college + "/applications", {
       responseType: "json",
     })
@@ -37,7 +33,6 @@ export default function ApplicationTracker2(props) {
         setStudents(response.data, () => setFilters({ ...filters, high_schools: getHighSchools() }))
         setCurrentStudents(response.data)
       });
-    setLoading(false);
   };
 
   const getHighSchools = () => {
@@ -47,13 +42,10 @@ export default function ApplicationTracker2(props) {
         uniqueTags.push(img.high_school_name)
       }
     });
-
     return uniqueTags;
   }
 
   const filter = (name, value) => {
-    console.log('name', name)
-    console.log('value', value)
     setFilters({
       ...filters,
       [ name ]: value
@@ -61,7 +53,6 @@ export default function ApplicationTracker2(props) {
   }
 
   useEffect(() => {
-    console.log('filters', filters)
     let new_students = students.filter(s => filters[ "status" ].length == 0 || s.status == null || filters[ "status" ].includes(s.status))
       .filter(s => filters[ "high_schools" ].length == 0 || s.high_school_name == null || filters[ "high_schools" ].includes(s.high_school_name))
       .filter(s => filters[ "college_class" ].length == 0 || s.college_class == null || ((s.college_class >= filters[ "college_class" ][0]) && (s.college_class <= filters[ "college_class" ][1])))
@@ -69,7 +60,6 @@ export default function ApplicationTracker2(props) {
         if(filters[ "strict_lax" ] == true){
           let res = true;
           Object.keys(student).forEach(y => {
-            console.log('key: ' + y)
             if (student[ y ] == null) {
               res = false;
             }

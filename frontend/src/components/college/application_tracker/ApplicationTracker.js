@@ -57,7 +57,7 @@ export default function ApplicationTracker(props) {
         <ApplicationTracker1 query={query} result={result} setStep={setStep} setResult={setResult} setQuery={setQuery} schoolSelected={schoolSelected} setSchoolSelected={setSchoolSelected}/>
       }
       { step == 2 && 
-          <ApplicationTracker2 college={props.college}  schoolSelected={schoolSelected} setSchoolSelected={setSchoolSelected} result={result}/>
+        <ApplicationTracker2 college={props.college}  schoolSelected={schoolSelected} setSchoolSelected={setSchoolSelected} result={result}/>
       }
     </div>
   );
