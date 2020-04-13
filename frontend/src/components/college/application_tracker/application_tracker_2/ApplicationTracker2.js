@@ -14,8 +14,8 @@ export default function ApplicationTracker2(props) {
   const [ students, setStudents ] = useState([]);
   const [ cur_students, setCurrentStudents ] = useState([]);
   const [ filters, setFilters ] = useState({
-    status: [ "accepted", "pending", "denied", "defered", "waitlisted", "withdrawn" ],
-    high_schools: [],
+    status: [ "accepted", "pending", "denied", "deferred", "waitlisted", "withdrawn" ],
+    high_schools: props.schoolSelected,
     college_class: [],
     strict_lax: false
   });
@@ -30,8 +30,8 @@ export default function ApplicationTracker2(props) {
       responseType: "json",
     })
       .then((response) => {
-        setStudents(response.data, () => setFilters({ ...filters, high_schools: getHighSchools() }))
-        setCurrentStudents(response.data)
+        setStudents(response.data, () => setFilters({ ...filters, high_schools: props.schoolSelected }))
+        setCurrentStudents(filterData(response.data))
       });
   };
 
@@ -57,24 +57,27 @@ export default function ApplicationTracker2(props) {
     })
   }
 
+  function filterData(temp_students) {
+    return temp_students.filter(s => filters[ "status" ].length == 0 || s.status == null || filters[ "status" ].includes(s.status))
+    .filter(s => filters[ "high_schools" ].length == 0 || s.high_school_name == null || filters[ "high_schools" ].includes(s.high_school_name))
+    .filter(s => filters[ "college_class" ].length == 0 || s.college_class == null || ((s.college_class >= filters[ "college_class" ][ 0 ]) && (s.college_class <= filters[ "college_class" ][ 1 ])))
+    .filter(function (temp_student) {
+      if (filters[ "strict_lax" ] == true) {
+        let res = true;
+        Object.keys(temp_student).forEach(y => {
+          if (temp_student[ y ] == null) {
+            res = false;
+          }
+        });
+        return res;
+      } else {
+        return true;
+      }
+    });
+  }
+
   useEffect(() => {
-    let new_students = students.filter(s => filters[ "status" ].length == 0 || s.status == null || filters[ "status" ].includes(s.status))
-      .filter(s => filters[ "high_schools" ].length == 0 || s.high_school_name == null || filters[ "high_schools" ].includes(s.high_school_name))
-      .filter(s => filters[ "college_class" ].length == 0 || s.college_class == null || ((s.college_class >= filters[ "college_class" ][ 0 ]) && (s.college_class <= filters[ "college_class" ][ 1 ])))
-      .filter(function (student) {
-        if (filters[ "strict_lax" ] == true) {
-          let res = true;
-          Object.keys(student).forEach(y => {
-            if (student[ y ] == null) {
-              res = false;
-            }
-          });
-          return res;
-        } else {
-          return true;
-        }
-      });
-    setCurrentStudents(new_students)
+    setCurrentStudents(filterData(students))
   }, [ filters ]);
 
 
@@ -99,7 +102,7 @@ export default function ApplicationTracker2(props) {
     <div>
       {/* FILTERS START */ }
       { FormRow(
-        <HighSchoolFilter id="high_schools" filterHighSchool={ (v) => filter("high_schools", v) } allHighSchools={ getHighSchools() } />,
+        <HighSchoolFilter id="high_schools" filterHighSchool={ (v) => filter("high_schools", v) } allHighSchools={ getHighSchools() } defaultValue={props.schoolSelected}/>,
         <StatusFilter id="status" filterStatus={ (v) => filter("status", v) } />
       ) }
       <br />
