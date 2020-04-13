@@ -139,7 +139,7 @@ export default function ApplicationTracker2(props) {
         GPA_accepted={ aggregate(cur_students.filter(item => item.status == "accepted").filter(item => item.status == "accepted").map(({ GPA }) => parseFloat(GPA))) }
         ACT_accepted={ aggregate(cur_students.filter(item => item.status == "accepted").filter(item => item.status == "accepted").map(({ ACT_composite }) => ACT_composite)) } />
       {/* TABLES END */ }
-      <ScatterPlot students={ students } test={ "ACT_composite" } />
+      <ScatterPlot students={ cur_students } test={ "ACT_composite" } />
 
 
     </div>
