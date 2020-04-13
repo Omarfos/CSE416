@@ -46,6 +46,7 @@ export default function ApplicationTracker1(props) {
         if(response.status == 200){
           props.setResult(response);
           props.setStep(1);
+          props.setErrorMessage(null);
         }
         else{
           props.setErrorMessage("No similar high school found.");
@@ -53,7 +54,6 @@ export default function ApplicationTracker1(props) {
       })
       .catch((error) => {
         props.setErrorMessage("No similar high school found.");
-        console.error("Error:", error);
       });
     }
 
