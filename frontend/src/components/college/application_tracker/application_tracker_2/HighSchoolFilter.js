@@ -5,8 +5,6 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 export default function HighSchoolFilter(props) {
 
   const handleSelectHighSchool = (high_school_name) => {
-    console.log("HIGH SCHOOLS")
-    console.log(props.allHighSchools)
     props.filterHighSchool(high_school_name)
   };
 
@@ -15,6 +13,7 @@ export default function HighSchoolFilter(props) {
     <Autocomplete
       multiple
       id="tags-outlined"
+
       options={ props.allHighSchools }
       onChange={ (e, v) => handleSelectHighSchool(v) }
       filterSelectedOptions

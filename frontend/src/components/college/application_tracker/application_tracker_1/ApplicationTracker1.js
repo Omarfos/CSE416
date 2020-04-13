@@ -51,7 +51,7 @@ export default function ApplicationTracker1(props) {
       justify="center"
     >
       {/* left - side */ }
-      <Grid item md={4} className={ classes.marginTop }>
+      <Grid item md={3} className={ classes.marginTop }>
           <Typography variant="h6" align="center">
               High School Entered:
           </Typography>
@@ -64,7 +64,7 @@ export default function ApplicationTracker1(props) {
           />
       </Grid>
 
-      <Grid item md={ 6 } align="right">
+      <Grid item md={ 7 } align="right">
         { props.result.length==0 ? (
          "No Simlar High School Found"
         ) : (

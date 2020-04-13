@@ -15,7 +15,7 @@ export default function ApplicationTracker2(props) {
   const [ cur_students, setCurrentStudents ] = useState([]);
   const [ filters, setFilters ] = useState({
     status: [ "accepted", "pending", "denied", "defered", "waitlisted", "withdrawn" ],
-    high_schools: props.schoolSelected,
+    high_schools: [],
     college_class: [],
     strict_lax: false
   });
@@ -30,7 +30,6 @@ export default function ApplicationTracker2(props) {
       responseType: "json",
     })
       .then((response) => {
-        console.log('response', response)
         setStudents(response.data, () => setFilters({ ...filters, high_schools: getHighSchools() }))
         setCurrentStudents(response.data)
       });
@@ -43,6 +42,11 @@ export default function ApplicationTracker2(props) {
         uniqueTags.push(img.high_school_name)
       }
     });
+    props.result.map(obj =>{
+      if (uniqueTags.indexOf(obj.name) === -1) {
+        uniqueTags.push(obj.name)
+      }
+    })
     return uniqueTags;
   }
 
@@ -93,7 +97,6 @@ export default function ApplicationTracker2(props) {
 
   return (
     <div>
-      { console.log('students', JSON.stringify(students)) }
       {/* FILTERS START */ }
       { FormRow(
         <HighSchoolFilter id="high_schools" filterHighSchool={ (v) => filter("high_schools", v) } allHighSchools={ getHighSchools() } />,

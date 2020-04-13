@@ -37,23 +37,25 @@ export default function CheckboxList(props) {
   };
 
   return (
+
     <List className={classes.root}>
       {props.result.map((value) => {
-        const labelId = `checkbox-list-label-${value.hs}`;
+        const labelId = `checkbox-list-label-${value.name}`;
 
         return (
-          <ListItem key={value.hs} role={undefined} dense button onClick={handleToggle(value.hs)}>
+          <ListItem key={value.name} role={undefined} dense button onClick={handleToggle(value.name)}>
             <ListItemIcon>
               <Checkbox
                 edge="start"
-                checked={props.schoolSelected.indexOf(value.hs) !== -1}
+                checked={props.schoolSelected.indexOf(value.name) !== -1}
                 tabIndex={-1}
                 disableRipple
                 inputProps={{ 'aria-labelledby': labelId }}
               />
             </ListItemIcon>
-            <ListItemText id={labelId} primary={value.hs} secondary={`${},${}`} />
-           
+            <ListItemText id={labelId} primary={value.name} 
+              secondary={`Location: ${value.city}, ${value.state}, SAT: ${value.sat}, ACT: ${value.act}, Number of Students: ${value.num_students}, AP Enroll: ${Math.round((value.ap_enroll*100))}%`}/>
+            {Math.round(value.score)}
           </ListItem>
         );
       })}
