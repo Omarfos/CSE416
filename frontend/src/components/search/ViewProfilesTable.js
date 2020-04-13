@@ -41,7 +41,7 @@ function stableSort(array, comparator) {
 
 const headCells = [
   { id: "userid", numeric: false, disablePadding: false, label: "User ID" }, // calories
-  { id: "similar_score", numeric: true, disablePadding: false, label: "Similarity Score" },
+  // { id: "similar_score", numeric: true, disablePadding: false, label: "Similarity Score" },
   { id: "high_school_name", numeric: false, disablePadding: false, label: "High School Name" }, // fat
   { id: "high_school_state", numeric: false, disablePadding: false, label: "High School State" }, // carbs
   { id: "GPA", numeric: false, disablePadding: false, label: "GPA" }, // protein
@@ -211,7 +211,7 @@ export default function EnhancedTable(props) {
                       selected={ isItemSelected }
                     >
                       <TableCell align="right">{ row.userid }</TableCell>
-                      <TableCell align="right">{ Math.round(row.similar_score*100) }%</TableCell>
+                      {/* <TableCell align="right">{ Math.round(row.similar_score*100) }%</TableCell> */}
                       <TableCell align="right">{ row.high_school_name }</TableCell>
                       <TableCell align="right">{ row.high_school_state }</TableCell>
                       <TableCell align="right">{ row.GPA }</TableCell>
