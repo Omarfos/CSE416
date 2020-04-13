@@ -294,7 +294,7 @@ export default function VerticalTabs(props) {
         </TabPanel>
         {!props.disable &&
           <div className={classes.buttonDiv}>
-            <Button type="submit" className={classes.button} variant="outlined">Update Profile</Button>
+            <Button type="submit" name="updateButton" className={classes.button} variant="outlined">Update Profile</Button>
           </div>
         }
       </div>

@@ -42,7 +42,7 @@ export default function SortOptions(props) {
           <Select onChange={handleChangeSort} name="selectYourOption">
             <MenuItem value="adm_rate">Admission Rate</MenuItem>
             <MenuItem value="out_state_cost">Cost of Attendance</MenuItem>
-            <MenuItem value="ranking">Ranking</MenuItem>
+            <MenuItem id="rank" value="ranking">Ranking</MenuItem>
             <MenuItem value="recommendationScore">
               Recommendation Score
             </MenuItem>

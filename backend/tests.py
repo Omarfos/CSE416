@@ -274,6 +274,16 @@ class RecommendationScoresTests(TestCase):
         #  similar_students('Idrees')
         #  similar_students('Andy')
         #  similar_students('Ryan')
+
+
+class EditProfileTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.student = Student.objects.create(userid="Bonya", major_1="Felinology")
+
+    
+
+    
          
 
 
