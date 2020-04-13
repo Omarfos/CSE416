@@ -91,8 +91,7 @@ export default function SimpleCard(props) {
           <Typography variant="h6" align="left" className={ classes.title }>
             Applications Tracker
           </Typography>
-          {/* Admission Rate: {props.college.adm_rate} */ }
-          <ApplicationTracker college={ props.college.name } />
+          <ApplicationTracker college={ props.college.name }  errorMessage={props.errorMessage} setErrorMessage={props.setErrorMessage}/>
         </CardContent>
       </Card>
     </div>

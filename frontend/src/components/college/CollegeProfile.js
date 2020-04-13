@@ -104,8 +104,10 @@ export default function CollegeProfile(props) {
                   <Typography variant="h6">
                     # {college.ranking} in National Universities
                   </Typography>
-                  <Typography variant="body1">
+                 <Typography variant="body1">
                     {college.institution_type} University in {college.state}
+                    <br />
+                    Admission Rate: {college.adm_rate}
                   </Typography>
                 </Grid>
                 <Grid item xs={6}>
@@ -180,7 +182,7 @@ export default function CollegeProfile(props) {
                   </TableContainer>
                 </Grid>
               </Grid>
-              <SimpleCard college={college} />
+              <SimpleCard college={college} errorMessage={props.errorMessage} setErrorMessage={props.setError}/>
             </div>
           </Container>
         </div>

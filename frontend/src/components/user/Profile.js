@@ -101,6 +101,7 @@ export default function Profile(props) {
   
 
   useEffect(() => {
+    console.log("LOCATION")
     let url = "http://localhost:8000" + location.pathname; //    /student/q
     fetch(url)
       .then((data) => {
