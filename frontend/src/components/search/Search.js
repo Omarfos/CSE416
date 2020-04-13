@@ -70,7 +70,6 @@ export default function Search(props) {
 
   const handleSearch = (query) => {
     setLoading(true);
-    console.log("query", query);
     axios
       .get("http://localhost:8000/search" + query, {
         responseType: "json",
@@ -95,12 +94,8 @@ export default function Search(props) {
     const params = queryString.parse(location.search, { arrayFormat: "comma" });
     params[ id ] = value;
     if(params.sort == "recommendationScore"){
-      // console.log("COOLLEGES")
-      // console.log(colleges)
       let new_colleges = Object.assign([], colleges); // names
       let new_recscores = Object.assign([], recscores); // ages
-      // var names = ["Bob","Tom","Larry"];
-      // var ages =  ["10", "20", "30"];
 
       //1) combine the arrays:
       var list = [];
@@ -110,8 +105,6 @@ export default function Search(props) {
       //2) sort:
       list.sort(function(a, b) {
           return ((a.rec_score < b.rec_score) ? -1 : ((a.rec_score == b.rec_score) ? 0 : 1));
-          //Sort could be modified to, for example, sort on the age 
-          // if the name is the same.
       });
 
       //3) separate them back out:
@@ -130,30 +123,23 @@ export default function Search(props) {
 
   const handleRecommend = (query) => {
     setLoading(true)
-    // console.log("query", query);
-    // console.log('props.userju', props.user)
     const college_names = colleges.map(c => c.name)
-    // console.log('college_names', college_names)
     axios
       .get("http://localhost:8000/recommend", {
         responseType: "json",
         params: {
-          userid: "amanda82",
+          userid: props.user,
           colleges: JSON.stringify(college_names)
         }
       })
       .then((response) => {
         let new_colleges = Object.assign([], colleges);
-        response.data.map((score, index) => { console.log(score, index); new_colleges[ index ].score = score })
+        response.data.map((score, index) => { new_colleges[ index ].score = score })
         setRecscores(response.data)
         setColleges(new_colleges, setLoading(false))
       });
   };
 
-
-  // const handleRSButtonClick = (e) => {
-  //   console.log("clicked")
-  // };
 
   return (
     <Grid
@@ -163,7 +149,6 @@ export default function Search(props) {
       margins={ 3 }
       justify="center"
     >
-      {/* { handleViewSimilarProfiles('Stony Brook University', 'allenhaley') } */ }
       <Grid className={ classes.header } item md={ 12 }></Grid>
       <Grid item md={ 2 } className={ classes.filters }>
         <Grid container spacing={ 2 }>
