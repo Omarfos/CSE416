@@ -13,7 +13,6 @@ export default function HighSchoolFilter(props) {
     <Autocomplete
       multiple
       id="tags-outlined"
-
       options={ props.allHighSchools }
       onChange={ (e, v) => handleSelectHighSchool(v) }
       filterSelectedOptions
