@@ -142,7 +142,7 @@ def post_student_profile(request, userid):
     info = json.loads(request.body)
     if "high_school_name" in info:
         with transaction.atomic():
-            if not HighSchool.objects.filter(name=info["high_school_name"]):
+            if not HighSchool.objects.filter(name__icontains=info["high_school_name"]):
                 hs = scrape_high_school([
                     {
                         "name": info["high_school_name"],
@@ -150,6 +150,8 @@ def post_student_profile(request, userid):
                         "state": info["high_school_state"],
                     }
                 ])
+                if not hs:
+                    return JsonResponse({"ERROR": "hs not found"}, status=400)
                 HighSchool(**hs[0]).save()
 
     Student.objects.filter(userid=userid).update(**info)
