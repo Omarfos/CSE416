@@ -249,27 +249,36 @@ class SimilarStudentsTests(TestCase):
 
     def test_one(self):
         r = similar_students('Eisa')
+        print("hellp")
         print(r)
         #  similar_students('Idrees')
         #  similar_students('Andy')
         #  similar_students('Ryan')
         
- class RecommendationScoresTests(TestCase):
-     fixtures = ['test_data.json']
-     def setUp(self):
-         Student.objects.create(userid='Ayoub', SAT=1600, ACT_composite=36)
-         # Student.objects.create(userid='Idrees', SAT_math=600, SAT_EBRW=500)
-         #  Student.objects.create(userid='Eisa', SAT_math=600, SAT_EBRW=700,
-                 #  ACT_composite=31, GPA=3.0, high_school_name="Stuy")
-         #  Student.objects.create(userid='Ryan', SAT_math=800, SAT_EBRW=800,
-                 #  ACT_composite=36, GPA=4.0, high_school_name="Stuy")
-         #  Student.objects.create(userid='Andy', high_school_name="Stuy", SAT=1300)
-         #  Student.objects.create(userid='Boodoo', num_AP_passed=10)
-         #  Student.objects.create(userid='DooDoo', num_AP_passed=10)
+class RecommendationScoresTests(TestCase):
+    # fixtures = ['test_data.json']
+    def setUp(self):
+        Student.objects.create(userid='Ayoub', SAT=1600, ACT_composite=36)
+        Student.objects.create(userid='Idrees', SAT_math=600, SAT_EBRW=500)
+        Student.objects.create(userid='Eisa', SAT_math=600, SAT_EBRW=700, ACT_composite=31, GPA=3.0, high_school_name="Stuy")
+        Student.objects.create(userid='Ryan', SAT_math=800, SAT_EBRW=800, ACT_composite=36, GPA=4.0, high_school_name="Stuy")
+        Student.objects.create(userid='Andy', high_school_name="Stuy", SAT=1300)
+        Student.objects.create(userid='Boodoo', num_AP_passed=10)
+        Student.objects.create(userid='DooDoo', num_AP_passed=10)
+
+        College.objects.create(
+            name="Columbia", out_state_cost=70000, ranking=10, state="NY"
+        )
+        College.objects.create(
+            name="Stony", out_state_cost=20000, ranking=105, state="NY"
+        )
+        College.objects.create(name="NYU", out_state_cost=65000, ranking=31, state="NY")
 #  
-    #  def test_one(self):
-        #  r = recommend_colleges('Ayoub', 'Stony Brook University')
-        #  print(r)
+    def test_one(self):
+        colleges = ["Columbia", "Stony", "NYU"]
+        r = recommend_colleges('Ayoub', colleges)
+        print(r)
+        self.assertListEqual(r, [20,17,19])
         #  #  similar_students('Idrees')
         #  #  similar_students('Andy')
         #  #  similar_students('Ryan')
@@ -277,7 +286,25 @@ class SimilarStudentsTests(TestCase):
 
 class similarHighSchool(TestCase):
     def setUp(self):
-        HighSchool.objects.create(name='VS Central', city="Valley Stream", state="NY", sat=1400, 
-            act=28, num_st)
+        HighSchool.objects.create(name='VS Central', city='Valley Stream', state='NY', 
+            sat=1400, act=28, num_students=300, grad_rate=80.0, ap_enroll=5)
+        HighSchool.objects.create(name='VS North', city='Valley Stream', state='NY', 
+            sat=1400, act=28, num_students=300, grad_rate=80.0, ap_enroll=5)
+        
+    def test_one(self):   
+        r = similar_hs('VS Central')
+        print("yerr")
+        print(r)
+
+class verifyAcceptanceDecision(TestCase):
+    def setUp(self):
+        Student.objects.create(userid='Ayoub', SAT=1000, ACT_composite=31)
+
+    def test_one(self):   
+        # r = verify_acceptance_decision('Ayoub', )
+        # print("yerr")
+        # print(r)
+
+
 
 
