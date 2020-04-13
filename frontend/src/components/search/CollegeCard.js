@@ -127,7 +127,6 @@ export default function CollegeCard(props) {
       <Card
         className={ classes.card }
         onClick={ () => {
-          console.log('COllege card clicked')
           history.push({
             pathname: "/college/" + props.college.name,
           })
