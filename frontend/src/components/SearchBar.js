@@ -1,25 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+import React from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
-import Image from "../images/homeBackground.png";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import logoImage from "../images/logo.png";
-const useStyles = makeStyles((theme) => ({
+import TextField from '@material-ui/core/TextField';
 
-}));
 export default function SearchBar(props) {
 
     return(
-        <Paper
-        component="form"
-        className={props.classes.search }
-        onSubmit={(e) => {props.handleSearch(e)}}
-        >
+      <form onSubmit={(e) => {props.handleSearch(e)}}>
+        <Paper className={props.classes.search } >
         <InputBase
           name="searchQuery"
           className={props.classes.input }
@@ -33,5 +23,13 @@ export default function SearchBar(props) {
           <SearchIcon />
         </IconButton>
       </Paper>
+
+      {props.detail &&
+          <div>
+            <TextField id="city" label="City" required className={props.classes.detail_textfield}/>
+            <TextField id="state" label="State" required className={props.classes.detail_textfield}/>
+          </div>
+        } 
+      </form>
     )
 }

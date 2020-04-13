@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import axios from "axios";
 import { Grid, Button} from "@material-ui/core";
 import Chip from '@material-ui/core/Chip';
-import DoneIcon from '@material-ui/icons/Done';
-import LinearProgress from "@material-ui/core/LinearProgress";
-import HighSchoolCard from "./HighSchoolCard";
+import CheckboxList from "./HighSchoolCard";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 
 
@@ -27,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
     button: {
       margin: theme.spacing(1),
       marginLeft: "97%"
+    },
+    marginTop:{
+      marginTop:"5%"
     }
   }));
 
@@ -35,15 +35,13 @@ const useStyles = makeStyles((theme) => ({
 export default function ApplicationTracker1(props) {
     const classes = useStyles();
 
-
-    const [ step, setStep ] = useState(2); // step 0 - enter hs, step 1 - select among simimlar, step 2 - view applications
-    const [ schools, setSchools ] = useState([ { name: "Witney High School", city: "New York City", state: "NY", sat: 1200, act: 30, num_students: 4000, grad_rate: 0.81, ap_enroll: 0.3 },
-    { name: "Witney High School", city: "New York City", state: "NY", sat: 1200, act: 30, num_students: 4000, grad_rate: 0.81, ap_enroll: 0.3 },
-    { name: "Witney High School", city: "New York City", state: "NY", sat: 1200, act: 30, num_students: 4000, grad_rate: 0.81, ap_enroll: 0.3 },
-    { name: "Witney High School", city: "New York City", state: "NY", sat: 1200, act: 30, num_students: 4000, grad_rate: 0.81, ap_enroll: 0.3 } ]); // high schools
-    const [ loading, setLoading ] = useState(false);
-
     
+    const handleGoBack = () =>{
+      props.setResult([]);
+      props.setQuery("");
+      props.setStep(0);
+    }
+
     return <div>
     <Grid
       className={ classes.root }
@@ -53,33 +51,26 @@ export default function ApplicationTracker1(props) {
       justify="center"
     >
       {/* left - side */ }
-      <Grid item md={ 2 } className={ classes.filters }>
-        <Grid container spacing={ 2 }>
-          <Grid item md={ 12 }>
-            <Typography variant="h6" align="center">
+      <Grid item md={4} className={ classes.marginTop }>
+          <Typography variant="h6" align="center">
               High School Entered:
           </Typography>
-            <Chip
-              size="large"
-              label="Whitney High School"
-              clickable
-              color="primary"
-              // onDelete={handleDelete}
-              deleteIcon={ <DoneIcon /> }
-            />
-          </Grid>
-        </Grid>
-
-
-        {/* right side - high schools */ }
+          <Chip
+            size="medium"
+            label={props.query}
+            clickable
+            color="primary"
+            onDelete={handleGoBack}
+          />
       </Grid>
-      <Grid item md={ 8 }>
 
+      <Grid item md={ 6 } align="right">
 
-        { loading ? (
-          <LinearProgress variant="query" />
+      {console.log(props.result)}
+        { props.result.length==0 ? (
+         "No Simlar High School Found"
         ) : (
-            schools.map((school) => <HighSchoolCard college={ school } rec_score={ false } user={ props.user } />)
+            <CheckboxList result={props.result} setSchoolSelected={props.setSchoolSelected} schoolSelected={props.schoolSelected}/>
           ) }
       </Grid>
       <Grid item md={ 8 }>
@@ -88,7 +79,7 @@ export default function ApplicationTracker1(props) {
           color="primary"
           className={ classes.button }
           endIcon={ <NavigateNextIcon>send</NavigateNextIcon> }
-          onClick={ () => { console.log('onClick'); setStep(2) } }
+          onClick={ () => { console.log('onClick'); props.setStep(2) } }
         >
           Next
         </Button>

@@ -1,0 +1,54 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{HW 7}
+\author{Team Bingo}
+\date{April 2020}
+
+\begin{document}
+
+\maketitle
+
+\section{Concurrency}
+As Professor Stoller has mentioned, the project has relatively few concurrency
+issues. There might be small race conditions between an administrator and a
+student such as marking a decision as questionable, but these are minor. In
+addition users can only edit their own profile. The only shared data that is
+accessible by two or more students is High School. When a hs is not in the system, it has to
+be scraped. This can happen in two cases, when a user is searching for similar
+high schools, or when he or she updates his or her profile. 
+
+The way we handle this is by using atomic transactions in get-similar-hs and
+post-student-profile in views.py. We choose the appropriate transaction
+boundaries and make sure the transaction is atomic, thus preventing any
+concurrency issues.
+
+
+\section{Implementation Status Report}
+See gradingsheet.xlsx 
+
+\section{Installation Manual}
+See README in source code directory
+
+\section{Test Report}
+\subsection{Unit Tests}
+Series of tests for backend functions login, register, and search.
+A set of unit tests to test scraping college rankings, data, scorecard, and
+niche.com. 
+
+\subsection{Integration Tests}
+Use a web browser automation tool, selenium, to test integration of frontend and
+backend. We test search, login, and register.
+
+\section{Contribution}
+Omar - backend 
+Olesia, Jafree, Bing: design, frontend, presentation
+
+\section{Data}
+See backend/data.
+
+\section{Design}
+See backend/design for diagrams and attached documents
+
+\end{document}
+

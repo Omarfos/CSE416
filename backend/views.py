@@ -137,13 +137,12 @@ def get_student_profile(request, userid):
     )
 
 
-@transaction.atomic
 def post_student_profile(request, userid):
     s = get_object_or_404(Student, userid=userid)
     info = json.loads(request.body)
     if "high_school_name" in info:
         with transaction.atomic():
-            if not HighSchool.objects.filter(name=info["high_school_name"]):
+            if not HighSchool.objects.filter(name__icontains=info["high_school_name"]):
                 hs = scrape_high_school([
                     {
                         "name": info["high_school_name"],
@@ -151,6 +150,8 @@ def post_student_profile(request, userid):
                         "state": info["high_school_state"],
                     }
                 ])
+                if not hs:
+                    return JsonResponse({"ERROR": "hs not found"}, status=400)
                 HighSchool(**hs[0]).save()
 
     Student.objects.filter(userid=userid).update(**info)
@@ -259,16 +260,6 @@ def search(request):
 
 
 def recommend(request):
-    """Return JSON of specified college 
-
-    Parameters:
-        request: GET, JSON 
-        url: college/<name>
-
-    Returns:
-        404: College not found
-        College JSON
-    """
     params = request.GET
     colleges = json.loads(params["colleges"])
     userid = params["userid"]
@@ -284,7 +275,19 @@ def get_similar_hs(request):
     high_school_city = params["high_school_city"]
     high_school_state = params["high_school_state"]
 
-    high_schools = similar_hs(high_school)
+    with transaction.atomic():
+        if not HighSchool.objects.filter(name__icontains=high_school):
+            hs = scrape_high_school([
+                {
+                    "name": high_school,
+                    "city": high_school_city,
+                    "state": high_school_state,
+                    }
+                ])
+            if not hs:
+                return JsonResponse({}, status=400)
+            HighSchool(**hs[0]).save()
+        high_schools = similar_hs(high_school)
 
     return JsonResponse(high_schools, safe=False)
 
