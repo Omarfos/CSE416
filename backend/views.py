@@ -8,12 +8,14 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.db.utils import IntegrityError
 from django.db.models import Q
+from django.db import transaction
 from django.forms.models import model_to_dict
 
 # from django.core.exceptions import DoesNotExist
 
 from .models import Student, College, Application
 from .algorithms import *
+from .scrape import *
 
 
 def index(request):
@@ -135,10 +137,23 @@ def get_student_profile(request, userid):
     )
 
 
+@transaction.atomic
 def post_student_profile(request, userid):
     s = get_object_or_404(Student, userid=userid)
-    updated_info = json.loads(request.body)
-    Student.objects.filter(userid=userid).update(**updated_info)
+    info = json.loads(request.body)
+    if "high_school_name" in info:
+        with transaction.atomic():
+            if not HighSchool.objects.filter(name=info["high_school_name"]):
+                hs = scrape_high_school([
+                    {
+                        "name": info["high_school_name"],
+                        "city": info["high_school_city"],
+                        "state": info["high_school_state"],
+                    }
+                ])
+                HighSchool(**hs[0]).save()
+
+    Student.objects.filter(userid=userid).update(**info)
 
     return JsonResponse({"SUCCESS": "User updated"})
 
@@ -262,6 +277,7 @@ def recommend(request):
 
     return JsonResponse(scores, safe=False)
 
+
 def get_similar_hs(request):
     params = request.GET
     high_school = params["high_school"]
@@ -271,7 +287,6 @@ def get_similar_hs(request):
     high_schools = similar_hs(high_school)
 
     return JsonResponse(high_schools, safe=False)
-
 
 
 def get_similar_profiles(request):

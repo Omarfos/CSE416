@@ -173,9 +173,11 @@ def similar_hs(hs_name):
 
 
 def verify_acceptance_decision(userid, app):
+
     u = Student.objects.get(userid=userid)
     apps = Application.objects.filter(college__name=app["college"], status=app["status"])
     score = 0
+
     for app in apps:
         s = app.student
         if u.ACT_composite and s.ACT_composite:
