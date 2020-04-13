@@ -157,10 +157,12 @@ def similar_hs(hs_name):
         score = 0
         if u_hs.city == hs.city:
             score = score + 1
-        if u_hs.state == hs.city:
+        if u_hs.state == hs.state:
             score = score + 0.5
-        score += (800 - abs(u_hs.sat - hs.sat)) / 800
-        score += (800 - abs(u_hs.act - hs.act)) / 800
+        if u_hs.sat and hs.sat:
+            score += (1600 - abs(u_hs.sat - hs.sat)) / 1600
+        if u_hs.act and hs.act:
+            score += (36 - abs(u_hs.act - hs.act)) / 36
         if u_hs.grad_rate and hs.grad_rate:
             score += 1 - abs(u_hs.grad_rate - hs.grad_rate)
         if u_hs.ap_enroll and hs.ap_enroll:
@@ -171,4 +173,21 @@ def similar_hs(hs_name):
 
 
 def verify_acceptance_decision(userid, app):
-    return True if random.random() < 0.3 else False
+    u = Student.objects.get(userid=userid)
+    apps = Application.objects.filter(college__name=app["college"], status=app["status"])
+    score = 0
+    for app in apps:
+        s = app.student
+        if u.ACT_composite and s.ACT_composite:
+            score += abs(u.ACT_composite - s.ACT_composite) / 36
+        if u.GPA and s.GPA:
+            score += float(abs(u.GPA - s.GPA)) / 4.0
+        if u.SAT_math and s.SAT_math:
+            score += abs(u.SAT_math - s.SAT_math) / 800
+        if u.SAT_EBRW and s.SAT_EBRW:
+            score += abs(u.SAT_EBRW - s.SAT_EBRW) / 800
+
+    print(len(apps))
+    print(score)
+
+    return True if score >= len(apps) else False
