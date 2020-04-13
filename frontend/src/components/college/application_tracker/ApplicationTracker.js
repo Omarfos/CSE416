@@ -15,10 +15,10 @@ import ApplicationTracker2 from "./application_tracker_2/ApplicationTracker2.js"
 
 export default function ApplicationTracker(props) {
 
-  const [step, setStep] = useState(2);
-
+  const [step, setStep] = useState(0);
+  const [result, setResult] = useState("");
   if (step == 0) {
-    return <ApplicationTracker0 />
+    return <ApplicationTracker0 setStep={setStep} setResult={setResult}/>
   } else if (step == 1) {
     return <ApplicationTracker1 />
   } else {

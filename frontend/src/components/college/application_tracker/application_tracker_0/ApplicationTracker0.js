@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import SearchBar from "../../../SearchBar";
+import axios from "axios";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,18 +21,38 @@ const useStyles = makeStyles((theme) => ({
     button: {
       margin: theme.spacing(1),
       marginLeft: "97%"
+    },
+    detail_textfield:{
+      margin: "20px",
     }
   }));
 
 
 
-export default function ApplicationTracker1() {
+export default function ApplicationTracker1(props) {
     const classes = useStyles();
 
     const handleSearch = (e) => {
-        // setStep(1);
-      }
+      e.preventDefault();
+      axios
+      .get("http://localhost:8000/similar/hs", {
+        responseType: "json",
+        params: {
+          high_school: e.target.searchQuery.value,
+          high_school_city: e.target.city.value,
+          high_school_state: e.target.state.value
+        }
+      })
+      .then((response) => {
+        console.log(response);
+      });
+        props.setStep(1);
+    }
 
-    return <SearchBar classes={ classes } handleSearch={ handleSearch } placeholder="Search for Similar High School" />;
+    return (
+
+      <SearchBar classes={ classes } handleSearch={ handleSearch } placeholder="Search for Similar High School" detail={true}/>
+      
+    );
 
 }
