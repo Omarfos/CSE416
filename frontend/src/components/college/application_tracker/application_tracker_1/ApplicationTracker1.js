@@ -7,14 +7,7 @@ import Chip from '@material-ui/core/Chip';
 import DoneIcon from '@material-ui/icons/Done';
 import LinearProgress from "@material-ui/core/LinearProgress";
 import HighSchoolCard from "./HighSchoolCard";
-// import SliderFactory from "../SliderCollegeClass";
-// import StatusFilter from "../StatusFilter"
-// import HighSchoolFilter from "../HighSchoolFilter"
-// import EnhancedTable from "../ViewApplicationsTable";
-// import CustomizedTables from "../StatisticsTable";
-// import Switch from "@material-ui/core/Switch";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import SearchBar from "../../../SearchBar";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,10 +15,7 @@ const useStyles = makeStyles((theme) => ({
       minWidth: "300px",
       width: "30vw",
       height: "45px",
-      // marginBottom: "5px",
-      // marginTop: "200px",
       background: 'linear-gradient(45deg, #D4DDFD 30%, #3F51B5 90%)',
-      // aling: "center"
     },
     input: {
       width: "85%",
@@ -52,16 +42,6 @@ export default function ApplicationTracker1(props) {
     { name: "Witney High School", city: "New York City", state: "NY", sat: 1200, act: 30, num_students: 4000, grad_rate: 0.81, ap_enroll: 0.3 },
     { name: "Witney High School", city: "New York City", state: "NY", sat: 1200, act: 30, num_students: 4000, grad_rate: 0.81, ap_enroll: 0.3 } ]); // high schools
     const [ loading, setLoading ] = useState(false);
-    const [ lax, setLax ] = useState(true);
-    const [ students, setStudents ] = useState([]);
-    const [ cur_students, setCurrentStudents ] = useState([]);
-  
-    const [ filters, setFilters ] = useState({
-      status: [ "accepted", "pending", "denied", "defered", "waitlisted", "withdrawn" ],
-      high_schools: [],
-      college_class: [],
-      strict_lax: false
-    });
 
     
     return <div>
