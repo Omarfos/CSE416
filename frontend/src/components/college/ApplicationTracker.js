@@ -60,7 +60,9 @@ export default function ApplicationTracker(props) {
 
   const [ filters, setFilters ] = useState({
     status: [ "accepted", "pending", "denied", "defered", "waitlisted", "withdrawn" ],
-    high_schools: []
+    high_schools: [],
+    college_class: [],
+    strict_lax: false
   });
 
 
@@ -103,52 +105,25 @@ export default function ApplicationTracker(props) {
 
   useEffect(() => {
     console.log('filters', filters)
-    let new_students = students.filter(s => filters[ "status" ].length == 0 || filters[ "status" ].includes(s.status))
-      .filter(s => filters[ "high_schools" ].length == 0 || filters[ "high_schools" ].includes(s.high_school_name));
+    let new_students = students.filter(s => filters[ "status" ].length == 0 || s.status == null || filters[ "status" ].includes(s.status))
+      .filter(s => filters[ "high_schools" ].length == 0 || s.high_school_name == null || filters[ "high_schools" ].includes(s.high_school_name))
+      .filter(s => filters[ "college_class" ].length == 0 || s.college_class == null || ((s.college_class >= filters[ "college_class" ][0]) && (s.college_class <= filters[ "college_class" ][1])))
+      .filter(function (student) {
+        if(filters[ "strict_lax" ] == true){
+          let res = true;
+          Object.keys(student).forEach(y => {
+            console.log('key: ' + y)
+            if (student[ y ] == null) {
+              res = false;
+            }
+          });
+          return res;
+        }else{
+          return true;
+        }
+      });
     setCurrentStudents(new_students)
   }, [ filters ]);
-
-
-  const filterStatus = (status_array) => {
-    console.log('status_array', status_array)
-    if (status_array.length == 0) {
-      setCurrentStudents(students)
-    } else {
-      setCurrentStudents(students.filter(s => status_array.includes(s.status)));
-    }
-  }
-
-
-  const filterHighSchool = (hs_array) => {
-    if (hs_array.length == 0) {
-      setCurrentStudents(students)
-    } else {
-      setCurrentStudents(students.filter(s => hs_array.includes(s.high_school_name)));
-    }
-  }
-
-  const filterCollegeClass = (college_class) => {
-    setCurrentStudents(students.filter(s => (s.college_class >= college_class[ 0 ] && (s.college_class <= college_class[ 1 ]))));
-  }
-
-  const filterStrict = () => {
-    console.log(lax)
-    if (lax == false) {
-      setCurrentStudents(students)
-    } else {
-      setCurrentStudents(students.filter(function (student) {
-        let res = true;
-        Object.keys(student).forEach(y => {
-          console.log('key: ' + y)
-          if (student[ y ] == null) {
-            res = false;
-          }
-        });
-        return res;
-      }));
-    }
-    console.log(lax)
-  }
 
   const aggregateSATmath = () => {
     return cur_students.map(({ SAT_math }) => SAT_math).reduce((sum, i) => sum + i, 0) / cur_students.length;
@@ -272,7 +247,7 @@ export default function ApplicationTracker(props) {
                 <SliderFactory
                   id="college_class"
                   // navigate={ navigate }
-                  filterCollegeClass={ () => filter("college_class") }
+                  filterCollegeClass={ (v) => filter("college_class", v) }
                   min={ 2000 }
                   max={ 2030 }
                   startText={ "College Class" }
@@ -287,7 +262,8 @@ export default function ApplicationTracker(props) {
                   onChange={ () => {
                     // navigate("lax", !lax);
                     setLax(!lax);
-                    filterStrict();
+                    // filterStrict();
+                    filter("strict_lax", lax)
                   } }
                   name="checkedA"
                   inputProps={ { "aria-label": "secondary checkbox" } }
