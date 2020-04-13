@@ -31,9 +31,10 @@ const useStyles = makeStyles((theme) => ({
 export default function ApplicationTracker(props) {
   const classes = useStyles();
 
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [result, setResult] = useState([]);
   const [query, setQuery] = useState("");
+  const [schoolSelected, setSchoolSelected] = React.useState([]);
 
   return (
     <div>
@@ -53,11 +54,10 @@ export default function ApplicationTracker(props) {
         <ApplicationTracker0 setStep={setStep} setResult={setResult} setErrorMessage={props.setErrorMessage} setQuery={setQuery}/>
       }
       {step == 1 && 
-        <ApplicationTracker1 query={query} result={result} setStep={setStep} setResult={setResult} setQuery={setQuery}/>
+        <ApplicationTracker1 query={query} result={result} setStep={setStep} setResult={setResult} setQuery={setQuery} schoolSelected={schoolSelected} setSchoolSelected={setSchoolSelected}/>
       }
-      {
-        step == 2 && 
-          <ApplicationTracker2 college={props.college} />
+      { step == 2 && 
+          <ApplicationTracker2 college={props.college}  schoolSelected={schoolSelected} setSchoolSelected={setSchoolSelected} result={result}/>
       }
     </div>
   );

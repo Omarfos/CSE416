@@ -33,6 +33,8 @@ export default function ApplicationTracker1(props) {
     const classes = useStyles();
     const handleSearch = (e) => {
       e.preventDefault();
+      const high_school_name= e.target.searchQuery.value;
+
       axios
       .get("http://localhost:8000/similar/hs", {
         responseType: "json",
@@ -44,16 +46,18 @@ export default function ApplicationTracker1(props) {
       })
       .then((response) => {
         if(response.status == 200){
-          props.setResult(response);
-          props.setStep(1);
+          props.setResult(response.data);
           props.setErrorMessage(null);
-          props.setQuery(e.target.searchQuery.value);
+          props.setQuery(high_school_name);
+          props.setStep(1);
         }
         else{
+          props.setResult([]);
           props.setErrorMessage("No similar high school found.");
         }
       })
       .catch((error) => {
+        props.setResult([]);
         props.setErrorMessage("No similar high school found.");
       });
     }

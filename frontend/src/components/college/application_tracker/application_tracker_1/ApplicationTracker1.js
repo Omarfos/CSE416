@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import axios from "axios";
 import { Grid, Button} from "@material-ui/core";
 import Chip from '@material-ui/core/Chip';
-import DoneIcon from '@material-ui/icons/Done';
-import LinearProgress from "@material-ui/core/LinearProgress";
-import HighSchoolCard from "./HighSchoolCard";
+import CheckboxList from "./HighSchoolCard";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 
 
@@ -27,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
     button: {
       margin: theme.spacing(1),
       marginLeft: "97%"
+    },
+    marginTop:{
+      marginTop:"5%"
     }
   }));
 
@@ -51,33 +51,26 @@ export default function ApplicationTracker1(props) {
       justify="center"
     >
       {/* left - side */ }
-      <Grid item md={ 2 } className={ classes.filters }>
-        <Grid container spacing={ 2 }>
-          <Grid item md={ 12 }>
-            <Typography variant="h6" align="center">
+      <Grid item md={4} className={ classes.marginTop }>
+          <Typography variant="h6" align="center">
               High School Entered:
           </Typography>
-            <Chip
-              size="medium"
-              label="{props.query}"
-              clickable
-              color="primary"
-              onDelete={handleGoBack}
-              
-            />
-          </Grid>
-        </Grid>
-
-
-        {/* right side - high school */ }
+          <Chip
+            size="medium"
+            label={props.query}
+            clickable
+            color="primary"
+            onDelete={handleGoBack}
+          />
       </Grid>
-      <Grid item md={ 8 }>
 
+      <Grid item md={ 6 } align="right">
 
-        { props.result ? (
+      {console.log(props.result)}
+        { props.result.length==0 ? (
          "No Simlar High School Found"
         ) : (
-            props.result.map((school, index) => <HighSchoolCard college={ school } key={index} rec_score={ false } user={ props.user } />)
+            <CheckboxList result={props.result} setSchoolSelected={props.setSchoolSelected} schoolSelected={props.schoolSelected}/>
           ) }
       </Grid>
       <Grid item md={ 8 }>
