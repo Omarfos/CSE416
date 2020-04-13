@@ -253,8 +253,7 @@ class SimilarStudentsTests(TestCase):
         #  similar_students('Idrees')
         #  similar_students('Andy')
         #  similar_students('Ryan')
-         
-
+        
 #  class RecommendationScoresTests(TestCase):
     #  fixtures = ['test_data.json']
     #  def setUp(self):
@@ -275,5 +274,5 @@ class SimilarStudentsTests(TestCase):
         #  #  similar_students('Andy')
         #  #  similar_students('Ryan')
          #  
-#  
-#  
+
+

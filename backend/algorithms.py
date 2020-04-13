@@ -3,6 +3,7 @@ import random
 
 from django.db import models
 from django.db.models import Avg, Max
+from django.forms.models import model_to_dict
 
 from .models import *
 
@@ -170,7 +171,8 @@ def similar_hs(hs_name):
         if u_hs.num_students and hs.num_students:
             max_students = HighSchool.objects.aggregate(Max('num_students'))['num_students__max']
             score += 1 - abs(u_hs.num_students - hs.num_students) / max_students
-        e = {"hs": hs.name,"score": score}
+        e = model_to_dict(hs)
+        e["score"] = score
         res.append(e)
     return sorted(res, reverse=True, key=lambda x: x["score"])
 

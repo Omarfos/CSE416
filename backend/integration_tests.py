@@ -64,5 +64,53 @@ class MySeleniumTests(LiveServerTestCase):
         search = self.selenium.find_element_by_name("searchQuery")
         search.send_keys("Stony")
         search.send_keys(Keys.RETURN)
+        time.sleep(4)
+        college = self.selenium.find_element_by_id("college_name")
+        time.sleep(4)
+        self.assertIsNotNone(college)
+
+##############################################################################################################################################
+    # selenium testing with respect to sorting
+    #trying to figure out the assertequal part
+    def test_sorting(self):
+        College.objects.create(name="stony", ranking=105)
+        College.objects.create(name="xyz", ranking=10)
+        # self.selenium.get("localhost:3000/search/college?sort=ranking")
+        self.selenium.get("localhost:3000/search/college")
+        time.sleep(1)  # wait for database
+        self.selenium.find_element_by_id('dropMenu').click()
+        self.selenium.find_element_by_id('rankOption').click() 
+        time.sleep(1)  
         college = self.selenium.find_element_by_id("college_name")
         self.assertIsNotNone(college)
+
+    #testing with respect to location
+    def test_sorting(self):
+        College.objects.create(name="stony", ranking=105)
+        College.objects.create(name="xyz", ranking=10)
+        self.selenium.get("localhost:3000/search/college")
+        time.sleep(1)  # wait for database
+        self.selenium.find_element_by_name('locationID').click()
+        time.sleep(2)
+        # self.selenium.find_element_by_('rankOption').click()  
+        # time.sleep(1)
+        # self.selenium.find_element_by_xpath("//input[@aria-activedescendant='tags-outlined-option-1']").click()
+
+
+
+    #edit profile integration test 
+    #problem rn is the handleEditProfile is not working when I try to 
+    # def test_student_check(self):
+    #     # self.user = User.objects.create_user(username="bonya", password="meowmeow")
+    #     self.student = Student.objects.create(userid="Bonya", major_1="Felinology", GPA="3.0", residence_state="NY")
+    #     self.selenium.get("localhost:3000/student/Bonya/")
+    #     time.sleep(10)
+    #     residence_input = self.selenium.find_element_by_id("residence_state")
+    #     residence_input.send_keys(Keys.CONTROL, 'a')
+    #     time.sleep(1)
+    #     residence_input.send_keys(Keys.BACKSPACE)
+    #     time.sleep(1)
+    #     residence_input.send_keys("MA")
+    #     time.sleep(2)  # wait for database
+    #     self.selenium.find_element_by_name("updateButton").click()
+    #     time.sleep(10)
