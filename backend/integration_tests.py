@@ -71,7 +71,6 @@ class MySeleniumTests(LiveServerTestCase):
 
 ##############################################################################################################################################
     # selenium testing with respect to sorting
-    #trying to figure out the assertequal part
     def test_sorting(self):
         College.objects.create(name="stony", ranking=105)
         College.objects.create(name="xyz", ranking=10)
@@ -85,17 +84,24 @@ class MySeleniumTests(LiveServerTestCase):
         self.assertIsNotNone(college)
 
     #testing with respect to location
-    def test_sorting(self):
+    def test_location(self):
         College.objects.create(name="stony", ranking=105)
         College.objects.create(name="xyz", ranking=10)
         self.selenium.get("localhost:3000/search/college")
         time.sleep(1)  # wait for database
         self.selenium.find_element_by_name('locationID').click()
-        time.sleep(2)
-        # self.selenium.find_element_by_('rankOption').click()  
-        # time.sleep(1)
-        # self.selenium.find_element_by_xpath("//input[@aria-activedescendant='tags-outlined-option-1']").click()
+        time.sleep(3)
 
+    #testing clicking a college card
+    def test_collegeCard(self):
+        College.objects.create(name="stony", ranking=105)
+        College.objects.create(name="xyz", ranking=10)
+        self.selenium.get("localhost:3000/search/college")
+        time.sleep(1)  # wait for database
+        college = self.selenium.find_element_by_id("college_name")
+        self.selenium.find_element_by_id('college_name').click()
+        time.sleep(1)
+        self.assertIsNotNone(college)
 
 
     #edit profile integration test 
