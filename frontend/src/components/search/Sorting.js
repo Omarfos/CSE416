@@ -63,10 +63,10 @@ export default function SortOptions(props) {
         </Tooltip>
 
         <FormControl className={classes.formControl}>
-          <Select onChange={handleChangeSort}>
+          <Select onChange={handleChangeSort} id="dropMenu">
             <MenuItem value="adm_rate">Admission Rate</MenuItem>
             <MenuItem value="out_state_cost">Cost of Attendance</MenuItem>
-            <MenuItem value="ranking">Ranking</MenuItem>
+            <MenuItem value="ranking" id="rankOption">Ranking</MenuItem>
             <MenuItem value="recommendationScore">
               Recommendation Score
             </MenuItem>

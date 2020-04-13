@@ -20,6 +20,7 @@ export default function LocationFilter(props) {
           {...params}
           variant="outlined"
           label="Location"
+          name="locationID"
           placeholder="Select State"
         />
       )}
