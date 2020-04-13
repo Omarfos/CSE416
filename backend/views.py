@@ -289,7 +289,7 @@ def get_similar_hs(request):
             HighSchool(**hs[0]).save()
         high_schools = similar_hs(high_school)
 
-    return JsonResponse(high_schools, safe=False)
+    return JsonResponse(high_schools[:10], safe=False)
 
 
 def get_similar_profiles(request):
