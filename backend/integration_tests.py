@@ -76,10 +76,8 @@ class MySeleniumTests(LiveServerTestCase):
         College.objects.create(name="xyz", ranking=10)
         # self.selenium.get("localhost:3000/search/college?sort=ranking")
         self.selenium.get("localhost:3000/search/college")
-        time.sleep(1)  # wait for database
         self.selenium.find_element_by_id('dropMenu').click()
         self.selenium.find_element_by_id('rankOption').click() 
-        time.sleep(1)  
         college = self.selenium.find_element_by_id("college_name")
         self.assertIsNotNone(college)
 
@@ -88,19 +86,15 @@ class MySeleniumTests(LiveServerTestCase):
         College.objects.create(name="stony", ranking=105)
         College.objects.create(name="xyz", ranking=10)
         self.selenium.get("localhost:3000/search/college")
-        time.sleep(1)  # wait for database
         self.selenium.find_element_by_name('locationID').click()
-        time.sleep(3)
 
     #testing clicking a college card
     def test_collegeCard(self):
         College.objects.create(name="stony", ranking=105)
         College.objects.create(name="xyz", ranking=10)
         self.selenium.get("localhost:3000/search/college")
-        time.sleep(1)  # wait for database
         college = self.selenium.find_element_by_id("college_name")
         self.selenium.find_element_by_id('college_name').click()
-        time.sleep(1)
         self.assertIsNotNone(college)
 
 
