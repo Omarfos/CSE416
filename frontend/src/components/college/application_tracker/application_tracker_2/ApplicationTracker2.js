@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Grid } from "@material-ui/core";
 import SliderFactory from "./SliderCollegeClass";
-import StatusFilter from "./StatusFilter"
-import HighSchoolFilter from "./HighSchoolFilter"
 import EnhancedTable from "./ViewApplicationsTable";
 import CustomizedTables from "./StatisticsTable";
 import Switch from "@material-ui/core/Switch";
 import ScatterPlot from "./ScatterPlot";
+import AutocompleteFilter from "../../../AutocompleteFilter";
 
 export default function ApplicationTracker2(props) {
   const [ lax, setLax ] = useState(true);
@@ -102,8 +101,8 @@ export default function ApplicationTracker2(props) {
     <div>
       {/* FILTERS START */ }
       { FormRow(
-        <HighSchoolFilter id="high_schools" filterHighSchool={ (v) => filter("high_schools", v) } allHighSchools={ getHighSchools() } defaultValue={props.schoolSelected}/>,
-        <StatusFilter id="status" filterStatus={ (v) => filter("status", v) } />
+        <AutocompleteFilter id="high_schools" filter={ (v) => filter("high_schools", v) } label="High School" placeholder="Select High School" options={ getHighSchools() } defaultValue={props.schoolSelected} navigate={false}/>,
+        <AutocompleteFilter id="status" filter={ (v) => filter("status", v) } label="Application Status" placeholder="Select Status" options={["pending", "accepted", "denied", "deferred", "waitlisted", "withdrawn"]} navigate={false}/>
       ) }
       <br />
       <SliderFactory

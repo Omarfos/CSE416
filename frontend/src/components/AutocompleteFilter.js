@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
-export default function HighSchoolFilter(props) {
+export default function AutocompleteFilter(props) {
 
-  const handleSelectHighSchool = (high_school_name) => {
-    props.filterHighSchool(high_school_name)
+  const handleSelect = (value) => {
+    props.filter(value)
   };
 
 
@@ -13,8 +13,8 @@ export default function HighSchoolFilter(props) {
     <Autocomplete
       multiple
       id="tags-outlined"
-      options={ props.allHighSchools }
-      onChange={ (e, v) => handleSelectHighSchool(v) }
+      options={ props.options }
+      onChange={ (e, v) => handleSelect(v) }
       filterSelectedOptions
       defaultValue={props.defaultValue}
       style={{width: "100%"}}
@@ -22,8 +22,8 @@ export default function HighSchoolFilter(props) {
         <TextField
           { ...params }
           variant="outlined"
-          label="High School"
-          placeholder="Select High School"
+          label={props.label}
+          placeholder={props.placeholder}
         />
       ) }
     />
