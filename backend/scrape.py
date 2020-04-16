@@ -25,10 +25,10 @@ college_scorecard_url = (
     + college_scorecard_api_key
 )
 college_ranking_url = "http://allv22.all.cs.stonybrook.edu/~stoller/cse416/WSJ_THE/united_states_rankings_2020_limit0_25839923f8b1714cf54659d4e4af6c3b.json"
-college_data_url = "http://allv22.all.cs.stonybrook.edu/~stoller/cse416/collegedata/"
-niche_url = "http://allv22.all.cs.stonybrook.edu/~stoller/cse416/niche/"
-# college_data_url = "https://www.collegedata.com/college/"
-# niche_url = "https://www.niche.com/k12/"
+#college_data_url = "http://allv22.all.cs.stonybrook.edu/~stoller/cse416/collegedata/"
+#niche_url = "http://allv22.all.cs.stonybrook.edu/~stoller/cse416/niche/"
+college_data_url = "https://www.collegedata.com/college/"
+niche_url = "https://www.niche.com/k12/"
 
 
 def scrape_college_rankings(colleges: List[str]) -> List[dict]:
@@ -147,19 +147,20 @@ def scrape_college_data(colleges_list: List[str]) -> List[dict]:
     for college, cleaned_college in zip(colleges_list, colleges):
         d = {"name": college, "majors": []}
         url = college_data_url + cleaned_college.replace(" ", "-")
+        print(url)
 
         r = requests.get(url, headers=headers)
         if r.status_code != 200:
             print(f"ERROR: unable to scrape {url}")
             return
-
+        
         soup = BeautifulSoup(r.text, "html.parser")
-        majors = soup.find("ul", "list--nice").contents
-        majors = list(filter(lambda x: x != "\n", majors))
-        for major in majors:
-            d["majors"].append(major.text)
-
-        d["majors"] = json.dumps(d["majors"])
+        #  majors = soup.find("ul", "list--nice").contents
+        #  majors = list(filter(lambda x: x != "\n", majors))
+        #  for major in majors:
+            #  d["majors"].append(major.text)
+#  
+        #  d["majors"] = json.dumps(d["majors"])
 
         for description_list in soup.find_all("dl"):
             for k, v in zip(
@@ -202,6 +203,8 @@ def scrape_college_data(colleges_list: List[str]) -> List[dict]:
 
     return result
 
+if __name__ == '__main__':
+    scrape_college_data(['Stony Brook University'])
 
 def scrape_high_school_location():
     """

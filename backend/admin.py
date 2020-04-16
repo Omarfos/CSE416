@@ -23,15 +23,16 @@ def import_college_data(modeladmin, request, queryset):
     r = scrape_college_data([college.name for college in queryset])
     print(r)
     for college in r:
-        College.objects.filter(name=college["name"]).update(**college)
+        College.objects.filter(name__icontains=college["name"]).update(**college)
 
 
 def import_niche_data(modeladmin, request, queryset):
     r = scrape_high_school(
         [{"name": hs.name, "city": hs.city, "state": hs.state} for hs in queryset]
     )
+    print(r)
     for hs in r:
-        HighSchool.objects.filter(name=hs["name"]).update(**hs)
+        HighSchool.objects.filter(name__icontains=hs["name"]).update(**hs)
 
 
 class CollegeAdmin(ImportExportModelAdmin, admin.ModelAdmin):
@@ -89,7 +90,6 @@ class HighSchoolAdmin(ImportExportModelAdmin, admin.ModelAdmin):
 class ApplicationAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ["college", "student", "status", "questionable"]
     list_filter = ["status", "questionable"]
-    pass
 
 
 admin.site.register(Student, StudentAdmin)

@@ -107,7 +107,7 @@ def recommend_colleges(user_id, colleges):
         # n_withdrawn = len(applications.filter(status='withdrawn'))
         # n_deferred = len(applications.filter(status='deferred'))
         
-        n_pending = 0ß
+        n_pending = 0
         n_accepted = 0
         n_waitlisted = 0
         n_withdrawn = 0
