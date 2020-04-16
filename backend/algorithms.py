@@ -101,12 +101,18 @@ def recommend_colleges(user_id, colleges):
         college = College.objects.get(name=college)
         applications = college.application_set.all().filter(questionable=False)
         
-        n_pending = len(applications.filter(status='pending'))
-        n_accepted = len(applications.filter(status='accepted'))
-        n_waitlisted = len(applications.filter(status='waitlisted'))
-        n_withdrawn = len(applications.filter(status='withdrawn'))
-        n_deferred = len(applications.filter(status='deferred'))
-
+        # n_pending = len(applications.filter(status='pending'))
+        # n_accepted = len(applications.filter(status='accepted'))
+        # n_waitlisted = len(applications.filter(status='waitlisted'))
+        # n_withdrawn = len(applications.filter(status='withdrawn'))
+        # n_deferred = len(applications.filter(status='deferred'))
+        
+        n_pending = 0ß
+        n_accepted = 0
+        n_waitlisted = 0
+        n_withdrawn = 0
+        n_deferred = 0
+        
         sum_similary_score_pending = 0
         sum_similarity_score_accepted = 0
         sum_similary_score_waitlisted = 0
@@ -121,14 +127,19 @@ def recommend_colleges(user_id, colleges):
                 
                 if(student_application_status == "accepted"):
                     sum_similarity_score_accepted += student_score
+                    n_accepted += 1
                 elif(student_application_status == "pending"):
                     sum_similary_score_pending += student_score
+                    n_pending += 1
                 elif(student_application_status == "waitlisted"):
                     sum_similary_score_waitlisted += student_score
+                    n_waitlisted += 1
                 elif(student_application_status == "withdrawn"):
                     sum_similarity_score_withdrawn += student_score
+                    n_withdrawn += 1
                 elif(student_application_status == "deferred"):
                     sum_similarity_score_deferred += student_score
+                    n_deferred += 1
 
             except Application.DoesNotExist:
                 continue
