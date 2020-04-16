@@ -58,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
+    width:"20%",
   },
   tab: {
     fontSize: "1.3vw",

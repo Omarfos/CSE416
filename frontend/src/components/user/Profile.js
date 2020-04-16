@@ -79,7 +79,6 @@ export default function Profile(props) {
     event.preventDefault();
 
     if(student.high_school_name == "" || student.high_school_city == "" || student.high_school_state == ""){
-      console.log(student);
       setErrorStatus("error");
       setErrorMessage("Please enter high school information. Including city and state.");
       return;
@@ -96,9 +95,7 @@ export default function Profile(props) {
     })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       if(data.SUCCESS){
-        console.log("here");
         setErrorStatus("success");
         setErrorMessage("Update Successfully");
       }
@@ -117,7 +114,7 @@ export default function Profile(props) {
     })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
+      setApplication(data);
     });
 }
 
