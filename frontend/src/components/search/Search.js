@@ -18,6 +18,7 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import Image from "../../images/header.png";
 import SyncRoundedIcon from "@material-ui/icons/SyncRounded";
 import { LocalConvenienceStoreOutlined } from "@material-ui/icons";
+import Map from "./filters/Map"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -151,10 +152,11 @@ export default function Search(props) {
     >
       <Grid className={ classes.header } item md={ 12 }></Grid>
       <Grid item md={ 2 } className={ classes.filters }>
+        <Map id="states" navigate={navigate}/>
         <Grid container spacing={ 2 }>
-          <Grid item md={ 12 }>
+          {/* <Grid item md={ 12 }>
             <LocationFilter id="states" navigate={ navigate } />
-          </Grid>
+          </Grid> */}
 
           <Grid item md={ 12 }>
             <MajorFilter id="majors" navigate={ navigate } />
