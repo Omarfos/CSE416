@@ -8,17 +8,28 @@ const handleClick = (values) => {
     // props.navigate(props.id, states);
 };
 
+
+
 // Functional component for the SVG map. Take in the map JSON data as a prop and
 // return SVG.
 const USMap = (props) => {
   const { statesData } = props;
+  const northeast = ["ME", "NH", "VT", "MA", "NY", "RI", "CT", "PA", "NJ"]
+  const midwest = ["OH", "MI", "IN", "WI", "IL", "MI", "IA", "MO", "ND", "SD", "NE", "KS", "MN"]
+  const west = ["MT", "ID", "WY", "CO", "NM", "AZ", "UT", "NV", "CA", "OR", "WA", "AK", "HI"]
+
+  function stateRegion(state_id) {
+    let color = "orange"
+    northeast.includes(state_id) ? color = "purple" : (midwest.includes(state_id) ? color = "blue" : (west.includes(state_id) ? color="orange" : color="green"))
+    return color
+  }
 
   return (
     <svg viewBox="0 0 960 600">
       {statesData.map((stateData, index) =>
         <path
           className="someCSSClass"
-          style={{cursor: "pointer", fill: "orange"}}
+          style={{cursor: "pointer", fill: stateRegion(stateData.id)}}
           key={index}
           stroke="#fff"
           strokeWidth="6px"
@@ -31,7 +42,7 @@ const USMap = (props) => {
         //     console.log(stateData.id)
         //   }}
           onClick={(event) => {
-            event.target.style.fill == 'red' ? event.target.style.fill = 'orange' : event.target.style.fill = 'red'
+            event.target.style.fill == 'red' ? event.target.style.fill = stateRegion(stateData.id) : event.target.style.fill = 'red'
           }}
         //   onMouseOut={(event) => {
         //     event.target.style.fill = 'orange';
