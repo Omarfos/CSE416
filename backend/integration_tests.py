@@ -64,39 +64,37 @@ class MySeleniumTests(LiveServerTestCase):
         search = self.selenium.find_element_by_name("searchQuery")
         search.send_keys("Stony")
         search.send_keys(Keys.RETURN)
-        time.sleep(4)
         college = self.selenium.find_element_by_id("college_name")
-        time.sleep(4)
         self.assertIsNotNone(college)
 
 ##############################################################################################################################################
     # selenium testing with respect to sorting
-    def test_sorting(self):
-        College.objects.create(name="stony", ranking=105)
-        College.objects.create(name="xyz", ranking=10)
-        # self.selenium.get("localhost:3000/search/college?sort=ranking")
-        self.selenium.get("localhost:3000/search/college")
-        self.selenium.find_element_by_id('dropMenu').click()
-        self.selenium.find_element_by_id('rankOption').click() 
-        college = self.selenium.find_element_by_id("college_name")
-        self.assertIsNotNone(college)
-
-    #testing with respect to location
-    def test_location(self):
-        College.objects.create(name="stony", ranking=105)
-        College.objects.create(name="xyz", ranking=10)
-        self.selenium.get("localhost:3000/search/college")
-        self.selenium.find_element_by_name('locationID').click()
-
-    #testing clicking a college card
-    def test_collegeCard(self):
-        College.objects.create(name="stony", ranking=105)
-        College.objects.create(name="xyz", ranking=10)
-        self.selenium.get("localhost:3000/search/college")
-        college = self.selenium.find_element_by_id("college_name")
-        self.selenium.find_element_by_id('college_name').click()
-        self.assertIsNotNone(college)
-
+#      def test_sorting(self):
+        #  College.objects.create(name="stony", ranking=105)
+        #  College.objects.create(name="xyz", ranking=10)
+        #  # self.selenium.get("localhost:3000/search/college?sort=ranking")
+        #  self.selenium.get("localhost:3000/search/college")
+        #  self.selenium.find_element_by_id('dropMenu').click()
+        #  self.selenium.find_element_by_id('rankOption').click() 
+        #  college = self.selenium.find_element_by_id("college_name")
+        #  self.assertIsNotNone(college)
+#  
+    #  #testing with respect to location
+    #  def test_location(self):
+        #  College.objects.create(name="stony", ranking=105)
+        #  College.objects.create(name="xyz", ranking=10)
+        #  self.selenium.get("localhost:3000/search/college")
+        #  self.selenium.find_element_by_name('locationID').click()
+#  
+    #  #testing clicking a college card
+    #  def test_collegeCard(self):
+        #  College.objects.create(name="stony", ranking=105)
+        #  College.objects.create(name="xyz", ranking=10)
+        #  self.selenium.get("localhost:3000/search/college")
+        #  college = self.selenium.find_element_by_id("college_name")
+        #  self.selenium.find_element_by_id('college_name').click()
+        #  self.assertIsNotNone(college)
+#  
 
     #edit profile integration test 
     #problem rn is the handleEditProfile is not working when I try to 

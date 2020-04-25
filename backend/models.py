@@ -6,7 +6,7 @@ class HighSchool(models.Model):
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
 
-    sat = models.IntegerField(default=1000, null=True, blank=True)
+    sat = models.IntegerField(null=True, blank=True)
     act = models.IntegerField(null=True, blank=True)
     num_students = models.IntegerField(null=True, blank=True)
 

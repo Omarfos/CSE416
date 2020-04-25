@@ -23,7 +23,7 @@ def import_college_data(modeladmin, request, queryset):
     r = scrape_college_data([college.name for college in queryset])
     print(r)
     for college in r:
-        College.objects.filter(name__icontains=college["name"]).update(**college)
+        College.objects.filter(name=college["name"]).update(**college)
 
 
 def import_niche_data(modeladmin, request, queryset):

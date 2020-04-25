@@ -49,7 +49,7 @@ def import_students():
 
         # Calculate academic quality metric to make scores depentent, otherwise
         # we can have a student with SAT 1600 and 2.0 GPA.
-        quality = random.gauss(0,0.1) * 3
+        quality = random.choice([-1, -0.5, 0, 0.5, 1])
 
         d["GPA"] = min(random.gauss(3.0 + quality * 1.0, 0.2), 4.0)
 
@@ -98,15 +98,15 @@ def import_students():
 
 
 def import_hs():
-    with open("backend/data/hs.txt", "r") as f:
+    with open("backend/data/highschools.txt", "r") as f:
         hs_urls = f.read().split("\n")
-        for hs_url in hs_urls:
-            try:
-                d = scrape_high_school(hs_url)
-            except Warning:
-                print("Niche.com Wins again...")
-                return
+        try:
+            r = scrape_high_school(hs_urls, True)
+        except Warning:
+            print("Niche.com Wins again...")
+            return
 
+        for d in r:
             hs = HighSchool(**d)
             if len(HighSchool.objects.filter(name=d["name"])) == 0:
                 hs.save()

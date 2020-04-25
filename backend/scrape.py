@@ -25,10 +25,8 @@ college_scorecard_url = (
     + college_scorecard_api_key
 )
 college_ranking_url = "http://allv22.all.cs.stonybrook.edu/~stoller/cse416/WSJ_THE/united_states_rankings_2020_limit0_25839923f8b1714cf54659d4e4af6c3b.json"
-#college_data_url = "http://allv22.all.cs.stonybrook.edu/~stoller/cse416/collegedata/"
-#niche_url = "http://allv22.all.cs.stonybrook.edu/~stoller/cse416/niche/"
-college_data_url = "https://www.collegedata.com/college/"
-niche_url = "https://www.niche.com/k12/"
+college_data_url = "http://allv22.all.cs.stonybrook.edu/~stoller/cse416/collegedata/"
+niche_url = "http://allv22.all.cs.stonybrook.edu/~stoller/cse416/niche/"
 
 
 def scrape_college_rankings(colleges: List[str]) -> List[dict]:
@@ -83,14 +81,17 @@ def scrape_college_score_card(colleges: List[str]) -> List[dict]:
         scraped = {"name": college}
         college = college.replace(", ", "-")
 
-        if college == "Franklin &":
+        if college == "Franklin & Marshall College":
             college = college.replace("&", "and")
         if college == "University of Alabama":
             college = "The University of Alabama"
 
+        
         r = requests.get(
             college_scorecard_url, {"school.name": college, "fields": fields}
         ).json()["results"]
+
+        print(r)
 
         d = list(filter(lambda x: x["school.name"] == college, r))
         d = d and d[0] or r[0]  # handle null case and choose first match
@@ -106,7 +107,7 @@ def scrape_college_score_card(colleges: List[str]) -> List[dict]:
 
 def parse_test_score(s):
     if s == "Not reported":
-        return -1
+        return None
     if "average" in s:
         return int(re.match(r"(\d+)", s).group(1))
     else:
@@ -141,11 +142,13 @@ def scrape_college_data(colleges_list: List[str]) -> List[dict]:
         college = college.replace("The ", "")
         college = college.replace("& ", "")
         college = college.replace("SUNY", "State University of New York")
-        colleges.append(c)
+        colleges.append(college)
+
 
     result = []
     for college, cleaned_college in zip(colleges_list, colleges):
         d = {"name": college, "majors": []}
+        print(cleaned_college)
         url = college_data_url + cleaned_college.replace(" ", "-")
         print(url)
 
@@ -155,12 +158,12 @@ def scrape_college_data(colleges_list: List[str]) -> List[dict]:
             return
         
         soup = BeautifulSoup(r.text, "html.parser")
-        #  majors = soup.find("ul", "list--nice").contents
-        #  majors = list(filter(lambda x: x != "\n", majors))
-        #  for major in majors:
-            #  d["majors"].append(major.text)
-#  
-        #  d["majors"] = json.dumps(d["majors"])
+        majors = soup.find("ul", "list--nice").contents
+        majors = list(filter(lambda x: x != "\n", majors))
+        for major in majors:
+            d["majors"].append(major.text)
+
+        d["majors"] = json.dumps(d["majors"])
 
         for description_list in soup.find_all("dl"):
             for k, v in zip(
@@ -203,9 +206,6 @@ def scrape_college_data(colleges_list: List[str]) -> List[dict]:
 
     return result
 
-if __name__ == '__main__':
-    scrape_college_data(['Stony Brook University'])
-
 def scrape_high_school_location():
     """
     Scrapes Niche.com for links to various high schools
@@ -223,18 +223,20 @@ def scrape_high_school_location():
     return results
 
 
-def scrape_high_school(hs_list):
+def scrape_high_school(hs_list, url=False):
     result = []
     for hs in hs_list:
-        end_point = f'{hs["name"]} {hs["city"]} {hs["state"]}'
-        end_point = end_point.lower()
-        end_point = end_point.replace(" ", "-")
-        url = niche_url + end_point
+        if not url:
+            end_point = f'{hs["name"]} {hs["city"]} {hs["state"]}'
+            end_point = end_point.lower()
+            end_point = end_point.replace(" ", "-")
+            url = niche_url + end_point
+        else:
+            url = niche_url + hs
 
         faker = Faker()
         headers["User-Agent"] = faker.user_agent()
         print(f"scraping {url}")
-
         d = {}
         r = requests.get(url, headers=headers)
 
