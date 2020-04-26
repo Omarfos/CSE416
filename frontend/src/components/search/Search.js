@@ -151,7 +151,7 @@ export default function Search(props) {
       justify="center"
     >
       <Grid className={ classes.header } item md={ 12 }></Grid>
-      <Grid item md={ 2 } className={ classes.filters }>
+      <Grid item md={ 3 } className={ classes.filters }>
         <Map id="states" navigate={navigate}/>
         <Grid container spacing={ 2 }>
           {/* <Grid item md={ 12 }>

@@ -6,6 +6,7 @@ import states from "./states.json";
 export default function LocationFilter(props) {
   const handleSelectState = (values) => {
     let states = values.map((v) => v.code);
+    console.log(states)
     props.navigate(props.id, states);
   };
 

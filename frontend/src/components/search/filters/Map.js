@@ -1,101 +1,51 @@
-// Normally these would be "import" statements, but this is a simple demo and
-// is needed to render in the browser.
-import React, { useState, useEffect } from "react";
-import { withStyles } from '@material-ui/core/styles';
-import { green } from '@material-ui/core/colors';
-import FormGroup from '@material-ui/core/FormGroup';
+import React, { useState, useEffect, Component } from "react";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Tooltip from '@material-ui/core/Tooltip';
+import { makeStyles } from "@material-ui/core/styles";
 
-// const { useEffect, useState } = React;
-const handleClick = (values) => {
-    // let states = values.map((v) => v.code);
-    // props.navigate(props.id, states);
-};
-
-const GreenCheckbox = withStyles({
+const useStyles = makeStyles({ 
   root: {
-    color: green[400],
-    '&$checked': {
-      color: green[600],
-    },
-  },
-  checked: {},
-})((props) => <Checkbox color="default" {...props} />);
+        color: props => props.color,
+        '&$checked': {
+          color: props => props.color,
+        },
+      },
+      checked: {},
+});
 
+const RegionCheckbox = ((props) => {
+  const classes = useStyles({color: props.color});
+  return <Checkbox color="default" className={classes.root} {...props} />
+});
 
-
-// Functional component for the SVG map. Take in the map JSON data as a prop and
-// return SVG.
-const USMap = (props) => {
-  const { statesData } = props;
+// export default function Map(props) {
+export default function Map(props) {
+  // The statesData is null by default until we set it.
+  const [statesData, setStatesData] = useState(null);
   const northeast = ["ME", "NH", "VT", "MA", "NY", "RI", "CT", "PA", "NJ"]
   const midwest = ["OH", "MI", "IN", "WI", "IL", "MI", "IA", "MO", "ND", "SD", "NE", "KS", "MN"]
   const west = ["MT", "ID", "WY", "CO", "NM", "AZ", "UT", "NV", "CA", "OR", "WA", "AK", "HI"]
+  const [ selectedStates, setSelectedStates ] = useState([]);
+
+  const [state, setState] = React.useState({
+    checkedSouth: false,
+    checkedWest: false,
+    checkedNortheast: false,
+    checkedMidwest: false,
+  });
+
+  const handleChange = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+    console.log(event.target.name)
+    console.log(event.target.checked)
+  };
 
   function stateRegion(state_id) {
     let color = "orange"
     northeast.includes(state_id) ? color = "purple" : (midwest.includes(state_id) ? color = "blue" : (west.includes(state_id) ? color="orange" : color="green"))
     return color
   }
-
-  return (
-    <svg viewBox="0 0 960 600">
-      {statesData.map((stateData, index) =>
-      <Tooltip disableFocusListener title={stateData.name}>
-        <path
-          id={"MyPath"+stateData.id}
-          className="someCSSClass"
-          style={{cursor: "pointer", fill: stateRegion(stateData.id)}}
-          key={index}
-          stroke="#fff"
-          strokeWidth="6px"
-          d={stateData.shape}
-        //   onMouseOver={(event) => {
-        //     event.target.style.fill = 'red';
-        //     console.log("STATE NAME: ")
-        //     console.log(stateData.name)
-        //     console.log("STATE ABBREV: ")
-        //     console.log(stateData.id)
-        //   }}
-          onClick={(event) => {
-            event.target.style.fill == 'red' ? event.target.style.fill = stateRegion(stateData.id) : event.target.style.fill = 'red'
-          }}
-        //   onMouseOut={(event) => {
-        //     event.target.style.fill = 'orange';
-        //   }}
-        >
-        </path>
-        </Tooltip>
-      )}
-      {/* {statesData.map((stateData, index) =>
-        <text style={{ fontSize: '30px'}}>
-          <textPath href={"#MyPath"+stateData.id}>
-              {stateData.id}
-          </textPath>
-      </text>
-      )} */}
-    </svg>
-  )
-}
-
-// Functional component for the app. This handles loading the data and showing
-// some sort of loading UI while waiting for the data.
-export default function Map(props) {
-  // The statesData is null by default until we set it.
-  const [statesData, setStatesData] = useState(null);
-
-  const [state, setState] = React.useState({
-    checkedA: true,
-    checkedB: true,
-    checkedF: true,
-    checkedG: true,
-  });
-
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
 
   // This should only run once due to the [] arg for the dependencies.
   useEffect(() => {
@@ -116,18 +66,58 @@ export default function Map(props) {
 
   return (
     <div>
-      <USMap statesData={statesData} id={props.id} navigate={props.navigate}/>
-      <FormControlLabel
-        control={<GreenCheckbox checked={state.checkedG} onChange={handleChange} name="checkedG"/>}
-        label="South"
-      />
+      <svg viewBox="0 0 960 600">
+        {statesData.map((stateData, index) =>
+        <Tooltip disableFocusListener title={stateData.name}>
+          <path
+            id={"MyPath"+stateData.id}
+            className="someCSSClass"
+            style={{cursor: "pointer", fill: stateRegion(stateData.id)}}
+            key={index}
+            stroke="#fff"
+            strokeWidth="6px"
+            d={stateData.shape}
+            onClick={(event) => {
+              var color = event.target.style.fill
+              if(color == 'red'){
+                event.target.style.fill = stateRegion(stateData.id)
+                setSelectedStates(selectedStates.filter(item => item != stateData.id))
+                props.navigate(props.id, selectedStates)
+              }else{
+                event.target.style.fill = 'red'
+                if(!selectedStates.includes(stateData.id)){
+                  setSelectedStates(selectedStates.concat(stateData.id))
+                  props.navigate(props.id, selectedStates)
+                }
+              }
+              console.log("ALL SELECTED STATES ARE:")
+              console.log(selectedStates)
+            }}
+          >
+          </path>
+          </Tooltip>
+        )}
+      </svg>
+      <div>
+        <FormControlLabel
+          control={<RegionCheckbox checked={state.checkedWest} onChange={handleChange} name="checkedWest" color="#FFA502"/>}
+          label="West"
+        />
+        <FormControlLabel
+          control={<RegionCheckbox checked={state.checkedSouth} onChange={handleChange} name="checkedSouth" color="#008001"/>}
+          label="South"
+        />
+      </div>
+      <div>
+        <FormControlLabel
+          control={<RegionCheckbox checked={state.checkedMidwest} onChange={handleChange} name="checkedMidwest" color="#1700FF"/>}
+          label="Midwest"
+        />
+        <FormControlLabel
+          control={<RegionCheckbox checked={state.checkedNortheast} onChange={handleChange} name="checkedNortheast" color="#800080"/>}
+          label="Northeast"
+        />
+      </div>
     </div>
   );
 }
-
-// // ReactDOM is used to render React in a browser directly. This is not typical
-// // and a "normal" React build pipeline should be used for production apps.
-// ReactDOM.render(
-//   <App />,
-//   document.getElementById('demo-app'),
-// );
