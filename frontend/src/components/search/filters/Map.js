@@ -26,8 +26,17 @@ export default function Map(props) {
   const northeast = ["ME", "NH", "VT", "MA", "NY", "RI", "CT", "PA", "NJ"]
   const midwest = ["OH", "MI", "IN", "WI", "IL", "MI", "IA", "MO", "ND", "SD", "NE", "KS", "MN"]
   const west = ["MT", "ID", "WY", "CO", "NM", "AZ", "UT", "NV", "CA", "OR", "WA", "AK", "HI"]
-  const south = ["TX", "OK", "AR", "LA", "MS", "AL", "TN", "GA", "FL", "KY", "SC", "NC", "VA", "WV"]
+  const south = ["TX", "OK", "AR", "LA", "MS", "AL", "TN", "GA", "FL", "KY", "SC", "NC", "VA", "WV", "DC", "MD", "DE"]
   const [ selectedStates, setSelectedStates ] = useState([]);
+  const [ stateColor, setStateColor ] = useState(() => {
+    // var allStates = northeast.concat(midwest).concat(west).concat(south)
+    var dict = {}
+    northeast.map(state => dict[state]="purple")
+    midwest.map(state => dict[state]="blue")
+    west.map(state => dict[state]="orange")
+    south.map(state => dict[state]="green")
+    return dict
+  });
 
   const [state, setState] = React.useState({
     checkedSouth: false,
@@ -39,25 +48,30 @@ export default function Map(props) {
   useEffect(() => {
     props.navigate(props.id, selectedStates)
     console.log(selectedStates)
-  }, [ selectedStates ]);
+  }, [ selectedStates, stateColor ]);
 
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
     var checkedName = event.target.name
     var checkdeStatus = event.target.checked
+    var newStateColor = stateColor
     if(checkdeStatus == false){
       switch(checkedName){
         case "checkedWest":
           console.log("filtering west")
+          west.map(stateID => newStateColor[stateID]=stateRegion(stateID))
           setSelectedStates(selectedStates.filter(item => !west.includes(item)))
           break;
         case "checkedMidwest":
+          midwest.map(stateID => newStateColor[stateID]=stateRegion(stateID))
           setSelectedStates(selectedStates.filter(item => !midwest.includes(item)))
           break;
         case "checkedNortheast":
+          northeast.map(stateID => newStateColor[stateID]=stateRegion(stateID))
           setSelectedStates(selectedStates.filter(item => !northeast.includes(item)))
           break;
         default:
+          south.map(stateID => newStateColor[stateID]=stateRegion(stateID))
           setSelectedStates(selectedStates.filter(item => !south.includes(item)))
       }
     }else{
@@ -65,20 +79,25 @@ export default function Map(props) {
       switch(checkedName){
         case "checkedWest":
           console.log("adding west")
-          document.getElementById("MyPathNY").style.fill = "red"
+          // document.getElementById("MyPathNY").style.fill = "red"
+          west.map(stateID => newStateColor[stateID]="red")
           setSelectedStates(Array.from(new Set(selectedStates.concat(west))))
           break;
         case "checkedMidwest":
+          midwest.map(stateID => newStateColor[stateID]="red")
           setSelectedStates(Array.from(new Set(selectedStates.concat(midwest))))
           break;
         case "checkedNortheast":
+          northeast.map(stateID => newStateColor[stateID]="red")
           setSelectedStates(Array.from(new Set(selectedStates.concat(northeast))))
           break;
         default:
+          south.map(stateID => newStateColor[stateID]="red")
           setSelectedStates(Array.from(new Set(selectedStates.concat(south))))
       }
-      
+
     }
+    setStateColor(newStateColor)
   };
 
   function stateRegion(state_id) {
@@ -112,7 +131,7 @@ export default function Map(props) {
           <path
             id={"MyPath"+stateData.id}
             className="someCSSClass"
-            style={{cursor: "pointer", fill: stateRegion(stateData.id)}}
+            style={{cursor: "pointer", fill: stateColor[stateData.id]}}
             key={index}
             stroke="#fff"
             strokeWidth="6px"
@@ -121,10 +140,16 @@ export default function Map(props) {
               var color = event.target.style.fill
               if(color == 'red'){
                 console.log(event)
-                event.target.style.fill = stateRegion(stateData.id)
+                // event.target.style.fill = stateRegion(stateData.id)
+                var newStateColor = stateColor
+                newStateColor[stateData.id] = stateRegion(stateData.id)
+                setStateColor(newStateColor)
                 setSelectedStates(selectedStates.filter(item => item != stateData.id))
               }else{
-                event.target.style.fill = 'red'
+                // event.target.style.fill = 'red'
+                var newStateColor = stateColor
+                newStateColor[stateData.id] = "red"
+                setStateColor(newStateColor)
                 if(!selectedStates.includes(stateData.id)){
                   setSelectedStates(selectedStates.concat(stateData.id))
                 }
