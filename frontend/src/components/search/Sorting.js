@@ -30,9 +30,6 @@ export default function SortOptions(props) {
 
   const handleChangeSort = (event) => {
     const name = event.target.value;
-    console.log("SORT")
-    console.log(props.id)
-    console.log(name)
     props.navigate(props.id, name);
   };
 

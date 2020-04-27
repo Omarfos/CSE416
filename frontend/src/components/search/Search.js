@@ -115,6 +115,46 @@ export default function Search(props) {
       }
       setRecscores(new_recscores)
       setColleges(new_colleges)
+    }else if(params.sort == "out_state_cost"){
+      let new_colleges = Object.assign([], colleges); // names
+      let url = "http://localhost:8000/student/"+props.user+"/"
+      fetch(url).then((data) => {
+        if (data.status === 200) {
+          async function getData() {
+            let object = await data.json();
+            var userProfile = await object["student"]
+            var residenceState = userProfile["residence_state"]   
+            
+            // now we have residence state and colleges so we can assign appropriate costs and sort
+            var new_cost = []
+            console.log(residenceState)
+            new_colleges.map((college) => 
+              // college["state"] == residenceState ? console.log(college["name"]) : console.log("NO")
+              college["state"] == residenceState ? new_cost.push(college["in_state_cost"]) : new_cost.push(college["out_state_cost"])
+            );
+            console.log(new_colleges)
+            console.log(new_cost)
+
+            //1) combine the arrays:
+            var list = [];
+            for (var j = 0; j < new_colleges.length; j++) 
+                list.push({'college': new_colleges[j], 'cost': new_cost[j]});
+
+            //2) sort:
+            list.sort(function(a, b) {
+                return ((a.cost < b.cost) ? -1 : ((a.cost == b.cost) ? 0 : 1));
+            });
+
+            //3) separate them back out:
+            for (var k = 0; k < list.length; k++) {
+                new_colleges[k] = list[k].college;
+            }
+            setColleges(new_colleges)
+
+          }
+          getData();
+        }
+      });
     }else{
       history.push(
         "college?" + queryString.stringify(params, { arrayFormat: "comma" })
