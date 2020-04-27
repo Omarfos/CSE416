@@ -26,6 +26,7 @@ export default function Map(props) {
   const northeast = ["ME", "NH", "VT", "MA", "NY", "RI", "CT", "PA", "NJ"]
   const midwest = ["OH", "MI", "IN", "WI", "IL", "MI", "IA", "MO", "ND", "SD", "NE", "KS", "MN"]
   const west = ["MT", "ID", "WY", "CO", "NM", "AZ", "UT", "NV", "CA", "OR", "WA", "AK", "HI"]
+  const south = ["TX", "OK", "AR", "LA", "MS", "AL", "TN", "GA", "FL", "KY", "SC", "NC", "VA", "WV"]
   const [ selectedStates, setSelectedStates ] = useState([]);
 
   const [state, setState] = React.useState({
@@ -35,10 +36,49 @@ export default function Map(props) {
     checkedMidwest: false,
   });
 
+  useEffect(() => {
+    props.navigate(props.id, selectedStates)
+    console.log(selectedStates)
+  }, [ selectedStates ]);
+
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
-    console.log(event.target.name)
-    console.log(event.target.checked)
+    var checkedName = event.target.name
+    var checkdeStatus = event.target.checked
+    if(checkdeStatus == false){
+      switch(checkedName){
+        case "checkedWest":
+          console.log("filtering west")
+          setSelectedStates(selectedStates.filter(item => !west.includes(item)))
+          break;
+        case "checkedMidwest":
+          setSelectedStates(selectedStates.filter(item => !midwest.includes(item)))
+          break;
+        case "checkedNortheast":
+          setSelectedStates(selectedStates.filter(item => !northeast.includes(item)))
+          break;
+        default:
+          setSelectedStates(selectedStates.filter(item => !south.includes(item)))
+      }
+    }else{
+      console.log(checkedName)
+      switch(checkedName){
+        case "checkedWest":
+          console.log("adding west")
+          document.getElementById("MyPathNY").style.fill = "red"
+          setSelectedStates(Array.from(new Set(selectedStates.concat(west))))
+          break;
+        case "checkedMidwest":
+          setSelectedStates(Array.from(new Set(selectedStates.concat(midwest))))
+          break;
+        case "checkedNortheast":
+          setSelectedStates(Array.from(new Set(selectedStates.concat(northeast))))
+          break;
+        default:
+          setSelectedStates(Array.from(new Set(selectedStates.concat(south))))
+      }
+      
+    }
   };
 
   function stateRegion(state_id) {
@@ -80,14 +120,13 @@ export default function Map(props) {
             onClick={(event) => {
               var color = event.target.style.fill
               if(color == 'red'){
+                console.log(event)
                 event.target.style.fill = stateRegion(stateData.id)
                 setSelectedStates(selectedStates.filter(item => item != stateData.id))
-                props.navigate(props.id, selectedStates)
               }else{
                 event.target.style.fill = 'red'
                 if(!selectedStates.includes(stateData.id)){
                   setSelectedStates(selectedStates.concat(stateData.id))
-                  props.navigate(props.id, selectedStates)
                 }
               }
               console.log("ALL SELECTED STATES ARE:")
