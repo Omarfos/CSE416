@@ -116,7 +116,7 @@ export default function CollegeCard(props) {
 
   function fab() {
     if (props.rec_score) {
-      return <ViewProfilesButton college={props.college}/>;
+      return <ViewProfilesButton college={props.college} user={ props.user }/>;
     } else {
       return <div></div>
     }

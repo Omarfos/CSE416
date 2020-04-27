@@ -27,10 +27,11 @@ export default function ViewProfilesButton(props) {
     const [ students, setStudents ] = useState([]);
     const [ open, setOpen ] = React.useState(false);
     const [ scroll, setScroll ] = React.useState("paper");
+    const [ user, setUser] = useState(props.user);
 
     const handleClickOpen = scrollType => {
         setOpen(true);
-        handleViewSimilarProfiles(props.college.name, 'amanda82')
+        handleViewSimilarProfiles(props.college.name, user)
     };
 
     const handleClose = () => {
