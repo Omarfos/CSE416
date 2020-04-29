@@ -50,7 +50,7 @@ def register(request):
     except json.decoder.JSONDecodeError:
         return JsonResponse({}, status=400)
 
-    return JsonResponse({"SUCCESS": "User Created"})
+return JsonResponse({"SUCCESS": "User Created"})
 
 
 def login_internal(request):
@@ -71,8 +71,12 @@ def login_internal(request):
             return JsonResponse(status=400)
         user = authenticate(request, username=d["userid"], password=d["password"])
         if user is not None:
+            request.session['userid'] = d["userid"]
             login(request, user)
-            return JsonResponse({"SUCCESS": "User logged in"})
+            #request.session.modified = True
+            #print(request.session.items())
+            response = JsonResponse({"SUCCESS": "User logged in"})
+            return response
         else:
             return JsonResponse({"ERROR": "Invalid User Name or Password"})
 
@@ -120,8 +124,8 @@ def get_student_profile(request, userid):
         404: Student not found
         Student JSON
     """
+    print(request.session)
     s = get_object_or_404(Student, userid=userid)
-
     applications = []
     for app in s.application_set.all():
         applications.append(
@@ -138,6 +142,8 @@ def get_student_profile(request, userid):
 
 
 def post_student_profile(request, userid):
+    #Add authenication 
+    #print(request.user)
     s = get_object_or_404(Student, userid=userid)
     info = json.loads(request.body)
     if "high_school_name" in info:
@@ -160,6 +166,7 @@ def post_student_profile(request, userid):
 
 
 def post_student_application(request, userid):
+    #Add
     s = get_object_or_404(Student, userid=userid)
     s.application_set.all().delete()
     new_apps = json.loads(request.body)

@@ -11,6 +11,7 @@ import NotFound from "../NotFound";
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Alert from "@material-ui/lab/Alert";
+import axios from "axios";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -77,8 +78,8 @@ export default function Profile(props) {
 
   async function handleUpdateProfile(event) {
     event.preventDefault();
-
-    if(student.high_school_name == "" || student.high_school_city == "" || student.high_school_state == ""){
+    if(student.high_school_name == null || student.high_school_city == null || student.high_school_state == null ||
+       student.high_school_name == ""  || student.high_school_city == "" || student.high_school_state==""){
       setErrorStatus("error");
       setErrorMessage("Please enter high school information. Including city and state.");
       return;
@@ -86,7 +87,7 @@ export default function Profile(props) {
 
     let url = "http://localhost:8000/student/"+student.userid + "/edit/";
     let url2 = "http://localhost:8000/student/"+student.userid + "/edit/application";
-    fetch(url, {
+    axios.fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -122,20 +123,17 @@ export default function Profile(props) {
   
 
   useEffect(() => {
-    let url = "http://localhost:8000" + location.pathname; //    /student/q
-    fetch(url)
+    let url = "http://localhost:8000" + location.pathname+"/"; //    /student/q
+    axios.get(url)
       .then((data) => {
         if (data.status === 200) {
-          async function getData() {
-            let object = await data.json();
-            await setStudent(object["student"]);
-            setApplication(object["application"]);
+            console.log(data);
+            setStudent(data.data.student);
+            setApplication(data.data.application);
             if (location.pathname.substring(9) == props.user) {
               setDisable(false);
             };
             setErrorMessage("");
-          }
-          getData();
         }
       });
   }, []);

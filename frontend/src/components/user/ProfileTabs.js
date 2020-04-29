@@ -374,9 +374,7 @@ function AppliedCollege(props) {
         </Select>
       </FormControl>
 
-      <Tooltip title="Delete this college application. Nothing will be saved until clicking 'update profile'">
-        <FormControlLabel className={classes.removeButtonDiv} control={<Checkbox color="primary" disabled checked={props.application.questionable} />} label="Questionable" labelPlacement="start" />
-      </Tooltip>
+      <FormControlLabel className={classes.removeButtonDiv} control={<Checkbox color="primary" disabled checked={props.application.questionable} />} label="Questionable" labelPlacement="start" />
       <div className={classes.float}>
         {!props.disable &&
           <Tooltip title="Delete this college application. Nothing will be saved until clicking 'update profile'">
