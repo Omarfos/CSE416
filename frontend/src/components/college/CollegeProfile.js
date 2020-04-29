@@ -13,8 +13,8 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import NotFound from "../NotFound";
-import SimpleTabs from "./collegeTabComponent";
 import SimpleCard from "./CollegeInfo";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -63,15 +63,11 @@ export default function CollegeProfile(props) {
 
   useEffect(() => {
     let url = "http://localhost:8000" + location.pathname; //    /college/q
-    fetch(url)
+    axios.get(url)
       //.then(response => response.json())
       .then((data) => {
         if (data.status === 200) {
-          async function getData() {
-            let college = await data.json();
-            setCollege(college);
-          }
-          getData();
+          setCollege(data.data);
         }
       });
   }, []);

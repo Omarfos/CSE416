@@ -54,19 +54,18 @@ export default function SignIn(props) {
     e.preventDefault();
     let userid = e.target.userid.value;
     let password = e.target.password.value;
-    fetch("http://localhost:8000/login/", {
+    axios.post("http://localhost:8000/login/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userid, password }),
+      loginInfo: JSON.stringify({ userid, password }),
     })
-      .then((response) => response.json())
       .then((data) => {
-        if (data.SUCCESS) {
+        if (data.status==200) {
           props.setUser(userid);
           props.setError(null);
-        } else if (data.ERROR) {
+        } else{
           props.setError("Wrong username or password");
         }
       })

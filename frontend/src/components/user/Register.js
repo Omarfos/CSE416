@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Alert from "@material-ui/lab/Alert";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -58,12 +59,12 @@ export default function Register(props) {
     if ((await validateEmail(email)) === false) {
       props.setError("Invalid Email Address");
     } else {
-      fetch("http://localhost:8000/register/", {
+      axios.post("http://localhost:8000/register/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
+        info: JSON.stringify({
           first_name,
           last_name,
           email,
@@ -71,13 +72,12 @@ export default function Register(props) {
           password,
         }),
       })
-        .then((response) => response.json())
         .then((data) => {
-          if (data.ERROR) {
-            props.setError("ERROR: user already exists");
-          } else if (data.SUCCESS) {
+          if (data.status == 200) {
             props.setUser(userid);
             props.setError(null);
+          } else if (data.SUCCESS) {
+            props.setError("ERROR: user already exists");
           }
         })
         .catch((error) => {

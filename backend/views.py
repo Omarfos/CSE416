@@ -34,9 +34,9 @@ def register(request):
         SUCCESS: User is created successfuly
         ERROR: User already exists
     """
-    print("Register: ",request.session.items())
     try:
-        d = json.loads(request.body)
+        d = json.loads(request.body)["info"]
+        d = json.loads(d)
         if "userid" not in d or "password" not in d:
             return JsonResponse({}, status=400)
         user = User.objects.create_user(d["userid"], password=d["password"])
@@ -65,9 +65,9 @@ def login_internal(request):
         SUCCESS: User is logged in successfuly
         ERROR: Invalid credentials 
     """
-    print("Login: ",request.session.items())
     try:
-        d = json.loads(request.body)
+        d = json.loads(request.body)['loginInfo']
+        d = json.loads(d)
         if "userid" not in d or "password" not in d:
             return JsonResponse(status=400)
         user = authenticate(request, username=d["userid"], password=d["password"])
@@ -94,16 +94,12 @@ def college(request, name="Stony Brook University"):
         404: College not found
         College JSON
     """
-
-    print("College: ",request.session.items())
     college = get_object_or_404(College, name=name)
     r = model_to_dict(college)
     return JsonResponse(r)
 
 
 def get_college_applications(request, name):
-    print("GetCollegeApp: ",request.session.items())
-
     college = get_object_or_404(College, name=name)
     applications = college.application_set.all()
     response = []
@@ -126,8 +122,6 @@ def get_student_profile(request, userid):
         404: Student not found
         Student JSON
     """
-    
-    print("GetStudent: ",request.session.items())
     s = get_object_or_404(Student, userid=userid)
     applications = []
     for app in s.application_set.all():
