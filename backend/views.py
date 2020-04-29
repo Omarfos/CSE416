@@ -50,8 +50,7 @@ def register(request):
     except json.decoder.JSONDecodeError:
         return JsonResponse({}, status=400)
 
-return JsonResponse({"SUCCESS": "User Created"})
-
+    return JsonResponse({"SUCCESS": "User Created"})
 
 def login_internal(request):
     """Authenticates a user.
