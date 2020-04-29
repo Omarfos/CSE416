@@ -87,16 +87,15 @@ export default function Profile(props) {
 
     let url = "http://localhost:8000/student/"+student.userid + "/edit/";
     let url2 = "http://localhost:8000/student/"+student.userid + "/edit/application";
-    axios.fetch(url, {
+    axios.post(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(student),
+      student: JSON.stringify(student),
     })
-    .then((response) => response.json())
     .then((data) => {
-      if(data.SUCCESS){
+      if(data.status == 200){
         setErrorStatus("success");
         setErrorMessage("Update Successfully");
       }
@@ -106,28 +105,24 @@ export default function Profile(props) {
       }
     });
 
-    fetch(url2, {
+    axios.post(url2, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(application),
+      application: JSON.stringify(application),
     })
-    .then((response) => response.json())
-    .then((data) => {
-      setApplication(data);
+    .then((res) => {
+      setApplication(res.data);
     });
 }
 
     
-  
-
   useEffect(() => {
     let url = "http://localhost:8000" + location.pathname+"/"; //    /student/q
     axios.get(url)
       .then((data) => {
         if (data.status === 200) {
-            console.log(data);
             setStudent(data.data.student);
             setApplication(data.data.application);
             if (location.pathname.substring(9) == props.user) {

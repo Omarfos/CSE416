@@ -34,6 +34,7 @@ def register(request):
         SUCCESS: User is created successfuly
         ERROR: User already exists
     """
+    print("Register: ",request.session.items())
     try:
         d = json.loads(request.body)
         if "userid" not in d or "password" not in d:
@@ -64,16 +65,15 @@ def login_internal(request):
         SUCCESS: User is logged in successfuly
         ERROR: Invalid credentials 
     """
+    print("Login: ",request.session.items())
     try:
         d = json.loads(request.body)
         if "userid" not in d or "password" not in d:
             return JsonResponse(status=400)
         user = authenticate(request, username=d["userid"], password=d["password"])
         if user is not None:
-            request.session['userid'] = d["userid"]
             login(request, user)
-            #request.session.modified = True
-            #print(request.session.items())
+            request.session['userid'] = d["userid"]
             response = JsonResponse({"SUCCESS": "User logged in"})
             return response
         else:
@@ -94,14 +94,17 @@ def college(request, name="Stony Brook University"):
         404: College not found
         College JSON
     """
+
+    print("College: ",request.session.items())
     college = get_object_or_404(College, name=name)
     r = model_to_dict(college)
     return JsonResponse(r)
 
 
 def get_college_applications(request, name):
-    college = get_object_or_404(College, name=name)
+    print("GetCollegeApp: ",request.session.items())
 
+    college = get_object_or_404(College, name=name)
     applications = college.application_set.all()
     response = []
     for app in applications:
@@ -123,7 +126,8 @@ def get_student_profile(request, userid):
         404: Student not found
         Student JSON
     """
-    print(request.session)
+    
+    print("GetStudent: ",request.session.items())
     s = get_object_or_404(Student, userid=userid)
     applications = []
     for app in s.application_set.all():
@@ -144,7 +148,8 @@ def post_student_profile(request, userid):
     #Add authenication 
     #print(request.user)
     s = get_object_or_404(Student, userid=userid)
-    info = json.loads(request.body)
+    info = json.loads(request.body)['student']
+    info = json.loads(info)
     if "high_school_name" in info:
         with transaction.atomic():
             if not HighSchool.objects.filter(name__icontains=info["high_school_name"]):
@@ -168,8 +173,8 @@ def post_student_application(request, userid):
     #Add
     s = get_object_or_404(Student, userid=userid)
     s.application_set.all().delete()
-    new_apps = json.loads(request.body)
-
+    new_apps = json.loads(request.body)['application']
+    new_apps = json.loads(new_apps)
     for app in new_apps:
         college = College.objects.get(name=app["college"])
         a = Application(
@@ -199,6 +204,7 @@ def search(request):
         ranking, name, size, adm_rate, out_state_cost, SAT_math, SAT_EBRW,
         ACT_composite, states, majors, sort
     """
+    print("Search: ",request.session.items())
     params = request.GET
     query = Q()
     colleges = College.objects.all()

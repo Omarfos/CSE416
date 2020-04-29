@@ -9,9 +9,11 @@ import Navbar from "./components/Navbar.js";
 import { Route, Switch, Redirect } from "react-router-dom";
 import "./App.css";
 import NotFound from "./components/NotFound";
+import axios from 'axios';
 
 function App() {
   //Set it to this right now.
+  axios.defaults.withCredentials = true;
   const [ user, setUser ] = useState(null);
   const [ errorMessage, setErrorMessage ] = useState(null);
   return (
