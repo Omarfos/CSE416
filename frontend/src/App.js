@@ -16,19 +16,16 @@ function App() {
   axios.defaults.withCredentials = true;
   const [ user, setUser ] = useState(null);
   const [ errorMessage, setErrorMessage ] = useState(null);
-
   useEffect(() => {
     axios.get("http://localhost:8000/loginCheck/")
     .then((data) => {
-      if (data.status === 200) {
-        setUser(data.data.user);
-      }
-    });
+      setUser(data.data.user);
+    })
   }, []);
 
   return (
     <div className="App">
-      <Navbar user={ user } setUser={ setUser } />
+      <Navbar user={ user } setUser={ setUser }/>
       <Switch>
         <Route exact path="/" render={ () => <Home /> } />
         <Route exact path="/search/:q" render={ () => <Search user={ user } /> } />

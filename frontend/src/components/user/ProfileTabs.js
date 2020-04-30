@@ -352,11 +352,12 @@ function AppliedCollege(props) {
 
       <MultipleSelect application={props.application} keyID={props.keyID} disable={props.disable} handleEditCollege={props.handleEditCollege} />
 
-      <FormControl className={classes.statusDropdown}>
+      <FormControl className={classes.statusDropdown} disable={props.disable}>
         <InputLabel shrink htmlFor="status" >
           Status
         </InputLabel>
         <Select
+          disabled={props.disable}
           value={props.application.status}
           onChange={(e) => { props.handleStatusChange(e, props.keyID) }}
           inputProps={{

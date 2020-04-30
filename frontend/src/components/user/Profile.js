@@ -118,21 +118,26 @@ export default function Profile(props) {
 }
 
     
+
   useEffect(() => {
     let url = "http://localhost:8000" + location.pathname+"/"; //    /student/q
     axios.get(url)
       .then((data) => {
         if (data.status === 200) {
-            setStudent(data.data.student);
-            setApplication(data.data.application);
-            if (location.pathname.substring(9) == props.user) {
-              setDisable(false);
-            };
-            setErrorMessage("");
+          console.log("getstudent")
+          setStudent(data.data.student);
+          setApplication(data.data.application);
+          setErrorMessage("");
         }
       });
   }, []);
 
+  useEffect(()=>{
+    if (location.pathname.substring(9) == props.user) {
+      setDisable(false);
+    };
+  },[props.user, student])
+  
   return (
     <div>
       {!student && <NotFound />}

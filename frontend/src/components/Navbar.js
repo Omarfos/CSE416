@@ -2,8 +2,9 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Route, Switch, Redirect } from "react-router-dom";
 import logoImage from "../images/logo.png";
 import Divider from "@material-ui/core/Divider";
@@ -104,25 +105,24 @@ export default function Navbar(props) {
           <Route exact path={["/search/:q", "/college/:id"]}>
             <SearchBar classes={classes} handleSearch={handleSearch} placeholder="Search for College"/>
           </Route>
-
-          {props.user && (
+          {props.user &&(
             <React.Fragment>
-              <Link className={classes.button} to={"/student/" + props.user}>
+              <Link className={classes.button} href={"/student/" + props.user}>
                 Profile
               </Link>
               <Divider orientation="vertical" className={classes.divider} />
-              <Link className={classes.button} to="/" onClick={handleLogout}>
+              <Link className={classes.button} href="/" onClick={handleLogout}>
                 Log out
               </Link>
             </React.Fragment>
           )}
-          {!props.user && (
+          {!props.user &&(
             <React.Fragment>
-              <Link className={classes.button} to="/login">
+              <Link className={classes.button} href="/login">
                 Login
               </Link>
               <Divider orientation="vertical" className={classes.divider} />
-              <Link className={classes.button} to="/register">
+              <Link className={classes.button} href="/register">
                 Register
               </Link>
             </React.Fragment>
