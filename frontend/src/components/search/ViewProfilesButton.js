@@ -7,6 +7,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import EnhancedTable from "./ViewProfilesTable";
+import { similarStudentUrl } from "../Url";
 
 const useStyles = makeStyles((theme) => ({
   
@@ -51,7 +52,7 @@ export default function ViewProfilesButton(props) {
 
     const handleViewSimilarProfiles = (college, userid) => {
 
-        axios.get("http://localhost:8000/similar/student", {
+        axios.get(similarStudentUrl, {
           responseType: "json",
           params: {
             userid: userid,

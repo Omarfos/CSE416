@@ -7,6 +7,7 @@ import CustomizedTables from "./StatisticsTable";
 import Switch from "@material-ui/core/Switch";
 import ScatterPlot from "./ScatterPlot";
 import AutocompleteFilter from "../../../AutocompleteFilter";
+import { collegeUrl } from "../../../Url";
 
 export default function ApplicationTracker2(props) {
   const [ lax, setLax ] = useState(true);
@@ -25,7 +26,7 @@ export default function ApplicationTracker2(props) {
   }, []);
 
   const getApplications = () => {
-    axios.get("http://localhost:8000/college/" + props.college + "/applications", {
+    axios.get(collegeUrl + props.college + "/applications", {
       responseType: "json",
     })
       .then((response) => {

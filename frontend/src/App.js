@@ -10,6 +10,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import "./App.css";
 import NotFound from "./components/NotFound";
 import axios from 'axios';
+import { loginCheckUrl } from "./components/Url";
 
 function App() {
   //Set it to this right now.
@@ -17,7 +18,7 @@ function App() {
   const [ user, setUser ] = useState(null);
   const [ errorMessage, setErrorMessage ] = useState(null);
   useEffect(() => {
-    axios.get("http://localhost:8000/loginCheck/")
+    axios.get(loginCheckUrl)
     .then((data) => {
       setUser(data.data.user);
     })

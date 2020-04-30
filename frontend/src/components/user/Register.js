@@ -12,6 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Alert from "@material-ui/lab/Alert";
 import axios from "axios";
+import { registerUrl } from "../Url";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -59,7 +60,7 @@ export default function Register(props) {
     if ((await validateEmail(email)) === false) {
       props.setError("Invalid Email Address");
     } else {
-      axios.post("http://localhost:8000/register/", {
+      axios.post(registerUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

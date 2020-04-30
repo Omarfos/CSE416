@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Alert from "@material-ui/lab/Alert";
 import axios from "axios";
+import { studentUrl, hostUrl } from "../Url";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -85,8 +86,8 @@ export default function Profile(props) {
       return;
     }
 
-    let url = "http://localhost:8000/student/"+student.userid + "/edit/";
-    let url2 = "http://localhost:8000/student/"+student.userid + "/edit/application";
+    let url = studentUrl+student.userid + "/edit/";
+    let url2 = studentUrl+student.userid + "/edit/application";
     axios.post(url, {
       method: "POST",
       headers: {
@@ -120,7 +121,7 @@ export default function Profile(props) {
     
 
   useEffect(() => {
-    let url = "http://localhost:8000" + location.pathname+"/"; //    /student/q
+    let url = hostUrl + location.pathname+"/"; //    /student/q
     axios.get(url)
       .then((data) => {
         if (data.status === 200) {

@@ -19,6 +19,7 @@ import Image from "../../images/header.png";
 import SyncRoundedIcon from "@material-ui/icons/SyncRounded";
 import { LocalConvenienceStoreOutlined } from "@material-ui/icons";
 import Map from "./filters/Map"
+import { searchUrl, studentUrl, recommendUrl } from "../Url";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,7 +73,7 @@ export default function Search(props) {
   const handleSearch = (query) => {
     setLoading(true);
     axios
-      .get("http://localhost:8000/search" + query, {
+      .get(searchUrl + query, {
         responseType: "json",
       })
       .then((response) => {
@@ -117,7 +118,7 @@ export default function Search(props) {
       setColleges(new_colleges)
     }else if(params.sort == "out_state_cost"){
       let new_colleges = Object.assign([], colleges); // names
-      let url = "http://localhost:8000/student/"+props.user+"/"
+      let url = studentUrl+props.user+"/"
       fetch(url).then((data) => {
         if (data.status === 200) {
           async function getData() {
@@ -166,7 +167,7 @@ export default function Search(props) {
     setLoading(true)
     const college_names = colleges.map(c => c.name)
     axios
-      .get("http://localhost:8000/recommend", {
+      .get(recommendUrl, {
         responseType: "json",
         params: {
           userid: props.user,

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import SearchBar from "../../../SearchBar";
 import axios from "axios";
+import { similarHighSchoolUrl } from "../../../Url";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,7 +37,7 @@ export default function ApplicationTracker1(props) {
       const high_school_name= e.target.searchQuery.value;
 
       axios
-      .get("http://localhost:8000/similar/hs", {
+      .get(similarHighSchoolUrl, {
         responseType: "json",
         params: {
           high_school: e.target.searchQuery.value,

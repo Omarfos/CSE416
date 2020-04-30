@@ -15,6 +15,7 @@ import TableRow from "@material-ui/core/TableRow";
 import NotFound from "../NotFound";
 import SimpleCard from "./CollegeInfo";
 import axios from "axios";
+import { hostUrl } from "../Url";
 
 const useStyles = makeStyles((theme) => ({
   body: {
@@ -64,7 +65,7 @@ export default function CollegeProfile(props) {
 
   
   useEffect(() => {
-    let url = "http://localhost:8000" + location.pathname; //    /college/q
+    let url = hostUrl + location.pathname; //    /college/q
     axios.get(url)
       //.then(response => response.json())
       .then((data) => {

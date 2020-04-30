@@ -10,6 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Alert from "@material-ui/lab/Alert";
 import axios from "axios";
+import { loginUrl } from "../Url";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -54,7 +55,7 @@ export default function SignIn(props) {
     e.preventDefault();
     let userid = e.target.userid.value;
     let password = e.target.password.value;
-    axios.post("http://localhost:8000/login/", {
+    axios.post(loginUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

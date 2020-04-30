@@ -10,6 +10,7 @@ import logoImage from "../images/logo.png";
 import Divider from "@material-ui/core/Divider";
 import SearchBar from "../components/SearchBar";
 import axios from "axios";
+import { logoutUrl } from "./Url";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,7 +73,7 @@ export default function Navbar(props) {
   let history = useHistory();
 
   async function handleLogout() {
-    axios.post("http://localhost:8000/logout/",{
+    axios.post(logoutUrl,{
       method: "POST",
     headers: {
       "Content-Type": "application/json",
