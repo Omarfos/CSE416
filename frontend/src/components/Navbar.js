@@ -30,6 +30,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 25,
     paddingLeft: "15px",
     paddingRight: "15px",
+    paddingTop: "18px",
+    paddingBottom: "18px",
     "&:hover": {
       background: "hsla(240, 48%, 41%, 0.1)",
       color: "#5d6896",
@@ -96,7 +98,7 @@ export default function Navbar(props) {
       <AppBar position="fixed" className={classes.navBar}>
         <Toolbar>
           <Typography align="left" className={classes.title}>
-            <Link to="/">
+            <Link href="/">
               <img src={logoImage} className={classes.logo} />
             </Link>
           </Typography>
