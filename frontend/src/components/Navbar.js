@@ -4,14 +4,11 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { Link, useHistory } from "react-router-dom";
-import SearchIcon from "@material-ui/icons/Search";
-import Paper from "@material-ui/core/Paper";
-import InputBase from "@material-ui/core/InputBase";
-import IconButton from "@material-ui/core/IconButton";
 import { Route, Switch, Redirect } from "react-router-dom";
 import logoImage from "../images/logo.png";
 import Divider from "@material-ui/core/Divider";
 import SearchBar from "../components/SearchBar";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,7 +69,20 @@ export default function Navbar(props) {
   let history = useHistory();
 
   async function handleLogout() {
-    props.setUser(null);
+    axios.post("http://localhost:8000/logout/",{
+      method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    userid: props.user
+  }).then((data) => {
+      if (data.status == 200) {
+        props.setUser(null);
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
   }
 
   const handleSearch= (event)=> {

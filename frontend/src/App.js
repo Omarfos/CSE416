@@ -16,6 +16,16 @@ function App() {
   axios.defaults.withCredentials = true;
   const [ user, setUser ] = useState(null);
   const [ errorMessage, setErrorMessage ] = useState(null);
+
+  useEffect(() => {
+    axios.get("http://localhost:8000/loginCheck/")
+    .then((data) => {
+      if (data.status === 200) {
+        setUser(data.data.user);
+      }
+    });
+  }, []);
+
   return (
     <div className="App">
       <Navbar user={ user } setUser={ setUser } />
@@ -26,10 +36,7 @@ function App() {
           exact
           path="/college/:id"
           render={ () => (
-            <CollegeProfile
-              errorMessage={ errorMessage }
-              setError={ setErrorMessage }
-            />
+            <CollegeProfile/>
           ) }
         />
         <Route

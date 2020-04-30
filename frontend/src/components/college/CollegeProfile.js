@@ -58,9 +58,11 @@ export default function CollegeProfile(props) {
   //Use to store the similar high schools.
   const [resultDisplay, setResultDisplay] = useState(null);
   //Use to store the results for similar student profiles.
+  const [ errorMessage, setErrorMessage ] = useState(null);
   const location = useLocation();
   const classes = useStyles();
 
+  
   useEffect(() => {
     let url = "http://localhost:8000" + location.pathname; //    /college/q
     axios.get(url)
@@ -178,7 +180,7 @@ export default function CollegeProfile(props) {
                   </TableContainer>
                 </Grid>
               </Grid>
-              <SimpleCard college={college} errorMessage={props.errorMessage} setErrorMessage={props.setError}/>
+              <SimpleCard college={college} errorMessage={errorMessage} setErrorMessage={setErrorMessage}/>
             </div>
           </Container>
         </div>

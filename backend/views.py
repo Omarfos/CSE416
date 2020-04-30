@@ -5,11 +5,12 @@ from django.http import HttpResponse, JsonResponse, HttpRequest
 from django.core import serializers
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.db.utils import IntegrityError
 from django.db.models import Q
 from django.db import transaction
 from django.forms.models import model_to_dict
+from django.contrib.auth.models import AnonymousUser
 
 # from django.core.exceptions import DoesNotExist
 
@@ -46,6 +47,9 @@ def register(request):
         user.save()
         student = Student(userid=d["userid"])
         student.save()
+        userAuth = authenticate(request, username=d["userid"], password=d["password"])
+        if userAuth is not None:
+            login(request, userAuth)
     except IntegrityError:
         return JsonResponse({"ERROR": "User already exists"})
     except json.decoder.JSONDecodeError:
@@ -73,7 +77,6 @@ def login_internal(request):
         user = authenticate(request, username=d["userid"], password=d["password"])
         if user is not None:
             login(request, user)
-            request.session['userid'] = d["userid"]
             response = JsonResponse({"SUCCESS": "User logged in"})
             return response
         else:
@@ -81,6 +84,27 @@ def login_internal(request):
 
     except json.decoder.JSONDecodeError:
         return JsonResponse({}, status=400)
+
+def logout_internal(request):
+    """Logout a user and clean session. 
+
+    Parameters:
+        request: POST, JSON 
+        {userid} 
+
+    Returns:
+        400: invalid input
+        SUCCESS: User is logged in successfuly
+        ERROR: Invalid credentials 
+    """
+    logout(request)
+    return JsonResponse({"SUCCESS": "User logged out"})
+    
+def check_if_login(request):
+    currentUser = ""
+    if request.user:
+        currentUser = request.user.username
+    return JsonResponse({"user": currentUser})
 
 
 def college(request, name="Stony Brook University"):
@@ -198,7 +222,6 @@ def search(request):
         ranking, name, size, adm_rate, out_state_cost, SAT_math, SAT_EBRW,
         ACT_composite, states, majors, sort
     """
-    print("Search: ",request.session.items())
     params = request.GET
     query = Q()
     colleges = College.objects.all()
