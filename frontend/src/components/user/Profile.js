@@ -124,7 +124,6 @@ export default function Profile(props) {
     axios.get(url)
       .then((data) => {
         if (data.status === 200) {
-          console.log("getstudent")
           setStudent(data.data.student);
           setApplication(data.data.application);
           setErrorMessage("");
@@ -136,7 +135,7 @@ export default function Profile(props) {
     if (location.pathname.substring(9) == props.user) {
       setDisable(false);
     };
-  },[props.user, student])
+  },[props.user, student, setStudent])
   
   return (
     <div>

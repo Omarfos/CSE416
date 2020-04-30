@@ -163,48 +163,57 @@ def get_student_profile(request, userid):
 
 
 def post_student_profile(request, userid):
-    #Add authenication 
-    #print(request.user)
-    s = get_object_or_404(Student, userid=userid)
-    info = json.loads(request.body)['student']
-    info = json.loads(info)
-    if "high_school_name" in info:
-        with transaction.atomic():
-            if not HighSchool.objects.filter(name__icontains=info["high_school_name"]):
-                hs = scrape_high_school([
-                    {
-                        "name": info["high_school_name"],
-                        "city": info["high_school_city"],
-                        "state": info["high_school_state"],
-                    }
-                ])
-                if not hs:
-                    return JsonResponse({"ERROR": "hs not found"}, status=400)
-                HighSchool(**hs[0]).save()
+    """
+    Returns:
+    404: Student not found
+    400: High School not found
+    403: Not authorized
+    Student JSON
+    """
+    if request.user.is_authenticated and request.user.username == userid:
+        s = get_object_or_404(Student, userid=userid)
+        info = json.loads(request.body)['student']
+        print(info)
+        info = json.loads(info)
+        if "high_school_name" in info:
+            with transaction.atomic():
+                if not HighSchool.objects.filter(name__icontains=info["high_school_name"]):
+                    hs = scrape_high_school([
+                        {
+                            "name": info["high_school_name"],
+                            "city": info["high_school_city"],
+                            "state": info["high_school_state"],
+                        }
+                    ])
+                    if not hs:
+                        return JsonResponse({"ERROR": "hs not found"}, status=400)
+                    HighSchool(**hs[0]).save()
 
-    Student.objects.filter(userid=userid).update(**info)
-
-    return JsonResponse({"SUCCESS": "User updated"})
+        Student.objects.filter(userid=userid).update(**info)
+        return JsonResponse({"SUCCESS": "User updated"})
+    else:
+        return JsonResponse({"ERROR: not authorized"}, status=403)
 
 
 def post_student_application(request, userid):
-    #Add
-    s = get_object_or_404(Student, userid=userid)
-    s.application_set.all().delete()
-    new_apps = json.loads(request.body)['application']
-    new_apps = json.loads(new_apps)
-    for app in new_apps:
-        college = College.objects.get(name=app["college"])
-        a = Application(
-            student=s,
-            college=college,
-            status=app["status"],
-            questionable=verify_acceptance_decision(userid, app),
-        )
-        app["questionable"] = a.questionable
-        a.save()
-
-    return JsonResponse(new_apps, safe=False)
+    if request.user.is_authenticated and request.user.username == userid:
+        s = get_object_or_404(Student, userid=userid)
+        s.application_set.all().delete()
+        new_apps = json.loads(request.body)['application']
+        new_apps = json.loads(new_apps)
+        for app in new_apps:
+            college = College.objects.get(name=app["college"])
+            a = Application(
+                student=s,
+                college=college,
+                status=app["status"],
+                questionable=verify_acceptance_decision(userid, app),
+            )
+            app["questionable"] = a.questionable
+            a.save()
+        return JsonResponse(new_apps, safe=False)
+    else:
+        return JsonResponse({"ERROR: not authorized"}, status=403)
 
 
 def search(request):
