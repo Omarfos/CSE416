@@ -64,7 +64,6 @@ class StudentAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = [
         "userid",
         "GPA",
-        "SAT",
         "ACT_composite",
         "high_school_name",
         "high_school_city",

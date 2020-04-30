@@ -3,6 +3,7 @@ from backend.models import College, Student, HighSchool, Application
 from backend.scrape import scrape_high_school, scrape_college_data
 from faker import Faker
 import random
+import csv
 
 
 def import_colleges():
@@ -111,12 +112,32 @@ def import_hs():
             if len(HighSchool.objects.filter(name=d["name"])) == 0:
                 hs.save()
 
+def import_students_csv():
+    with open('students.csv', newline='') as csvfile:
+        spamreader = csv.DictReader(csvfile)
+        for row in spamreader:
+            b = {}
+            for k,v in row.items():
+                if v:
+                    b[k] = v
+            if "SAT_math" and "SAT_EBRW" in b:
+                b["SAT"] = int(b["SAT_math"]) + int(b["SAT_EBRW"])
+            Student(**b).save()
+
+def import_applications():
+    with open('applications.csv', newline='') as csvfile:
+        r = csv.DictReader(csvfile)
+        for row in r:
+            s = Student.objects.get(userid=row['userid'])
+            c = College.objects.get(name=row['college'])
+            Application(student=s, college=c, status=row['status']).save()
 
 class Command(BaseCommand):
     help = "Import either the Student dataset or Colleges from college.txt"
 
     def add_arguments(self, parser):
-        parser.add_argument("data_type", choices=["college", "student", "hs"])
+        parser.add_argument("data_type", choices=["college", "student", "hs",
+            "scsv", "acsv"])
 
     def handle(self, *args, **options):
 
@@ -128,6 +149,16 @@ class Command(BaseCommand):
         elif options["data_type"] == "student":
             self.stdout.write(self.style.SUCCESS("Importing Students"))
             import_students()
+            self.stdout.write(self.style.SUCCESS("Importing Successful"))
+
+        elif options["data_type"] == "scsv":
+            self.stdout.write(self.style.SUCCESS("Importing Students"))
+            import_students_csv()
+            self.stdout.write(self.style.SUCCESS("Importing Successful"))
+
+        elif options["data_type"] == "acsv":
+            self.stdout.write(self.style.SUCCESS("Importing Applications"))
+            import_applications()
             self.stdout.write(self.style.SUCCESS("Importing Successful"))
 
         else:

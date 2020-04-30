@@ -22,7 +22,6 @@ class Student(models.Model):
     password = models.CharField(max_length=100, null=True)
     residence_state = models.CharField(max_length=2, null=True, blank=True)
 
-    high_school = models.ForeignKey(HighSchool, on_delete=models.CASCADE, null=True, blank=True)
     high_school_name = models.CharField(max_length=100, null=True, blank=True)
     high_school_city = models.CharField(max_length=100, null=True, blank=True)
     high_school_state = models.CharField(max_length=2, null=True, blank=True)
@@ -32,7 +31,7 @@ class Student(models.Model):
     GPA = models.DecimalField(max_digits=3, decimal_places=2, null=True, blank=True)
 
     college_class = models.IntegerField(null=True, blank=True)
-    ACT_english = models.IntegerField(null=True, blank=True)
+    ACT_English = models.IntegerField(null=True, blank=True)
     ACT_math = models.IntegerField(null=True, blank=True)
     ACT_reading = models.IntegerField(null=True, blank=True)
     ACT_science = models.IntegerField(null=True, blank=True)
