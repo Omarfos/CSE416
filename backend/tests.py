@@ -72,6 +72,47 @@ class LoginTests(TestCase):
         self.assertEqual(r.status_code, 200)
         self.assertEqual(r.json().get("ERROR", ""), "Invalid User Name or Password")
 
+class LogoutTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(username="bonya", password="meow")
+
+    def test_logout_valid_creds(self):
+        r = self.client.post(
+            "/login/",
+            {"loginInfo":"{\"userid\": \"bonya\", \"password\": \"meow\"}"},
+            content_type="application/json",
+        )
+        r1 = self.client.post(
+            "/logout/",
+            {"userid":"bonya"},
+        )
+        self.assertEqual(r1.status_code, 200)
+        self.assertEqual(r1.json().get("SUCCESS", ""),"User logged out")
+
+
+class CheckIfLoginTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(username="bonya", password="meow")
+
+    def test_if_login_valid(self):
+        r = self.client.post(
+            "/login/",
+            {"loginInfo":"{\"userid\": \"bonya\", \"password\": \"meow\"}"},
+            content_type="application/json",
+        )
+        r1 = self.client.post(
+            "/loginCheck/",
+        )
+        self.assertEqual(r1.json().get("user", ""),"bonya")
+
+    def test_if_login_Invalid(self):
+        r1 = self.client.post(
+            "/loginCheck/",
+        )
+        self.assertEqual(r1.json().get("user", ""),"")
+
 
 class StudentProfileTests(TestCase):
     def setUp(self):
@@ -86,6 +127,19 @@ class StudentProfileTests(TestCase):
     def test_invalid_view_profile(self):
         r = self.client.get("/student/Olesia/")
         self.assertEqual(r.status_code, 404)
+
+# class StudentProfilePostTests(TestCase):
+#     def setUp(self):
+#         self.client = Client()
+#         self.student = Student.objects.create(userid="Bonya", major_1="Felinology")
+
+    # def test_change_profile(self):
+    #     r = self.client.post(
+    #         "/student/bonya/edit/",
+    #         {"student":"{\"userid\": \"bonya\", \"password\": \"meow\"}"},
+    #         content_type="application/json",
+    #     )
+    #     self.assertEqual(r.status_code, 301)
 
 
 class SearchTests(TestCase):
