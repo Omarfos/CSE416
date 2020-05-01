@@ -78,7 +78,7 @@ function ScatterPlot(props) {
             <Select onChange={ (e) => { setTest(e.target.value) } } defaultValue={"ACT_composite"}>
                 <MenuItem value="ACT_composite">ACT </MenuItem>
                 <MenuItem value="SAT">SAT</MenuItem>
-                <MenuItem value="ACT_english">ACT English</MenuItem>
+                <MenuItem value="ACT_English">ACT English</MenuItem>
                 <MenuItem value="ACT_math">ACT math</MenuItem>
                 <MenuItem value="ACT_reading">ACT reading</MenuItem>
                 <MenuItem value="ACT_science">ACT science</MenuItem>

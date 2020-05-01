@@ -174,9 +174,9 @@ export default function VerticalTabs(props) {
             onChange={(e) => props.setStudent({ ...props.student, [e.target.id]: Number(e.target.value) })}
             disabled={props.disable} defaultValue={props.student.ACT_composite} className={classes.textfield} type="number" variant="outlined" InputProps={{ classes: { input: classes.resize } }} />
           <br />
-          <TextField id="ACT_english" label="ACT English"
+          <TextField id="ACT_English" label="ACT English"
             onChange={(e) => props.setStudent({ ...props.student, [e.target.id]: Number(e.target.value) })}
-            disabled={props.disable} defaultValue={props.student.ACT_english} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+            disabled={props.disable} defaultValue={props.student.ACT_English} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
           <TextField id="ACT_math" label="ACT MATH" 
             onChange={(e) => props.setStudent({ ...props.student, [e.target.id]: Number(e.target.value) })}
             disabled={props.disable} defaultValue={props.student.ACT_math} type="number" variant="outlined" className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
