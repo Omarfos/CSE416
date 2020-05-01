@@ -170,13 +170,11 @@ def post_student_profile(request, userid):
     403: Not authorized
     Student JSON
     """
-    print(request.user)
     if request.user.is_authenticated:
         if request.user.username == userid:
             s = get_object_or_404(Student, userid=userid)
             info = json.loads(request.body)['student']
             info = json.loads(info)
-            print("printing hs name",info["high_school_name"])
             if "high_school_name" in info and info["high_school_name"] is not None:
                 with transaction.atomic():
                     if not HighSchool.objects.filter(name__icontains=info["high_school_name"]):
@@ -192,9 +190,10 @@ def post_student_profile(request, userid):
                         HighSchool(**hs[0]).save()
 
             Student.objects.filter(userid=userid).update(**info)
-            return JsonResponse({"SUCCESS": "User updated"})
-    print("here")
-    return JsonResponse({"ERROR: not authorized"}, status=403, safe=False)
+            response = JsonResponse({"SUCCESS": "User updated"})
+            #response.set_cookie =
+            return response#JsonResponse({"SUCCESS": "User updated"})
+    return JsonResponse({"ERROR": "not authorized"}, status=403)
 
 
 def post_student_application(request, userid):
@@ -214,8 +213,7 @@ def post_student_application(request, userid):
             app["questionable"] = a.questionable
             a.save()
         return JsonResponse(new_apps, safe=False)
-    else:
-        return JsonResponse({"ERROR: not authorized"}, status=403)
+    return JsonResponse({"ERROR": "not authorized"}, status=403)
 
 
 def search(request):

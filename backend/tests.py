@@ -133,19 +133,25 @@ class StudentProfilePostTests(TestCase):
         self.client = Client()
         self.student = Student.objects.create(userid="Bonya",  password="meow")
 
-    def test_change_profile(self):
-        r1 = self.client.post(
-            "/login/",
-            {"loginInfo":"{\"userid\": \"Bonya\", \"password\": \"meow\"}"},
-            content_type="application/json",
-        )
-        #\"high_school_name\":Rye Country Day School,\"high_school_city\":dye,\"high_school_state\":ny,
+    def test_change_profile_invalidUser(self):
+        #Without cookie
         r = self.client.post(
             "/student/Bonya/edit/",
-            {"student":"{\"high_school_name\":\"Rye Country Day School\",\"high_school_city\":\"dye\",\"high_school_state\":\"ny\",\"residence_state\":\"ny\",\"major_1\":\"Felinology\",\"GPA\":2.2,\"college_class\":2020,\"ACT_English\":20}"},
+            {"student":"{\"high_school_name\":\"Fairfield High School\",\"high_school_city\":\"Fairfield\",\"high_school_state\":\"TX\",\"residence_state\":\"TX\",\"major_1\":\"Felinology\",\"GPA\":2.2,\"college_class\":2020,\"ACT_English\":20}"},
             content_type="application/json",
         )
-        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.status_code, 403)
+
+    # def test_change_profile_validUser(self):
+    #     #self.client.login(username='Bonya', password='meow')
+    #     r = self.client.post(
+    #         "/login/",
+    #         {"loginInfo":"{\"userid\": \"Bonya\", \"password\": \"meow\"}"},
+    #         content_type="application/json",
+    #     )
+    #     print(self.client.session.items())
+    #     #\"high_school_name\":Rye Country Day School,\"high_school_city\":dye,\"high_school_state\":ny,
+    #     #self.assertEqual(r1.status_code, 403)
 
 
 class SearchTests(TestCase):
