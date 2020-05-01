@@ -59,7 +59,7 @@ def import_students():
 
         # https://www.act.org/content/dam/act/unsecured/documents/MultipleChoiceStemComposite.pdf
         d["ACT_composite"] = act(21.0, 5.8)
-        d["ACT_english"] = act(21.2, 7.0)
+        d["ACT_English"] = act(21.2, 7.0)
         d["ACT_math"] = act(21.5, 5.5)
         d["ACT_science"] = act(21.8, 5.7)
         d["ACT_reading"] = act(22.3, 6.8)
