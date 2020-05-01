@@ -336,7 +336,7 @@ def get_similar_profiles(request):
     college = params["college"]
     college = College.objects.get(name=college)
 
-    students = similar_students(userid)
+    students = similar_students(userid, college)
 
     results = []
     for student in students:

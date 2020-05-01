@@ -8,7 +8,7 @@ from django.forms.models import model_to_dict
 from .models import *
 
 
-def similar_students(userid):
+def similar_students(userid, college):
     u = Student.objects.get(userid=userid)
 
     # user only specified one test score, act XOR sat, convert it to the other
@@ -48,64 +48,72 @@ def similar_students(userid):
         u.GPA = all_students.aggregate(Avg("GPA"))["GPA__avg"]
         
     # At this point, user has GPA, SAT, and ACT
-    for s in all_students:
-        hs = ap = gpa = composite = 0
+    # User may have or not high school, number of AP, majors, subject SATs
+    applications = college.application_set.all().filter(questionable=False)
+    students_with_score = []
+    for application in applications:
+        s = application.student
+        # s = Student.objects.get(userid=application.student)
+        
+        hs = ap = major = subject = gpa = composite = 0
 
+        # similar gpa?
         s.GPA = s.GPA or 0
-        # Why not just subtract?
-        # abs (4.0 - (s.Gpa - u.gpa)) / 4.0
-        if s.GPA < u.GPA:
-            gpa = (s.GPA - (s.GPA - u.GPA) / 2) / u.GPA
-        else:
-            gpa = (u.GPA - (u.GPA - s.GPA) / 2) / s.GPA
+        gpa = (4.0 - float(abs(s.GPA - u.GPA))) / 4.0 if s.GPA != 0 else 0
 
-        if s.SAT:
-            if s.SAT < u.SAT:
-                composite = (s.SAT - (s.SAT - u.SAT) / 2) / u.SAT
-            else:
-                composite = (u.SAT - (u.SAT - s.SAT) / 2) / s.SAT
+        # similar composite?
+        s.SAT = s.SAT or 0
+        s.ACT_composite = s.ACT_composite or 0
+        composite = max ((1600 - float(abs (s.SAT - u.SAT))) / 1600, (36 - float(abs (s.ACT_composite - u.ACT_composite))) / 36) if s.SAT != 0 and s.ACT_composite != 0 else 0
 
-        if s.ACT_composite:
-            if s.ACT_composite < u.ACT_composite:
-                composite = (s.ACT_composite - (s.ACT_composite -
-                                                u.ACT_composite) / 2) / u.ACT_composite
-            else:
-                composite = (u.ACT_composite - (u.ACT_composite -
-                                                s.ACT_composite) / 2) / s.ACT_composite
-
+        # similar high school?
         if u.high_school_name is not None and s.high_school_name is not None:
             if u.high_school_name == s.high_school_name:
                 hs = 1
             elif u.high_school_state == s.high_school_state:
                 hs = 0.5
 
-        if u.num_AP_passed is not None and s.num_AP_passed is not None:
-            max_num = Student.objects.all().aggregate(Max('num_AP_passed'))['num_AP_passed__max']
-            ap = (max_num - abs(u.num_AP_passed - s.num_AP_passed)) / max_num
+        # similar AP?
+        u.num_AP_passed = u.num_AP_passed or 0
+        s.num_AP_passed = s.num_AP_passed or 0
+        ap = min(u.num_AP_passed, s.num_AP_passed) / max(u.num_AP_passed, s.num_AP_passed) if u.num_AP_passed != 0 and s.num_AP_passed != 0 else 0
+        
+        # similar major?
+        major_set = [s.major_1, s.major_2]
+        if u.major_1 in major_set or u.major_2 in major_set:
+            major = 1
+            
+        # similar SAT subject?
+        subject_pairs = [[u.SAT_literature, s.SAT_literature], [u.SAT_US_hist, s.SAT_US_hist], [u.SAT_world_hist, s.SAT_world_hist], [u.SAT_math_I, s.SAT_math_I], [u.SAT_math_II, s.SAT_math_II], [u.SAT_eco_bio, s.SAT_eco_bio], [u.SAT_mol_bio, s.SAT_mol_bio], [u.SAT_chemistry, s.SAT_chemistry], [u.SAT_physics, s.SAT_physics]]
+        number_of_same_taken = 0
+        for pair in subject_pairs:
+            pair[0] = pair[0] or 0
+            pair[1] = pair[1] or 0
+            if(pair[0] != 0 and pair[1] != 0):
+                subject += subject*number_of_same_taken + min(pair[0], pair[1]) / max(pair[0], pair[1])
+                number_of_same_taken += 1
+                subject = subject / number_of_same_taken
+            if number_of_same_taken == 2:
+                break
+            
 
-
-        s.similar_score = 0.2*hs + 0.2*ap + 0.4*composite + 0.2*float(gpa)
+        s.similar_score = 0.1*major + 0.1*subject + 0.2*hs + 0.1*ap + 0.4*composite + 0.1*float(gpa)
+        students_with_score.append(s)
 
     #result.sort(key=lambda s: s.similar_score)
     #all_students = sorted(all_students,key=lambda s: s.similar_score)
-    all_students.order_by('-similar_score')
+    # students_with_score.order_by('-similar_score')
+    students_with_score.sort(key=lambda x: x.similar_score, reverse=True)
 
-    return all_students[:100]
+    return students_with_score[:100]
 
 
 def recommend_colleges(user_id, colleges):
     scores = []
-    students = similar_students(user_id)
 
     for college in colleges:
         college = College.objects.get(name=college)
-        applications = college.application_set.all().filter(questionable=False)
-        
-        # n_pending = len(applications.filter(status='pending'))
-        # n_accepted = len(applications.filter(status='accepted'))
-        # n_waitlisted = len(applications.filter(status='waitlisted'))
-        # n_withdrawn = len(applications.filter(status='withdrawn'))
-        # n_deferred = len(applications.filter(status='deferred'))
+        students = similar_students(user_id, college)
         
         n_pending = 0
         n_accepted = 0
@@ -145,7 +153,7 @@ def recommend_colleges(user_id, colleges):
                 continue
                     
         total_rank = 600
-        rank_position = college.ranking
+        rank_position = college.ranking or 601
         college_r = 1 - (rank_position - 1) / total_rank
         
         accepted_ratio = sum_similarity_score_accepted/n_accepted if n_accepted > 0 else 0

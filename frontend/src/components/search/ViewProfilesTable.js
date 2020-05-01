@@ -40,14 +40,15 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: "userid", numeric: false, disablePadding: false, label: "User ID" }, // calories
-  // { id: "similar_score", numeric: true, disablePadding: false, label: "Similarity Score" },
-  { id: "high_school_name", numeric: false, disablePadding: false, label: "High School Name" }, // fat
-  { id: "high_school_state", numeric: false, disablePadding: false, label: "High School State" }, // carbs
-  { id: "GPA", numeric: false, disablePadding: false, label: "GPA" }, // protein
+  { id: "userid", numeric: false, disablePadding: false, label: "User ID" }, 
   { id: "SAT", numeric: true, disablePadding: false, label: "SAT" },
   { id: "ACT_composite", numeric: true, disablePadding: false, label: "ACT" },
-  { id: "major_1", numeric: false, disablePadding: false, label: "Major" },
+  { id: "high_school_name", numeric: false, disablePadding: false, label: "High School Name" }, 
+  { id: "high_school_state", numeric: false, disablePadding: false, label: "High School State" }, 
+  { id: "GPA", numeric: false, disablePadding: false, label: "GPA" }, 
+  { id: "major_1", numeric: false, disablePadding: false, label: "Major 1" },
+  { id: "major_2", numeric: false, disablePadding: false, label: "Major 2" },
+  { id: "num_AP_passed", numeric: false, disablePadding: false, label: "Number of AP passed" },
   { id: "college_class", numeric: true, disablePadding: false, label: "College Class" },
 ];
 
@@ -133,9 +134,6 @@ export default function EnhancedTable(props) {
 
   // click on row -> go to student profile
   const handleClick = (event, name) => {
-    console.log("CLICKED ON ROW")
-    // console.log(event)
-    console.log(name)
     history.push({
       pathname: "/student/" + name,
     })
@@ -144,8 +142,6 @@ export default function EnhancedTable(props) {
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
-    console.log(isAsc)
-    console.log(property)
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
@@ -211,13 +207,14 @@ export default function EnhancedTable(props) {
                       selected={ isItemSelected }
                     >
                       <TableCell align="right">{ row.userid }</TableCell>
-                      {/* <TableCell align="right">{ Math.round(row.similar_score*100) }%</TableCell> */}
+                      <TableCell align="right">{ row.SAT }</TableCell>
+                      <TableCell align="right">{ row.ACT_composite }</TableCell>
                       <TableCell align="right">{ row.high_school_name }</TableCell>
                       <TableCell align="right">{ row.high_school_state }</TableCell>
                       <TableCell align="right">{ row.GPA }</TableCell>
-                      <TableCell align="right">{ row.SAT }</TableCell>
-                      <TableCell align="right">{ row.ACT_composite }</TableCell>
                       <TableCell align="right">{ row.major_1 }</TableCell>
+                      <TableCell align="right">{ row.major_2 }</TableCell>
+                      <TableCell align="right">{ row.num_AP_passed }</TableCell>
                       <TableCell align="right">{ row.college_class }</TableCell>
                     </TableRow>
                   );

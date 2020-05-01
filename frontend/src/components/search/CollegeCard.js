@@ -100,8 +100,6 @@ export default function CollegeCard(props) {
 
   function RecommendationScore() {
     if (props.rec_score) {
-      console.log("SCORE")
-      console.log(props.college.score)
       return <div>
         {/* Recommendation Score, absolute position */ }
         <CircularProgress variant="static" size={ 55 } value={ props.college.score } thickness={ 2 } className={ classes.progress } />
