@@ -38,7 +38,7 @@ function App() {
         }
         {!user &&
           <React.Fragment>
-            <Route render={ () => (<Login errorMessage={ errorMessage } setError={ setErrorMessage } setUser={ setUser } user={ user }/>) }/>
+            <Route exact path = {["/login", "/search/:q", "/college/:id", "/student/:id", "/"]} render={ () => (<Login errorMessage={ errorMessage } setError={ setErrorMessage } setUser={ setUser } user={ user }/>) }/>
             <Route exact path="/register" render={ () => (<Register user={ user } setUser={ setUser } errorMessage={ errorMessage } setError={ setErrorMessage }/>) }/>
           </React.Fragment>
         }
