@@ -8,16 +8,12 @@ import Divider from "@material-ui/core/Divider";
 import Switch from "@material-ui/core/Switch";
 import Tooltip from '@material-ui/core/Tooltip';
 import CollegeCard from "./CollegeCard";
-import Pagination from "@material-ui/lab/Pagination";
 import SortOptions from "./Sorting.js";
-import LocationFilter from "./filters/LocationFilter";
 import MajorFilter from "./filters/MajorFilter";
-import SizeFilter from "./filters/SizeFilter";
 import SliderFactory from "./filters/SliderFactory";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Image from "../../images/header.png";
 import SyncRoundedIcon from "@material-ui/icons/SyncRounded";
-import { LocalConvenienceStoreOutlined } from "@material-ui/icons";
 import Map from "./filters/Map"
 import { searchUrl, studentUrl, recommendUrl } from "../Url";
 
@@ -195,9 +191,6 @@ export default function Search(props) {
       <Grid item md={ 3 } className={ classes.filters }>
         <Map id="states" navigate={navigate}/>
         <Grid container spacing={ 2 }>
-          {/* <Grid item md={ 12 }>
-            <LocationFilter id="states" navigate={ navigate } />
-          </Grid> */}
 
           <Grid item md={ 12 }>
             <MajorFilter id="majors" navigate={ navigate } />
@@ -330,8 +323,6 @@ export default function Search(props) {
           ) }
       </Grid>
 
-      {/* pagination */ }
-      {/* <Pagination count={ 10 } color="primary" className={ classes.pagination } /> */}
     </Grid>
   );
 }

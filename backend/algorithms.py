@@ -10,7 +10,28 @@ from .models import *
 
 def similar_students(userid, college):
     u = Student.objects.get(userid=userid)
-
+                    
+    # aggregate with class mates
+    classmates = Student.objects.filter(high_school_name=u.high_school_name) if u.high_school_name != None else Student.objects.all()
+    if classmates:
+        if not u.SAT and not u.ACT_composite:
+            new_ACT = classmates.aggregate(Avg("ACT_composite"))["ACT_composite__avg"]
+            if new_ACT:
+                u.ACT_composite = int(new_ACT)
+            new_SAT = classmates.aggregate(Avg("SAT"))["SAT__avg"]
+            if new_SAT:
+                u.SAT = int(new_SAT) 
+        if not u.GPA:
+            new_GPA = classmates.aggregate(Avg("GPA"))["GPA__avg"]
+            if new_GPA:
+                u.GPA = new_GPA
+                
+    if not u.SAT and not u.ACT_composite:
+        u.SAT = 0
+        u.ACT_composite = 0
+    if not u.GPA:
+        u.GPA = 0
+        
     # user only specified one test score, act XOR sat, convert it to the other
     if bool(u.SAT) ^ bool(u.ACT_composite):
         with open("backend/data/act_sat.json") as f:
@@ -25,28 +46,7 @@ def similar_students(userid, college):
                     if u.SAT >= int(low) and u.SAT <= int(high):
                         u.ACT_composite = int(act)
                         break
-
-    # aggregate with class mates
-    if u.high_school_name:
-        classmates = Student.objects.filter(high_school_name=u.high_school_name)
-        if not u.SAT and not u.ACT_composite:
-            u.ACT_composite = int(
-                classmates.aggregate(Avg("ACT_composite"))["ACT_composite__avg"]
-            )
-            u.SAT = int(classmates.aggregate(Avg("SAT"))["SAT__avg"])
-        if not u.GPA:
-            u.GPA = classmates.aggregate(Avg("GPA"))["GPA__avg"]
-
-    # user did not specify a hs or any fields, aggregate based on SAT and act
-    all_students = Student.objects.all()
-    if not u.SAT and not u.ACT_composite:
-        u.ACT_composite = int(
-            all_students.aggregate(Avg("ACT_composite"))["ACT_composite__avg"]
-        )
-        u.SAT = int(all_students.aggregate(Avg("SAT"))["SAT__avg"])
-    if not u.GPA:
-        u.GPA = all_students.aggregate(Avg("GPA"))["GPA__avg"]
-
+        
     print("SIMILARITY SCORES", "major, hs, subject, ap, gpa, composite")
 
     # At this point, user has GPA, SAT, and ACT
@@ -55,6 +55,8 @@ def similar_students(userid, college):
     students_with_score = []
     for application in applications:
         s = application.student
+        if(s == None):
+            break
         if s.userid == userid:
             break
         # s = Student.objects.get(userid=application.student)
@@ -69,10 +71,10 @@ def similar_students(userid, college):
         s.SAT = s.SAT or 0
         s.ACT_composite = s.ACT_composite or 0
         amount_count = 0
-        if s.SAT != 0:
-            composite = (1200 - float(abs(s.SAT - u.SAT))) / 1200
+        if s.SAT != 0 and s.SAT != None:
+            composite = (1200 - float(abs (s.SAT - u.SAT))) / 1200
             amount_count += 1
-        if s.ACT_composite != 0:
+        if s.ACT_composite != None and s.ACT_composite != 0:
             amount_count += 1
             composite = (
                 composite + (35 - float(abs(s.ACT_composite - u.ACT_composite))) / 35
