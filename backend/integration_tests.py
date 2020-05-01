@@ -67,48 +67,49 @@ class MySeleniumTests(LiveServerTestCase):
         college = self.selenium.find_element_by_id("college_name")
         self.assertIsNotNone(college)
 
-##############################################################################################################################################
-    # selenium testing with respect to sorting
-#      def test_sorting(self):
-        #  College.objects.create(name="stony", ranking=105)
-        #  College.objects.create(name="xyz", ranking=10)
-        #  # self.selenium.get("localhost:3000/search/college?sort=ranking")
-        #  self.selenium.get("localhost:3000/search/college")
-        #  self.selenium.find_element_by_id('dropMenu').click()
-        #  self.selenium.find_element_by_id('rankOption').click() 
-        #  college = self.selenium.find_element_by_id("college_name")
-        #  self.assertIsNotNone(college)
-#  
-    #  #testing with respect to location
-    #  def test_location(self):
-        #  College.objects.create(name="stony", ranking=105)
-        #  College.objects.create(name="xyz", ranking=10)
-        #  self.selenium.get("localhost:3000/search/college")
-        #  self.selenium.find_element_by_name('locationID').click()
-#  
-    #  #testing clicking a college card
-    #  def test_collegeCard(self):
-        #  College.objects.create(name="stony", ranking=105)
-        #  College.objects.create(name="xyz", ranking=10)
-        #  self.selenium.get("localhost:3000/search/college")
-        #  college = self.selenium.find_element_by_id("college_name")
-        #  self.selenium.find_element_by_id('college_name').click()
-        #  self.assertIsNotNone(college)
-#  
 
-    #edit profile integration test 
-    #problem rn is the handleEditProfile is not working when I try to 
-    # def test_student_check(self):
-    #     # self.user = User.objects.create_user(username="bonya", password="meowmeow")
-    #     self.student = Student.objects.create(userid="Bonya", major_1="Felinology", GPA="3.0", residence_state="NY")
-    #     self.selenium.get("localhost:3000/student/Bonya/")
-    #     time.sleep(10)
-    #     residence_input = self.selenium.find_element_by_id("residence_state")
-    #     residence_input.send_keys(Keys.CONTROL, 'a')
-    #     time.sleep(1)
-    #     residence_input.send_keys(Keys.BACKSPACE)
-    #     time.sleep(1)
-    #     residence_input.send_keys("MA")
-    #     time.sleep(2)  # wait for database
-    #     self.selenium.find_element_by_name("updateButton").click()
-    #     time.sleep(10)
+##############################################################################################################################################
+# selenium testing with respect to sorting
+#      def test_sorting(self):
+#  College.objects.create(name="stony", ranking=105)
+#  College.objects.create(name="xyz", ranking=10)
+#  # self.selenium.get("localhost:3000/search/college?sort=ranking")
+#  self.selenium.get("localhost:3000/search/college")
+#  self.selenium.find_element_by_id('dropMenu').click()
+#  self.selenium.find_element_by_id('rankOption').click()
+#  college = self.selenium.find_element_by_id("college_name")
+#  self.assertIsNotNone(college)
+#
+#  #testing with respect to location
+#  def test_location(self):
+#  College.objects.create(name="stony", ranking=105)
+#  College.objects.create(name="xyz", ranking=10)
+#  self.selenium.get("localhost:3000/search/college")
+#  self.selenium.find_element_by_name('locationID').click()
+#
+#  #testing clicking a college card
+#  def test_collegeCard(self):
+#  College.objects.create(name="stony", ranking=105)
+#  College.objects.create(name="xyz", ranking=10)
+#  self.selenium.get("localhost:3000/search/college")
+#  college = self.selenium.find_element_by_id("college_name")
+#  self.selenium.find_element_by_id('college_name').click()
+#  self.assertIsNotNone(college)
+#
+
+# edit profile integration test
+# problem rn is the handleEditProfile is not working when I try to
+# def test_student_check(self):
+#     # self.user = User.objects.create_user(username="bonya", password="meowmeow")
+#     self.student = Student.objects.create(userid="Bonya", major_1="Felinology", GPA="3.0", residence_state="NY")
+#     self.selenium.get("localhost:3000/student/Bonya/")
+#     time.sleep(10)
+#     residence_input = self.selenium.find_element_by_id("residence_state")
+#     residence_input.send_keys(Keys.CONTROL, 'a')
+#     time.sleep(1)
+#     residence_input.send_keys(Keys.BACKSPACE)
+#     time.sleep(1)
+#     residence_input.send_keys("MA")
+#     time.sleep(2)  # wait for database
+#     self.selenium.find_element_by_name("updateButton").click()
+#     time.sleep(10)

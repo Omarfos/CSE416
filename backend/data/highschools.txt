@@ -14,6 +14,7 @@ bellevue-high-school-bellevue-wa
 blair-high-school-pasadena-ca
 blue-valley-north-high-school-overland-park-ks
 brighton-high-school-rochester-ny
+bronx-high-school-of-science-bronx-ny
 brooklyn-technical-high-school-brooklyn-ny
 campolindo-high-school-moraga-ca
 canyon-crest-academy-san-diego-ca
@@ -41,6 +42,7 @@ goffstown-high-school-goffstown-nh
 granada-hills-charter-high-school-granada-hills-ca
 haas-hall-academy-fayetteville-ar
 hanover-high-school-hanover-nh
+harriton-senior-high-school-rosemont-pa
 health-careers-high-school-san-antonio-tx
 highland-park-high-school-highland-park-il
 hinsdale-central-high-school-hinsdale-il
@@ -78,6 +80,7 @@ pelham-memorial-high-school-pelham-ny
 piedmont-high-school-piedmont-ca
 providence-high-school-charlotte-nc
 radnor-senior-high-school-radnor-pa
+redwood-high-school-larkspur-ca
 reedy-high-school-frisco-tx
 richard-montgomery-high-school-rockville-md
 richland-high-school-north-richland-hills-tx

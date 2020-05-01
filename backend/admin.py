@@ -67,7 +67,7 @@ class StudentAdmin(ImportExportModelAdmin, admin.ModelAdmin):
         "ACT_composite",
         "high_school_name",
         "high_school_city",
-        "high_school_state"
+        "high_school_state",
     ]
     inlines = [ApplicationInline]
 

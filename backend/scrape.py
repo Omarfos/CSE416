@@ -86,7 +86,6 @@ def scrape_college_score_card(colleges: List[str]) -> List[dict]:
         if college == "University of Alabama":
             college = "The University of Alabama"
 
-        
         r = requests.get(
             college_scorecard_url, {"school.name": college, "fields": fields}
         ).json()["results"]
@@ -144,7 +143,6 @@ def scrape_college_data(colleges_list: List[str]) -> List[dict]:
         college = college.replace("SUNY", "State University of New York")
         colleges.append(college)
 
-
     result = []
     for college, cleaned_college in zip(colleges_list, colleges):
         d = {"name": college, "majors": []}
@@ -156,7 +154,7 @@ def scrape_college_data(colleges_list: List[str]) -> List[dict]:
         if r.status_code != 200:
             print(f"ERROR: unable to scrape {url}")
             return
-        
+
         soup = BeautifulSoup(r.text, "html.parser")
         majors = soup.find("ul", "list--nice").contents
         majors = list(filter(lambda x: x != "\n", majors))
@@ -205,6 +203,7 @@ def scrape_college_data(colleges_list: List[str]) -> List[dict]:
         result.append(d)
 
     return result
+
 
 def scrape_high_school_location():
     """

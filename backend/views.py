@@ -57,6 +57,7 @@ def register(request):
 
     return JsonResponse({"SUCCESS": "User Created"})
 
+
 def login_internal(request):
     """Authenticates a user.
 
@@ -70,7 +71,7 @@ def login_internal(request):
         ERROR: Invalid credentials 
     """
     try:
-        d = json.loads(request.body)['loginInfo']
+        d = json.loads(request.body)["loginInfo"]
         d = json.loads(d)
         if "userid" not in d or "password" not in d:
             return JsonResponse(status=400)
@@ -84,6 +85,7 @@ def login_internal(request):
 
     except json.decoder.JSONDecodeError:
         return JsonResponse({}, status=400)
+
 
 def logout_internal(request):
     """Logout a user and clean session. 
@@ -99,7 +101,8 @@ def logout_internal(request):
     """
     logout(request)
     return JsonResponse({"SUCCESS": "User logged out"})
-    
+
+
 def check_if_login(request):
     currentUser = ""
     if request.user:
@@ -173,26 +176,30 @@ def post_student_profile(request, userid):
     if request.user.is_authenticated:
         if request.user.username == userid:
             s = get_object_or_404(Student, userid=userid)
-            info = json.loads(request.body)['student']
+            info = json.loads(request.body)["student"]
             info = json.loads(info)
             if "high_school_name" in info and info["high_school_name"] is not None:
                 with transaction.atomic():
-                    if not HighSchool.objects.filter(name__icontains=info["high_school_name"]):
-                        hs = scrape_high_school([
-                            {
-                                "name": info["high_school_name"],
-                                "city": info["high_school_city"],
-                                "state": info["high_school_state"],
-                            }
-                        ])
+                    if not HighSchool.objects.filter(
+                        name__icontains=info["high_school_name"]
+                    ):
+                        hs = scrape_high_school(
+                            [
+                                {
+                                    "name": info["high_school_name"],
+                                    "city": info["high_school_city"],
+                                    "state": info["high_school_state"],
+                                }
+                            ]
+                        )
                         if not hs:
                             return JsonResponse({"ERROR": "hs not found"}, status=400)
                         HighSchool(**hs[0]).save()
 
             Student.objects.filter(userid=userid).update(**info)
             response = JsonResponse({"SUCCESS": "User updated"})
-            #response.set_cookie =
-            return response#JsonResponse({"SUCCESS": "User updated"})
+            # response.set_cookie =
+            return response  # JsonResponse({"SUCCESS": "User updated"})
     return JsonResponse({"ERROR": "not authorized"}, status=403)
 
 
@@ -200,7 +207,7 @@ def post_student_application(request, userid):
     if request.user.is_authenticated and request.user.username == userid:
         s = get_object_or_404(Student, userid=userid)
         s.application_set.all().delete()
-        new_apps = json.loads(request.body)['application']
+        new_apps = json.loads(request.body)["application"]
         new_apps = json.loads(new_apps)
         for app in new_apps:
             college = College.objects.get(name=app["college"])
@@ -315,13 +322,15 @@ def get_similar_hs(request):
 
     with transaction.atomic():
         if not HighSchool.objects.filter(name__icontains=high_school):
-            hs = scrape_high_school([
-                {
-                    "name": high_school,
-                    "city": high_school_city,
-                    "state": high_school_state,
+            hs = scrape_high_school(
+                [
+                    {
+                        "name": high_school,
+                        "city": high_school_city,
+                        "state": high_school_state,
                     }
-                ])
+                ]
+            )
             if not hs:
                 return JsonResponse({}, status=400)
             HighSchool(**hs[0]).save()

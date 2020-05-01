@@ -54,8 +54,12 @@ def import_students():
 
         d["GPA"] = min(random.gauss(3.0 + quality * 1.0, 0.2), 4.0)
 
-        act = lambda mean, std: max(1, min(36, int(random.gauss(mean + mean*quality, std))))
-        sat = lambda mean, std: max(400, min(800, int(random.gauss(mean + mean*quality, std))))
+        act = lambda mean, std: max(
+            1, min(36, int(random.gauss(mean + mean * quality, std)))
+        )
+        sat = lambda mean, std: max(
+            400, min(800, int(random.gauss(mean + mean * quality, std)))
+        )
 
         # https://www.act.org/content/dam/act/unsecured/documents/MultipleChoiceStemComposite.pdf
         d["ACT_composite"] = act(21.0, 5.8)
@@ -67,7 +71,7 @@ def import_students():
         # https://reports.collegeboard.org/pdf/2019-total-group-sat-suite-assessments-annual-report.pdf
         d["SAT_math"] = sat(528, 117)
         d["SAT_EBRW"] = sat(531, 103)
-        d["SAT"] = d["SAT_math"] + d["SAT_EBRW"] 
+        d["SAT"] = d["SAT_math"] + d["SAT_EBRW"]
 
         # https://secure-media.collegeboard.org/sat/pdf/sat-subject-tests-percentile-ranks.pdf
         d["SAT_literature"] = sat(614, 109)
@@ -87,8 +91,8 @@ def import_students():
             s.save()
         except:
             continue
-        
-        colleges = random.sample(list(college_list), random.randint(5,15))
+
+        colleges = random.sample(list(college_list), random.randint(5, 15))
         for c in colleges:
             a = Application()
             a.college = c
@@ -112,32 +116,36 @@ def import_hs():
             if len(HighSchool.objects.filter(name=d["name"])) == 0:
                 hs.save()
 
+
 def import_students_csv():
-    with open('students.csv', newline='') as csvfile:
+    with open("students.csv", newline="") as csvfile:
         spamreader = csv.DictReader(csvfile)
         for row in spamreader:
             b = {}
-            for k,v in row.items():
+            for k, v in row.items():
                 if v:
                     b[k] = v
             if "SAT_math" and "SAT_EBRW" in b:
                 b["SAT"] = int(b["SAT_math"]) + int(b["SAT_EBRW"])
             Student(**b).save()
 
+
 def import_applications():
-    with open('applications.csv', newline='') as csvfile:
+    with open("applications.csv", newline="") as csvfile:
         r = csv.DictReader(csvfile)
         for row in r:
-            s = Student.objects.get(userid=row['userid'])
-            c = College.objects.get(name=row['college'])
-            Application(student=s, college=c, status=row['status']).save()
+            s = Student.objects.get(userid=row["userid"])
+            c = College.objects.get(name=row["college"])
+            Application(student=s, college=c, status=row["status"]).save()
+
 
 class Command(BaseCommand):
     help = "Import either the Student dataset or Colleges from college.txt"
 
     def add_arguments(self, parser):
-        parser.add_argument("data_type", choices=["college", "student", "hs",
-            "scsv", "acsv"])
+        parser.add_argument(
+            "data_type", choices=["college", "student", "hs", "scsv", "acsv"]
+        )
 
     def handle(self, *args, **options):
 
