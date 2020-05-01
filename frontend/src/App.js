@@ -28,45 +28,23 @@ function App() {
     <div className="App">
       <Navbar user={ user } setUser={ setUser }/>
       <Switch>
-        <Route exact path="/" render={ () => <Home /> } />
-        <Route exact path="/search/:q" render={ () => <Search user={ user } /> } />
-        <Route
-          exact
-          path="/college/:id"
-          render={ () => (
-            <CollegeProfile/>
-          ) }
-        />
-        <Route
-          exact
-          path="/student/:id"
-          render={ () => <Profile user={ user } /> }
-        />
-        <Route
-          exact
-          path="/login"
-          render={ () => (
-            <Login
-              errorMessage={ errorMessage }
-              setError={ setErrorMessage }
-              setUser={ setUser }
-              user={ user }
-            />
-          ) }
-        />
-        <Route
-          exact
-          path="/register"
-          render={ () => (
-            <Register
-              user={ user }
-              setUser={ setUser }
-              errorMessage={ errorMessage }
-              setError={ setErrorMessage }
-            />
-          ) }
-        />
-
+        {user &&
+          <React.Fragment>
+            <Route exact path="/" render={ () => <Home /> } />
+            <Route exact path="/search/:q" render={ () => <Search user={ user } /> } />
+            <Route exact path="/college/:id" render={ () => (<CollegeProfile/>) }/>
+            <Route exact path="/student/:id" render={ () => <Profile user={ user } /> }/>
+          </React.Fragment>
+        }
+        {!user &&
+          <React.Fragment>
+            <Route render={ () => (<Login errorMessage={ errorMessage } setError={ setErrorMessage } setUser={ setUser } user={ user }/>) }/>
+            <Route exact path="/register" render={ () => (<Register user={ user } setUser={ setUser } errorMessage={ errorMessage } setError={ setErrorMessage }/>) }/>
+          </React.Fragment>
+        }
+        
+        
+        
         <Route render={ () => <NotFound /> } />
       </Switch>
     </div>

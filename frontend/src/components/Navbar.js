@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Link from "@material-ui/core/Link";
+import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router-dom";
 import { Route, Switch, Redirect } from "react-router-dom";
@@ -28,16 +28,16 @@ const useStyles = makeStyles((theme) => ({
   button: {
     textDecoration: "none",
     color: "#8493d3",
-    fontSize: 25,
+    fontSize: 20,
     paddingLeft: "15px",
     paddingRight: "15px",
-    paddingTop: "18px",
-    paddingBottom: "18px",
+    // paddingTop: "18px",
+    // paddingBottom: "18px",
     "&:hover": {
       background: "hsla(240, 48%, 41%, 0.1)",
       color: "#5d6896",
-      paddingTop: "18px",
-      paddingBottom: "18px",
+      // paddingTop: "18px",
+      // paddingBottom: "18px",
     },
   },
   search: {
@@ -59,8 +59,6 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       background: "hsla(240, 48%, 41%, 0.1)",
       color: "#5d6896",
-      paddingTop: "16px",
-      paddingBottom: "16px",
     },
   },
   divider: {
@@ -82,6 +80,7 @@ export default function Navbar(props) {
   }).then((data) => {
       if (data.status == 200) {
         props.setUser(null);
+        history.push("/");
       }
     })
     .catch((error) => {
@@ -94,14 +93,29 @@ export default function Navbar(props) {
     history.push("/search/college?name=" + event.target.searchQuery.value);
   }
 
+  const handleRedirect = (e)=>{
+    history.push("/");
+  }
+
+  const handleProfile = (e)=>{
+    history.push("/student/" + props.user);
+  }
+
+  const handleRegister = (e)=>{
+    history.push("/register");
+  }
+  const handleLogin = (e)=>{
+    history.push("/login");
+  }
+  
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.navBar}>
         <Toolbar>
           <Typography align="left" className={classes.title}>
-            <Link href="/">
+            <Button onClick={handleRedirect}>
               <img src={logoImage} className={classes.logo} />
-            </Link>
+            </Button>
           </Typography>
 
           {/* search on navigation bar for some pages */}
@@ -110,24 +124,24 @@ export default function Navbar(props) {
           </Route>
           {props.user &&(
             <React.Fragment>
-              <Link className={classes.button} href={"/student/" + props.user}>
+              <Button className={classes.button} onClick={handleProfile}>
                 Profile
-              </Link>
+              </Button>
               <Divider orientation="vertical" className={classes.divider} />
-              <Link className={classes.button} href="/" onClick={handleLogout}>
+              <Button className={classes.button} onClick={handleLogout}>
                 Log out
-              </Link>
+              </Button>
             </React.Fragment>
           )}
           {!props.user &&(
             <React.Fragment>
-              <Link className={classes.button} href="/login">
+              <Button className={classes.button} onClick={handleLogin}>
                 Login
-              </Link>
+              </Button>
               <Divider orientation="vertical" className={classes.divider} />
-              <Link className={classes.button} href="/register">
+              <Button className={classes.button} onClick={handleRegister}>
                 Register
-              </Link>
+              </Button>
             </React.Fragment>
           )}
         </Toolbar>

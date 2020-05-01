@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
@@ -11,6 +10,7 @@ import Container from "@material-ui/core/Container";
 import Alert from "@material-ui/lab/Alert";
 import axios from "axios";
 import { loginUrl } from "../Url";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn(props) {
   const classes = useStyles();
+  let history = useHistory();
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -66,6 +67,7 @@ export default function SignIn(props) {
         if (data.status==200) {
           props.setUser(userid);
           props.setError(null);
+          history.push("/");
         } else{
           props.setError("Wrong username or password");
         }
