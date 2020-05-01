@@ -327,7 +327,7 @@ class RecommendationScoresTests(TestCase):
         college4 = College.objects.create(name="College4", ranking=lowerRanking)
         
         statuses = ["pending", "accepted", "deferred", "waitlisted", "withdrawn"]
-        status = statuses[random.randint(0,5)]
+        status = statuses[random.randint(0,4)]
         for i in range(100):
             student = None
             if random.randint(0,1) == 0:
