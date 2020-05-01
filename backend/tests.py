@@ -128,18 +128,24 @@ class StudentProfileTests(TestCase):
         r = self.client.get("/student/Olesia/")
         self.assertEqual(r.status_code, 404)
 
-# class StudentProfilePostTests(TestCase):
-#     def setUp(self):
-#         self.client = Client()
-#         self.student = Student.objects.create(userid="Bonya", major_1="Felinology")
+class StudentProfilePostTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.student = Student.objects.create(userid="Bonya",  password="meow")
 
-    # def test_change_profile(self):
-    #     r = self.client.post(
-    #         "/student/bonya/edit/",
-    #         {"student":"{\"userid\": \"bonya\", \"password\": \"meow\"}"},
-    #         content_type="application/json",
-    #     )
-    #     self.assertEqual(r.status_code, 301)
+    def test_change_profile(self):
+        r1 = self.client.post(
+            "/login/",
+            {"loginInfo":"{\"userid\": \"Bonya\", \"password\": \"meow\"}"},
+            content_type="application/json",
+        )
+        #\"high_school_name\":Rye Country Day School,\"high_school_city\":dye,\"high_school_state\":ny,
+        r = self.client.post(
+            "/student/Bonya/edit/",
+            {"student":"{\"high_school_name\":\"Rye Country Day School\",\"high_school_city\":\"dye\",\"high_school_state\":\"ny\",\"residence_state\":\"ny\",\"major_1\":\"Felinology\",\"GPA\":2.2,\"college_class\":2020,\"ACT_English\":20}"},
+            content_type="application/json",
+        )
+        self.assertEqual(r.status_code, 200)
 
 
 class SearchTests(TestCase):
