@@ -331,7 +331,7 @@ export default function Search(props) {
       </Grid>
 
       {/* pagination */ }
-      <Pagination count={ 10 } color="primary" className={ classes.pagination } />
+      {/* <Pagination count={ 10 } color="primary" className={ classes.pagination } /> */}
     </Grid>
   );
 }

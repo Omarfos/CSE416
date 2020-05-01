@@ -47,6 +47,8 @@ def similar_students(userid, college):
     if not u.GPA:
         u.GPA = all_students.aggregate(Avg("GPA"))["GPA__avg"]
         
+    print("SIMILARITY SCORES", "major, hs, subject, ap, gpa, composite")
+        
     # At this point, user has GPA, SAT, and ACT
     # User may have or not high school, number of AP, majors, subject SATs
     applications = college.application_set.all().filter(questionable=False)
@@ -64,14 +66,32 @@ def similar_students(userid, college):
         # similar composite?
         s.SAT = s.SAT or 0
         s.ACT_composite = s.ACT_composite or 0
-        composite = max ((1600 - float(abs (s.SAT - u.SAT))) / 1600, (36 - float(abs (s.ACT_composite - u.ACT_composite))) / 36) if s.SAT != 0 and s.ACT_composite != 0 else 0
+        amount_count = 0
+        if s.SAT != 0:
+            composite = (1200 - float(abs (s.SAT - u.SAT))) / 1200
+            amount_count += 1
+        if s.ACT_composite != 0:
+            amount_count += 1
+            composite = composite + (35 - float(abs (s.ACT_composite - u.ACT_composite))) / 35
+            composite = composite / amount_count
+        # composite = max ((1200 - float(abs (s.SAT - u.SAT))) / 1200, (35 - float(abs (s.ACT_composite - u.ACT_composite))) / 35) if s.SAT != 0 and s.ACT_composite != 0 else 0
 
         # similar high school?
+        northeast = ["ME", "NH", "VT", "MA", "NY", "RI", "CT", "PA", "NJ"]
+        midwest = ["OH", "MI", "IN", "WI", "IL", "MI", "IA", "MO", "ND", "SD", "NE", "KS", "MN"]
+        west = ["MT", "ID", "WY", "CO", "NM", "AZ", "UT", "NV", "CA", "OR", "WA", "AK", "HI"]
+        south = ["TX", "OK", "AR", "LA", "MS", "AL", "TN", "GA", "FL", "KY", "SC", "NC", "VA", "WV", "DC", "MD", "DE"]
+        regions = [northeast, midwest, west, south]
         if u.high_school_name is not None and s.high_school_name is not None:
             if u.high_school_name == s.high_school_name:
                 hs = 1
             elif u.high_school_state == s.high_school_state:
                 hs = 0.5
+            else:
+                for region in regions:
+                    if u.high_school_state in region and s.high_school_state in region:
+                        hs = 0.25
+                        break 
 
         # similar AP?
         u.num_AP_passed = u.num_AP_passed or 0
@@ -90,15 +110,14 @@ def similar_students(userid, college):
             pair[0] = pair[0] or 0
             pair[1] = pair[1] or 0
             if(pair[0] != 0 and pair[1] != 0):
-                subject += subject*number_of_same_taken + min(pair[0], pair[1]) / max(pair[0], pair[1])
+                subject = subject*number_of_same_taken + (600 - float(abs (pair[1] - pair[0]))) / 600
                 number_of_same_taken += 1
                 subject = subject / number_of_same_taken
-            if number_of_same_taken == 2:
-                break
-            
-
-        s.similar_score = 0.1*major + 0.1*subject + 0.2*hs + 0.1*ap + 0.4*composite + 0.1*float(gpa)
+  
+        s.similar_score = (0.05*major + 0.10*subject + 0.05*hs + 0.05*ap + 0.2*gpa + 0.2*composite) / (0.05 + 0.10 + 0.05 + 0.05 + 0.2 + 0.2)
         students_with_score.append(s)
+
+        print(s.userid, 'Similarity Score:', s.similar_score,'Before Weights:', major, subject, hs, ap, gpa, composite, 'After Weights:', 0.05*major, 0.10*subject, 0.05*hs, 0.05*ap, 0.2*gpa, 0.2*composite)
 
     #result.sort(key=lambda s: s.similar_score)
     #all_students = sorted(all_students,key=lambda s: s.similar_score)
