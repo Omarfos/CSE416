@@ -25,7 +25,7 @@ class RegisterTests(TestCase):
     def test_register(self):
         r = self.client.post(
             "/register/",
-            {"userid": "john", "password": "smith"},
+            {"info":"{\"userid\": \"john\", \"password\": \"smith\"}"},
             content_type="application/json",
         )
         self.assertEqual(r.status_code, 200)
@@ -34,7 +34,7 @@ class RegisterTests(TestCase):
     def test_register_invalid_input(self):
         r = self.client.post(
             "/register/",
-            {"usri": "john", "pass": "smith"},
+            {"info":"{\"usri\": \"john\", \"pass\": \"smith\"}"},
             content_type="application/json",
         )
         self.assertEqual(r.status_code, 400)
@@ -43,7 +43,7 @@ class RegisterTests(TestCase):
         Student.objects.create(userid="john")
         r = self.client.post(
             "/register/",
-            {"userid": "john", "password": "smith"},
+            {"info":"{\"userid\": \"john\", \"password\": \"smith\"}"},
             content_type="application/json",
         )
         self.assertEqual(r.json()["ERROR"], "User already exists")
@@ -57,7 +57,7 @@ class LoginTests(TestCase):
     def test_login_valid_creds(self):
         r = self.client.post(
             "/login/",
-            {"userid": "bonya", "password": "meow"},
+            {"loginInfo":"{\"userid\": \"bonya\", \"password\": \"meow\"}"},
             content_type="application/json",
         )
         self.assertEqual(r.status_code, 200)
@@ -66,7 +66,7 @@ class LoginTests(TestCase):
     def test_login_invalid_creds(self):
         r = self.client.post(
             "/login/",
-            {"userid": "bonya", "password": "soRussian"},
+            {"loginInfo":"{\"userid\": \"bonya\", \"password\": \"soRussian\"}"},
             content_type="application/json",
         )
         self.assertEqual(r.status_code, 200)
