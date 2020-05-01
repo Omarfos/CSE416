@@ -85,14 +85,12 @@ export default function Profile(props) {
     //   setErrorMessage("Please enter high school information. Including city and state.");
     //   return;
     // }
-    if(student.SAT != null && (student.SAT < 400 || student.SAT > 1600)){
-      console.log("STUDEEENTIK")
-      console.log(student)
+    if((student.SAT != null && student.SAT != "") && (student.SAT < 400 || student.SAT > 1600)){
       setErrorStatus("error");
       setErrorMessage("Please enter valid SAT score.");
       return;
     }
-    if(student.ACT_composite != null && (student.ACT_composite < 1 || student.ACT_composite > 36)){
+    if((student.ACT_composite != null && student.ACT_composite != "") && (student.ACT_composite < 1 || student.ACT_composite > 36)){
       setErrorStatus("error");
       setErrorMessage("Please enter valid ACT composite score.");
       return;
