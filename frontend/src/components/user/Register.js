@@ -13,6 +13,8 @@ import Container from "@material-ui/core/Container";
 import Alert from "@material-ui/lab/Alert";
 import axios from "axios";
 import { registerUrl } from "../Url";
+import { useHistory } from "react-router-dom";
+
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -50,6 +52,8 @@ async function validateEmail(email) {
 }
 
 export default function Register(props) {
+  let history = useHistory();
+
   async function handleRegister(event) {
     event.preventDefault();
     let first_name = event.target.firstName.value;
@@ -77,6 +81,7 @@ export default function Register(props) {
           if (data.status == 200) {
             props.setUser(userid);
             props.setError(null);
+            history.push("/");
           } else if (data.SUCCESS) {
             props.setError("ERROR: user already exists");
           }
