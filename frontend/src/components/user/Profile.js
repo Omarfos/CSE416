@@ -79,12 +79,13 @@ export default function Profile(props) {
 
   async function handleUpdateProfile(event) {
     event.preventDefault();
-    if(student.high_school_name == null || student.high_school_city == null || student.high_school_state == null ||
-       student.high_school_name == ""  || student.high_school_city == "" || student.high_school_state==""){
-      setErrorStatus("error");
-      setErrorMessage("Please enter high school information. Including city and state.");
-      return;
-    }
+    // if(student.high_school_name == null || student.high_school_city == null || student.high_school_state == null ||
+    //    student.high_school_name == ""  || student.high_school_city == "" || student.high_school_state==""){
+    //   setErrorStatus("error");
+    //   setErrorMessage("Please enter high school information. Including city and state.");
+    //   return;
+    // }
+    //Allow all high school information to pass to backend. No matter if it's empty
 
     let url = studentUrl+student.userid + "/edit/";
     let url2 = studentUrl+student.userid + "/edit/application";
@@ -100,10 +101,9 @@ export default function Profile(props) {
         setErrorStatus("success");
         setErrorMessage("Update Successfully");
       }
-      else{
+    }).catch((error) => {
         setErrorStatus("error");
         setErrorMessage("No High School Information Found. ");
-      }
     });
 
     axios.post(url2, {
