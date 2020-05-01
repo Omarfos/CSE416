@@ -55,6 +55,8 @@ def similar_students(userid, college):
     students_with_score = []
     for application in applications:
         s = application.student
+        if s.userid == userid:
+            break
         # s = Student.objects.get(userid=application.student)
         
         hs = ap = major = subject = gpa = composite = 0
