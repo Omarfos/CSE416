@@ -319,26 +319,48 @@ class ScrapeCollegeScoreCardTests(TestCase):
 class RecommendationScoresTests(TestCase):
     # fixtures = ['test_data.json']
     def setUp(self):
-        Student.objects.create(userid='Ayoub', SAT=1600, ACT_composite=36)
-        Student.objects.create(userid='Idrees', SAT_math=600, SAT_EBRW=500)
-        Student.objects.create(userid='Eisa', SAT_math=600, SAT_EBRW=700, ACT_composite=31, GPA=3.0, high_school_name="Stuy")
-        Student.objects.create(userid='Ryan', SAT_math=800, SAT_EBRW=800, ACT_composite=36, GPA=4.0, high_school_name="Stuy")
-        Student.objects.create(userid='Andy', high_school_name="Stuy", SAT=1300)
-        Student.objects.create(userid='Boodoo', num_AP_passed=10)
-        Student.objects.create(userid='DooDoo', num_AP_passed=10)
-
-        College.objects.create(
-            name="Columbia", out_state_cost=70000, ranking=10, state="NY"
-        )
-        College.objects.create(
-            name="Stony", out_state_cost=20000, ranking=105, state="NY"
-        )
-        College.objects.create(name="NYU", out_state_cost=65000, ranking=31, state="NY")
-#  
-    def test_one(self):
-        colleges = ["Columbia", "Stony", "NYU"]
+        higherRanking = random.randint(1, 599)
+        lowerRanking = random.randint(higherRanking+1, 600)
+        college1 = College.objects.create(name="College1", ranking=higherRanking)
+        college2 = College.objects.create(name="College2", ranking=higherRanking)
+        college3 = College.objects.create(name="College3", ranking=higherRanking)
+        college4 = College.objects.create(name="College4", ranking=lowerRanking)
+        
+        statuses = ["pending", "accepted", "deferred", "waitlisted", "withdrawn"]
+        status = statuses[random.randint(0,5)]
+        for i in range(100):
+            student = None
+            if random.randint(0,1) == 0:
+                # student with higher values
+                student = Student.objects.create(userid='Student'+str(i), SAT=random.randint(1000, 1600), ACT_composite=random.randint(19, 36), GPA=random.randint(200, 400)/100)
+                Application.objects.create(student=student, college=college1, status=status)
+            else:
+                # student with lower values
+                student = Student.objects.create(userid='Student'+str(i), SAT=random.randint(400, 999), ACT_composite=random.randint(1, 18), GPA=random.randint(1, 199)/100)
+                Application.objects.create(student=student, college=college2, status=status)
+            Application.objects.create(student=student, college=college3, status=status)
+            Application.objects.create(student=student, college=college4, status=status)
+            
+        Student.objects.create(userid='Ayoub', SAT=random.randint(1000, 1600), ACT_composite=random.randint(19, 36), GPA=random.randint(200, 400)/100)
+                  
+    """
+    test that for college, where user is average, recommendation score is not less than 
+    for college where user is above average; ranking of colleges is the same
+    """
+    def test_similarity(self):
+        colleges = ["College1", "College2"]
         r = recommend_colleges('Ayoub', colleges)
-        self.assertListEqual(r, [20,17,19])
+        self.assertGreaterEqual(r[0], r[1])
+    
+    """
+    test that for two colleges with same students, recommendation score for college 
+    with higher ranking is not less than for college with lower ranking
+    """
+    def test_ranking(self):
+        colleges = ["College3", "College4"]
+        r = recommend_colleges('Ayoub', colleges)
+        self.assertGreaterEqual(r[0], r[1])
+        
 
 class similarHighSchool(TestCase):
     def setUp(self):
