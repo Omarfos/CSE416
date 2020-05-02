@@ -23,13 +23,6 @@ export default function SearchBar(props) {
           <SearchIcon />
         </IconButton>
       </Paper>
-
-      {props.detail &&
-          <div>
-            <TextField id="city" label="City" required className={props.classes.detail_textfield}/>
-            <TextField id="state" label="State" required className={props.classes.detail_textfield}/>
-          </div>
-        } 
       </form>
     )
 }

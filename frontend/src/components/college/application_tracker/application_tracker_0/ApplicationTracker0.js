@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import SearchBar from "../../../SearchBar";
 import axios from "axios";
 import { similarHighSchoolUrl } from "../../../Url";
+import TextField from '@material-ui/core/TextField';
+import highSchoolName from "../../../user/highSchools.json";
+import DropDownSelection from "../../../user/SelectionDropdown";
+import Button from '@material-ui/core/Button';
 
 
 const useStyles = makeStyles((theme) => ({
     search: {
+      marginTop: "",
       minWidth: "300px",
-      width: "30vw",
-      height: "45px",
-      background: 'linear-gradient(45deg, #D4DDFD 30%, #3F51B5 90%)',
+      width: "60%",
     },
-    input: {
+    dropdown: {
       width: "85%",
     },
     margin: {
@@ -32,15 +34,21 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ApplicationTracker1(props) {
     const classes = useStyles();
+    const [highSchool, setHighSchool] = useState("Whitney High School");
+
+    async function handleEditHighSchool(value, index){
+      setHighSchool(value)
+    }
+
     const handleSearch = (e) => {
       e.preventDefault();
-      const high_school_name= e.target.searchQuery.value;
-
+      const high_school_name= highSchool;
+      console.log(highSchool)
       axios
       .get(similarHighSchoolUrl, {
         responseType: "json",
         params: {
-          high_school: e.target.searchQuery.value,
+          high_school: highSchool,
           high_school_city: e.target.city.value,
           high_school_state: e.target.state.value
         }
@@ -64,7 +72,14 @@ export default function ApplicationTracker1(props) {
     }
 
     return (
-      <SearchBar classes={ classes } handleSearch={ handleSearch } placeholder="Search for Similar High School" detail={true}/>
+      <div>
+        <form onSubmit={(e) => {handleSearch(e)}} className = {classes.search} >
+            <DropDownSelection className={classes.dropdown} required value={highSchool} disable={props.disable} handleEditValue={handleEditHighSchool} valueName = {highSchoolName} placeholder = "High School Name"/>
+            <TextField id="city" label="City" required className={classes.detail_textfield}/>
+            <TextField id="state" label="State" required className={classes.detail_textfield}/>
+            <Button type="submit">Search</Button>
+        </form>
+      </div>
     );
 
 }
