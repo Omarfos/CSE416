@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
       minHeight: "55px"
     },
     button: {
-      margin: theme.spacing(1),
-      marginLeft: "97%"
+      margin:20,
+      background: 'linear-gradient(45deg, #D4DDFD 30%, #3F51B5 90%)'
     },
     detail_textfield:{
       margin: "20px",
@@ -77,7 +77,7 @@ export default function ApplicationTracker1(props) {
             <DropDownSelection className={classes.dropdown} required value={highSchool} disable={props.disable} handleEditValue={handleEditHighSchool} valueName = {highSchoolName} placeholder = "High School Name"/>
             <TextField id="city" label="City" required className={classes.detail_textfield}/>
             <TextField id="state" label="State" required className={classes.detail_textfield}/>
-            <Button type="submit">Search</Button>
+            <Button type="submit" className = {classes.button}>Search</Button>
         </form>
       </div>
     );
