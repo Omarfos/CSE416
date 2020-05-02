@@ -17,10 +17,13 @@ function App() {
   axios.defaults.withCredentials = true;
   const [ user, setUser ] = useState(null);
   const [ errorMessage, setErrorMessage ] = useState(null);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
+    setLoading(true);
     axios.get(loginCheckUrl)
     .then((data) => {
       setUser(data.data.user);
+      setLoading(false);
     })
   }, []);
 
@@ -28,6 +31,7 @@ function App() {
     <div className="App">
       <Navbar user={ user } setUser={ setUser }/>
       <Switch>
+        {loading && <div> </div>}
         {user &&
           <React.Fragment>
             <Route exact path="/" render={ () => <Home /> } />
