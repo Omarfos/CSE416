@@ -17,6 +17,6 @@ urlpatterns = [
     path("student/<slug:userid>/edit/", views.post_student_profile),
     path("student/<slug:userid>/edit/application", views.post_student_application),
     path("similar/student/", views.get_similar_profiles),
-    path("similar/hs", views.get_similar_hs),
+    path("similar/hs/", views.get_similar_hs),
     path("recommend/", views.recommend),
 ]
