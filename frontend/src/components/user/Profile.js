@@ -76,7 +76,6 @@ export default function Profile(props) {
 
   const classes = useStyles();
 
-
   async function handleUpdateProfile(event) {
     event.preventDefault();
     // if(student.high_school_name == null || student.high_school_city == null || student.high_school_state == null ||
@@ -85,20 +84,20 @@ export default function Profile(props) {
     //   setErrorMessage("Please enter high school information. Including city and state.");
     //   return;
     // }
-    if((student.SAT != null && student.SAT != "") && (student.SAT < 400 || student.SAT > 1600)){
+    if ((student.SAT != null && student.SAT != "") && (student.SAT < 400 || student.SAT > 1600)) {
       setErrorStatus("error");
       setErrorMessage("Please enter valid SAT score.");
       return;
     }
-    if((student.ACT_composite != null && student.ACT_composite != "") && (student.ACT_composite < 1 || student.ACT_composite > 36)){
+    if ((student.ACT_composite != null && student.ACT_composite != "") && (student.ACT_composite < 1 || student.ACT_composite > 36)) {
       setErrorStatus("error");
       setErrorMessage("Please enter valid ACT composite score.");
       return;
     }
 
 
-    let url = studentUrl+student.userid + "/edit/";
-    let url2 = studentUrl+student.userid + "/edit/application";
+    let url = studentUrl + student.userid + "/edit/";
+    let url2 = studentUrl + student.userid + "/edit/application";
     axios.post(url, {
       method: "POST",
       headers: {
@@ -106,15 +105,15 @@ export default function Profile(props) {
       },
       student: JSON.stringify(student),
     })
-    .then((data) => {
-      if(data.status == 200){
-        setErrorStatus("success");
-        setErrorMessage("Update Successfully");
-      }
-    }).catch((error) => {
+      .then((data) => {
+        if (data.status == 200) {
+          setErrorStatus("success");
+          setErrorMessage("Update Successfully");
+        }
+      }).catch((error) => {
         setErrorStatus("error");
         setErrorMessage("No High School Information Found. ");
-    });
+      });
 
     axios.post(url2, {
       method: "POST",
@@ -123,15 +122,13 @@ export default function Profile(props) {
       },
       application: JSON.stringify(application),
     })
-    .then((res) => {
-      setApplication(res.data);
-    });
-}
-
-    
+      .then((res) => {
+        setApplication(res.data);
+      });
+  }
 
   useEffect(() => {
-    let url = hostUrl + location.pathname+"/"; //    /student/q
+    let url = hostUrl + location.pathname + "/"; //    /student/q
     axios.get(url)
       .then((data) => {
         if (data.status === 200) {
@@ -140,31 +137,31 @@ export default function Profile(props) {
           setErrorMessage("");
         }
       });
-  }, []);
+  }, [location]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (location.pathname.substring(9) == props.user) {
       setDisable(false);
     };
-  },[props.user, student, setStudent])
-  
+  }, [props.user, student, setStudent])
+
   return (
     <div>
-      {!student && <NotFound />}
       {student && (
         <div className={classes.root}>
-            { errorMessage && (
-              <div className={ classes.alert }>
-                <Alert
-                  severity={errorStatus}
-                  onClose={ () => {
-                    setErrorMessage(null);
-                  } }
-                >
-                  { errorMessage }
-                </Alert>
-              </div>
-            ) }
+          {errorMessage && (
+            <div className={classes.alert}>
+              <Alert
+                severity={errorStatus}
+                onClose={() => {
+                  setErrorMessage(null);
+                }}
+              >
+                {errorMessage}
+              </Alert>
+            </div>
+          )}
+          {!student && <NotFound />}
           <form onSubmit={handleUpdateProfile} >
             <Container className={classes.header}>
               <Grid container direction="row"
@@ -178,10 +175,10 @@ export default function Profile(props) {
                     {student.userid}
                   </Typography>
                   <Typography variant="h4">
-                    Residence State:  
-                    <TextField id="residence_state" 
-                    onChange={(e) => setStudent({ ...student, [e.target.id]: e.target.value})}
-                    disabled={disable} defaultValue={student.residence_state} variant="outlined" InputProps={{ classes: { input: classes.resize } }} />
+                    Residence State:
+                    <TextField id="residence_state"
+                      onChange={(e) => setStudent({ ...student, [e.target.id]: e.target.value })}
+                      disabled={disable} defaultValue={student.residence_state} variant="outlined" InputProps={{ classes: { input: classes.resize } }} />
                   </Typography>
                 </Grid>
               </Grid>

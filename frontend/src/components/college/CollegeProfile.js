@@ -59,11 +59,11 @@ export default function CollegeProfile(props) {
   //Use to store the similar high schools.
   const [resultDisplay, setResultDisplay] = useState(null);
   //Use to store the results for similar student profiles.
-  const [ errorMessage, setErrorMessage ] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
   const location = useLocation();
   const classes = useStyles();
 
-  
+
   useEffect(() => {
     let url = hostUrl + location.pathname; //    /college/q
     axios.get(url)
@@ -86,7 +86,6 @@ export default function CollegeProfile(props) {
 
   return (
     <div>
-      {!college && <NotFound />}
       {college && (
         <div className={classes.backgound}>
           <Container maxWidth="md">
@@ -103,7 +102,7 @@ export default function CollegeProfile(props) {
                   <Typography variant="h6">
                     # {college.ranking} in National Universities
                   </Typography>
-                 <Typography variant="body1">
+                  <Typography variant="body1">
                     {college.institution_type} University in {college.state}
                     <br />
                     Admission Rate: {college.adm_rate}
@@ -181,11 +180,12 @@ export default function CollegeProfile(props) {
                   </TableContainer>
                 </Grid>
               </Grid>
-              <SimpleCard college={college} errorMessage={errorMessage} setErrorMessage={setErrorMessage}/>
+              <SimpleCard college={college} errorMessage={errorMessage} setErrorMessage={setErrorMessage} />
             </div>
           </Container>
         </div>
       )}
+      {!college && <NotFound />}
     </div>
   );
 }

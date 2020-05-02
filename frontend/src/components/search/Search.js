@@ -266,7 +266,7 @@ export default function Search(props) {
                 className={classes.button}
                 endIcon={<SyncRoundedIcon />}
                 onClick={() => {
-                  if (RSText == "Compute Recommendation Score") {
+                  if (RSText === "Compute Recommendation Score") {
                     handleRecommend();
                     setRSText("Hide Recommendation Score");
                     setRSVariant("outlined")
