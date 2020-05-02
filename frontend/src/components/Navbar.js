@@ -71,46 +71,46 @@ export default function Navbar(props) {
   let history = useHistory();
 
   async function handleLogout() {
-    axios.post(logoutUrl,{
+    axios.post(logoutUrl, {
       method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    userid: props.user
-  }).then((data) => {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      userid: props.user
+    }).then((data) => {
       if (data.status == 200) {
         props.setUser(null);
         history.push("/");
       }
     })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   }
 
-  const handleSearch= (event)=> {
+  const handleSearch = (event) => {
     event.preventDefault();
     history.push("/search/college?name=" + event.target.searchQuery.value);
   }
 
-  const handleRedirect = (e)=>{
+  const handleRedirect = (e) => {
     history.push("/");
   }
 
-  const handleProfile = (e)=>{
+  const handleProfile = (e) => {
     history.push({
       pathname: "/student/" + props.user,
     });
-    window.location.reload(false);
+    // window.location.reload(false);
   }
 
-  const handleRegister = (e)=>{
+  const handleRegister = (e) => {
     history.push("/register");
   }
-  const handleLogin = (e)=>{
+  const handleLogin = (e) => {
     history.push("/login");
   }
-  
+
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.navBar}>
@@ -123,9 +123,9 @@ export default function Navbar(props) {
 
           {/* search on navigation bar for some pages */}
           <Route exact path={["/search/:q", "/college/:id"]}>
-            <SearchBar classes={classes} handleSearch={handleSearch} placeholder="Search for College"/>
+            <SearchBar classes={classes} handleSearch={handleSearch} placeholder="Search for College" />
           </Route>
-          {props.user &&(
+          {props.user && (
             <React.Fragment>
               <Button className={classes.button} onClick={handleProfile}>
                 Profile
@@ -136,7 +136,7 @@ export default function Navbar(props) {
               </Button>
             </React.Fragment>
           )}
-          {!props.user &&(
+          {!props.user && (
             <React.Fragment>
               <Button className={classes.button} onClick={handleLogin}>
                 Login
