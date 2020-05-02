@@ -16,10 +16,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
     minWidth: 120,
   },
-  divider:{
-    width:"40%",
-    textAlign:"right",
-    display:"inline-block",
+  divider: {
+    width: "40%",
+    textAlign: "right",
+    display: "inline-block",
   }
 }));
 
@@ -34,19 +34,19 @@ export default function SortOptions(props) {
   };
 
   return (
-      <div className={classes.divider}>
-        <Tooltip title="sort by ascending or descending order" placement="bottom" arrow>
-          {asc ? (
-            <IconButton
-              size="medium"
-              onClick={() => {
-                setAsc(!asc);
-                props.setOrder();
-              }}
-            >
-              <ArrowDropDown fontSize="inherit" color="primary" />
-            </IconButton>
-          ) : (
+    <div className={classes.divider}>
+      <Tooltip title="sort by ascending or descending order" placement="bottom" arrow>
+        {asc ? (
+          <IconButton
+            size="medium"
+            onClick={() => {
+              setAsc(!asc);
+              props.setOrder();
+            }}
+          >
+            <ArrowDropDown fontSize="inherit" color="primary" />
+          </IconButton>
+        ) : (
             <IconButton
               size="medium"
               onClick={() => {
@@ -57,19 +57,19 @@ export default function SortOptions(props) {
               <ArrowDropUp fontSize="inherit" color="primary" />
             </IconButton>
           )}
-        </Tooltip>
+      </Tooltip>
 
-        <FormControl className={classes.formControl}>
-          <Select onChange={handleChangeSort} id="dropMenu">
-            <MenuItem value="adm_rate">Admission Rate</MenuItem>
-            <MenuItem value="out_state_cost">Cost of Attendance</MenuItem>
-            <MenuItem value="ranking" id="rankOption">Ranking</MenuItem>
-            <MenuItem value="recommendationScore">
-              Recommendation Score
+      <FormControl className={classes.formControl}>
+        <Select onChange={handleChangeSort} id="dropMenu">
+          <MenuItem value="adm_rate">Admission Rate</MenuItem>
+          <MenuItem value="out_state_cost">Cost of Attendance</MenuItem>
+          <MenuItem value="ranking" id="rankOption">Ranking</MenuItem>
+          <MenuItem value="score">
+            Recommendation Score
             </MenuItem>
-          </Select>
-          <FormHelperText>Sort</FormHelperText>
-        </FormControl>
+        </Select>
+        <FormHelperText>Sort</FormHelperText>
+      </FormControl>
     </div>
   );
 }
