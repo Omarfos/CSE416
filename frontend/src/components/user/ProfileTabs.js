@@ -14,11 +14,14 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Tooltip from '@material-ui/core/Tooltip';
-import MultipleSelect from "./CollegeDropdown";
+import DropDownSelection from "./SelectionDropdown";
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import collegeName from "./colleges.json";
+import highSchoolName from "./highSchools.json";
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -145,6 +148,9 @@ export default function VerticalTabs(props) {
     newlist[index].college = value;
     props.setApplication(newlist);
   }
+  async function handleEditHighSchool(value, index){
+    props.setStudent({ ...props.student, ["high_school_name"]: value})
+  }
 
   async function handleAddApplication() {
     let newApp = props.application.concat([{ college: "", status: "", questionable: false }]);
@@ -249,12 +255,13 @@ export default function VerticalTabs(props) {
           <Typography variant="h6" className={classes.title2}>
             High School Name:
           </Typography>
-          <TextField id="high_school_name" disabled={props.disable} 
-            onChange={(e) => props.setStudent({ ...props.student, [e.target.id]: e.target.value})}
-            defaultValue={props.student.high_school_name} variant="outlined" fullWidth className={classes.textfield} InputProps={{ classes: { input: classes.resize } }} />
+          <DropDownSelection value={props.student.high_school_name?props.student.high_school_name: ""} disable={props.disable} handleEditValue={handleEditHighSchool} type="highSchoolName" valueName = {highSchoolName} placeholder = "High School Name"/>
+
+          
+          
           <br /><br />
           <Typography variant="h6" className={classes.title2}>
-            Location:
+            Location: 
           </Typography>
           <TextField id="high_school_city" label="City" 
             onChange={(e) => props.setStudent({ ...props.student, [e.target.id]: e.target.value})}
@@ -350,9 +357,9 @@ function AppliedCollege(props) {
         {props.keyID + 1}:
       </Typography>
 
-      <MultipleSelect application={props.application} keyID={props.keyID} disable={props.disable} handleEditCollege={props.handleEditCollege} />
+      <DropDownSelection value={props.application.college} keyID={props.keyID} disable={props.disable} handleEditValue={props.handleEditCollege} type="collegeName" valueName = {collegeName} placeholder = "College Name"/>
 
-      <FormControl className={classes.statusDropdown} disable={props.disable}>
+      <FormControl className={classes.statusDropdown}>
         <InputLabel shrink htmlFor="status" >
           Status
         </InputLabel>
