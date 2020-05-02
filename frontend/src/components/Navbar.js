@@ -98,7 +98,10 @@ export default function Navbar(props) {
   }
 
   const handleProfile = (e)=>{
-    history.push("/student/" + props.user);
+    history.push({
+      pathname: "/student/" + props.user,
+    });
+    window.location.reload(false);
   }
 
   const handleRegister = (e)=>{
