@@ -251,6 +251,17 @@ export default function Search(props) {
             />
             lax
           </Grid>
+          {/* Add the completion_rate here with the following way
+          <Grid item md={12}>
+            <SliderFactory
+              id="completion_rate"
+              navigate={navigate}
+              min={0}
+              max={100}
+              startText={"Completion Rate"}
+              step={1}
+            />
+          </Grid>*/}
         </Grid>
 
 

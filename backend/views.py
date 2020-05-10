@@ -215,7 +215,8 @@ def post_student_application(request, userid):
                 student=s,
                 college=college,
                 status=app["status"],
-                questionable=verify_acceptance_decision(userid, app),
+                questionable=verify_acceptance_decision(userid, app), #pass the college here
+                # make verify_acceptance_decision(userid, app, college)
             )
             app["questionable"] = a.questionable
             a.save()

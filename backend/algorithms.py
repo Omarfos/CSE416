@@ -326,10 +326,11 @@ def similar_hs(hs_name):
     return sorted(res, reverse=True, key=lambda x: x["score"])
 
 
+# we make it verify_acceptance_decision(userid, app, college)
 def verify_acceptance_decision(userid, app):
 
-    u = Student.objects.get(userid=userid)
-    apps = Application.objects.filter(
+    u = Student.objects.get(userid=userid)                  #gets the student
+    apps = Application.objects.filter(                      #gets the application of an applied student
         college__name=app["college"], status=app["status"]
     )
     score = 0
@@ -344,6 +345,12 @@ def verify_acceptance_decision(userid, app):
             score += abs(u.SAT_math - s.SAT_math) / 800
         if u.SAT_EBRW and s.SAT_EBRW:
             score += abs(u.SAT_EBRW - s.SAT_EBRW) / 800
+
+    # we can do college.sat_math, college.sat_ebrw and college.ACT_composite with respect 
+    # to how it was done in the previous lines
+    #if u.ACT_composite and college.ACT_composite:
+        #score += abs(u.ACT_composite - college.ACT_composite) / 36
+    # Question is how is why is score determined based on length, how would this affect the score
 
     print(len(apps))
     print(score)
