@@ -64,7 +64,7 @@ export default function SignIn(props) {
       loginInfo: JSON.stringify({ userid, password }),
     })
       .then((data) => {
-        if (data.status==200) {
+        if (data.SUCCESS) {
           props.setUser(userid);
           props.setError(null);
           history.push("/");
