@@ -294,7 +294,7 @@ def search(request):
         major_query = Q()
         for major in params["majors"].split(","):
             major_query = major_query | Q(majors__icontains=major)
-        query = query & major__query
+        query = query & major_query
 
     colleges = College.objects.filter(query)
     if "sort" in params:
