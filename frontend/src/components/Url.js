@@ -9,3 +9,5 @@ export const similarStudentUrl = hostUrl + "/similar/student/"
 export const collegeUrl = hostUrl + "/college/"
 export const similarHighSchoolUrl = hostUrl + "/similar/hs/"
 export const loginCheckUrl = hostUrl + "/loginCheck/"
+
+export const savedSearchUrl = hostUrl + "/savedSearch/"

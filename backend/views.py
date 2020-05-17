@@ -14,7 +14,7 @@ from django.contrib.auth.models import AnonymousUser
 
 # from django.core.exceptions import DoesNotExist
 
-from .models import Student, College, Application
+from .models import Student, College, Application, Savedsearch
 from .algorithms import *
 from .scrape import *
 
@@ -128,15 +128,36 @@ def college(request, name="Stony Brook University"):
 
 def get_college_applications(request, name):
     college = get_object_or_404(College, name=name)
-    applications = college.application_set.all()
+    applications = college.application_set.all().filter(
+            questionable=False
+        ) #change this line to filter out questionable decisions
+    print(applications)
     response = []
     for app in applications:
         s = model_to_dict(app.student)
         s["status"] = app.status
+        # print(s)
         response.append(s)
 
     return JsonResponse(response, safe=False)
 
+##################################################################
+def get_student_savedsearch(request, userid):
+    s = get_object_or_404(Student, userid=userid)
+    saved = []
+    for app in s.savedsearch_set.all():
+        saved.append(
+            {
+                "name": app.name,
+                "url": app.url,
+            }
+        )
+    # print("get saved search is ")
+    # print(savedsearch)
+    return JsonResponse(
+        {"savedsearch": saved}, safe=False
+    )
+#################################################################3
 
 def get_student_profile(request, userid):
     """Return JSON of specified student 
@@ -215,7 +236,7 @@ def post_student_application(request, userid):
                 student=s,
                 college=college,
                 status=app["status"],
-                questionable=verify_acceptance_decision(userid, app), #pass the college here
+                questionable=verify_acceptance_decision(userid, app, college), #pass the college here
                 # make verify_acceptance_decision(userid, app, college)
             )
             app["questionable"] = a.questionable
@@ -223,6 +244,26 @@ def post_student_application(request, userid):
         return JsonResponse(new_apps, safe=False)
     return JsonResponse({"ERROR": "not authorized"}, status=403)
 
+########################################################################################
+def post_student_savedsearch(request, userid):
+    if request.user.is_authenticated and request.user.username == userid:
+        s = get_object_or_404(Student, userid=userid)
+        # print(s.savedsearch_set.all())
+        s.savedsearch_set.all().delete()
+        new_savedsearch = json.loads(request.body)["savedsearch"]
+        new_savedsearch = json.loads(new_savedsearch)       #loads the savedsearch in a json
+        for savedsearch in new_savedsearch:
+            a = Savedsearch(
+                student=s,
+                name=savedsearch["name"],
+                url=savedsearch["url"]
+            )
+            # savedsearch["url"] = a.url
+            a.save()
+        return JsonResponse(new_savedsearch, safe=False)
+    return JsonResponse({"ERROR": "not authorized"}, status=403)
+
+#########################################################################################
 
 def search(request):
     """Return colleges matching filter/search parameters of request
@@ -237,7 +278,7 @@ def search(request):
 
     Supported filters:
         ranking, name, size, adm_rate, out_state_cost, SAT_math, SAT_EBRW,
-        ACT_composite, states, majors, sort
+        ACT_composite, states, majors, sort, (added later completion_rate)
     """
     params = request.GET
     query = Q()
@@ -266,6 +307,11 @@ def search(request):
         query = query & Q(adm_rate__range=(low, high))
         if lax:
             query = query | Q(adm_rate=None)
+    if "completion_rate" in params:
+        low, high = tuple(params["completion_rate"].split(","))
+        query = query & Q(completion_rate__range=(low, high))
+        if lax:
+            query = query | Q(completion_rate=None)
     if "out_state_cost" in params:
         low, high = tuple(params["out_state_cost"].split(","))
         query = query & Q(out_state_cost__range=(low, high))

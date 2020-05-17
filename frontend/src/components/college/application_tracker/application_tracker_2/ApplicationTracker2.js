@@ -142,7 +142,17 @@ export default function ApplicationTracker2(props) {
         GPA_accepted={ aggregate(cur_students.filter(item => item.status == "accepted").filter(item => item.status == "accepted").map(({ GPA }) => parseFloat(GPA))) }
         ACT_accepted={ aggregate(cur_students.filter(item => item.status == "accepted").filter(item => item.status == "accepted").map(({ ACT_composite }) => ACT_composite)) } />
       {/* TABLES END */ }
-      <ScatterPlot students={ cur_students } test={ "ACT_composite" } />
+      
+      <ScatterPlot students={ cur_students } test={ "ACT_composite" }
+        SAT_math={aggregate(cur_students.map(({ SAT_math }) => SAT_math))}
+        SAT_EBRW={aggregate(cur_students.map(({ SAT_EBRW }) => SAT_EBRW))}
+        GPA={aggregate(cur_students.map(({ GPA }) => parseFloat(GPA)))}
+        ACT={aggregate(cur_students.map(({ ACT_composite }) => ACT_composite))}
+        SAT_math_accepted={aggregate(cur_students.filter(item => item.status == "accepted").map(({ SAT_math }) => SAT_math))}
+        SAT_EBRW_accepted={aggregate(cur_students.filter(item => item.status == "accepted").filter(item => item.status == "accepted").map(({ SAT_EBRW }) => SAT_EBRW))}
+        GPA_accepted={aggregate(cur_students.filter(item => item.status == "accepted").filter(item => item.status == "accepted").map(({ GPA }) => parseFloat(GPA)))}
+        ACT_accepted={aggregate(cur_students.filter(item => item.status == "accepted").filter(item => item.status == "accepted").map(({ ACT_composite }) => ACT_composite))} 
+        />
 
 
     </div>

@@ -11,6 +11,8 @@ export default function SliderFactory(props) {
   // on load, set slider values according to url
   useEffect(() => {
     const params = queryString.parse(location.search, { arrayFormat: "comma" });
+    console.log("slider factory params is ")
+    console.log(params)
     if (!params[props.id]) setValue([props.min, props.max]);
     else setValue(params[props.id].map((p) => Number(p)));
   }, []);

@@ -98,3 +98,11 @@ class Application(models.Model):
 
     def __str__(self):
         return f"{self.student} application for {self.college}: {self.status}"
+
+class Savedsearch(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100, unique=True)
+    url = models.CharField(max_length=1000, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.student} saved search for {self.name}: {self.url}"

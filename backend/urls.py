@@ -19,4 +19,7 @@ urlpatterns = [
     path("similar/student/", views.get_similar_profiles),
     path("similar/hs/", views.get_similar_hs),
     path("recommend/", views.recommend),
+    
+    path("student/<slug:userid>/edit/savedsearch", views.post_student_savedsearch),
+    path("student/<slug:userid>/savedsearch", views.get_student_savedsearch),
 ]

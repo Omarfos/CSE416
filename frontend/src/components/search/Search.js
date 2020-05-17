@@ -16,6 +16,7 @@ import Image from "../../images/header.png";
 import SyncRoundedIcon from "@material-ui/icons/SyncRounded";
 import Map from "./filters/Map"
 import { searchUrl, studentUrl, recommendUrl } from "../Url";
+import FormDialog from "./filters/DialogBox";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,6 +62,7 @@ export default function Search(props) {
   const [RSVariant, setRSVariant] = useState("contained");
   const [compute, setCompute] = useState(false);
   const [recscores, setRecscores] = useState([]);
+  const [open, setOpen] = React.useState(false);
 
   const [user, setUser] = useState([]);
 
@@ -74,7 +76,6 @@ export default function Search(props) {
         setUser(data.data.student);
       })
   }, []);
-
 
   const handleSearch = (query) => {
     setLoading(true);
@@ -98,10 +99,30 @@ export default function Search(props) {
     setLoading(false);
   };
 
+  const navigateSaved = (url) => {
+    if (url != ""){
+      const params = queryString.parse(url, { arrayFormat: "comma" });
+      console.log("current saved search param is ")
+      console.log(params)
+      // params[id] = value;
+      history.push(
+        "college?" + queryString.stringify(params, { arrayFormat: "comma" })
+      );
+      // params["adm_rate"].map((p) => Number(p))
+      return;
+    }
+  }
   const navigate = (id, value) => {
     console.log('user', user)
+    console.log('id', id)
+    console.log('value', value)
+    console.log('location.search', location.search)
+    console.log('queryString', queryString)
     const params = queryString.parse(location.search, { arrayFormat: "comma" });
+    // console.log('params', params)
+    console.log("the rest ", queryString.stringify(params, { arrayFormat: "comma" }))
     params[id] = value;
+    console.log("params 2nd is", params)
     if (id != 'sort') {
       history.push(
         "college?" + queryString.stringify(params, { arrayFormat: "comma" })
@@ -117,7 +138,7 @@ export default function Search(props) {
       new_colleges = Object.assign([], colleges).sort((a, b) => {
         if (a["state"] === user["residence_state"])
           return a["in_state_cost"] - b[value]
-        else if (b["state"] === user["residence_state"])
+        else if (b["state"] === user["residence_state"])  
           return a[value] - b["in_state_cost"]
         else if (b["state"] === user["residence_state"] && a["state"] === user["residence_state"])
           return a["in_state_cost"] - b["in_state_cost"]
@@ -173,6 +194,16 @@ export default function Search(props) {
               min={0}
               max={1}
               startText={"Admission Rate"}
+              step={0.1}
+            />
+          </Grid>
+          <Grid item md={12}>
+            <SliderFactory
+              id="completion_rate"  
+              navigate={navigate}
+              min={0}
+              max={100}
+              startText={"Completion Rate"}
               step={0.1}
             />
           </Grid>
@@ -251,17 +282,8 @@ export default function Search(props) {
             />
             lax
           </Grid>
-          {/* Add the completion_rate here with the following way
-          <Grid item md={12}>
-            <SliderFactory
-              id="completion_rate"
-              navigate={navigate}
-              min={0}
-              max={100}
-              startText={"Completion Rate"}
-              step={1}
-            />
-          </Grid>*/}
+          
+          <FormDialog student={ props.user } location={ location } navigateSaved={ navigateSaved }/>
         </Grid>
 
 
@@ -291,7 +313,7 @@ export default function Search(props) {
               >
                 {RSText}
               </Button>
-            </Tooltip>
+            </Tooltip>  
           </div>
           <SortOptions id="sort" navigate={navigate} setOrder={setOrder} />
         </div>

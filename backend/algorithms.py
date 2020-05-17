@@ -327,32 +327,51 @@ def similar_hs(hs_name):
 
 
 # we make it verify_acceptance_decision(userid, app, college)
-def verify_acceptance_decision(userid, app):
+def verify_acceptance_decision(userid, app, college):
 
     u = Student.objects.get(userid=userid)                  #gets the student
     apps = Application.objects.filter(                      #gets the application of an applied student
         college__name=app["college"], status=app["status"]
     )
-    score = 0
 
-    for app in apps:
-        s = app.student
-        if u.ACT_composite and s.ACT_composite:
-            score += abs(u.ACT_composite - s.ACT_composite) / 36
-        if u.GPA and s.GPA:
-            score += float(abs(u.GPA - s.GPA)) / 4.0
-        if u.SAT_math and s.SAT_math:
-            score += abs(u.SAT_math - s.SAT_math) / 800
-        if u.SAT_EBRW and s.SAT_EBRW:
-            score += abs(u.SAT_EBRW - s.SAT_EBRW) / 800
+    collegeScore = 0
+    count = 0
+    if u.ACT_composite and college.ACT_composite:
+        count += 1
+        if (u.ACT_composite > college.ACT_composite):
+            collegeScore += 1
+        else:
+            collegeScore += (u.ACT_composite / college.ACT_composite)
+    if u.SAT_math and college.SAT_math:
+        count += 1
+        if (u.SAT_math > college.SAT_math):
+            collegeScore += 1
+        else:
+            collegeScore += (u.SAT_math / college.SAT_math)
+    if u.SAT_EBRW and college.SAT_EBRW:
+        count += 1
+        if (u.SAT_EBRW > college.SAT_EBRW):
+            collegeScore += 1
+        else:
+            collegeScore += (u.SAT_EBRW / college.SAT_EBRW)
+    
+    print("College is ", college)
+    print("CollegeSCore is ", collegeScore)
+    return False if collegeScore >= (0.85 * count) else True
 
-    # we can do college.sat_math, college.sat_ebrw and college.ACT_composite with respect 
-    # to how it was done in the previous lines
-    #if u.ACT_composite and college.ACT_composite:
-        #score += abs(u.ACT_composite - college.ACT_composite) / 36
-    # Question is how is why is score determined based on length, how would this affect the score
+    #previous code for questionable based on students already on database, code works if you uncomment it out 
+    # score = 0
+    # for app in apps:
+    #     s = app.student
+    #     if u.ACT_composite and s.ACT_composite:
+    #         score += abs(u.ACT_composite - s.ACT_composite) / 36
+    #     if u.GPA and s.GPA:
+    #         score += float(abs(u.GPA - s.GPA)) / 4.0
+    #     if u.SAT_math and s.SAT_math:
+    #         score += abs(u.SAT_math - s.SAT_math) / 800
+    #     if u.SAT_EBRW and s.SAT_EBRW:
+    #         score += abs(u.SAT_EBRW - s.SAT_EBRW) / 800
 
-    print(len(apps))
-    print(score)
-
-    return True if score >= len(apps) else False
+    # print(len(apps))
+    # print(score)
+    # return True if score >= len(apps) else False

@@ -51,7 +51,7 @@ export default function CustomizedTables(props) {
   return (
 
     <TableContainer component={ Paper }>
-      { console.log('props', props) }
+      {/* { console.log('props', props) } */}
       <Table className={ classes.table } aria-label="customized table">
         <TableHead>
           <TableRow>
