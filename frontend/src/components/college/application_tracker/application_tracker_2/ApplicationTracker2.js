@@ -152,6 +152,7 @@ export default function ApplicationTracker2(props) {
         SAT_EBRW_accepted={aggregate(cur_students.filter(item => item.status == "accepted").filter(item => item.status == "accepted").map(({ SAT_EBRW }) => SAT_EBRW))}
         GPA_accepted={aggregate(cur_students.filter(item => item.status == "accepted").filter(item => item.status == "accepted").map(({ GPA }) => parseFloat(GPA)))}
         ACT_accepted={aggregate(cur_students.filter(item => item.status == "accepted").filter(item => item.status == "accepted").map(({ ACT_composite }) => ACT_composite))} 
+        
         WA_SAT={aggregate(cur_students.map(({ WA_SAT }) => WA_SAT))}
         WA_SAT_accepted={aggregate(cur_students.filter(item => item.status == "accepted").map(({ WA_SAT }) => WA_SAT))}
         />

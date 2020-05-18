@@ -32,8 +32,8 @@ export default function FormDialog(props) {
     };
 
     const handleClose = () => {
-        console.log("nothing is saved")
-        console.log(savedsearch)
+        // console.log("nothing is saved")
+        // console.log(savedsearch)
         setOpen(false);
     };
 
@@ -167,12 +167,12 @@ function Searchlist(props) {
                     onChange={(e) => { props.handleEditSearchName(e, props.keyID) }}
                 />
                 <Tooltip title="View this saved search. Click the 'SAVE' button to save any previous ADD/DELETE">
-                    <IconButton align="right" id={props.keyID} onClick={() => { props.navigateSaved(props.saved.url); props.handleClose() }}>
+                    <IconButton align="right" id={props.keyID} onClick={(e) => { props.navigateSaved(props.saved.url); props.handleClose() }}>
                         <MenuBookIcon fontSize="small" />
                     </IconButton>
                 </Tooltip>
                 <Tooltip align="right" title="Delete this SEARCH. Nothing will be saved until clicking 'SAVE'">
-                    <IconButton id={props.keyID} onClick={() => props.handleRemoveSavedSearch(props.keyID)}>
+                    <IconButton id={props.keyID} onClick={(e) => props.handleRemoveSavedSearch(props.keyID)}>
                         <DeleteIcon fontSize="small" />
                     </IconButton>
                 </Tooltip>
