@@ -10,8 +10,6 @@ function createData(name, calories, fat, carbs, protein) {
 function ScatterPlot(props) {
     const { students } = props
     const [ test, setTest ] = useState("ACT_composite")
-    const [ wa_avg, setWA_avg] = useState(0)
-    const [wa_avg_acc, setWA_avg_acc] = useState(0)
 
     const initState = {
         ACT_composite: { 
@@ -31,8 +29,8 @@ function ScatterPlot(props) {
             avg_accepted: Math.round(props.GPA_accepted * 100) / 100,
         },
         WA_SAT: {
-            avg: 0,
-            avg_accepted: 0,
+            avg: Math.round(props.WA_SAT),
+            avg_accepted: Math.round(props.WA_SAT_accepted),
         },
     };
     const [filters, setFilters] = useState(initState)
@@ -56,21 +54,15 @@ function ScatterPlot(props) {
                 avg_accepted: Math.round(props.GPA_accepted * 100) / 100,
             },
             WA_SAT: {
-                avg: wa_avg,
-                avg_accepted: wa_avg_acc,
+                avg: Math.round(props.WA_SAT),
+                avg_accepted: Math.round(props.WA_SAT_accepted),
             },
         })
-    }, [wa_avg, wa_avg_acc, props.GPA, props.GPA_accepted, props.ACT, props.ACT_accepted, props.SAT_EBRW, props.SAT_EBRW_accepted, props.SAT_math, props.SAT_math_accepted])
+    }, [students, props.GPA, props.GPA_accepted, props.ACT, props.ACT_accepted, props.SAT_EBRW, props.SAT_EBRW_accepted, props.SAT_math, props.SAT_math_accepted])
 
     const aggregate = (array) => {
         return array.reduce((sum, i) => sum + i, 0) / array.length;
     }
-    // const rows = [
-    //     createData('Average GPA', Math.round(props.GPA * 100) / 100, Math.round(props.GPA_accepted * 100) / 100),
-    //     createData('Average SAT Math', Math.round(props.SAT_math), Math.round(props.SAT_math_accepted)),
-    //     createData('Average SAT EBRW', Math.round(props.SAT_EBRW), Math.round(props.SAT_EBRW_accepted)),
-    //     createData('Average ACT composite', Math.round(props.ACT), Math.round(props.ACT_accepted)),
-    // ];
 
     function computeWA_SAT() {
         students.map(student => {
@@ -98,20 +90,20 @@ function ScatterPlot(props) {
         
         // console.log("Students are")
         // console.log(students)
-        // if (students[0].WA_SAT != 0){
-        //     let wa_avg = aggregate(students.map(({ WA_SAT }) => WA_SAT))
-        //     let wa_avg_accepted = aggregate(students.filter(item => item.status == "accepted").map(({ WA_SAT }) => WA_SAT))
+        // // if (students[0].WA_SAT != 0){
+        // let wa_avg = aggregate(students.map(({ WA_SAT }) => WA_SAT))
+        // let wa_avg_accepted = aggregate(students.filter(item => item.status == "accepted").map(({ WA_SAT }) => WA_SAT))
 
-        //     console.log("The WA_avg is ", wa_avg)
-        //     console.log("The WA_avg_accepted is ", wa_avg_accepted)
-        //     setWA_avg(wa_avg)
-        //     setWA_avg_acc(wa_avg_acc)
+        // console.log("The WA_avg is ", wa_avg)
+        // console.log("The WA_avg_accepted is ", wa_avg_accepted)
+        // setWA_avg(wa_avg)
+        // setWA_avg_acc(wa_avg_acc)
         // }
         // setFilters({
         //     ...filters, 
         //     WA_SAT: {
-        //         avg: wa_avg,
-        //         avg_accepted: wa_avg_accepted,
+        //         avg: aggregate(students.map(({ WA_SAT }) => WA_SAT)),
+        //         avg_accepted: aggregate(students.filter(item => item.status == "accepted").map(({ WA_SAT }) => WA_SAT)),
         //     },
         // })
     };

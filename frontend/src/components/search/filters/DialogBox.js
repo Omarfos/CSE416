@@ -15,14 +15,14 @@ import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
+import FindInPageIcon from '@material-ui/icons/FindInPage';
 
 import queryString from "query-string";
 
 export default function FormDialog(props) {
     const [open, setOpen] = React.useState(false);
     const [savedsearch, setSavedSearch] = useState([]);
-    // const [ searchName, setSearchName ] = useState("");
-    // const [student, setStudent] = useState(props.student);
 
     const handleClickOpen = () => {
         console.log(props.student)
@@ -36,23 +36,6 @@ export default function FormDialog(props) {
         console.log(savedsearch)
         setOpen(false);
     };
-
-    // const handleSave = () => {
-    //     console.log("searchname is", searchName)
-    //     console.log(props.location.search)
-    //     setSavedSearch( {'name': searchName})
-    //     setSavedSearch([
-    //         ...savedsearch,
-    //         {
-    //         name: searchName,
-    //         url: props.location.search,
-    //         }
-    //     ]);
-    //     console.log("saved search is ")
-    //     console.log(savedsearch)
-    //     handleUpdateProfile()
-    //     setOpen(false);
-    // }
 
     // posting the information to the database
     async function handleUpdateProfile(event) {
@@ -87,8 +70,6 @@ export default function FormDialog(props) {
         }).catch((error) => {
             console.log("error")
             console.log(props.student)
-            // setErrorStatus("error");
-            // setErrorMessage("No High School Information Found. ");
         });
     }, [ open ] );      // do useeffect only if saved search changes. 
 
@@ -104,51 +85,45 @@ export default function FormDialog(props) {
     }
 
     async function handleRemoveSavedSearch(id) {
-        console.log("the keyid is ", id)
-        console.log("saved search is ", savedsearch)
         const newlist = [].concat(savedsearch);
-        console.log("newlist is ", newlist)
         newlist.splice(id, 1);
-        console.log("after splicing newlist is ", newlist)
         setSavedSearch(newlist);
+        // console.log("the keyid is ", id)
+        // console.log("saved search is ", savedsearch)
+        // console.log("newlist is ", newlist)
+        // console.log("after splicing newlist is ", newlist)
     }
 
     return (
         <div>
-            <Button variant="contained" color="primary" startIcon={<SaveIcon />} onClick={handleClickOpen}>
-                Save Search
-            </Button>
-            <Button variant="contained" color="secondary">
-                View/Delete/Run
+            <Button variant="contained" color="primary" startIcon={<FindInPageIcon/>} onClick={handleClickOpen}>
+                Save/Edit/View Search
             </Button>
 
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Saving Search Result</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Please enter the name you would like the search criteria to be saved (ex: safety schools, stretch schools).
+                        Please enter the name you would like the search criteria to be saved after clicking the ADD Button(ex: safety schools, stretch schools).
+                        <br></br>
+                        You have to click the SAVE button to save it.
                     </DialogContentText>
-                    {/* <TextField
-                        autoFocus
-                        margin="dense"
-                        name="name"
-                        id="searchName"
-                        label="Search Name"
-                        type="name"
-                        // defaultValue={"Name"}
-                        fullWidth
-                        onChange={(e) => setSearchName(e.target.value)}
-                        // onChange={updateField}
-                    /> */}
 
                     <div name="savedsearches">
+                        <div align="right">
+                            <Tooltip title="Save a new search">
+                                <Fab color="secondary" size="medium" onClick={handleAddSearch}>
+                                    <AddIcon />
+                                </Fab>
+                            </Tooltip>
+                        </div>
                         <Typography variant="h6">
                             Saved Searches:
                         </Typography>
                         {savedsearch.length > 0 &&
                             <div name="yooo">
                                 {savedsearch.map((saved, key) => (
-                                    <Searchlist saved={saved} navigateSaved={props.navigateSaved} key={key} keyID={key} handleRemoveSavedSearch={handleRemoveSavedSearch} handleEditSearchName={handleEditSearchName} />
+                                    <Searchlist saved={saved} navigateSaved={props.navigateSaved} handleClose={handleClose} key={key} keyID={key} handleRemoveSavedSearch={handleRemoveSavedSearch} handleEditSearchName={handleEditSearchName} />
                                 ))}
                             </div>
                         }
@@ -157,16 +132,6 @@ export default function FormDialog(props) {
                                 NO saved searches
                             </Typography>
                         }
-                        <div>
-                            <Tooltip title="Add more college application">
-                                {/* <IconButton onClick={handleAddSearch}>
-                                    <Icon className={classes.addButton}>add_circle</Icon>
-                                </IconButton> */}
-                                <Fab color="secondary" onClick={handleAddSearch}>
-                                    <AddIcon />
-                                </Fab>
-                            </Tooltip>
-                        </div>
                     </div>
                 </DialogContent>
                 <DialogActions>
@@ -178,34 +143,35 @@ export default function FormDialog(props) {
                     </Button>
                 </DialogActions>
                 
-                
             </Dialog>
         </div>
     );
 }
 
 function Searchlist(props) {
-    // const classes = useStyles();
-
     return (
-        <div name="yerrr" onClick={event => props.navigateSaved( props.saved.url )}>
-            {/* hover */}
+        <div name="yerrr">
             <Typography>
                 {props.keyID + 1}:
             </Typography>
 
-            <TextField
-                id="standard-full-width"
-                // label={props.placeholder}
-                style={{ margin: 8 }}
-                // placeholder="Placeholder"
-                helperText="Full width!"
-                margin="normal"
-                defaultValue={props.saved.name}
-                onChange={(e) => { props.handleEditSearchName(e, props.keyID)}}
-            />
-            <div>
-                <Tooltip title="Delete this college application. Nothing will be saved until clicking 'update profile'">
+            <div align="left">
+                <TextField
+                    id="standard-full-width"
+                    // label={props.placeholder}
+                    style={{ margin: 8 }}
+                    // placeholder="Placeholder"
+                    helperText="Name of Saved Search"
+                    margin="normal"
+                    value={props.saved.name}
+                    onChange={(e) => { props.handleEditSearchName(e, props.keyID) }}
+                />
+                <Tooltip title="View this saved search. Click the 'SAVE' button to save any previous ADD/DELETE">
+                    <IconButton align="right" id={props.keyID} onClick={() => { props.navigateSaved(props.saved.url); props.handleClose() }}>
+                        <MenuBookIcon fontSize="small" />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip align="right" title="Delete this SEARCH. Nothing will be saved until clicking 'SAVE'">
                     <IconButton id={props.keyID} onClick={() => props.handleRemoveSavedSearch(props.keyID)}>
                         <DeleteIcon fontSize="small" />
                     </IconButton>
@@ -214,6 +180,3 @@ function Searchlist(props) {
         </div>
     );
 }
-
-// onClick={handleSave}
-// type="submit"
