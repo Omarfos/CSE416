@@ -20,7 +20,7 @@ function ScatterPlot(props) {
             avg: Math.round(props.SAT_math),
             avg_accepted: Math.round(props.SAT_math_accepted),
         },
-        SAT_ebrw: {
+        SAT_EBRW: {
             avg: Math.round(props.SAT_EBRW),
             avg_accepted: Math.round(props.SAT_EBRW_accepted),
         },
@@ -45,7 +45,7 @@ function ScatterPlot(props) {
                 avg: Math.round(props.SAT_math),
                 avg_accepted: Math.round(props.SAT_math_accepted),
             },
-            SAT_ebrw: {
+            SAT_EBRW: {
                 avg: Math.round(props.SAT_EBRW),
                 avg_accepted: Math.round(props.SAT_EBRW_accepted),
             },
