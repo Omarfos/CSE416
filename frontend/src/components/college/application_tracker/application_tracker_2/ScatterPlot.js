@@ -87,25 +87,6 @@ function ScatterPlot(props) {
             result = Math.round(result/weights * 100)
             student.WA_SAT = result;
         });
-        
-        // console.log("Students are")
-        // console.log(students)
-        // // if (students[0].WA_SAT != 0){
-        // let wa_avg = aggregate(students.map(({ WA_SAT }) => WA_SAT))
-        // let wa_avg_accepted = aggregate(students.filter(item => item.status == "accepted").map(({ WA_SAT }) => WA_SAT))
-
-        // console.log("The WA_avg is ", wa_avg)
-        // console.log("The WA_avg_accepted is ", wa_avg_accepted)
-        // setWA_avg(wa_avg)
-        // setWA_avg_acc(wa_avg_acc)
-        // }
-        // setFilters({
-        //     ...filters, 
-        //     WA_SAT: {
-        //         avg: aggregate(students.map(({ WA_SAT }) => WA_SAT)),
-        //         avg_accepted: aggregate(students.filter(item => item.status == "accepted").map(({ WA_SAT }) => WA_SAT)),
-        //     },
-        // })
     };
 
     computeWA_SAT();

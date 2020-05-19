@@ -110,7 +110,7 @@ export default function Search(props) {
       history.push(
         "college?" + queryString.stringify(params, { arrayFormat: "comma" })
       );
-      window.location.reload();
+      // window.location.reload();
       return;
     }
   }

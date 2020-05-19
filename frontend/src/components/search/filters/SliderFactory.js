@@ -15,7 +15,7 @@ export default function SliderFactory(props) {
     console.log(params)
     if (!params[props.id]) setValue([props.min, props.max]);
     else setValue(params[props.id].map((p) => Number(p)));
-  }, []);
+  }, [location.search]);
 
   return (
     <>

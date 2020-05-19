@@ -57,6 +57,33 @@ export default function ApplicationTracker2(props) {
     })
   }
 
+  function computeWA_SAT() {
+    return cur_students.map(student => {
+      let result = 0;
+      let weights = 0;
+      Object.keys(student).forEach(y => {
+        if (y.substring(0, 4) == "SAT_" && y != "SAT_math" && y != "SAT_EBRW" && student[y] != null) {
+          result += 0.05 * (student[y] / 800);
+          weights += 0.05;
+        }
+      });
+      if (student.SAT != null && student.ACT_composite != null) {
+        result += (1 - weights) / 2 * (student.SAT / 1600 + student.ACT_composite / 36)
+        weights = 1;
+      } else if (student.SAT != null) {
+        result += (1 - weights) * student.SAT / 1600;
+        weights = 1;
+      } else if (student.ACT_composite != null) {
+        result += (1 - weights) * student.ACT_composite / 36;
+        weights = 1;
+      }
+      result = Math.round(result / weights * 100)
+      student.WA_SAT = result;
+      return student
+    });
+  };
+  console.log("new students", computeWA_SAT())
+
   function filterData(temp_students) {
     return temp_students.filter(s => filters[ "status" ].length == 0 || s.status == null || filters[ "status" ].includes(s.status))
     .filter(s => filters[ "high_schools" ].length == 0 || s.high_school_name == null || filters[ "high_schools" ].includes(s.high_school_name))
@@ -154,6 +181,8 @@ export default function ApplicationTracker2(props) {
         ACT_accepted={aggregate(cur_students.filter(item => item.status == "accepted").filter(item => item.status == "accepted").map(({ ACT_composite }) => ACT_composite))} 
         
         WA_SAT={aggregate(cur_students.map(({ WA_SAT }) => WA_SAT))}
+        //WA_SAT={aggregate(computeWA_SAT().map(({ WA_SAT }) => WA_SAT))}
+       // WA_SAT_accepted={aggregate(computeWA_SAT().filter(item => item.status == "accepted").map(({ WA_SAT }) => WA_SAT))}
         WA_SAT_accepted={aggregate(cur_students.filter(item => item.status == "accepted").map(({ WA_SAT }) => WA_SAT))}
         />
 
