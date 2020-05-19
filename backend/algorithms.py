@@ -354,24 +354,28 @@ def verify_acceptance_decision(userid, app, college):
             collegeScore += 1
         else:
             collegeScore += (u.SAT_EBRW / college.SAT_EBRW)
-    
-    print("College is ", college)
-    print("CollegeSCore is ", collegeScore)
-    return False if collegeScore >= (0.85 * count) else True
 
-    #previous code for questionable based on students already on database, code works if you uncomment it out 
-    # score = 0
-    # for app in apps:
-    #     s = app.student
-    #     if u.ACT_composite and s.ACT_composite:
-    #         score += abs(u.ACT_composite - s.ACT_composite) / 36
-    #     if u.GPA and s.GPA:
-    #         score += float(abs(u.GPA - s.GPA)) / 4.0
-    #     if u.SAT_math and s.SAT_math:
-    #         score += abs(u.SAT_math - s.SAT_math) / 800
-    #     if u.SAT_EBRW and s.SAT_EBRW:
-    #         score += abs(u.SAT_EBRW - s.SAT_EBRW) / 800
 
-    # print(len(apps))
-    # print(score)
-    # return True if score >= len(apps) else False
+    if (collegeScore >= (0.85 * count)):
+        return False
+    else:
+        score = 0
+        for app in apps:
+            s = app.student
+            if u.ACT_composite and s.ACT_composite:
+                score += abs(u.ACT_composite - s.ACT_composite) / 36
+            if u.GPA and s.GPA:
+                score += float(abs(u.GPA - s.GPA)) / 4.0
+            if u.SAT_math and s.SAT_math:
+                score += abs(u.SAT_math - s.SAT_math) / 800
+            if u.SAT_EBRW and s.SAT_EBRW:
+                score += abs(u.SAT_EBRW - s.SAT_EBRW) / 800
+
+        print(len(apps))
+        print(score)
+        return True if score >= len(apps) else False
+
+    # print("College is ", college)
+    # print("CollegeSCore is ", collegeScore)
+
+    # return False if collegeScore >= (0.85 * count) else True

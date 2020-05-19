@@ -28,12 +28,9 @@ export default function FormDialog(props) {
         console.log(props.student)
         console.log(props.location)
         setOpen(true);
-        // handleAddSearch()
     };
 
     const handleClose = () => {
-        // console.log("nothing is saved")
-        // console.log(savedsearch)
         setOpen(false);
     };
 
@@ -88,10 +85,6 @@ export default function FormDialog(props) {
         const newlist = [].concat(savedsearch);
         newlist.splice(id, 1);
         setSavedSearch(newlist);
-        // console.log("the keyid is ", id)
-        // console.log("saved search is ", savedsearch)
-        // console.log("newlist is ", newlist)
-        // console.log("after splicing newlist is ", newlist)
     }
 
     return (

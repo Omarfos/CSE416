@@ -104,13 +104,10 @@ export default function Search(props) {
       const params = queryString.parse(url, { arrayFormat: "comma" });
       console.log("current saved search param is ")
       console.log(params)
-      
-      // console.log("doc.id adm rate is ", document.getElementById("adm_rate"))
-      // params[id] = value;
+
       history.push(
         "college?" + queryString.stringify(params, { arrayFormat: "comma" })
       );
-      // window.location.reload();
       return;
     }
   }
